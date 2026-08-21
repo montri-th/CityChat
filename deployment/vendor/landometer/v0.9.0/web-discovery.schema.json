@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/Landometer/machine/v0.9.0/web-discovery.schema.json",
+  "title": "Landometer web discovery record — [WEB-DISCOVERY-01]",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "intentionally_absent_internal",
+        "declared",
+        "verified"
+      ]
+    },
+    "indexable": {
+      "type": "boolean"
+    },
+    "canonicalUrl": {
+      "type": "string"
+    },
+    "discoverySet": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "boolean"
+        },
+        "canonical": {
+          "type": "boolean"
+        },
+        "robots": {
+          "type": "boolean"
+        },
+        "openGraph": {
+          "type": "boolean"
+        },
+        "jsonLd": {
+          "type": "boolean"
+        },
+        "sitemap": {
+          "type": "boolean"
+        },
+        "favicon": {
+          "type": "boolean"
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "llmsTxt": {
+      "type": "object",
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "boundary": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "status",
+    "indexable"
+  ]
+}

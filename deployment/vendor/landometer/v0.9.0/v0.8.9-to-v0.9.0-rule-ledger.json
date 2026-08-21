@@ -1,0 +1,518 @@
+{
+  "schemaVersion": "1.0",
+  "source": {
+    "readFrom": "assets/downloads/landometer-design-system-v0.8.9.md (baseline authoring master)",
+    "readSha256": "00d931254d21931952d29fdde7a00e2c3a5b4f875504a1bf72fee316bf5d4e68",
+    "canonicalPredecessorSha256": "827f4d85381f980dba43c319cd74762e2745a522232936630fa65ed4b54679d6",
+    "note": "The repository carries the baseline authoring master variant (recorded in the skill release-lock as lineage.baselineAuthoringMaster); the canonical predecessor document lives in the project store at the canonical sha above. Rule IDs are identical across the two variants."
+  },
+  "authority": "v0.9.0 Supersedes clause: the complete v0.8.9 rule set is retained in place; no v0.8.9 rule is removed; the only rename is [SEARCH-01] -> [INTERNAL-SEARCH-01].",
+  "ruleCount": 72,
+  "rules": [
+    {
+      "fromRule": "[ADOPT-01]",
+      "toRule": "[ADOPT-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[AGENT-01]",
+      "toRule": "[AGENT-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[AGENT-OUT-01]",
+      "toRule": "[AGENT-OUT-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[AHA-01]",
+      "toRule": "[AHA-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[AUTH-01]",
+      "toRule": "[AUTH-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[BRAND-01]",
+      "toRule": "[BRAND-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[BRAND-02]",
+      "toRule": "[BRAND-02]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[BRAND-03]",
+      "toRule": "[BRAND-03]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[BRAND-04]",
+      "toRule": "[BRAND-04]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[BUILD-01]",
+      "toRule": "[BUILD-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[CITYMETER-VOICE-01]",
+      "toRule": "[CITYMETER-VOICE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[COCREATE-01]",
+      "toRule": "[COCREATE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[CONTEXT-01]",
+      "toRule": "[CONTEXT-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[COPY-01]",
+      "toRule": "[COPY-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-01",
+      "toRule": "CORE-01",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-02",
+      "toRule": "CORE-02",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-03",
+      "toRule": "CORE-03",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-04",
+      "toRule": "CORE-04",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-05",
+      "toRule": "CORE-05",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-06",
+      "toRule": "CORE-06",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-07",
+      "toRule": "CORE-07",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-08",
+      "toRule": "CORE-08",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-09",
+      "toRule": "CORE-09",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "CORE-10",
+      "toRule": "CORE-10",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[CTRL-01]",
+      "toRule": "[CTRL-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[CTRL-02]",
+      "toRule": "[CTRL-02]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[CULTURE-01]",
+      "toRule": "[CULTURE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[DATA-01]",
+      "toRule": "[DATA-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[DATAVIZ-01]",
+      "toRule": "[DATAVIZ-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[DELIVERY-01]",
+      "toRule": "[DELIVERY-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[DONE-01]",
+      "toRule": "[DONE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[EFFECT-01]",
+      "toRule": "[EFFECT-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[EXCEPTION-01]",
+      "toRule": "[EXCEPTION-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[FLOW-01]",
+      "toRule": "[FLOW-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[FLOW-02]",
+      "toRule": "[FLOW-02]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[FLOW-03]",
+      "toRule": "[FLOW-03]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[FLOW-04]",
+      "toRule": "[FLOW-04]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[FLOW-05]",
+      "toRule": "[FLOW-05]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[FLOW-06]",
+      "toRule": "[FLOW-06]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[LAYOUT-01]",
+      "toRule": "[LAYOUT-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[LDM-VOICE-01]",
+      "toRule": "[LDM-VOICE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[LEARN-01]",
+      "toRule": "[LEARN-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[LOCALE-01]",
+      "toRule": "[LOCALE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[LOCALE-TH-01]",
+      "toRule": "[LOCALE-TH-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[LOGO-SURFACE-01]",
+      "toRule": "[LOGO-SURFACE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[MACHINE-01]",
+      "toRule": "[MACHINE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[MAP-01]",
+      "toRule": "[MAP-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[MOTIF-01]",
+      "toRule": "[MOTIF-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[MOTION-01]",
+      "toRule": "[MOTION-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[PHOTO-01]",
+      "toRule": "[PHOTO-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[POSITION-01]",
+      "toRule": "[POSITION-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[PRODUCT-01]",
+      "toRule": "[PRODUCT-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[PROFILE-01]",
+      "toRule": "[PROFILE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[PUB-01]",
+      "toRule": "[PUB-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[QA-01]",
+      "toRule": "[QA-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[REFERENCE-01]",
+      "toRule": "[REFERENCE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[RELATION-01]",
+      "toRule": "[RELATION-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[SEARCH-01]",
+      "toRule": "[INTERNAL-SEARCH-01]",
+      "disposition": "superseded",
+      "predicate": "always",
+      "acceptance": "automated",
+      "reason": "renamed §7.6; old ID a deprecated alias for one release"
+    },
+    {
+      "fromRule": "[SHARE-01]",
+      "toRule": "[SHARE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[SPACE-01]",
+      "toRule": "[SPACE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[STATE-01]",
+      "toRule": "[STATE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[SURFACE-01]",
+      "toRule": "[SURFACE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[TELEMETRY-01]",
+      "toRule": "[TELEMETRY-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[THEME-01]",
+      "toRule": "[THEME-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[TOKEN-01]",
+      "toRule": "[TOKEN-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[TYPE-01]",
+      "toRule": "[TYPE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[VALUE-PROOF-01]",
+      "toRule": "[VALUE-PROOF-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[VIS-01]",
+      "toRule": "[VIS-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[VIS-02]",
+      "toRule": "[VIS-02]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[VIS-03]",
+      "toRule": "[VIS-03]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[VIS-04]",
+      "toRule": "[VIS-04]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    },
+    {
+      "fromRule": "[VOICE-01]",
+      "toRule": "[VOICE-01]",
+      "disposition": "retained",
+      "predicate": "per owning profile/pack in the v0.9.0 master",
+      "acceptance": "both"
+    }
+  ]
+}

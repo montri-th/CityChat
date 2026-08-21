@@ -1,0 +1,602 @@
+{
+  "schemaVersion": "1.0",
+  "packageRevision": "v0.9.0-mp1",
+  "dsVersion": "0.9.0",
+  "colorSetId": "color-srgb-05",
+  "artifactBuildId": "ui-20260821-05",
+  "validator": "tools/validate-machine-package.mjs",
+  "totals": {
+    "checks": 143,
+    "failures": 0
+  },
+  "result": "package_internally_consistent",
+  "boundary": "Package-level validation means the specification, schemas, mappings, fixtures, approvals, and hashes are internally consistent. It never certifies a downstream artifact; artifacts begin at machineValidation: pending and earn passed only from their own applicable generated preflight and manual evidence.",
+  "openItems": [
+    "machineValidation for the shipped playground remains pending: manual gates in qa/v0.9.0-manual-gates.md are open.",
+    "Formal identity/media approvals beyond the recorded assets remain approval_missing."
+  ],
+  "ownerFindingsCarried": "qa/v0.9.0-thai-leading.json#ownerFindings (cross-pair ink overlaps at leading 1.16)",
+  "approvalRef": "normative-patches/landometer-design-system-v0.9.0-machine-package.approval.yml",
+  "checks": [
+    {
+      "name": "layout:core.md",
+      "ok": true
+    },
+    {
+      "name": "layout:build-card.schema.json",
+      "ok": true
+    },
+    {
+      "name": "layout:manifest.schema.json",
+      "ok": true
+    },
+    {
+      "name": "layout:surface-recipes.json",
+      "ok": true
+    },
+    {
+      "name": "layout:connector.schema.json",
+      "ok": true
+    },
+    {
+      "name": "layout:tokens.json",
+      "ok": true
+    },
+    {
+      "name": "layout:tokens.css",
+      "ok": true
+    },
+    {
+      "name": "layout:tokens.ts",
+      "ok": true
+    },
+    {
+      "name": "layout:color-delivery.json",
+      "ok": true
+    },
+    {
+      "name": "layout:font-assets.manifest.json",
+      "ok": true
+    },
+    {
+      "name": "layout:media-assets.manifest.json",
+      "ok": true
+    },
+    {
+      "name": "layout:identity-approvals.manifest.json",
+      "ok": true
+    },
+    {
+      "name": "layout:components.json",
+      "ok": true
+    },
+    {
+      "name": "layout:page-kinds.json",
+      "ok": true
+    },
+    {
+      "name": "layout:voice-recipes.md",
+      "ok": true
+    },
+    {
+      "name": "layout:thai-voice-fixtures-v0.8.7.json",
+      "ok": true
+    },
+    {
+      "name": "layout:adapters/README.md",
+      "ok": true
+    },
+    {
+      "name": "layout:preflight.yml",
+      "ok": true
+    },
+    {
+      "name": "layout:fixtures.json",
+      "ok": true
+    },
+    {
+      "name": "layout:build-kit/lds-tokens.css",
+      "ok": true
+    },
+    {
+      "name": "layout:build-kit/lds-base.css",
+      "ok": true
+    },
+    {
+      "name": "layout:build-kit/skeleton.html",
+      "ok": true
+    },
+    {
+      "name": "layout:self-check.map.json",
+      "ok": true
+    },
+    {
+      "name": "layout:growth.schema.json",
+      "ok": true
+    },
+    {
+      "name": "layout:web-discovery.schema.json",
+      "ok": true
+    },
+    {
+      "name": "layout:social-previews.schema.json",
+      "ok": true
+    },
+    {
+      "name": "layout:v0.8.9-to-v0.9.0-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "layout:v0.8.7-to-v0.8.9-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "layout:v0.8.6-to-v0.8.7-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "layout:v0.8.5-to-v0.8.6-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "layout:package.json",
+      "ok": true
+    },
+    {
+      "name": "layout:SHA256SUMS.txt",
+      "ok": true
+    },
+    {
+      "name": "layout:profiles/*.json",
+      "ok": true,
+      "detail": "expected 11 profiles, found 11"
+    },
+    {
+      "name": "layout:packs/*.json",
+      "ok": true,
+      "detail": "expected >=19 packs, found 20"
+    },
+    {
+      "name": "package:ds-version",
+      "ok": true
+    },
+    {
+      "name": "package:revision",
+      "ok": true
+    },
+    {
+      "name": "package:color-set",
+      "ok": true,
+      "detail": "color-srgb-05 vs color-srgb-05"
+    },
+    {
+      "name": "package:artifact-build",
+      "ok": true
+    },
+    {
+      "name": "package:authoring-revision",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:adapters/README.md",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:build-card.schema.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:build-kit/lds-base.css",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:build-kit/lds-tokens.css",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:build-kit/skeleton.html",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:color-delivery.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:components.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:connector.schema.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:core.md",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:fixtures.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:font-assets.manifest.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:growth.schema.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:identity-approvals.manifest.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:manifest.schema.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:media-assets.manifest.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/ABUSE-INTEGRITY-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/AGENT-OUT-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/AUTH-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/COCREATE-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/CONTEXT-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/DATA-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/DATAVIZ-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/DELIVERY-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/EFFECT-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/HOOK-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/INTERNAL-SEARCH-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/LEARN-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/MAP-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/PUB-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/REFERENCE-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/SHARE-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/TELEMETRY-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/TOOL-HANDOFF-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/WEB-DISCOVERY-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:packs/XPRODUCT-01.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:page-kinds.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:preflight.yml",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/brand.public.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/campaign.public.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/citychat.app.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/citymeter.dataset.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/citywiki.public.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/data.explainer.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/designsystem.adoption.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/ijji.app.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/presentation.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/product.app.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:profiles/social.static.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:self-check.map.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:social-previews.schema.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:surface-recipes.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:thai-voice-fixtures-v0.8.7.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:tokens.css",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:tokens.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:tokens.ts",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:v0.8.5-to-v0.8.6-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:v0.8.6-to-v0.8.7-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:v0.8.7-to-v0.8.9-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:v0.8.9-to-v0.9.0-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:voice-recipes.md",
+      "ok": true
+    },
+    {
+      "name": "package:file-hash:web-discovery.schema.json",
+      "ok": true
+    },
+    {
+      "name": "package:sums-count",
+      "ok": true
+    },
+    {
+      "name": "fingerprint:index.html",
+      "ok": true
+    },
+    {
+      "name": "fingerprint:assets/downloads/landometer-design-system-v0.9.0.md",
+      "ok": true
+    },
+    {
+      "name": "fingerprint:assets/downloads/landometer-design-system-v0.8.9.md",
+      "ok": true
+    },
+    {
+      "name": "fingerprint:assets/data/color-delivery.v0.9.0.json",
+      "ok": true
+    },
+    {
+      "name": "fingerprint:assets/data/tokens.json",
+      "ok": true
+    },
+    {
+      "name": "fingerprint:assets/data/scales.json",
+      "ok": true
+    },
+    {
+      "name": "fingerprint:font-assets.manifest.json",
+      "ok": true
+    },
+    {
+      "name": "kit:master-parity:lds-tokens.css",
+      "ok": true
+    },
+    {
+      "name": "kit:preflight-hash:lds-tokens.css",
+      "ok": true
+    },
+    {
+      "name": "kit:master-parity:lds-base.css",
+      "ok": true
+    },
+    {
+      "name": "kit:preflight-hash:lds-base.css",
+      "ok": true
+    },
+    {
+      "name": "kit:master-parity:skeleton.html",
+      "ok": true
+    },
+    {
+      "name": "kit:preflight-hash:skeleton.html",
+      "ok": true
+    },
+    {
+      "name": "schema:draft:build-card.schema.json",
+      "ok": true
+    },
+    {
+      "name": "schema:draft:manifest.schema.json",
+      "ok": true
+    },
+    {
+      "name": "schema:draft:connector.schema.json",
+      "ok": true
+    },
+    {
+      "name": "schema:draft:growth.schema.json",
+      "ok": true
+    },
+    {
+      "name": "schema:draft:web-discovery.schema.json",
+      "ok": true
+    },
+    {
+      "name": "schema:draft:social-previews.schema.json",
+      "ok": true
+    },
+    {
+      "name": "instance:site-manifest",
+      "ok": true
+    },
+    {
+      "name": "instance:connectors",
+      "ok": true
+    },
+    {
+      "name": "instance:build-card",
+      "ok": true
+    },
+    {
+      "name": "selfcheck:23-items",
+      "ok": true,
+      "detail": "23"
+    },
+    {
+      "name": "selfcheck:matches-master-ledger",
+      "ok": true,
+      "detail": "master 23 vs map 23"
+    },
+    {
+      "name": "ledger:source-hash",
+      "ok": true
+    },
+    {
+      "name": "ledger:every-v089-rule-mapped",
+      "ok": true
+    },
+    {
+      "name": "ledger:count-consistent",
+      "ok": true
+    },
+    {
+      "name": "preflight:ten-retired-values",
+      "ok": true,
+      "detail": "10"
+    },
+    {
+      "name": "preflight:retired-values-absent-from-tokens",
+      "ok": true
+    },
+    {
+      "name": "preflight:both-banned-windows-encoded",
+      "ok": true
+    },
+    {
+      "name": "preflight:build-id-current",
+      "ok": true
+    },
+    {
+      "name": "tokens:schema-6",
+      "ok": true
+    },
+    {
+      "name": "tokens:provenance-hash",
+      "ok": true
+    },
+    {
+      "name": "tokens:values-match-source",
+      "ok": true
+    },
+    {
+      "name": "thai-leading:evidence-present",
+      "ok": true
+    },
+    {
+      "name": "thai-leading:case-coverage",
+      "ok": true,
+      "detail": "36"
+    },
+    {
+      "name": "thai-leading:no-hard-failures",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "name": "thai-leading:cross-pair-stress-present",
+      "ok": true
+    },
+    {
+      "name": "boundary:v0.8.7-to-v0.8.9-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "boundary:v0.8.6-to-v0.8.7-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "boundary:v0.8.5-to-v0.8.6-rule-ledger.json",
+      "ok": true
+    },
+    {
+      "name": "boundary:thai-voice-fixtures-v0.8.7.json",
+      "ok": true
+    }
+  ]
+}

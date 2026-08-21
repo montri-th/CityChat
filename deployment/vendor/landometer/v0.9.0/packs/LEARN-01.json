@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "id": "[LEARN-01]",
+  "section": "§7.9",
+  "title": "Voluntary investment and transparent learning pack",
+  "triggeredWhen": "voluntary investment / transparent learning enabled",
+  "loadRule": "Trigger Packs load only the matching branch (§7); unloaded packs never become visible UI",
+  "source": {
+    "path": "assets/downloads/landometer-design-system-v0.9.0.md"
+  },
+  "boundary": "Machine pointer record; the master section is the authority for the pack's requirements."
+}

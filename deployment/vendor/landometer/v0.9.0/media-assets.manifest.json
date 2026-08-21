@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0",
+  "boundary": "Hash-and-boundary records only; binaries excluded from the public-safe package.",
+  "assets": [
+    {
+      "path": "assets/images/landometer-logo-banner.png",
+      "bytes": 184476,
+      "sha256": "f6ed8748d32d11514c94ce6a639491120489ce8c3ab6fff073d7ca9638a87535",
+      "transform": "source bytes unchanged; transparent background is mandatory; no box, plate, carrier, border, or radius is applied",
+      "contrastStrategy": "logo and release metadata remain transparent; shared surrounding header surface changes to maintain contrast",
+      "reuseBoundary": "Exact existing repository path and bytes; formal current identity approval record remains pending."
+    },
+    {
+      "path": "assets/images/landometer-symbol-transparent.png",
+      "bytes": 11001,
+      "sha256": "35a1496f6e8c502cef82f0a46de5dacff98718ff9f5a6c07ccc3783d76e3ae85",
+      "mimeType": "image/png",
+      "intrinsicSize": "192x192",
+      "transparentCanvas": true,
+      "transform": "none",
+      "usageClass": "browser-tab favicon only",
+      "approvalSource": "repository main commit ce785864e5341321e1957dce35a8326732764432",
+      "reuseBoundary": "Exact repository path and bytes; do not reuse as a social-preview, touch, maskable, or horizontal-header asset without separate approval."
+    },
+    {
+      "path": "assets/images/team-hero.jpg",
+      "bytes": 182387,
+      "sha256": "50048eb0d0eeaf8b17e086bebc504389033bcc0673d453363c27581aa11579fb",
+      "transform": "none",
+      "usageClass": "team identity and culture context; not product-outcome evidence",
+      "reuseBoundary": "Exact existing public repository rendition; formal rights, creator, and expiry record remains pending."
+    },
+    {
+      "path": "assets/fonts",
+      "usageClass": "self-hosted Arvo, IBM Plex Sans Thai Looped, Bai Jamjuree, and the single-weight JetBrains Mono 400 + IBM Plex Sans Thai 400 technical pair",
+      "manifest": "font-assets.manifest.json"
+    }
+  ]
+}

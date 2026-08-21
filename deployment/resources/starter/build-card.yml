@@ -1,0 +1,23 @@
+citychatBuild:
+  artifact:
+    name: Replace with real artifact name
+    product: citychat
+    profile: data.explainer
+    oneJob: explain one governed place signal and its limitation
+    delivery: portable_demo
+    language: th
+  publication:
+    visibility: internal
+    indexable: false
+    evidenceStatus: source_limited
+    machineValidation: pending
+  capabilityTruth:
+    productAuthority: candidate
+    capabilityEvidenceStatus: source_limited
+    deliveryAvailability: designed
+  effects:
+    remoteMutation: false
+    receipt: false
+  boundary:
+    fixture: conceptual
+    targetDoesNotMeanShipped: true

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/Landometer/machine/v0.9.0/social-previews.schema.json",
+  "title": "Landometer social preview record",
+  "description": "Share previews are destination-tested against the real reachable artifact; public metadata contains only public-safe assets/claims with permission.",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "not_applicable_no_promoted_destination",
+        "declared",
+        "destination_tested"
+      ]
+    },
+    "destinations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "platform": {
+            "type": "string"
+          },
+          "canvasPx": {
+            "type": "string"
+          },
+          "tested": {
+            "type": "boolean"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "platform"
+        ]
+      }
+    },
+    "canonicalUrl": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status"
+  ]
+}

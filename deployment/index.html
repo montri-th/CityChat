@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="th" data-locale="th" data-theme="light" data-theme-preference="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CityChat Design Identity Playground v0.4 — source-limited guide and implementation resources for the CityChat team.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <link rel="canonical" href="https://montri-th.github.io/CityChat/">
+  <title>CityChat Design Identity Playground v0.4</title>
+  <link rel="stylesheet" href="vendor/landometer/v0.9.0/build-kit/lds-tokens.css">
+  <link rel="stylesheet" href="vendor/landometer/v0.9.0/build-kit/lds-base.css">
+  <link rel="stylesheet" href="citychat.css">
+  <script>
+    (() => {
+      const root = document.documentElement;
+      root.classList.add("has-js");
+      const themes = ["system", "light", "dark"];
+      const storedTheme = localStorage.getItem("citychat-playground-theme") || "system";
+      const storedLocale = localStorage.getItem("citychat-playground-locale") || "th";
+      const preference = themes.includes(storedTheme) ? storedTheme : "system";
+      const locale = ["th", "en"].includes(storedLocale) ? storedLocale : "th";
+      const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      root.dataset.themePreference = preference;
+      root.dataset.theme = preference === "system" ? (systemDark ? "dark" : "light") : preference;
+      root.dataset.locale = locale;
+      root.lang = locale;
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main"><span data-th>ข้ามไปเนื้อหาหลัก</span><span data-en>Skip to main content</span></a>
+
+  <header class="site-header" aria-label="CityChat Design Identity Playground">
+    <a class="brand-lockup" href="#top" aria-label="CityChat — กลับไปจุดเริ่มต้น / return to the start">
+      <img src="assets/identity/citychat-horizontal-lockup.png" width="380" height="82" alt="CityChat">
+    </a>
+    <nav class="header-actions" aria-label="Page preferences">
+      <span class="source-status source-status--candidate"><span data-th>ฉบับทดลอง · source_limited</span><span data-en>Preview · source_limited</span></span>
+      <button class="btn btn--quiet preference-button js-only" id="theme-cycle" type="button"><span data-th>ธีม: ระบบ</span><span data-en>Theme: system</span></button>
+      <button class="btn btn--quiet preference-button js-only" id="locale-cycle" type="button" aria-label="เปลี่ยนภาษา / change language">EN</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero scene-atmosphere scene-atmosphere--ground" id="top" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span data-th>CityStory-first · Intent-led · CityScan-aligned</span><span data-en>CityStory-first · Intent-led · CityScan-aligned</span></p>
+          <h1 id="hero-title">
+            <span data-th>เห็นความหมายของพื้นที่ แล้วไปต่ออย่างเป็นประโยชน์</span>
+            <span data-en>See what a place means, then take one useful next step.</span>
+          </h1>
+          <p class="hero-support">
+            <span data-th>Playground นี้ช่วยให้ทีมเห็นว่า CityChat ควรพาคนจากหลักฐาน ไปสู่คำถาม การกระทำ และความทรงจำที่ซื่อสัตย์อย่างไร — โดยไม่ทำให้ตัวอย่างดูเหมือนของที่เปิดใช้จริงแล้ว</span>
+            <span data-en>This playground shows how CityChat can move from evidence to a question, an action, and honest memory—without making a fixture look like a shipped capability.</span>
+          </p>
+          <a class="btn hero-action" href="#play"><span data-th>ลองเส้นทาง CityChat</span><span data-en>Try the CityChat journey</span></a>
+          <p class="hero-boundary technical"><span data-th>Design guidance · conceptual fixtures · ไม่ใช่ product runtime</span><span data-en>Design guidance · conceptual fixtures · not a product runtime</span></p>
+        </div>
+
+        <figure class="hero-object" aria-labelledby="hero-object-caption">
+          <div class="hero-map" aria-hidden="true">
+            <span class="map-line map-line--a"></span>
+            <span class="map-line map-line--b"></span>
+            <span class="map-place map-place--a"></span>
+            <span class="map-place map-place--b"></span>
+            <span class="map-place map-place--c"></span>
+          </div>
+          <article class="hero-story card">
+            <p class="technical meta">PLACE-DEMO-01 · v1</p>
+            <strong><span data-th>หนึ่งความหมาย</span><span data-en>One meaning</span></strong>
+            <p><span data-th>จุดบริการในกรอบตัวอย่างกระจุกตัวทางตะวันตก</span><span data-en>Services in this sample frame cluster to the west.</span></p>
+            <div class="hero-question"><span data-th>ฝั่งตะวันออกเข้าถึงบริการได้จริงอย่างไร?</span><span data-en>How do people on the east side actually reach the service?</span></div>
+          </article>
+          <figcaption id="hero-object-caption"><span data-th>ภาพประกอบเชิงแนวคิด · ข้อมูลสังเคราะห์</span><span data-en>Conceptual illustration · synthetic data</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="route-strip" aria-label="Learning route">
+      <div class="container route-list">
+        <a href="#identity"><span class="route-index">01</span><span data-th>เข้าใจตัวตน</span><span data-en>Understand</span></a>
+        <a href="#play"><span class="route-index">02</span><span data-th>ลองกับ object เดิม</span><span data-en>Try one object</span></a>
+        <a href="#components"><span class="route-index">03</span><span data-th>ประกอบเป็นระบบ</span><span data-en>Build the system</span></a>
+        <a href="#resources"><span class="route-index">04</span><span data-th>นำไปใช้ต่อ</span><span data-en>Take it away</span></a>
+      </div>
+    </section>
+
+    <section class="identity-section section-pad" id="identity" aria-labelledby="identity-title">
+      <div class="container">
+        <header class="section-heading split-heading">
+          <div>
+            <p class="eyebrow"><span data-th>CityChat identity</span><span data-en>CityChat identity</span></p>
+            <h2 id="identity-title"><span data-th>เมืองรู้สึกมีชีวิต เพราะคนเห็นเรื่องที่เกี่ยวกับตัวเอง</span><span data-en>A city feels alive when people can see what relates to them.</span></h2>
+          </div>
+          <p><span data-th>ความรู้สึกนั้นมาจากสถานที่ คน การเปลี่ยนแปลง และการกระทำที่ตรวจสอบได้ ไม่ใช่ pulse ปลอม ตัวเลขผู้ร่วมที่แต่งขึ้น หรือ motion ที่สร้างความเร่งด่วน</span><span data-en>That feeling comes from real places, people, change, and inspectable action—not fake pulse, invented participation counts, or motion that manufactures urgency.</span></p>
+        </header>
+
+        <div class="principle-grid">
+          <article class="principle-card card">
+            <span class="principle-mark principle-mark--measure" aria-hidden="true"></span>
+            <p class="technical meta">MEASURE</p>
+            <h3><span data-th>หลักฐานอยู่ข้างความหมาย</span><span data-en>Evidence stays beside meaning</span></h3>
+            <p><span data-th>ให้คนเห็นที่มา ช่วงเวลา coverage และข้อจำกัด โดยไม่ต้องเริ่มจาก dashboard หนัก ๆ</span><span data-en>Show source, period, coverage, and limitation without making people begin in a heavy dashboard.</span></p>
+          </article>
+          <article class="principle-card card">
+            <span class="principle-mark principle-mark--ground" aria-hidden="true"></span>
+            <p class="technical meta">GROUND</p>
+            <h3><span data-th>สถานที่และ object ไม่หลุดระหว่างทาง</span><span data-en>Place and object stay intact</span></h3>
+            <p><span data-th>ชื่อพื้นที่ ขอบเขต version และ snapshot เดินทางไปพร้อม Story การกระทำ และ handoff</span><span data-en>Place, boundary version, and snapshot travel with the Story, action, and handoff.</span></p>
+          </article>
+          <article class="principle-card card">
+            <span class="principle-mark principle-mark--cultivate" aria-hidden="true"></span>
+            <p class="technical meta">CULTIVATE</p>
+            <h3><span data-th>คำถามเดียวเปิดพื้นที่ให้คนมีส่วนร่วม</span><span data-en>One question opens meaningful participation</span></h3>
+            <p><span data-th>CityChat ขอเท่าที่จำเป็น บอกผลที่จะเกิดขึ้น และจบอย่างสะอาดเมื่อยังไม่มี action ที่ซื่อสัตย์</span><span data-en>CityChat asks only what is needed, names the consequence, and ends cleanly when no honest action exists.</span></p>
+          </article>
+        </div>
+
+        <div class="anti-pattern-line">
+          <strong><span data-th>CityChat ไม่ใช่</span><span data-en>CityChat is not</span></strong>
+          <span><span data-th>generic chatbot</span><span data-en>generic chatbot</span></span>
+          <span><span data-th>expert GIS หน้าแรก</span><span data-en>expert GIS first</span></span>
+          <span><span data-th>กล่องร้องเรียนที่หายไป</span><span data-en>a disappearing complaint inbox</span></span>
+          <span><span data-th>social feed เพื่อ engagement อย่างเดียว</span><span data-en>an engagement-only social feed</span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="playground section-pad" id="play" aria-labelledby="play-title">
+      <div class="container">
+        <header class="section-heading split-heading">
+          <div>
+            <p class="eyebrow"><span data-th>Try the same governed object</span><span data-en>Try the same governed object</span></p>
+            <h2 id="play-title"><span data-th>เปลี่ยนลำดับและความหมาย ไม่เปลี่ยนข้อเท็จจริง</span><span data-en>Change the experience—not the facts.</span></h2>
+          </div>
+          <p><span data-th>ทุกโหมดใช้ PLACE-DEMO-01, snapshot และตัวเลขสังเคราะห์ชุดเดียวกัน เพื่อให้เห็นว่า design เพิ่มประโยชน์ตรงไหนจริง ๆ</span><span data-en>Every mode keeps PLACE-DEMO-01, its snapshot, and the same synthetic facts so the design benefit remains visible and honest.</span></p>
+        </header>
+
+        <div class="play-controls card" aria-label="Playground controls">
+          <fieldset>
+            <legend><span data-th>มุมมองของประสบการณ์</span><span data-en>Experience view</span></legend>
+            <div class="segmented" id="clarity-switch">
+              <button type="button" data-clarity-choice="baseline" aria-pressed="false"><span data-th>ยังไม่ align</span><span data-en>Needs alignment</span></button>
+              <button type="button" data-clarity-choice="assisted" aria-pressed="true"><span data-th>Intent-led</span><span data-en>Intent-led</span></button>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><span data-th>เส้นทาง</span><span data-en>Journey</span></legend>
+            <div class="segmented mode-switch" role="tablist" aria-label="CityChat journey mode">
+              <button id="mode-story" type="button" role="tab" aria-selected="true" aria-controls="journey-stage" data-mode-choice="story"><span data-th>Direct Story</span><span data-en>Direct Story</span></button>
+              <button id="mode-scan" type="button" role="tab" aria-selected="false" aria-controls="journey-stage" data-mode-choice="scan"><span data-th>CityScan</span><span data-en>CityScan</span></button>
+              <button id="mode-officer" type="button" role="tab" aria-selected="false" aria-controls="journey-stage" data-mode-choice="officer"><span data-th>Officer target</span><span data-en>Officer target</span></button>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="journey-layout" id="journey-stage" role="tabpanel" aria-live="polite" data-mode="story" data-clarity="assisted">
+          <aside class="fixture-record card" aria-labelledby="fixture-title">
+            <p class="technical meta">FIXTURE RECORD · SYNTHETIC</p>
+            <h3 id="fixture-title"><span data-th>ข้อเท็จจริงที่ห้ามเปลี่ยน</span><span data-en>Facts that must not change</span></h3>
+            <dl>
+              <div><dt>Object</dt><dd>PLACE-DEMO-01 · v1</dd></div>
+              <div><dt>Snapshot</dt><dd>FIXTURE-20260822-A</dd></div>
+              <div><dt><span data-th>จุดบริการ</span><span data-en>Service points</span></dt><dd>3</dd></div>
+              <div><dt><span data-th>ฝั่งตะวันตก</span><span data-en>West side</span></dt><dd>2</dd></div>
+              <div><dt><span data-th>นอกระยะเดินตัวอย่าง</span><span data-en>Beyond sample walk band</span></dt><dd>1</dd></div>
+              <div><dt>Evidence</dt><dd>source_limited · synthetic</dd></div>
+            </dl>
+            <p class="fixture-limit"><span data-th>ข้อจำกัด: ตัวเลขนี้สอนรูปแบบเท่านั้น ไม่อธิบายเมืองหรือเทศบาลจริง</span><span data-en>Boundary: these numbers teach the pattern; they describe no real city or municipality.</span></p>
+          </aside>
+
+          <div class="stage-panel">
+            <section class="baseline-specimen" data-specimen="baseline" hidden>
+              <article class="card baseline-card">
+                <p class="technical meta">PLACE-DEMO-01 · 3 points · 2 west · 1 outside sample band</p>
+                <h3><span data-th>ข้อมูลการเข้าถึงบริการ</span><span data-en>Service access data</span></h3>
+                <p><span data-th>ดูข้อมูลในพื้นที่ และดำเนินการต่อหากต้องการ</span><span data-en>Review the area data and continue if needed.</span></p>
+                <button class="btn" type="button" data-local-ack="generic"><span data-th>ดำเนินการ</span><span data-en>Continue</span></button>
+                <p class="local-ack" data-local-ack-output="generic" role="status"></p>
+              </article>
+              <div class="specimen-note status status--warning"><span data-th>อ่านได้ แต่คนยังต้องเดาความหมาย ข้อจำกัด และผลของ action</span><span data-en>Readable, but people must still guess the meaning, limitation, and action consequence.</span></div>
+            </section>
+
+            <section class="assisted-specimen" data-specimen="assisted">
+              <article class="story-specimen card" data-story-view="story">
+                <header class="context-head">
+                  <div>
+                    <p class="technical meta">DIRECT CITYSTORY · PLACE-DEMO-01 · v1</p>
+                    <p class="context-place"><span data-th>กรอบพื้นที่ตัวอย่าง ริมคลองกลางเมือง</span><span data-en>Sample inner-city canal frame</span></p>
+                  </div>
+                  <span class="source-status source-status--candidate">candidate · compare</span>
+                </header>
+                <div class="signal-band" aria-hidden="true"></div>
+                <h3><span data-th>จุดบริการในกรอบตัวอย่างกระจุกตัวทางตะวันตก</span><span data-en>Services in this sample frame cluster to the west.</span></h3>
+                <p><span data-th>นี่เป็นการเปรียบเทียบจากข้อมูลสังเคราะห์ ยังยืนยันไม่ได้ว่าบริการไม่เพียงพอ</span><span data-en>This is a synthetic comparison. It cannot confirm that services are insufficient.</span></p>
+                <ul class="fact-chips" aria-label="Traceable facts">
+                  <li><strong>3</strong><span data-th>จุดในกรอบ</span><span data-en>points in frame</span></li>
+                  <li><strong>2</strong><span data-th>จุดฝั่งตะวันตก</span><span data-en>on the west side</span></li>
+                  <li><strong>1</strong><span data-th>จุดนอกระยะตัวอย่าง</span><span data-en>beyond sample band</span></li>
+                </ul>
+                <section class="question-block" aria-labelledby="story-question">
+                  <p class="technical meta">ONE USEFUL QUESTION</p>
+                  <h4 id="story-question"><span data-th>คนฝั่งตะวันออกเข้าถึงบริการนี้ได้จริงอย่างไร?</span><span data-en>How do people on the east side actually reach this service?</span></h4>
+                </section>
+                <div class="story-footer">
+                  <a class="btn" href="#component-storycell"><span data-th>ดู contract ของ StoryCell</span><span data-en>Inspect the StoryCell contract</span></a>
+                  <details class="evidence-disclosure">
+                    <summary><span data-th>ที่มาและข้อจำกัด</span><span data-en>Source and limits</span></summary>
+                    <dl>
+                      <div><dt>Source</dt><dd>synthetic fixture · FIXTURE-20260822-A</dd></div>
+                      <div><dt>Coverage</dt><dd><span data-th>เฉพาะกรอบตัวอย่าง</span><span data-en>sample frame only</span></dd></div>
+                      <div><dt>Freshness</dt><dd>not_applicable · static fixture</dd></div>
+                      <div><dt>Claim ceiling</dt><dd>compare · candidate</dd></div>
+                      <div><dt>Limitation</dt><dd><span data-th>ไม่ใช่ CityScan จริง ไม่ใช่คำวินิจฉัยหรือสถานะทางการ</span><span data-en>Not a real CityScan, diagnosis, or official status.</span></dd></div>
+                    </dl>
+                  </details>
+                </div>
+              </article>
+
+              <article class="scan-specimen card" data-story-view="scan" hidden>
+                <header class="context-head">
+                  <div>
+                    <p class="technical meta">CITYSCAN CONCEPT · PLACE-DEMO-01 · v1</p>
+                    <p class="context-place"><span data-th>กรอบพื้นที่ตัวอย่าง ริมคลองกลางเมือง</span><span data-en>Sample inner-city canal frame</span></p>
+                  </div>
+                  <span class="source-status source-status--candidate">proposed · local fixture</span>
+                </header>
+                <div class="scan-state-controls segmented" aria-label="CityScan conceptual state">
+                  <button type="button" data-scan-state="signal" aria-pressed="true">SIGNAL_READY</button>
+                  <button type="button" data-scan-state="no-score" aria-pressed="false">NO_SCORE</button>
+                  <button type="button" data-scan-state="locked" aria-pressed="false">LOCKED</button>
+                </div>
+                <div class="scan-frame" data-active-scan-state="signal">
+                  <div class="scan-geometry" aria-label="Conceptual scan geometry; no real map data">
+                    <span class="scan-grid"></span>
+                    <span class="scan-window"></span>
+                    <span class="scan-reticle"></span>
+                  </div>
+                  <div class="scan-readout">
+                    <p class="technical scan-state-label">SIGNAL_READY · demonstration only</p>
+                    <div class="topic-signals">
+                      <div><span data-th>การเข้าถึง</span><span data-en>Access</span><strong><span data-th>ต่ำกว่ามิติอื่น</span><span data-en>lower than other topics</span></strong></div>
+                      <div><span data-th>กิจกรรม</span><span data-en>Activity</span><strong><span data-th>ผสมกัน</span><span data-en>mixed</span></strong></div>
+                      <div><span data-th>ความเสี่ยง</span><span data-en>Risk</span><strong><span data-th>ข้อมูลไม่พอ</span><span data-en>insufficient data</span></strong></div>
+                    </div>
+                    <p class="scan-boundary"><span data-th>coverage แยกจาก score · NO_SCORE ไม่ใช่ศูนย์ · transient ไม่ใช่ locked</span><span data-en>Coverage stays separate from score · NO_SCORE is not zero · transient is not locked.</span></p>
+                  </div>
+                </div>
+                <div class="story-footer">
+                  <button class="btn" type="button" id="open-story-from-lock"><span data-th>ดู Story จาก Lock ตัวอย่าง</span><span data-en>Open Story from the sample Lock</span></button>
+                  <p class="local-ack" id="lock-note" role="status"></p>
+                </div>
+              </article>
+
+              <article class="officer-specimen card" data-story-view="officer" hidden>
+                <header class="context-head">
+                  <div>
+                    <p class="technical meta">OFFICER TARGET · OBJECT-NATIVE RECORD</p>
+                    <p class="context-place">PLACE-DEMO-01 · review item OP-DEMO-01</p>
+                  </div>
+                  <span class="source-status source-status--candidate">target · runtime unresolved</span>
+                </header>
+                <h3><span data-th>เก็บหลักฐาน งาน และความรับผิดชอบไว้ใน record เดียว</span><span data-en>Keep evidence, work, and responsibility in one record.</span></h3>
+                <div class="operations-grid">
+                  <dl>
+                    <div><dt><span data-th>เจ้าของงาน</span><span data-en>Owner</span></dt><dd>unassigned · fixture</dd></div>
+                    <div><dt><span data-th>สถานะอ้างอิง</span><span data-en>Status reference</span></dt><dd>needs_review · fixture</dd></div>
+                    <div><dt><span data-th>กำหนดเวลา</span><span data-en>Deadline</span></dt><dd>not set</dd></div>
+                    <div><dt><span data-th>อำนาจปิดงาน</span><span data-en>Closure authority</span></dt><dd>unresolved</dd></div>
+                  </dl>
+                  <div class="officer-boundary">
+                    <strong><span data-th>สิ่งที่ UI นี้ยังไม่อ้าง</span><span data-en>What this UI does not claim</span></strong>
+                    <p><span data-th>ไม่มีระบบรับเรื่อง ไม่มี assignment ไม่มี SLA และไม่มีสถานะเทศบาลจริงใน playground นี้</span><span data-en>This playground has no intake system, assignment, SLA, or real municipal status.</span></p>
+                  </div>
+                </div>
+                <a class="btn" href="#preflight"><span data-th>ตรวจ release gate ก่อนสร้าง</span><span data-en>Check the release gate before building</span></a>
+              </article>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="loops section-pad" aria-labelledby="loop-title">
+      <div class="container">
+        <header class="section-heading">
+          <p class="eyebrow"><span data-th>One promise, three vocabularies</span><span data-en>One promise, three vocabularies</span></p>
+          <h2 id="loop-title"><span data-th>ใช้แต่ละ loop ในระดับที่มันช่วยตัดสินใจ</span><span data-en>Use each loop at the level where it helps.</span></h2>
+        </header>
+        <div class="loop-map" role="img" aria-label="CityChat loop mapping">
+          <article>
+            <p class="technical meta">EXECUTIVE PROMISE</p>
+            <strong>See → Understand → Participate → Act → Learn</strong>
+            <span><span data-th>เล่าเป้าหมายของระบบ</span><span data-en>Explains the system promise</span></span>
+          </article>
+          <span class="loop-connector" aria-hidden="true">→</span>
+          <article>
+            <p class="technical meta">OPTIONAL DISCOVERY</p>
+            <strong>SCAN → LOCK → STORY</strong>
+            <span><span data-th>ใช้เมื่อเริ่มจาก CityScan</span><span data-en>Used only for CityScan entry</span></span>
+          </article>
+          <span class="loop-connector" aria-hidden="true">→</span>
+          <article>
+            <p class="technical meta">CANONICAL CIVIC LOOP</p>
+            <strong>SEE → ASK → FOLLOW → VERIFY → ENRICH → ACT → CLOSE → ADVOCATE</strong>
+            <span><span data-th>ใช้กับประสบการณ์และผลลัพธ์</span><span data-en>Owns experience and outcome semantics</span></span>
+          </article>
+        </div>
+        <p class="clean-completion"><span data-th>ทุกเส้นทางจบสะอาดได้ — advocacy หรือ return loop ไม่ใช่สิ่งที่ต้องบังคับ</span><span data-en>Every route may end cleanly—advocacy and return loops are never compulsory.</span></p>
+      </div>
+    </section>
+
+    <section class="component-library section-pad" id="components" aria-labelledby="components-title">
+      <div class="container">
+        <header class="section-heading split-heading">
+          <div>
+            <p class="eyebrow"><span data-th>CityChat product components</span><span data-en>CityChat product components</span></p>
+            <h2 id="components-title"><span data-th>Component คือ contract ไม่ใช่ภาพที่ดูเหมือนทำงาน</span><span data-en>A component is a contract—not a picture that looks operational.</span></h2>
+          </div>
+          <p><span data-th>ทุกชิ้น inherit token, type, geometry, motion และ accessibility จาก LDS ส่วน CityChat เพิ่ม object, evidence, state และ effect semantics เท่านั้น</span><span data-en>Every piece inherits tokens, type, geometry, motion, and accessibility from LDS. CityChat adds only object, evidence, state, and effect semantics.</span></p>
+        </header>
+
+        <div class="component-index">
+          <article class="component-card card" id="component-storycell">
+            <header><span class="status status--assisted">CORE</span><code>StoryCell</code></header>
+            <h3><span data-th>จากหลักฐานสู่ความหมายหนึ่งเรื่อง</span><span data-en>From evidence to one meaning</span></h3>
+            <ul>
+              <li>1 main signal</li><li>0–3 facts</li><li>1 question</li><li>0–1 action</li>
+            </ul>
+            <p><span data-th>ไม่ใช่ H3 และไม่บังคับให้ object-native record เปลี่ยน grain</span><span data-en>Not H3; never forces an object-native record into another grain.</span></p>
+          </article>
+          <article class="component-card card">
+            <header><span class="status status--assisted">CORE</span><code>EvidenceSummary + Drawer</code></header>
+            <h3><span data-th>คำตอบก่อน หลักฐานลึกหนึ่งชั้น</span><span data-en>Answer first, evidence one layer deep</span></h3>
+            <p><span data-th>แสดง source, period, grain, coverage, freshness, method, limitation และ claim ceiling โดยไม่เพิ่มอำนาจให้ claim</span><span data-en>Shows source, period, grain, coverage, freshness, method, limitation, and claim ceiling without promoting the claim.</span></p>
+          </article>
+          <article class="component-card card">
+            <header><span class="status status--warning">PROPOSED</span><code>CityScanFrame + LockControl</code></header>
+            <h3><span data-th>กรอบที่เห็นต้องตรงกับกรอบที่คำนวณ</span><span data-en>The visible frame must equal the calculated frame</span></h3>
+            <p><span data-th>เก็บ geometry, ordered cells, weights, baseline, snapshots และ exact response เพื่อ replay ได้</span><span data-en>Preserves geometry, ordered cells, weights, baseline, snapshots, and exact response for replay.</span></p>
+          </article>
+          <article class="component-card card">
+            <header><span class="status status--pending">CAPABILITY-GATED</span><code>PrimaryAction + ActionReceipt</code></header>
+            <h3><span data-th>กดแล้วต้องเกิดผลจริง หรือเห็นทางกู้คืน</span><span data-en>An action must have a real effect or honest recovery</span></h3>
+            <p><span data-th>receipt เกิดหลัง authoritative persistence เท่านั้น การตอบรับใน demo ไม่ใช่ receipt ของผลิตภัณฑ์</span><span data-en>A receipt follows authoritative persistence only. A demo acknowledgement is not a product receipt.</span></p>
+          </article>
+          <article class="component-card card">
+            <header><span class="status status--pending">CAPABILITY-GATED</span><code>ContributionPrompt + SharePreview</code></header>
+            <h3><span data-th>ขอเท่าที่จำเป็น ส่งต่อเพื่อประโยชน์ของผู้รับ</span><span data-en>Ask minimally; hand off for recipient benefit</span></h3>
+            <p><span data-th>ต้องมี purpose, privacy, retention, moderation, correction และ destination ที่ตรวจแล้ว</span><span data-en>Requires purpose, privacy, retention, moderation, correction, and a verified destination.</span></p>
+          </article>
+          <article class="component-card card">
+            <header><span class="status status--pending">TARGET</span><code>OperationsObject</code></header>
+            <h3><span data-th>record จริง มุมมองตามบทบาท</span><span data-en>One governed record, role-specific views</span></h3>
+            <p><span data-th>คง owner, workflow status, permission, deadline, audit, evidence และ closure authority ไว้ใน schema เจ้าของงาน</span><span data-en>Keeps owner, workflow status, permission, deadline, audit, evidence, and closure authority in its native schema.</span></p>
+          </article>
+        </div>
+
+        <details class="truth-contract card">
+          <summary><span data-th>เปิด typed truth envelope ที่ dev ต้องแยก</span><span data-en>Open the typed truth envelope developers must keep separate</span></summary>
+          <div class="truth-grid">
+            <div><code>productAuthority</code><span>approved_truth · draft_truth · proposed · candidate · out_of_scope</span></div>
+            <div><code>capabilityEvidenceStatus</code><span>observed · release_proven · source_limited · not_evidenced · unresolved</span></div>
+            <div><code>deliveryAvailability</code><span>not_designed · designed · implemented · pilot · accepted · unresolved</span></div>
+            <div><code>authorizationDecision</code><span>checking · allowed · denied · expired · not_applicable</span></div>
+            <div><code>claimLevel</code><span>candidate ladder until PB v8/ADR approval</span></div>
+            <div><code>valueState</code><span>unknown ≠ zero · stale ≠ current · privacy-suppressed ≠ missing</span></div>
+          </div>
+          <p class="status status--warning"><span data-th>ห้ามรวมสิ่งเหล่านี้ไว้ใน field ชื่อ status, stage, phase หรือ claim เพียงตัวเดียว</span><span data-en>Never collapse these into one bare status, stage, phase, or claim field.</span></p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cases section-pad" id="cases" aria-labelledby="cases-title">
+      <div class="container">
+        <header class="section-heading">
+          <p class="eyebrow"><span data-th>Three constructive cases + one rejected case</span><span data-en>Three constructive cases + one rejected case</span></p>
+          <h2 id="cases-title"><span data-th>เรียนจาก intent ที่ต่างกัน ไม่ใช่ card ที่เปลี่ยนแค่สี</span><span data-en>Learn from different intents—not recoloured cards.</span></h2>
+        </header>
+
+        <div class="case-grid">
+          <article class="case-card card">
+            <p class="technical meta">CASE A · mediaStatus: conceptual</p>
+            <h3><span data-th>พลเมืองเปิด Direct Story</span><span data-en>Citizen opens a Direct Story</span></h3>
+            <dl><div><dt>Intent</dt><dd><span data-th>เข้าใจพื้นที่และตรวจคำถามหนึ่งข้อ</span><span data-en>Understand a place and verify one question</span></dd></div><div><dt>Design move</dt><dd>StoryCell + EvidenceSummary</dd></div><div><dt>AHA</dt><dd><span data-th>รู้ว่าสิ่งใดสำคัญและสิ่งใดยังบอกไม่ได้</span><span data-en>Sees what matters and what remains unknown</span></dd></div><div><dt>Boundary</dt><dd><span data-th>ไม่มี receipt หากไม่มี persistence</span><span data-en>No receipt without persistence</span></dd></div></dl>
+            <p class="case-source">Authority: CityChat Profile v0.4 §§4.1, 7.2 · source_limited</p>
+          </article>
+          <article class="case-card card">
+            <p class="technical meta">CASE B · mediaStatus: conceptual</p>
+            <h3><span data-th>ผู้สำรวจเริ่มจาก CityScan</span><span data-en>Explorer begins with CityScan</span></h3>
+            <dl><div><dt>Intent</dt><dd><span data-th>เปรียบเทียบกรอบพื้นที่ก่อนเปิด Story</span><span data-en>Compare a frame before opening a Story</span></dd></div><div><dt>Design move</dt><dd>SCAN → LOCK → STORY</dd></div><div><dt>AHA</dt><dd><span data-th>เห็นสาม topic แยกกันและรู้เหตุผลของ no-score</span><span data-en>Sees three separate topics and the no-score reason</span></dd></div><div><dt>Boundary</dt><dd><span data-th>spec และ runtime ยัง proposed</span><span data-en>Spec and runtime remain proposed</span></dd></div></dl>
+            <p class="case-source">Authority: proposed CityScan context pack + Profile v0.4 §4.2</p>
+          </article>
+          <article class="case-card card">
+            <p class="technical meta">CASE C · mediaStatus: conceptual</p>
+            <h3><span data-th>เจ้าหน้าที่เห็น record ที่ต้องตัดสินใจ</span><span data-en>Officer sees the record requiring a decision</span></h3>
+            <dl><div><dt>Intent</dt><dd><span data-th>รู้ owner, หลักฐาน, deadline และ action ที่มีอำนาจ</span><span data-en>Know owner, evidence, deadline, and an authorized action</span></dd></div><div><dt>Design move</dt><dd>object-native OperationsObject</dd></div><div><dt>AHA</dt><dd><span data-th>รู้ว่าอะไรต้องทำต่อและใครรับผิดชอบ</span><span data-en>Sees what happens next and who owns it</span></dd></div><div><dt>Boundary</dt><dd><span data-th>target เท่านั้น; runtime unresolved</span><span data-en>Target only; runtime unresolved</span></dd></div></dl>
+            <p class="case-source">Authority: Profile v0.4 §4.4 · product target</p>
+          </article>
+          <article class="case-card card rejected-case">
+            <p class="technical meta">REJECTED D · mediaStatus: conceptual</p>
+            <h3><span data-th>LivePulse ปลอม + receipt เชิงบวกทันที</span><span data-en>Fake LivePulse + instant optimistic receipt</span></h3>
+            <div class="fake-dashboard" aria-hidden="true"><span></span><span></span><span></span></div>
+            <p><span data-th>ตัวเลขวิ่ง สีเร่งด่วน และ “เทศบาลรับเรื่องแล้ว” ทำให้ fixture ดูเป็น live/official ทั้งที่ไม่มีแหล่งอำนาจ</span><span data-en>Moving counts, urgent colour, and “municipality received it” make a fixture look live and official without authority.</span></p>
+            <p><strong><span data-th>ซ่อม:</span><span data-en>Recovery:</span></strong> <span data-th>แสดง static data state, no-score หรือ unavailable action; ใช้ local demonstration acknowledgement ที่ติดป้ายชัด</span><span data-en>Show static data state, no-score, or an unavailable action; label any local demonstration acknowledgement clearly.</span></p>
+            <p class="case-source">Rejected by Profile v0.4 §§0.6, 5.7, 7.7</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="preflight section-pad" id="preflight" aria-labelledby="preflight-title">
+      <div class="container preflight-layout">
+        <div class="preflight-intro">
+          <p class="eyebrow"><span data-th>60-second preflight</span><span data-en>60-second preflight</span></p>
+          <h2 id="preflight-title"><span data-th>ก่อนส่งให้ dev หรือ agent ตอบหกเรื่องนี้ให้ครบ</span><span data-en>Before handoff, answer these six questions.</span></h2>
+          <p><span data-th>นี่ไม่ใช่ compliance checklist แต่ช่วยหยุดความเข้าใจผิดที่พบบ่อยที่สุดก่อนเริ่มเขียน UI</span><span data-en>This is not a compliance certificate. It stops the most common misunderstandings before UI work begins.</span></p>
+          <div class="preflight-progress" aria-live="polite"><strong id="preflight-count">0/6</strong><span><span data-th>พร้อมนำไปคุยต่อ</span><span data-en>ready to discuss</span></span></div>
+        </div>
+        <form class="preflight-checks" id="preflight-form">
+          <label><input type="checkbox"><span><strong><span data-th>ใครกำลังทำงานอะไร?</span><span data-en>Who is doing what work?</span></strong><small><span data-th>คน, object, intent และ one job</span><span data-en>person, object, intent, and one job</span></small></span></label>
+          <label><input type="checkbox"><span><strong><span data-th>ใช้ profile ใดเพียงหนึ่งตัว?</span><span data-en>Which single profile applies?</span></strong><small><span data-th>designsystem.adoption ไม่ใช่ citychat.app</span><span data-en>designsystem.adoption is not citychat.app</span></small></span></label>
+          <label><input type="checkbox"><span><strong><span data-th>ข้อเท็จจริงและ claim ceiling มาจากไหน?</span><span data-en>Where do facts and claim ceiling come from?</span></strong><small><span data-th>source, period, coverage, freshness, limitation</span><span data-en>source, period, coverage, freshness, limitation</span></small></span></label>
+          <label><input type="checkbox"><span><strong><span data-th>capability นี้เปิดใช้จริงหรือยัง?</span><span data-en>Is this capability actually available?</span></strong><small><span data-th>authority, evidence, delivery, authorization แยกกัน</span><span data-en>separate authority, evidence, delivery, and authorization</span></small></span></label>
+          <label><input type="checkbox"><span><strong><span data-th>action ไปไหนและเกิดผลอะไร?</span><span data-en>Where does the action go and what changes?</span></strong><small><span data-th>destination/effect, persistence, receipt, recovery</span><span data-en>destination/effect, persistence, receipt, recovery</span></small></span></label>
+          <label><input type="checkbox"><span><strong><span data-th>ทดสอบกับคนและอุปกรณ์ใดแล้ว?</span><span data-en>Who and what has been tested?</span></strong><small><span data-th>Thai/English, keyboard, 320–390px, zoom, reduced motion</span><span data-en>Thai/English, keyboard, 320–390px, zoom, reduced motion</span></small></span></label>
+          <button class="btn js-only" id="copy-preflight" type="button"><span data-th>คัดลอก preflight สำหรับงานนี้</span><span data-en>Copy this preflight</span></button>
+          <p class="copy-status" id="copy-status" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="resources section-pad" id="resources" aria-labelledby="resources-title">
+      <div class="container">
+        <header class="section-heading split-heading">
+          <div>
+            <p class="eyebrow"><span data-th>Build from governed resources</span><span data-en>Build from governed resources</span></p>
+            <h2 id="resources-title"><span data-th>เริ่มจากไฟล์ที่บอกทั้งสิ่งที่ทำได้และสิ่งที่ยังทำไม่ได้</span><span data-en>Start with resources that name both capability and boundary.</span></h2>
+          </div>
+          <p><span data-th>ทุก resource ด้านล่างเป็นไฟล์จริงใน release นี้ ไม่ใช่ปุ่มตัวอย่าง และ vendored LDS package ถูกเก็บ byte-identical จาก upstream commit ที่ระบุ</span><span data-en>Every resource below is a real file in this release, and the vendored LDS package is byte-identical to the pinned upstream commit.</span></p>
+        </header>
+
+        <div class="resource-grid">
+          <a class="resource-card card" href="assets/downloads/citychat-product-experience-profile-v0.4.md" download>
+            <span class="status status--warning">DRAFT PROFILE</span>
+            <h3>CityChat Product Experience Profile v0.4</h3>
+            <p><span data-th>interaction, object, evidence, state, privacy และ release contract ฉบับเต็ม</span><span data-en>Full interaction, object, evidence, state, privacy, and release contract.</span></p>
+            <code>SHA f1964af7…</code>
+          </a>
+          <a class="resource-card card" href="assets/downloads/citychat-component-contracts.v0.4.json" download>
+            <span class="status status--assisted">MACHINE-READABLE</span>
+            <h3>Component + state contracts</h3>
+            <p><span data-th>typed truth, component cardinality, state machine และ canonical events</span><span data-en>Typed truth, component cardinality, state machines, and canonical events.</span></p>
+            <code>JSON · v0.4</code>
+          </a>
+          <a class="resource-card card" href="assets/downloads/citychat-build-card-template.yml" download>
+            <span class="status status--assisted">START HERE</span>
+            <h3>CityChat Build Card template</h3>
+            <p><span data-th>บังคับให้ตอบ profile, truth, trigger, privacy และ release boundary ก่อนเริ่ม UI</span><span data-en>Resolve profile, truth, triggers, privacy, and release boundary before UI work.</span></p>
+            <code>YAML</code>
+          </a>
+          <a class="resource-card card" href="assets/downloads/vibe-coding-prompt.md" download>
+            <span class="status status--info">VIBE CODING</span>
+            <h3>Prompt starter</h3>
+            <p><span data-th>prompt พร้อมช่องให้ใส่ intent, object, evidence, availability และ handoff จริง</span><span data-en>A prompt with slots for real intent, object, evidence, availability, and handoff.</span></p>
+            <code>Markdown</code>
+          </a>
+          <a class="resource-card card" href="resources/starter/index.html">
+            <span class="status status--info">RUNNABLE</span>
+            <h3>Minimal StoryCell starter</h3>
+            <p><span data-th>ตัวอย่าง static ที่ใช้ upstream token/primitive จริง และไม่จำลอง persistence</span><span data-en>A static example using real upstream tokens and primitives without simulated persistence.</span></p>
+            <code>HTML + CSS + Build Card</code>
+          </a>
+          <a class="resource-card card" href="vendor/landometer/v0.9.0/package.json">
+            <span class="status status--success">PINNED UPSTREAM</span>
+            <h3>Landometer machine package v0.9.0-mp1</h3>
+            <p><span data-th>build kit, profile, packs, schema และ SHA manifest จาก commit d82ac775…</span><span data-en>Build kit, profiles, packs, schemas, and SHA manifest from commit d82ac775…</span></p>
+            <code>143 checks · 0 package failures</code>
+          </a>
+        </div>
+
+        <div class="copy-prompt card">
+          <div>
+            <p class="technical meta">QUICK START</p>
+            <h3><span data-th>คัดลอกคำสั่งเริ่มงานสั้น ๆ</span><span data-en>Copy a short starting instruction</span></h3>
+            <p><span data-th>เวอร์ชันเต็มอยู่ใน Prompt starter และต้องแทนค่า bracket ทุกจุดก่อนใช้</span><span data-en>The full prompt is in Prompt starter; replace every bracketed value before use.</span></p>
+          </div>
+          <button class="btn js-only" id="copy-prompt" type="button"><span data-th>คัดลอก quick prompt</span><span data-en>Copy quick prompt</span></button>
+          <p class="copy-status" id="prompt-copy-status" role="status"></p>
+        </div>
+
+        <details class="release-details card">
+          <summary><span data-th>ดู authority, identity และ release boundary ของหน้านี้</span><span data-en>Inspect this page's authority, identity, and release boundary</span></summary>
+          <dl>
+            <div><dt>Page kind</dt><dd>design-identity-playground</dd></div>
+            <div><dt>LDS profile</dt><dd>designsystem.adoption</dd></div>
+            <div><dt>CityChat profile</dt><dd>v0.4 · draft_candidate · SHA f1964af7…</dd></div>
+            <div><dt>LDS package</dt><dd>v0.9.0-mp1 · color-srgb-05 · lds-kit-0.9.0-r4</dd></div>
+            <div><dt>Publication</dt><dd>public projection · page-level noindex request · source_limited; public files may still be indexed</dd></div>
+            <div><dt>Runtime effects</dt><dd>none · local fixture state and clipboard only</dd></div>
+            <div><dt>Header identity</dt><dd>user-supplied project lockup · exact hash in identity manifest</dd></div>
+            <div><dt>Favicon/social/touch</dt><dd>omitted · approval scope unresolved</dd></div>
+            <div><dt>Machine validation</dt><dd>pending for this artifact; upstream package consistency does not certify it</dd></div>
+          </dl>
+        </details>
+      </div>
+    </section>
+
+    <section class="closing scene-atmosphere scene-atmosphere--cultivate" aria-labelledby="closing-title">
+      <div class="container closing-grid">
+        <div>
+          <p class="eyebrow"><span data-th>Measure what matters. Make it actionable.</span><span data-en>Measure what matters. Make it actionable.</span></p>
+          <h2 id="closing-title"><span data-th>เริ่มจาก intent หนึ่งเรื่อง แล้วรักษาความจริงไว้จนถึง handoff</span><span data-en>Begin with one intent, then keep truth intact through handoff.</span></h2>
+        </div>
+        <a class="btn" href="#play"><span data-th>กลับไปลองอีกโหมด</span><span data-en>Try another mode</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="assets/identity/citychat-horizontal-lockup.png" width="190" height="41" alt="CityChat">
+        <p><span data-th>Design identity playground สำหรับทีม · ไม่ใช่ product runtime</span><span data-en>A team design identity playground · not a product runtime</span></p>
+      </div>
+      <dl>
+        <div><dt>Artifact</dt><dd>v0.4.0 · citychat-ui-20260822-01</dd></div>
+        <div><dt>Evidence</dt><dd>source_limited</dd></div>
+        <div><dt>Indexing</dt><dd>HTML entry points request noindex; public downloads and repository files may still be indexed</dd></div>
+        <div><dt>Updated</dt><dd>2026-08-22 · Asia/Bangkok</dd></div>
+      </dl>
+      <a href="https://github.com/montri-th/CityChat"><span data-th>เปิด source บน GitHub</span><span data-en>Open source on GitHub</span></a>
+    </div>
+  </footer>
+
+  <noscript>
+    <div class="noscript-note"><span>JavaScript is unavailable. The design guidance remains readable; theme, language, fixture switching, and copy actions are not operable.</span></div>
+  </noscript>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

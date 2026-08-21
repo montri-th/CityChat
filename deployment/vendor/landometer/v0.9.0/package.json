@@ -1,0 +1,370 @@
+{
+  "schemaVersion": "1.0",
+  "id": "landometer-design-system-machine-package",
+  "dsVersion": "0.9.0",
+  "packageRevision": "v0.9.0-mp1",
+  "generatedAtAuthoringRevision": "v0.9.0-r7",
+  "colorSetId": "color-srgb-05",
+  "artifactBuildId": "ui-20260821-05",
+  "kitVersion": "lds-kit-0.9.0-r4",
+  "manifestVersion": "2.1",
+  "tokenSchemaVersion": 6,
+  "generator": "tools/generate-machine-package.py",
+  "validator": "tools/validate-machine-package.mjs",
+  "validationReport": "validation-report.json",
+  "releaseLock": "skill/apply-landometer-design-system-v0-9-0/references/release-lock.json",
+  "sourceFingerprint": [
+    {
+      "path": "index.html",
+      "bytes": 994143,
+      "sha256": "09e616576c899cb2e69d9813ebaf333e61cf8a449d4fb1c6f4a8c655639108f5"
+    },
+    {
+      "path": "assets/downloads/landometer-design-system-v0.9.0.md",
+      "bytes": 416189,
+      "sha256": "52ef41f1b231f8b84955a40c21a018991a114a4f5eaabd8c5111816bf8d645b1"
+    },
+    {
+      "path": "assets/downloads/landometer-design-system-v0.8.9.md",
+      "bytes": 269767,
+      "sha256": "00d931254d21931952d29fdde7a00e2c3a5b4f875504a1bf72fee316bf5d4e68"
+    },
+    {
+      "path": "assets/data/color-delivery.v0.9.0.json",
+      "bytes": 18503,
+      "sha256": "aa6833b5286f6eb957925cb0c538c951d6822217fb83b051a71473ff2bdbd9c5"
+    },
+    {
+      "path": "assets/data/tokens.json",
+      "bytes": 9166,
+      "sha256": "00863492782b2fb1f93e6229f644fa0c092bde0e8c5d1093619c3120d73a71fc"
+    },
+    {
+      "path": "assets/data/scales.json",
+      "bytes": 36955,
+      "sha256": "daf8e5219f1da9229d7fb474fdaba3957f37c0cfe18eef7527e551c37d88d235"
+    },
+    {
+      "path": "font-assets.manifest.json",
+      "bytes": 2738,
+      "sha256": "d6c630bd4e03e3705a5d6f45fc54498f7c1bc96fe9a22210b8d0b8a0fedd6c18"
+    }
+  ],
+  "files": [
+    {
+      "path": "adapters/README.md",
+      "bytes": 368,
+      "sha256": "494793ee92fb14f0271a9b30cc7c09b7b7baac1b7f510176104f9c9a9af1e718"
+    },
+    {
+      "path": "build-card.schema.json",
+      "bytes": 7352,
+      "sha256": "bfc8962637b8ca5da738408513ddc2c94517675491dfbc0ea6991c4f98197610"
+    },
+    {
+      "path": "build-kit/lds-base.css",
+      "bytes": 10718,
+      "sha256": "47eb23f0b2a06bd6882080bcc693384f5d59791b434045e7281b98fa2831903c"
+    },
+    {
+      "path": "build-kit/lds-tokens.css",
+      "bytes": 11392,
+      "sha256": "aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323"
+    },
+    {
+      "path": "build-kit/skeleton.html",
+      "bytes": 5103,
+      "sha256": "bd6f1ad7fa4c7b2600587769131ec364bad36e951ac78bb057ec1fb748b26405"
+    },
+    {
+      "path": "color-delivery.json",
+      "bytes": 18503,
+      "sha256": "aa6833b5286f6eb957925cb0c538c951d6822217fb83b051a71473ff2bdbd9c5"
+    },
+    {
+      "path": "components.json",
+      "bytes": 2258,
+      "sha256": "90dcd37df9bcd12786c143ad53b1a4f78f607ca3fd22ab6b78ac2765f4b88246"
+    },
+    {
+      "path": "connector.schema.json",
+      "bytes": 1483,
+      "sha256": "d6d1e00426ef21a8870d2f842bd83f6acd2d24949703240984b28327918dce15"
+    },
+    {
+      "path": "core.md",
+      "bytes": 3639,
+      "sha256": "76f98de642926aa06d00211e690fa70353ccdc87faadcafc39842d9d6683b544"
+    },
+    {
+      "path": "fixtures.json",
+      "bytes": 4030,
+      "sha256": "9a12f5fa2184434fbcbcdf694864958d775c81d34bf02115cfa49528de771005"
+    },
+    {
+      "path": "font-assets.manifest.json",
+      "bytes": 2738,
+      "sha256": "d6c630bd4e03e3705a5d6f45fc54498f7c1bc96fe9a22210b8d0b8a0fedd6c18"
+    },
+    {
+      "path": "growth.schema.json",
+      "bytes": 2385,
+      "sha256": "4abc0892f8bd3aaab03e2ac984be8f43197b7a3fecb0d0a3d9e3dee5dd6828e8"
+    },
+    {
+      "path": "identity-approvals.manifest.json",
+      "bytes": 2408,
+      "sha256": "4d9864b05fc3b95bc76e6c986aff69444245a843509d5c7cdf481719a95e7ea1"
+    },
+    {
+      "path": "manifest.schema.json",
+      "bytes": 4056,
+      "sha256": "bb2ec38a62161dab4e322b11ec7a3de00756e048545c2ee11174a207993ccf0f"
+    },
+    {
+      "path": "media-assets.manifest.json",
+      "bytes": 1990,
+      "sha256": "3080c3870e995032ac0ecc74e6a9824009f97b37e32696174711fb82e9d0a6e9"
+    },
+    {
+      "path": "packs/ABUSE-INTEGRITY-01.json",
+      "bytes": 474,
+      "sha256": "df70c3d4c799fd238a89f70cdc1c6fcb652646f6c959adb19eac14d51a5c126f"
+    },
+    {
+      "path": "packs/AGENT-OUT-01.json",
+      "bytes": 485,
+      "sha256": "09d496333abb24b50e52b2c5f68c453ae1e383320159891ead9f9e86757f011e"
+    },
+    {
+      "path": "packs/AUTH-01.json",
+      "bytes": 463,
+      "sha256": "baf7cd03cc0e01e3bf6123a1b51941aae84c3b8a7021c6a6a3c68cb90fad243e"
+    },
+    {
+      "path": "packs/COCREATE-01.json",
+      "bytes": 452,
+      "sha256": "cd49fd7e09cd8e1a88d270e7ac8ea9ad35d11d8f675c4be4ded0bd387dc182df"
+    },
+    {
+      "path": "packs/CONTEXT-01.json",
+      "bytes": 456,
+      "sha256": "11a709a9abd4bd78560de14cc6285a4876607ce3cd62f780c03c3e65a7805b75"
+    },
+    {
+      "path": "packs/DATA-01.json",
+      "bytes": 456,
+      "sha256": "2b095d5f30894f6b87d35304a5e688c0a59d41d066f32574c958e9bcd4220cc9"
+    },
+    {
+      "path": "packs/DATAVIZ-01.json",
+      "bytes": 457,
+      "sha256": "f0638d07e369eec14342d3f0305f7d4cb743006755f707190f536d4f78eebc25"
+    },
+    {
+      "path": "packs/DELIVERY-01.json",
+      "bytes": 471,
+      "sha256": "23fd099490ea17bf05e923930863b140b140900bfe8c894def9b51fe495848d2"
+    },
+    {
+      "path": "packs/EFFECT-01.json",
+      "bytes": 481,
+      "sha256": "d1de4b609eff575461f79d0f0203035e93c63fb3960bac0450f4dbbf0d25c9a9"
+    },
+    {
+      "path": "packs/HOOK-01.json",
+      "bytes": 496,
+      "sha256": "1b37937804fefcbd15c68a56e06da784898c0aa908253d080d6a251070a87ceb"
+    },
+    {
+      "path": "packs/INTERNAL-SEARCH-01.json",
+      "bytes": 472,
+      "sha256": "1b37c525ac8382fd9aa8adc1bc20a7f9439e72726f7e1265fe268890e03db153"
+    },
+    {
+      "path": "packs/LEARN-01.json",
+      "bytes": 510,
+      "sha256": "b41c07be06bce36c6267f844a0d24c235e7b6e80b66e939dfc713702bf5d96d4"
+    },
+    {
+      "path": "packs/MAP-01.json",
+      "bytes": 424,
+      "sha256": "5e1e47a5fafbddc54ada092bda874256e67a83d7eb1df1b6340a63422c61d380"
+    },
+    {
+      "path": "packs/PUB-01.json",
+      "bytes": 481,
+      "sha256": "6cbf91793564a69a975c619f8010687af155922019e5fc35e02d29b86b70d554"
+    },
+    {
+      "path": "packs/REFERENCE-01.json",
+      "bytes": 479,
+      "sha256": "2b10107e2b21a2df4e3629c8c4484d0e5c62727ec7f6d197b024462b8018926e"
+    },
+    {
+      "path": "packs/SHARE-01.json",
+      "bytes": 484,
+      "sha256": "c9503aa3771db31674390e3a05993f3164e9509efb798215b7b9ea3b02b6f2c0"
+    },
+    {
+      "path": "packs/TELEMETRY-01.json",
+      "bytes": 446,
+      "sha256": "e7e62c86180d2ebbf8e90f31f93bda18dd39fd2566d8abba9c7845f85a860643"
+    },
+    {
+      "path": "packs/TOOL-HANDOFF-01.json",
+      "bytes": 466,
+      "sha256": "808365b9ac9d4d3944d82a84c1a0ec0698d57e84b8a50c9aa2c0ee4888f77ff6"
+    },
+    {
+      "path": "packs/WEB-DISCOVERY-01.json",
+      "bytes": 487,
+      "sha256": "598374820086b1e8f00f2829f7045a553d0a469699023f3245aeb11a68196585"
+    },
+    {
+      "path": "packs/XPRODUCT-01.json",
+      "bytes": 469,
+      "sha256": "cd4887f6e7820e323a1abd048fbc3d0f114962997db1ae9a985b6c31419ac1bb"
+    },
+    {
+      "path": "page-kinds.json",
+      "bytes": 1990,
+      "sha256": "2ccc49f7207720de4a614c54ff9644818d938f3cabe177db07a066a4a4219fe0"
+    },
+    {
+      "path": "preflight.yml",
+      "bytes": 5290,
+      "sha256": "363b5182e69e92ea33f2788c7da39dbbff8bd23936dd5098d36efd56d10eaf19"
+    },
+    {
+      "path": "profiles/brand.public.json",
+      "bytes": 1051,
+      "sha256": "690c7c8c276186a1c4878586a4f84f9bdd4902922852bfc9c06780f9a94b7e7d"
+    },
+    {
+      "path": "profiles/campaign.public.json",
+      "bytes": 899,
+      "sha256": "1113994d41431ae896a6da325c941b511dc750fde636f65d8957e709f76a9dff"
+    },
+    {
+      "path": "profiles/citychat.app.json",
+      "bytes": 944,
+      "sha256": "5f2fa8aae51f33483fe309f50d793b3e4943d6e5d2c4aa2512cc90b80cbce340"
+    },
+    {
+      "path": "profiles/citymeter.dataset.json",
+      "bytes": 976,
+      "sha256": "b815d1be8877c516f55b1d36bb9ac80e9ac8aa5ae86fee5075d6bca503718520"
+    },
+    {
+      "path": "profiles/citywiki.public.json",
+      "bytes": 896,
+      "sha256": "7ee784b33b247d4e2034dd77e0af47690ac14186eea81723ecff669d1de27032"
+    },
+    {
+      "path": "profiles/data.explainer.json",
+      "bytes": 877,
+      "sha256": "6a88a5b1588a44020c1c6aa11980e159dfe0ca0c04f340f44fbfbe3fa266cd55"
+    },
+    {
+      "path": "profiles/designsystem.adoption.json",
+      "bytes": 926,
+      "sha256": "203644fc1e7f8babbca9ee3307a5dce5de7cd36f9636d0e37fb767a6e6c8fa10"
+    },
+    {
+      "path": "profiles/ijji.app.json",
+      "bytes": 931,
+      "sha256": "fd51b739c09e96038e1d60eccd98c397e1ecc8d3e3af9fcc64cf066f34bc6024"
+    },
+    {
+      "path": "profiles/presentation.json",
+      "bytes": 857,
+      "sha256": "bedf3a3ac715e0699458afddffa87f1a56b5365e00f2a17ea703593b8bb1980f"
+    },
+    {
+      "path": "profiles/product.app.json",
+      "bytes": 865,
+      "sha256": "eee4f2382f5b557dd1a66056600267cd598ffba7cb8ece8f1836f1aae1ff4097"
+    },
+    {
+      "path": "profiles/social.static.json",
+      "bytes": 901,
+      "sha256": "fdc8323dda8d89dd4cb2b1ccbc904186b0bfd1f46f629ec87860f5a422885ee7"
+    },
+    {
+      "path": "self-check.map.json",
+      "bytes": 8342,
+      "sha256": "a6e95792126079da59cfb6b0670f0d08845491972779ccd8571f524aa9a963f6"
+    },
+    {
+      "path": "social-previews.schema.json",
+      "bytes": 1124,
+      "sha256": "ed28ea2b9027d020f10cf7743c9e712b42c23273cdaf18f103c3672b02fe6e09"
+    },
+    {
+      "path": "surface-recipes.json",
+      "bytes": 2455,
+      "sha256": "9e849896c0fa49411e226bfa7ca094d939e7e36cbd31e67cd0a76c44f0027d92"
+    },
+    {
+      "path": "thai-voice-fixtures-v0.8.7.json",
+      "bytes": 472,
+      "sha256": "3dacec32f554b11a9f69f0176ee6ee10751b5163edda5b73fda6e52a75f3a3c4"
+    },
+    {
+      "path": "tokens.css",
+      "bytes": 8248,
+      "sha256": "f37ae631d3d35afa01c222feee461357c305cbde6da52a220c43e4a8b5cc1d13"
+    },
+    {
+      "path": "tokens.json",
+      "bytes": 10749,
+      "sha256": "5afa9a93bafa8f2e5edb7e929d4924bc548a415098377ad53e18097c56980287"
+    },
+    {
+      "path": "tokens.ts",
+      "bytes": 9490,
+      "sha256": "6c5edd06aadb7ddf0c951e275dfa472a973ff6f406dff9e2dac753bad2b8323a"
+    },
+    {
+      "path": "v0.8.5-to-v0.8.6-rule-ledger.json",
+      "bytes": 323,
+      "sha256": "09c89496cb0bdd82f4b5dfcf8f5f75f6c339e488da698622f514806199ecdb86"
+    },
+    {
+      "path": "v0.8.6-to-v0.8.7-rule-ledger.json",
+      "bytes": 323,
+      "sha256": "7a46f21ca264655bbd6fcf8163908083c0d6ac27fab312aaa983e0440d02002d"
+    },
+    {
+      "path": "v0.8.7-to-v0.8.9-rule-ledger.json",
+      "bytes": 323,
+      "sha256": "f7e95fa54b53ce0798d03596ff2c1de91236fcfa78f3358a88758d01cf661b02"
+    },
+    {
+      "path": "v0.8.9-to-v0.9.0-rule-ledger.json",
+      "bytes": 15469,
+      "sha256": "304fea250c6b41a5ec1720e5312f1ad5a13e09e9fb1bb3b29b3fe1cdf4a90a93"
+    },
+    {
+      "path": "voice-recipes.md",
+      "bytes": 10152,
+      "sha256": "0cd05189a7bad55dc6c38a6d27f263d157d1d94ed2967082de832aac3e115747"
+    },
+    {
+      "path": "web-discovery.schema.json",
+      "bytes": 1372,
+      "sha256": "cffdfd710fe912a77b731a9650a7ae0e5f7ba7d8750aa28c5f369cc5a693f60a"
+    }
+  ],
+  "boundaries": [
+    "Public-safe: excludes logo, photograph, poster, font, PDF, and other protected source binaries; identity/media/font manifests record exact hashes and use boundaries instead.",
+    "Package-level validation means the specification, schemas, mappings, fixtures, approvals, and hashes are internally consistent — it never certifies a downstream artifact's production QA.",
+    "A downstream artifact begins at machineValidation: pending and earns passed only from its own applicable generated preflight and manual evidence.",
+    "Historical rule ledgers before v0.8.9->v0.9.0 and the v0.8.7 Thai voice fixtures are preserved as boundary records; their sources are frozen in their own package versions outside this repository."
+  ],
+  "openItems": [
+    "machineValidation for the shipped playground remains pending: manual gates in qa/v0.9.0-manual-gates.md are open.",
+    "Formal identity/media approvals beyond the recorded assets remain approval_missing."
+  ]
+}

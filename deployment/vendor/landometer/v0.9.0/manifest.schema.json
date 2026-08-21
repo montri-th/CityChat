@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/Landometer/machine/v0.9.0/manifest.schema.json",
+  "title": "Landometer Site Manifest 2.1",
+  "description": "Validates the shipped Manifest 2.1 instance. manifest.html.match fields (preflight.yml) must additionally agree with the rendered DOM; that parity is enforced by generated preflight and verify-live, not by this schema alone.",
+  "type": "object",
+  "properties": {
+    "artifact": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "const": "0.9.0"
+        },
+        "buildCardVersion": {
+          "const": "0.9.0"
+        },
+        "manifestVersion": {
+          "const": "2.1"
+        },
+        "tokenSchemaVersion": {
+          "const": 6
+        },
+        "product": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "string"
+        },
+        "pageKind": {
+          "type": "string"
+        },
+        "pageKindSourceRef": {
+          "type": "string"
+        },
+        "delivery": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "evidenceStatus": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "string"
+        },
+        "indexable": {
+          "type": "boolean"
+        },
+        "canonicalUrl": {
+          "type": "string"
+        },
+        "machineValidation": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "passed",
+            "failed"
+          ]
+        },
+        "artifactBuildId": {
+          "type": "string",
+          "pattern": "^ui-\\d{8}-\\d{2}$"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "buildCardVersion",
+        "manifestVersion",
+        "tokenSchemaVersion",
+        "product",
+        "profile",
+        "pageKind",
+        "delivery",
+        "language",
+        "evidenceStatus",
+        "visibility",
+        "indexable",
+        "canonicalUrl",
+        "machineValidation",
+        "artifactBuildId"
+      ]
+    },
+    "colorDelivery": {
+      "type": "object",
+      "properties": {
+        "registryId": {
+          "type": "string",
+          "pattern": "^color-srgb-\\d{2}$"
+        },
+        "immutableColorBaseline": {
+          "type": "object"
+        },
+        "currentArtifactBuild": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "registryId",
+        "immutableColorBaseline",
+        "currentArtifactBuild"
+      ]
+    },
+    "experience": {
+      "type": "object"
+    },
+    "composition": {
+      "type": "object",
+      "properties": {
+        "connectors": {
+          "type": "array"
+        }
+      }
+    },
+    "capabilities": {
+      "type": "object"
+    },
+    "network": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode"
+      ]
+    },
+    "identity": {
+      "type": "object"
+    },
+    "fixtureCapabilities": {
+      "type": "object"
+    },
+    "governedObject": {
+      "type": "object"
+    },
+    "referenceFixtures": {
+      "type": "array"
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "path"
+        ]
+      }
+    },
+    "publication": {
+      "type": "object"
+    },
+    "qa": {
+      "type": "object"
+    },
+    "selfCheck": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "artifact",
+    "colorDelivery",
+    "experience",
+    "composition",
+    "capabilities",
+    "network",
+    "identity",
+    "governedObject",
+    "assets",
+    "publication",
+    "qa",
+    "selfCheck"
+  ]
+}

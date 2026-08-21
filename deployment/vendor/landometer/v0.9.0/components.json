@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "version": "0.8.6",
+    "sourceRule": "CTRL-02",
+    "machineValidation": "pending"
+  },
+  "components": [
+    {
+      "id": "BrandSignature",
+      "contract": [
+        "approved asset",
+        "intrinsic ratio",
+        "no redraw/recolor/animation"
+      ]
+    },
+    {
+      "id": "Button",
+      "contract": [
+        "native button",
+        "intent label",
+        "visible focus",
+        "busy/disabled state",
+        "44px target"
+      ]
+    },
+    {
+      "id": "Link",
+      "contract": [
+        "real destination",
+        "clear label",
+        "visible focus",
+        "external cue when useful"
+      ]
+    },
+    {
+      "id": "FormField",
+      "contract": [
+        "label",
+        "help",
+        "associated error",
+        "retained input",
+        "recovery"
+      ]
+    },
+    {
+      "id": "DecisionCard",
+      "contract": [
+        "object",
+        "metric/status",
+        "meaning",
+        "evidence",
+        "one action"
+      ]
+    },
+    {
+      "id": "SourceLedger",
+      "contract": [
+        "source",
+        "publisher",
+        "date",
+        "supported claim",
+        "limitation"
+      ]
+    },
+    {
+      "id": "TrustBadge",
+      "contract": [
+        "visible status matches publication and index policy"
+      ]
+    },
+    {
+      "id": "DataTable",
+      "contract": [
+        "caption",
+        "headers",
+        "numeric alignment",
+        "mobile strategy"
+      ]
+    },
+    {
+      "id": "MapLegend",
+      "contract": [
+        "layer",
+        "method",
+        "units/classes",
+        "no-data",
+        "source/date",
+        "limitation"
+      ]
+    },
+    {
+      "id": "EmptyState",
+      "contract": [
+        "what is unavailable",
+        "why",
+        "honest next action"
+      ]
+    },
+    {
+      "id": "ErrorState",
+      "contract": [
+        "what failed",
+        "preserved state",
+        "retry or alternative"
+      ]
+    },
+    {
+      "id": "Dialog",
+      "contract": [
+        "name",
+        "visible close",
+        "focus containment/return",
+        "Escape",
+        "inert background"
+      ]
+    },
+    {
+      "id": "Toast",
+      "contract": [
+        "non-blocking status only",
+        "never sole critical message"
+      ]
+    }
+  ]
+}

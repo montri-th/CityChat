@@ -1,0 +1,106 @@
+<!doctype html>
+<html
+  lang="th"
+  data-ds="landometer"
+  data-ds-version="0.9.0"
+  data-build-card-version="0.9.0"
+  data-manifest-version="2.1"
+  data-token-schema-version="6"
+  data-ds-profile="[profile]"
+  data-delivery-mode="[delivery]"
+  data-evidence-status="[verified|provisional|source_limited]"
+  data-visibility="[public|internal|private]"
+  data-indexable="[true|false]"
+  data-theme="light"
+  data-theme-preference="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Theme init [THEME-01]: inline, before any stylesheet; stored explicit choice → system -->
+  <script>
+  (function () {
+    var K = "lds-theme", t = null, root = document.documentElement;
+    try { t = localStorage.getItem(K); } catch (e) {}
+    var mode = (t === "light" || t === "dark") ? t : "system";
+    var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+    function resolve(m) { return (m === "dark" || (m === "system" && mq && mq.matches)) ? "dark" : "light"; }
+    root.setAttribute("data-theme", resolve(mode));
+    root.setAttribute("data-theme-preference", mode);
+    if (mq && mq.addEventListener) { mq.addEventListener("change", function () {
+      if (root.getAttribute("data-theme-preference") === "system") { root.setAttribute("data-theme", resolve("system")); }
+    }); }
+  })();
+  </script>
+
+  <title>[Object/place/decision — truthful title, not a slogan]</title>
+  <meta name="description" content="[truthful description naming the object]">
+
+  <!-- Release receipt [PUB-01] §9.4 — values from the validated Build Card -->
+  <meta name="landometer:ds-version" content="0.9.0">
+  <meta name="landometer:color-set" content="color-srgb-03">
+  <meta name="landometer:artifact-build" content="[artifact-build-id]">
+  <meta name="landometer:release-receipt" content="[receipt-id]">
+
+  <!-- Mirrors surface.canvas exactly (sanctioned hex outside the token block) -->
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F6F7F3">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#11191D">
+
+  <!-- Public indexable pages only [WEB-DISCOVERY-01] [PUB-01] -->
+  <link rel="canonical" href="[absolute-https-url]">
+  <meta name="robots" content="[index,follow | noindex,nofollow]">
+  <meta property="og:site_name" content="Landometer">
+  <meta property="og:type" content="[website|article]">
+  <meta property="og:title" content="[matches the visible title]">
+  <meta property="og:description" content="[matches visible content]">
+  <meta property="og:url" content="[canonical]">
+  <meta property="og:image" content="[socialPreview asset URL — permission-complete, destination-tested]">
+  <meta property="og:image:alt" content="[what the preview image actually shows]">
+  <meta property="og:locale" content="th_TH">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- JSON-LD: honest type only; must match visible content exactly [WEB-DISCOVERY-01]
+  <script type="application/ld+json">{ "[...]": "[...]" }</script>
+  -->
+
+  <!-- Per-page identity truth [LOGO-SURFACE-01] [PUB-01]: the OWNING product/surface's
+       approved assets from identity-delivery records; if no approved compact asset
+       exists, omit and record the blocker — never improvise one -->
+  <link rel="icon" href="[approved-asset-stable-url]" sizes="[declared]">
+  <link rel="apple-touch-icon" href="[approved-touch-asset-url]">
+
+  <!-- Fonts [TYPE-01] A11 — six-face self-hosted delivery REQUIRED; files and hashes
+       from font-assets.manifest.json; a remote font host is never the critical source -->
+  <style id="lds-fonts">
+    /* @font-face: Arvo 700 · IBM Plex Sans Thai Looped 700 · Bai Jamjuree 400 + 600
+       · JetBrains Mono 400 · IBM Plex Sans Thai 400
+       · Material Symbols Rounded (variable, subset to used glyphs) [ICON-01] */
+  </style>
+
+  <style id="lds-tokens">
+    /* E1 lds-tokens.css — verbatim */
+  </style>
+  <style id="lds-base">
+    /* E2 lds-base.css — verbatim */
+  </style>
+  <style id="build-local">
+    /* build-specific styles only: var() derivations, no new hex, no !important;
+       one layer, expires per [DELIVERY-01] lifecycle */
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">ข้ามไปเนื้อหาหลัก</a>
+  <header class="container">
+    <!-- [FLOW-05]: approved logo asset + ≤4 desktop / ≤2 mobile visible controls;
+         theme + locale inside one labelled menu; every control .btn or .btn-icon -->
+  </header>
+  <main id="main" class="container">
+    <h1>[the page's one job or its one protected line]</h1>
+    <!-- First viewport per [FLOW-03] · scenes per the [SURFACE-01] scene table ·
+         quiet region marked data-quiet-field (QA only, no styling) -->
+  </main>
+  <footer class="container">
+    <p class="technical">[product] · Landometer DS 0.9.0 · color-srgb-03 · build [artifact-build-id] · <a href="[canonical]">exact link</a></p>
+  </footer>
+  <!-- Embedded or adjacent manifest per §9.4, including selfCheck results -->
+</body>
+</html>

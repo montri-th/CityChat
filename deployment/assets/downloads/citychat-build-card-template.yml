@@ -1,0 +1,52 @@
+citychatBuild:
+  artifact:
+    name: required
+    product: citychat
+    artifactBuildId: required
+    pageKind: required_from_owning_registry
+    profile: exactly_one_lds_profile
+    oneJob: required
+    delivery: required
+    language: required
+  publication:
+    visibility: public | internal | private
+    indexable: true | false
+    evidenceStatus: verified | provisional | source_limited
+    machineValidation: pending | passed | failed
+  landometerFoundation:
+    dsVersion: 0.9.0
+    authoringRevision: v0.9.0-r7
+    machinePackage: v0.9.0-mp1
+    colorSetId: derive_from_validated_package
+    kitVersion: derive_from_validated_package
+    upstreamCommit: pin_exact_commit
+  citychatAuthority:
+    profilePath: pin_exact_profile
+    profileSha256: pin_exact_hash
+    productAuthority: approved_truth | draft_truth | proposed | candidate | out_of_scope
+    capabilityEvidenceStatus: observed | release_proven | source_limited | not_evidenced | unresolved
+    deliveryAvailability: not_designed | designed | implemented | pilot | accepted | unresolved
+  capabilityTriggers:
+    data: false
+    map: false
+    effect: false
+    auth: false
+    share: false
+    coCreate: false
+    telemetry: false
+    hook: false
+  firstAha:
+    target: required_from_selected_profile
+    maximumEssentialInputs: required_from_selected_profile
+    primaryActionOrCleanCompletion: required
+  privacy:
+    visibility: public | internal | private
+    sensitivity: public | internal | confidential | restricted
+    purpose: required
+    retention: required
+    analytics: true | false
+  releaseBoundary:
+    targetDoesNotMeanShipped: true
+    fixturesAreConceptual: true
+    manualVisualGates: open | passed
+    nativeDeviceGate: open | passed

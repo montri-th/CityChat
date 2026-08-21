@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260822-01",
+  "scope": "source and contract validation; not native-device or product-runtime certification",
+  "totals": {
+    "checks": 49,
+    "failures": 0
+  },
+  "result": "passed",
+  "checks": [
+    {
+      "name": "html:one-h1",
+      "ok": true
+    },
+    {
+      "name": "html:skip-link",
+      "ok": true
+    },
+    {
+      "name": "publication:noindex-in-initial-html",
+      "ok": true
+    },
+    {
+      "name": "publication:canonical",
+      "ok": true
+    },
+    {
+      "name": "identity:no-unapproved-public-discovery-assets",
+      "ok": true
+    },
+    {
+      "name": "truth:visible-source-limited-boundary",
+      "ok": true
+    },
+    {
+      "name": "fixture:synthetic-object-labelled",
+      "ok": true
+    },
+    {
+      "name": "rejected:livepulse-is-labelled-teaching-only",
+      "ok": true
+    },
+    {
+      "name": "rejected:optimistic-receipt-is-labelled-teaching-only",
+      "ok": true
+    },
+    {
+      "name": "truth:no-rejected-pattern-in-runtime-layer",
+      "ok": true
+    },
+    {
+      "name": "locale:thai-english-content-present",
+      "ok": true
+    },
+    {
+      "name": "html:no-duplicate-ids",
+      "ok": true
+    },
+    {
+      "name": "css:no-build-local-raw-hex",
+      "ok": true
+    },
+    {
+      "name": "css:no-build-local-important",
+      "ok": true
+    },
+    {
+      "name": "css:product-gradient-not-used-as-data-signal",
+      "ok": true
+    },
+    {
+      "name": "css:semantic-token-composition",
+      "ok": true
+    },
+    {
+      "name": "motion:reduced-motion",
+      "ok": true
+    },
+    {
+      "name": "responsive:narrow-layout",
+      "ok": true
+    },
+    {
+      "name": "runtime:no-background-network-or-analytics",
+      "ok": true
+    },
+    {
+      "name": "runtime:local-fixture-boundary",
+      "ok": true
+    },
+    {
+      "name": "a11y:tab-keyboard-contract",
+      "ok": true
+    },
+    {
+      "name": "effect:clipboard-fallback",
+      "ok": true
+    },
+    {
+      "name": "html:local-references-exist",
+      "ok": true
+    },
+    {
+      "name": "delivery:project-relative-paths",
+      "ok": true
+    },
+    {
+      "name": "json:all-parse",
+      "ok": true
+    },
+    {
+      "name": "source:citychat-profile-hash",
+      "ok": true
+    },
+    {
+      "name": "source:claim-ladder-candidate",
+      "ok": true
+    },
+    {
+      "name": "source:trigger-security-contract",
+      "ok": true
+    },
+    {
+      "name": "source:canonical-cityscan-event-map",
+      "ok": true
+    },
+    {
+      "name": "identity:horizontal_lockup_png:bytes-and-hash",
+      "ok": true
+    },
+    {
+      "name": "identity:symbol_source:bytes-and-hash",
+      "ok": true
+    },
+    {
+      "name": "identity:horizontal_lockup_svg_source:bytes-and-hash",
+      "ok": true
+    },
+    {
+      "name": "identity:favicon-omission-recorded",
+      "ok": true
+    },
+    {
+      "name": "vendor:package-revision",
+      "ok": true
+    },
+    {
+      "name": "vendor:color-set",
+      "ok": true
+    },
+    {
+      "name": "vendor:upstream-artifact-build",
+      "ok": true
+    },
+    {
+      "name": "vendor:package-file-hashes",
+      "ok": true
+    },
+    {
+      "name": "vendor:recorded-package-validation",
+      "ok": true
+    },
+    {
+      "name": "vendor:validation-boundary",
+      "ok": true
+    },
+    {
+      "name": "build-card:one-profile",
+      "ok": true
+    },
+    {
+      "name": "build-card:publication-truth",
+      "ok": true
+    },
+    {
+      "name": "build-card:no-remote-effect",
+      "ok": true
+    },
+    {
+      "name": "controls:inventory-resolves",
+      "ok": true
+    },
+    {
+      "name": "controls:no-remote-effects",
+      "ok": true
+    },
+    {
+      "name": "manifest:artifact-build",
+      "ok": true
+    },
+    {
+      "name": "manifest:profile",
+      "ok": true
+    },
+    {
+      "name": "manifest:publication-truth",
+      "ok": true
+    },
+    {
+      "name": "manifest:honest-machine-validation",
+      "ok": true
+    },
+    {
+      "name": "privacy:no-personal-absolute-paths",
+      "ok": true
+    }
+  ],
+  "openManualGateRef": "manual-gates.v0.4.md"
+}

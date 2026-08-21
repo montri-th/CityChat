@@ -1,0 +1,195 @@
+{
+  "meta": {
+    "designSystem": "Landometer",
+    "version": "0.8.6",
+    "profile": "designsystem.adoption",
+    "effect": "none"
+  },
+  "referenceFixtures": [
+    {
+      "id": "reward-before-request",
+      "packs": [
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": true,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "decision-quality",
+      "packs": [
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": true,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "private-by-default",
+      "packs": [
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": true,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "relevant-circle-coordination",
+      "packs": [
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": true,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "recovery-completeness",
+      "packs": [
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": true,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "cta-integrity",
+      "packs": [
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": true,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "transparent-learning",
+      "packs": [
+        "LEARN-01",
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": false,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "voluntary-investment",
+      "packs": [
+        "LEARN-01",
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": false,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "hook-without-dark-patterns",
+      "packs": [
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": false,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "cross-team-handoff",
+      "packs": [
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "local_reference_state"
+      ],
+      "baselineAssisted": false,
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "scale-lab",
+      "packs": [
+        "DATAVIZ-01",
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "dataVisualization"
+      ],
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "map-lab",
+      "packs": [
+        "MAP-01",
+        "DATAVIZ-01",
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "map",
+        "dataVisualization"
+      ],
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "typography-lab",
+      "packs": [
+        "TYPE-01",
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "typography"
+      ],
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "motion-lab",
+      "packs": [
+        "MOTION-01",
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "motionEnhancement"
+      ],
+      "localStateOnly": true,
+      "effect": "none"
+    },
+    {
+      "id": "state-lab",
+      "packs": [
+        "STATE-01",
+        "CTRL-02",
+        "REFERENCE-01"
+      ],
+      "demonstratedCapabilities": [
+        "component_states"
+      ],
+      "localStateOnly": true,
+      "effect": "none"
+    }
+  ]
+}

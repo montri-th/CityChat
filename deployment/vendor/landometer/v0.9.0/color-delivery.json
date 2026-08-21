@@ -1,0 +1,654 @@
+{
+  "meta": {
+    "id": "color-srgb-05",
+    "designSystemVersion": "0.9.0",
+    "authoringRevision": "v0.9.0-r7",
+    "status": "owner_approved_authoring_contract_package_validation_pending",
+    "createdAt": "2026-08-21",
+    "immutableColorBaseline": "landometer-design-system-v0.9.0-standalone.color-srgb-05.html",
+    "currentArtifactBuild": {
+      "id": "ui-20260821-05",
+      "immutableStandalone": "landometer-design-system-v0.9.0-standalone.color-srgb-05.ui-20260821-05.html"
+    },
+    "latestAliases": [
+      "index.html",
+      "landometer-design-system-v0.9.0-standalone.html"
+    ],
+    "supersedes": "color-srgb-04 (immutable v0.9.0 colour baseline; every colour, gradient, and analytical scale value byte-identical in color-srgb-05)",
+    "changeNote": "2026-08-21 rise refinement of the [REVEAL-01] entrance: motion token values durationReveal 400->640ms, delayStagger 60->120ms, delayStaggerCap 240->600ms, distanceReveal 12->20px. Token source changed, so the registry identity rule mints a new Color Set ID; zero colour values change.",
+    "approvalRef": "normative-patches/landometer-design-system-v0.9.0-reveal-rise.approval.yml",
+    "amendedAt": "2026-08-21",
+    "amendmentRecord": "normative-patches/landometer-design-system-v0.9.0-product-identity-gradients.approval.yml",
+    "previousColorSet": {
+      "id": "color-srgb-04",
+      "frozenRegistryEvidence": "assets/data/color-delivery.v0.9.0.color-srgb-04.json"
+    },
+    "previousArtifactBuild": {
+      "id": "ui-20260821-02",
+      "immutableStandalone": "landometer-design-system-v0.9.0-standalone.color-srgb-04.ui-20260821-02.html",
+      "status": "immutable evidence"
+    }
+  },
+  "delivery": {
+    "range": "SDR",
+    "colorSpace": "sRGB IEC 61966-2-1",
+    "cssEncoding": "exact six-digit sRGB hex plus declared-alpha sRGB rgba",
+    "gradientRegistrySchema": "landometer-atmosphere-gradient-v2",
+    "gradientInterpolation": "explicit in srgb when supported; exact legacy sRGB-compatible syntax retained as fallback",
+    "defaultGradientAngle": "135deg",
+    "comparisonThemes": [
+      "light",
+      "dark"
+    ],
+    "adaptiveTheme": "system is a user preference, not a visual-baseline state"
+  },
+  "gradientRegistry": {
+    "schema": "landometer-atmosphere-gradient-v2",
+    "scope": "shared_atmosphere_only",
+    "runtimeGeneration": "prohibited",
+    "newValuesSolidUse": "prohibited"
+  },
+  "sources": {
+    "authoringMaster": {
+      "path": "assets/downloads/landometer-design-system-v0.9.0.md",
+      "revision": "v0.9.0-r1",
+      "bytes": 416189,
+      "sha256": "52ef41f1b231f8b84955a40c21a018991a114a4f5eaabd8c5111816bf8d645b1"
+    },
+    "tokenRegistry": {
+      "path": "assets/data/tokens.json",
+      "carriedVersion": "0.9.0",
+      "sha256": "00863492782b2fb1f93e6229f644fa0c092bde0e8c5d1093619c3120d73a71fc"
+    },
+    "scaleRegistry": {
+      "path": "assets/data/scales.json",
+      "carriedVersion": "0.9.0",
+      "sha256": "daf8e5219f1da9229d7fb474fdaba3957f37c0cfe18eef7527e551c37d88d235"
+    }
+  },
+  "artifactBuilds": [
+    {
+      "id": "color-baseline-20260820",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-03.html",
+      "role": "immutable_color_baseline",
+      "colorRegistryId": "color-srgb-03",
+      "bytes": 2129389,
+      "sha256": "88a65d8678dcf8a08b2c942bfc0298a53a14c09c4cf697c600d6d029c6367020",
+      "status": "append_only",
+      "mintedWithArtifactBuild": "ui-20260820-01"
+    },
+    {
+      "id": "ui-20260820-01",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-03.ui-20260820-01.html",
+      "role": "immutable_ui_build",
+      "colorRegistryId": "color-srgb-03",
+      "bytes": 2129394,
+      "sha256": "db186208abddfebf8957f4f8b2373f4c4fcf2ccfcd3c7201aa94145b6e661202",
+      "status": "append_only"
+    },
+    {
+      "id": "color-baseline-20260820-02",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-04.html",
+      "role": "immutable_color_baseline",
+      "colorRegistryId": "color-srgb-04",
+      "status": "append_only",
+      "bytes": 2129858,
+      "sha256": "65b906252ad3be19b7282a121d7b955c375472766ddda177af8875fb7a968b01",
+      "mintedWithArtifactBuild": "ui-20260820-02"
+    },
+    {
+      "id": "ui-20260820-02",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-04.ui-20260820-02.html",
+      "role": "immutable_ui_build",
+      "colorRegistryId": "color-srgb-04",
+      "status": "append_only",
+      "bytes": 2129863,
+      "sha256": "c0694ea314e7d6ab5536845006bb2457412c1a7aad183bfdfb7a429ec2d2f67f"
+    },
+    {
+      "id": "ui-20260821-01",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-04.ui-20260821-01.html",
+      "role": "immutable_ui_build",
+      "colorRegistryId": "color-srgb-04",
+      "status": "append_only",
+      "supersedes": "ui-20260820-02",
+      "changeClass": "ui_only; Color Set color-srgb-04 unchanged",
+      "bytes": 2134749,
+      "sha256": "93bef9b68a7565c5c1cffc08b89de0ed60c0ece9139ba8dc3476f9d32c7e69ac"
+    },
+    {
+      "id": "ui-20260821-02",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-04.ui-20260821-02.html",
+      "role": "immutable_ui_build",
+      "colorRegistryId": "color-srgb-04",
+      "status": "append_only",
+      "supersedes": "ui-20260821-01",
+      "changeClass": "ui_only; Color Set color-srgb-04 unchanged",
+      "bytes": 2142000,
+      "sha256": "7e8fb15cc943218b057c968f7268705f792244934ddd9573752f9a38f67bf66a"
+    },
+    {
+      "id": "color-baseline-20260821",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-05.html",
+      "role": "immutable_color_baseline",
+      "colorRegistryId": "color-srgb-05",
+      "status": "append_only",
+      "mintedWithArtifactBuild": "ui-20260821-04",
+      "integrityMode": "append-only Color Set baseline; never rewritten for a UI-only change",
+      "bytes": 2141429,
+      "sha256": "0788b25be195307821ac7c26159d5011e840c4c0da385ba6c9237e90fbaf7f1a"
+    },
+    {
+      "id": "ui-20260821-04",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-05.ui-20260821-04.html",
+      "role": "immutable_ui_build",
+      "colorRegistryId": "color-srgb-05",
+      "status": "append_only",
+      "supersedes": "ui-20260821-02 (last published build; the prepared ui-20260821-03 was withdrawn before publication and its id is not reused)",
+      "changeClass": "token_source_motion; every colour, gradient, and scale value byte-identical to color-srgb-04",
+      "bytes": 2141434,
+      "sha256": "f21ffb5db26170f25af0a551243003b8d3f98f7ca0bc74b683da4c3bbb09d19c"
+    },
+    {
+      "id": "ui-20260821-05",
+      "path": "landometer-design-system-v0.9.0-standalone.color-srgb-05.ui-20260821-05.html",
+      "role": "immutable_ui_build",
+      "colorRegistryId": "color-srgb-05",
+      "status": "append_only",
+      "supersedes": "ui-20260821-04",
+      "changeClass": "ui_only; machine specification package v0.9.0-mp1 generated and page package-status texts updated; Color Set color-srgb-05 unchanged",
+      "bytes": 2142100,
+      "sha256": "87ae72f9d51b5f83f47e05b4a1d885992aebe850c7135959e54ce73685955b2b"
+    }
+  ],
+  "sharedAtmosphereGradients": [
+    {
+      "id": "atmosphere.gradient.measure.deep",
+      "family": "Measure",
+      "variant": "deep",
+      "angle": "135deg",
+      "stops": [
+        [
+          "#1D4497",
+          "0%"
+        ],
+        [
+          "#176B82",
+          "54%"
+        ],
+        [
+          "#08756F",
+          "100%"
+        ]
+      ],
+      "foreground": {
+        "contract": "surfaceForeground.onDeep",
+        "primary": "#FFFFFF",
+        "secondary": "#F1F4EF",
+        "minimumContrast": 4.5
+      },
+      "themeDefaultFor": [
+        "light"
+      ],
+      "job": "entry, direction, high-confidence orientation, or closure",
+      "scope": "shared_atmosphere_only",
+      "normativeNewIn": "0.8.9"
+    },
+    {
+      "id": "atmosphere.gradient.measure.luminous",
+      "family": "Measure",
+      "variant": "luminous",
+      "angle": "135deg",
+      "stops": [
+        [
+          "#89CEF6",
+          "0%"
+        ],
+        [
+          "#5ECAD6",
+          "50%"
+        ],
+        [
+          "#6CD5B3",
+          "100%"
+        ]
+      ],
+      "foreground": {
+        "contract": "surfaceForeground.onLight",
+        "primary": "#182327",
+        "secondary": "#293337",
+        "minimumContrast": 4.5
+      },
+      "themeDefaultFor": [
+        "dark"
+      ],
+      "job": "orientation and measurement becoming action",
+      "scope": "shared_atmosphere_only",
+      "normativeNewIn": "0.8.9"
+    },
+    {
+      "id": "atmosphere.gradient.ground.current",
+      "family": "Ground",
+      "variant": "current",
+      "angle": "135deg",
+      "stops": [
+        [
+          "#0F5773",
+          "0%"
+        ],
+        [
+          "#006A6A",
+          "50%"
+        ],
+        [
+          "#1F744F",
+          "100%"
+        ]
+      ],
+      "foreground": {
+        "contract": "surfaceForeground.onDeep",
+        "primary": "#FFFFFF",
+        "secondary": "#F1F4EF",
+        "minimumContrast": 4.5
+      },
+      "themeDefaultFor": [
+        "dark"
+      ],
+      "job": "context reveal and evidence becoming understandable",
+      "scope": "shared_atmosphere_only",
+      "normativeNewIn": "0.8.9"
+    },
+    {
+      "id": "atmosphere.gradient.ground.mist",
+      "family": "Ground",
+      "variant": "mist",
+      "angle": "135deg",
+      "stops": [
+        [
+          "#C4E0EE",
+          "0%"
+        ],
+        [
+          "#B2E2E2",
+          "50%"
+        ],
+        [
+          "#CCE6D0",
+          "100%"
+        ]
+      ],
+      "foreground": {
+        "contract": "surfaceForeground.onLight",
+        "primary": "#182327",
+        "secondary": "#293337",
+        "minimumContrast": 4.5
+      },
+      "themeDefaultFor": [
+        "light"
+      ],
+      "job": "calm context, collaboration, and Brand Voice proof",
+      "scope": "shared_atmosphere_only",
+      "normativeNewIn": "0.8.9"
+    },
+    {
+      "id": "atmosphere.gradient.cultivate.glow",
+      "family": "Cultivate",
+      "variant": "glow",
+      "angle": "135deg",
+      "stops": [
+        [
+          "#EB8182",
+          "0%"
+        ],
+        [
+          "#F5A06F",
+          "50%"
+        ],
+        [
+          "#EBC573",
+          "100%"
+        ]
+      ],
+      "foreground": {
+        "contract": "surfaceForeground.onLight",
+        "primary": "#182327",
+        "secondary": "#293337",
+        "minimumContrast": 4.5
+      },
+      "themeDefaultFor": [
+        "light"
+      ],
+      "job": "action and credible momentum",
+      "scope": "shared_atmosphere_only",
+      "normativeNewIn": "0.8.9"
+    },
+    {
+      "id": "atmosphere.gradient.cultivate.mist",
+      "family": "Cultivate",
+      "variant": "mist",
+      "angle": "135deg",
+      "stops": [
+        [
+          "#F7CBC7",
+          "0%"
+        ],
+        [
+          "#FBD1B6",
+          "50%"
+        ],
+        [
+          "#F1E0B4",
+          "100%"
+        ]
+      ],
+      "foreground": {
+        "contract": "surfaceForeground.onLight",
+        "primary": "#182327",
+        "secondary": "#293337",
+        "minimumContrast": 4.5
+      },
+      "themeDefaultFor": [
+        "dark"
+      ],
+      "job": "completion and handoff",
+      "scope": "shared_atmosphere_only",
+      "normativeNewIn": "0.8.9"
+    },
+    {
+      "id": "atmosphere.gradient.diversity.spectrum",
+      "family": "Diversity",
+      "variant": "spectrum",
+      "angle": "135deg",
+      "stops": [
+        [
+          "#89CEF6",
+          "0%"
+        ],
+        [
+          "#6CD5B3",
+          "34%"
+        ],
+        [
+          "#EBC573",
+          "67%"
+        ],
+        [
+          "#EB8182",
+          "100%"
+        ]
+      ],
+      "foreground": {
+        "contract": "surfaceForeground.onLight",
+        "primary": "#182327",
+        "secondary": "#293337",
+        "minimumContrast": 4.5
+      },
+      "themeDefaultFor": [],
+      "job": "rare evidenced diverse participation or co-creation",
+      "scope": "shared_atmosphere_only_rare",
+      "normativeNewIn": "0.8.9"
+    }
+  ],
+  "atmosphereThemeDefaults": {
+    "light": {
+      "measure": "atmosphere.gradient.measure.deep",
+      "ground": "atmosphere.gradient.ground.mist",
+      "cultivate": "atmosphere.gradient.cultivate.glow"
+    },
+    "dark": {
+      "measure": "atmosphere.gradient.measure.luminous",
+      "ground": "atmosphere.gradient.ground.current",
+      "cultivate": "atmosphere.gradient.cultivate.mist"
+    }
+  },
+  "rareUsage": {
+    "diversity": {
+      "gradient": "atmosphere.gradient.diversity.spectrum",
+      "maximumPerLongRoute": 1,
+      "allowedFor": [
+        "evidenced multiple perspectives",
+        "named diverse contributors",
+        "co-creation inside Ground or Cultivate"
+      ],
+      "notFor": [
+        "data",
+        "semantic status",
+        "product identity",
+        "button",
+        "logo",
+        "map",
+        "routine decoration"
+      ]
+    }
+  },
+  "surfaceForegroundContracts": {
+    "surfaceForeground.onDeep": {
+      "primary": "#FFFFFF",
+      "secondary": "#F1F4EF",
+      "metadata": "#F1F4EF",
+      "icon": "#FFFFFF",
+      "meaningfulSeparator": "#F1F4EF",
+      "interactiveSurface": "#FFFFFF",
+      "interactiveInk": "#182327",
+      "focusRingInner": "#182327",
+      "focusRingOuter": "#FFFFFF"
+    },
+    "surfaceForeground.onLight": {
+      "primary": "#182327",
+      "secondary": "#293337",
+      "metadata": "#293337",
+      "icon": "#182327",
+      "meaningfulSeparator": "#182327",
+      "interactiveSurface": "#FFFFFF",
+      "interactiveInk": "#182327",
+      "focusRingInner": "#FFFFFF",
+      "focusRingOuter": "#182327"
+    }
+  },
+  "gradientOnlyColors": [
+    {
+      "value": "#89CEF6",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#5ECAD6",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#6CD5B3",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#0F5773",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#006A6A",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#1F744F",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#C4E0EE",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#B2E2E2",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#CCE6D0",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#EB8182",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#F5A06F",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#EBC573",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#F7CBC7",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#FBD1B6",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    },
+    {
+      "value": "#F1E0B4",
+      "role": "gradient_stop_only",
+      "scope": "shared_atmosphere",
+      "solidUse": "prohibited"
+    }
+  ],
+  "motifGradients": {
+    "brandSignature": {
+      "aliasOf": "atmosphere.gradient.measure.deep",
+      "scope": "asset_only_after_vector_and_hash_gate"
+    },
+    "civicCool": {
+      "angle": "135deg",
+      "stops": [
+        [
+          "#147A9F",
+          "0%"
+        ],
+        [
+          "#3BD3CB",
+          "52%"
+        ],
+        [
+          "#3BD19B",
+          "100%"
+        ]
+      ],
+      "scope": "asset_only_legacy"
+    },
+    "civicWarm": {
+      "angle": "135deg",
+      "stops": [
+        [
+          "#C33F55",
+          "0%"
+        ],
+        [
+          "#FF8A4C",
+          "52%"
+        ],
+        [
+          "#F4C44E",
+          "100%"
+        ]
+      ],
+      "scope": "asset_only_legacy"
+    }
+  },
+  "deprecatedAliases": {
+    "signature.gradient.closing.light": "atmosphere.gradient.measure.deep",
+    "signature.gradient.closing.dark": "atmosphere.gradient.measure.luminous"
+  },
+  "productIdentityGradients": {
+    "citymeter": {
+      "light": [
+        "#12669B",
+        "#36BCE4"
+      ],
+      "dark": [
+        "#4C99D5",
+        "#59C7E8"
+      ]
+    },
+    "citywiki": {
+      "light": [
+        "#F7CBC7",
+        "#FBD1B6",
+        "#F1E0B4"
+      ],
+      "lightAliasOf": "atmosphere.gradient.cultivate.mist",
+      "dark": [
+        "#F2F1DF",
+        "#E0B443"
+      ]
+    },
+    "citychat": {
+      "light": [
+        "#007A58",
+        "#007E79"
+      ],
+      "dark": [
+        "#3BD19B",
+        "#3BD3CB"
+      ]
+    },
+    "ijji": {
+      "light": [
+        "#C4E0EE",
+        "#B2E2E2",
+        "#CCE6D0"
+      ],
+      "lightAliasOf": "atmosphere.gradient.ground.mist",
+      "dark": [
+        "#59C7E8",
+        "#3BD3CB"
+      ]
+    }
+  },
+  "parity": {
+    "registryIdentityRule": "Any change to a governed solid, atmosphere gradient angle, stop, position, theme mapping, series pair, or analytical source hash requires a new Color Set id. Existing Color Set ids and immutable artifact-build paths are never redefined.",
+    "sameColorSetRequiredFor": [
+      "hosted root",
+      "latest standalone alias",
+      "current immutable UI artifact",
+      "immutable Color Set baseline",
+      "Complete Color Atlas",
+      "Build Card",
+      "Site Manifest",
+      "manual QA evidence"
+    ],
+    "compareFirst": [
+      "data-color-registry",
+      "data-atmosphere-gradient-registry",
+      "artifact build id",
+      "resolved theme",
+      "token registry SHA-256",
+      "scale registry SHA-256"
+    ],
+    "cacheBoundary": "Latest aliases may temporarily differ after publication. The immutable UI artifact path is the current handoff and visual-QA authority."
+  }
+}

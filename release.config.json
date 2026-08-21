@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "product": "citychat",
+  "artifactName": "CityChat Design Identity Playground",
+  "artifactVersion": "0.4.0",
+  "artifactBuildId": "citychat-ui-20260822-01",
+  "pageKind": "design-identity-playground",
+  "profile": "designsystem.adoption",
+  "language": "th",
+  "additionalLanguages": ["en"],
+  "delivery": "internal_demo_public_projection",
+  "visibility": "public",
+  "indexable": false,
+  "evidenceStatus": "source_limited",
+  "machineValidation": "pending",
+  "canonicalUrl": "https://montri-th.github.io/CityChat/",
+  "sourceProfile": {
+    "path": "assets/downloads/citychat-product-experience-profile-v0.4.md",
+    "sha256": "f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba",
+    "status": "draft_candidate"
+  },
+  "upstream": {
+    "repository": "https://github.com/montri-th/Landometer",
+    "commit": "d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665",
+    "dsVersion": "0.9.0",
+    "authoringRevision": "v0.9.0-r7",
+    "machinePackage": "v0.9.0-mp1",
+    "colorSetId": "color-srgb-05",
+    "kitVersion": "lds-kit-0.9.0-r4",
+    "upstreamArtifactBuildId": "ui-20260821-05",
+    "vendorPath": "vendor/landometer/v0.9.0"
+  },
+  "capabilities": {
+    "analytics": false,
+    "authentication": false,
+    "remotePersistence": false,
+    "remoteAction": false,
+    "networkShare": false,
+    "cityScanScoring": false,
+    "lineIntegration": false,
+    "officerOperations": false,
+    "localFixtureState": true,
+    "clipboardCopy": true,
+    "themePreference": true,
+    "localePreference": true
+  }
+}

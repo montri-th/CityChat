@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "id": "campaign.public",
+  "ruleId": "[PROFILE-01]",
+  "oneJob": "understand one message and take one action",
+  "firstAha": "promised proof in first viewport",
+  "character": "expressive-short",
+  "impliedTrigger": "share only after proof and hosting",
+  "motionIntensity": "expressive_short",
+  "ahaBudget": {
+    "maxActions": "0-1",
+    "target": "promised object/result in first viewport"
+  },
+  "delivery": {
+    "rejectsStaticExport": false,
+    "requiresStaticExport": false
+  },
+  "evidenceBranch": "per capability declarations",
+  "source": {
+    "path": "assets/downloads/landometer-design-system-v0.9.0.md",
+    "sections": [
+      "§8 [PROFILE-01]",
+      "§8.1 [AHA-01]",
+      "Build Card gates §2"
+    ]
+  },
+  "boundary": "Exactly one profile loads per artifact; this record is a projection — the master's profile clauses remain the authority."
+}

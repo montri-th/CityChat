@@ -1,0 +1,5 @@
+{
+  "schemaVersion": "1.0",
+  "status": "not_regenerated_source_external",
+  "boundary": "The v0.8.7 Thai voice fixture set is frozen in the v0.8.7 package, which is not part of this repository. This record preserves the package slot and the source boundary without fabricating fixture content. Current Thai voice authority is Appendix D (voice-recipes.md in this package); rendered Thai display-leading stress evidence for this release is qa/v0.9.0-thai-leading.json."
+}

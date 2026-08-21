@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260822-01",
+  "checkedAt": "2026-08-21T17:57:19.136Z",
+  "browser": "Chromium via Playwright 1.54.1 contract",
+  "scope": "rendered local HTTP; native-device and product-runtime gates remain open",
+  "totals": {
+    "checks": 54,
+    "failures": 0
+  },
+  "result": "passed",
+  "checks": [
+    {
+      "name": "render:320-th-light:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:320-th-light:no-horizontal-overflow",
+      "ok": true,
+      "detail": "320/320"
+    },
+    {
+      "name": "render:320-th-light:first-viewport-content",
+      "ok": true
+    },
+    {
+      "name": "render:320-th-light:locale-theme",
+      "ok": true
+    },
+    {
+      "name": "render:320-th-light:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:320-th-light:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:320-th-light:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:360-en-dark:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:360-en-dark:no-horizontal-overflow",
+      "ok": true,
+      "detail": "360/360"
+    },
+    {
+      "name": "render:360-en-dark:first-viewport-content",
+      "ok": true
+    },
+    {
+      "name": "render:360-en-dark:locale-theme",
+      "ok": true
+    },
+    {
+      "name": "render:360-en-dark:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360-en-dark:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:360-en-dark:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:390-th-dark:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:390-th-dark:no-horizontal-overflow",
+      "ok": true,
+      "detail": "390/390"
+    },
+    {
+      "name": "render:390-th-dark:first-viewport-content",
+      "ok": true
+    },
+    {
+      "name": "render:390-th-dark:locale-theme",
+      "ok": true
+    },
+    {
+      "name": "render:390-th-dark:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:390-th-dark:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:390-th-dark:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:768-en-light:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:768-en-light:no-horizontal-overflow",
+      "ok": true,
+      "detail": "768/768"
+    },
+    {
+      "name": "render:768-en-light:first-viewport-content",
+      "ok": true
+    },
+    {
+      "name": "render:768-en-light:locale-theme",
+      "ok": true
+    },
+    {
+      "name": "render:768-en-light:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:768-en-light:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:768-en-light:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1024-th-light:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1024-th-light:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1024/1024"
+    },
+    {
+      "name": "render:1024-th-light:first-viewport-content",
+      "ok": true
+    },
+    {
+      "name": "render:1024-th-light:locale-theme",
+      "ok": true
+    },
+    {
+      "name": "render:1024-th-light:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1024-th-light:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1024-th-light:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1440-en-dark:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1440-en-dark:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1440/1440"
+    },
+    {
+      "name": "render:1440-en-dark:first-viewport-content",
+      "ok": true
+    },
+    {
+      "name": "render:1440-en-dark:locale-theme",
+      "ok": true
+    },
+    {
+      "name": "render:1440-en-dark:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1440-en-dark:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1440-en-dark:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "interaction:tab-arrow-navigation",
+      "ok": true
+    },
+    {
+      "name": "interaction:no-score-state",
+      "ok": true
+    },
+    {
+      "name": "interaction:locked-fixture-handoff",
+      "ok": true
+    },
+    {
+      "name": "interaction:preflight-progress",
+      "ok": true
+    },
+    {
+      "name": "motion:reduced-scroll-final-state",
+      "ok": true,
+      "detail": "auto"
+    },
+    {
+      "name": "motion:reduced-transition",
+      "ok": true,
+      "detail": "0s"
+    },
+    {
+      "name": "no-js:read-only-guidance-visible",
+      "ok": true
+    },
+    {
+      "name": "no-js:honest-non-operable-fallback",
+      "ok": true
+    },
+    {
+      "name": "no-js:no-horizontal-overflow",
+      "ok": true
+    },
+    {
+      "name": "type:thai-130-no-page-overflow",
+      "ok": true,
+      "detail": "390/390 [{\"node\":\"a.skip-link\",\"rect\":\"-9999..-9816\",\"size\":\"183/183\",\"text\":\"ข้ามไปเนื้อหาหลักSkip to main content\"},{\"node\":\"span\",\"rect\":\"-9983..-9832\",\"size\":\"0/0\",\"text\":\"ข้ามไปเนื้อหาหลัก\"},{\"node\":\"section#top.hero.scene-atmosphere.scene-atmosphere--ground\",\"rect\":\"0..390\",\"size\":\"605/390\",\"text\":\"CityStory-first · Intent-led · CityScan-alignedC\"},{\"node\":\"figure.hero-object\",\"rect\":\"16..374\",\"size\":\"367/358\",\"text\":\"PLACE-DEMO-01 · v1\\n            หนึ่งความหมายOne \"},{\"node\":\"span.scan-reticle\",\"rect\":\"179..211\",\"size\":\"40/27\",\"text\":\"\"}]"
+    },
+    {
+      "name": "type:thai-130-no-control-or-heading-clipping",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "type:200-percent-zoom-essential-content",
+      "ok": true
+    }
+  ]
+}
