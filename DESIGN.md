@@ -2,6 +2,8 @@
 
 CityChat keeps its own face and way of speaking. Landometer DS supplies the shared visual foundation; approved CityChat VES v0.6 composes it into first value, a warm living-city identity, and honest civic continuity without creating a second token system.
 
+Playground artifact v0.6.1 is the implementation example layer for that approved VES. Its control, icon, motion, and colour records are bounded artifact bindings—not a new normative VES version and not evidence that a CityChat product capability is live.
+
 ## North-star interaction
 
 ```text
@@ -41,6 +43,16 @@ Use the exact Landometer v0.9.0 machine package in `deployment/vendor/landometer
 ```
 
 Build-local CSS may compose layout from semantic `var()` tokens. It must not copy retired CityChat v0.3 colours, font values, radii or motion tokens. The exact CityChat lockup remains protected artwork and may appear only in a role/build/surface approved by the active identity manifest.
+
+## Implementation bindings in artifact v0.6.1
+
+- **Buttons** inherit the LDS `.btn` capsule or `.btn-icon` circle. Keep the inherited padding, gap, height, focus, disabled, busy, and press behaviour. A visual specimen is not a live product action.
+- **Functional icons** use the exact self-hosted Material Symbols Rounded subset recorded in `deployment/resources/citychat-ves/v0.6.1/font-assets.manifest.json`. Bind only a closed role from `citychat-icon-map.json`, keep a visible or accessible label, and check `citychat-icon-resolution.json` before putting an icon on an actual control. The CityChat logo and motif are identity assets, never functional icons.
+- **Motion** uses only an inherited LDS primitive named in `semantic-motion.citychat.yml`, or `none`. The main meaning and action are visible before enhancement; reduced-motion and no-JavaScript routes land directly in the final readable state. Animation never emits a receipt, product event, telemetry, or proof of persistence.
+- **Colour** follows `citychat-color-role-map.json`, a product-usage overlay on the pinned LDS `color-srgb-05` source. It does not create a second palette, duplicate the complete LDS atlas, or authorize an analytical scale. Missing authority resolves to no-data or unavailable copy, not a guessed colour.
+- **Identity** uses the exact lockup bytes and the separately approved build, URL, role, theme, backdrop, and surface in `identity-assets.v0.6.1.json`. Do not add a white logo card or recolour, crop, filter, mask, animate, or rebuild the mark.
+
+Use the v0.6.1 resource directory as the human/AI handoff entry point; use the approved VES v0.6 when deciding normative CityChat composition and experience behaviour.
 
 ## CityChat visual signatures
 

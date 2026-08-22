@@ -48,6 +48,7 @@ const words = {
     answerOptionsOpen: "เปิดตัวเลือกคำตอบสำหรับดูรูปแบบแล้ว ยังไม่มีการส่งหรือบันทึกข้อมูล",
     answerOptionsClosed: "ปิดตัวเลือกคำตอบแล้ว",
     lockStory: "เปิดเรื่องจากกรอบตัวอย่างแล้ว ข้อมูลยังอยู่เฉพาะหน้านี้",
+    demoAction: "ปุ่มทำงานแล้วในหน้านี้ · ไม่มีการส่งหรือบันทึกข้อมูล",
     copied: "คัดลอกแล้ว",
     copyFailed: "คัดลอกอัตโนมัติไม่ได้ กรุณาเปิดไฟล์ดาวน์โหลดแล้วคัดลอกข้อความ",
     preflightReady: "ตอบ preflight ครบ 6 ข้อแล้ว — ยังต้องผ่าน release gates ที่เกี่ยวข้อง",
@@ -75,6 +76,7 @@ const words = {
     answerOptionsOpen: "Answer choices opened for preview; nothing is sent or saved",
     answerOptionsClosed: "Answer choices closed",
     lockStory: "Story opened from the sample frame; the state remains on this page",
+    demoAction: "The control worked locally · nothing was sent or persisted",
     copied: "Copied",
     copyFailed: "Automatic copy was unavailable. Open the downloadable file and copy the text.",
     preflightReady: "All six preflight questions are answered; applicable release gates still remain",
@@ -131,13 +133,14 @@ function applyTheme({ persist = false, announceChange = false } = {}) {
     themeButton.setAttribute("aria-label", label);
   }
   if (announceChange) announce(t().themes[state.theme]);
+  updateColorTokenValues();
   syncUrl();
 }
 
 function applyLocale({ persist = false, announceChange = false } = {}) {
   root.dataset.locale = state.locale;
   root.lang = state.locale;
-  document.title = "CityChat VES Interactive Playground v0.6";
+  document.title = "CityChat VES Interactive Playground v0.6.1";
   if (persist) localStorage.setItem("citychat-playground-locale", state.locale);
   if (localeButton) {
     localeButton.textContent = t().localeButton;
@@ -276,8 +279,53 @@ document.querySelector("#open-story-from-lock")?.addEventListener("click", () =>
   state.storyOrigin = "lock";
   state.mode = "story";
   applyMode();
+  const heading = document.querySelector("#story-result-heading");
+  heading?.focus({ preventScroll: true });
+  heading?.scrollIntoView({ block: "nearest", behavior: "auto" });
   announce(t().lockStory);
-  document.querySelector("[data-story-view='story']")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+});
+
+document.querySelector("#demo-action")?.addEventListener("click", () => {
+  setBilingualText(document.querySelector("#demo-action-result"), words.th.demoAction, words.en.demoAction);
+  announce(t().demoAction);
+});
+
+function updateColorTokenValues() {
+  const styles = getComputedStyle(root);
+  document.querySelectorAll("[data-color-token]").forEach(card => {
+    const token = card.dataset.colorToken;
+    const output = card.querySelector("[data-token-value]");
+    if (!token || !output) return;
+    output.textContent = styles.getPropertyValue(token).trim() || "unresolved";
+  });
+}
+
+function settleRevealExamples() {
+  document.querySelectorAll("[data-reveal-item].reveal").forEach(item => item.classList.remove("reveal"));
+}
+
+const reducedMotionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+function prepareRevealExamples() {
+  const groups = [...document.querySelectorAll("[data-reveal-group]")];
+  if (!groups.length || reducedMotionQuery?.matches || !("IntersectionObserver" in window)) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const group = entry.target;
+      observer.unobserve(group);
+      if (group.dataset.revealComplete === "true" || reducedMotionQuery?.matches) return;
+      group.dataset.revealComplete = "true";
+      group.querySelectorAll(":scope > [data-reveal-item]").forEach(item => {
+        item.classList.add("reveal");
+        item.addEventListener("animationend", () => item.classList.remove("reveal"), { once: true });
+      });
+    });
+  }, { rootMargin: "0px 0px -10% 0px" });
+  groups.forEach(group => observer.observe(group));
+}
+
+reducedMotionQuery?.addEventListener?.("change", event => {
+  if (event.matches) settleRevealExamples();
 });
 
 const preflightInputs = [...document.querySelectorAll("#preflight-form input[type='checkbox']")];
@@ -371,3 +419,5 @@ applyView();
 applyMode();
 applyScan();
 updatePreflight();
+updateColorTokenValues();
+prepareRevealExamples();

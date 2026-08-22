@@ -26,6 +26,51 @@ function check(ok, name, detail = "") {
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
 const validatorSha256 = sha256(readFileSync(fileURLToPath(import.meta.url)));
 const readJson = relative => JSON.parse(readFileSync(path.join(deployment, relative), "utf8"));
+const implementationRecordRoot = `resources/citychat-ves/v${config.artifactVersion}`;
+const implementationPath = name => `${implementationRecordRoot}/${name}`;
+const schemaPath = name => `schemas/${name}.v${config.artifactVersion}.json`;
+const generatorPath = path.join(root, "tools/generate-citychat-color-atlas.mjs");
+const importerPath = path.join(root, "tools/import-material-symbols.mjs");
+const escapeRegex = value => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+function schemaRequiredFields(record, schema) {
+  return (schema.required || []).filter(field => !(field in record));
+}
+
+function resolveRecordPath(recordRelative, referencedPath) {
+  return path.resolve(path.dirname(path.join(deployment, recordRelative)), referencedPath);
+}
+
+function openingTagById(id) {
+  return html.match(new RegExp(`<[^>]*\\bid="${escapeRegex(id)}"[^>]*>`, "i"))?.[0] || "";
+}
+
+function elementFragmentById(id) {
+  const marker = html.indexOf(`id="${id}"`);
+  if (marker < 0) return "";
+  const opening = html.lastIndexOf("<", marker);
+  const tag = html.slice(opening + 1).match(/^([a-z0-9-]+)/i)?.[1];
+  if (!tag) return "";
+  const closing = html.indexOf(`</${tag}>`, marker);
+  return closing < 0 ? html.slice(opening, html.indexOf(">", marker) + 1) : html.slice(opening, closing + tag.length + 3);
+}
+
+const versionedMachineSources = [
+  implementationPath("citychat-color-atlas.fragment.html"),
+  implementationPath("citychat-color-role-map.json"),
+  implementationPath("citychat-icon-map.json"),
+  implementationPath("citychat-icon-resolution.json"),
+  implementationPath("font-assets.manifest.json"),
+  implementationPath("semantic-motion.citychat.yml"),
+  schemaPath("citychat-color-role-map.schema"),
+  schemaPath("citychat-font-assets.schema"),
+  schemaPath("citychat-icon-map.schema"),
+  schemaPath("citychat-icon-resolution.schema"),
+  schemaPath("semantic-motion-citychat.schema"),
+  `qa/color-atlas-generation.v${config.artifactVersion}.json`,
+  "assets/icons/material-symbols-rounded-citychat-v368.ttf",
+  "assets/icons/LICENSE.material-symbols.txt"
+];
 const testedSourcePaths = [
   ["release.config.json", path.join(root, "release.config.json")],
   ["deployment/index.html", path.join(deployment, "index.html")],
@@ -36,7 +81,10 @@ const testedSourcePaths = [
   [`deployment/${config.releaseArtifacts.implementationNotes}`, path.join(deployment, config.releaseArtifacts.implementationNotes)],
   [`deployment/${config.identityManifest.path}`, path.join(deployment, config.identityManifest.path)],
   [`deployment/${config.sourceVisualExperience.path}`, path.join(deployment, config.sourceVisualExperience.path)],
-  ...config.approvalRecords.map(record => [`deployment/${record.path}`, path.join(deployment, record.path)])
+  ...config.approvalRecords.map(record => [`deployment/${record.path}`, path.join(deployment, record.path)]),
+  ...versionedMachineSources.map(relative => [`deployment/${relative}`, path.join(deployment, relative)]),
+  ["tools/generate-citychat-color-atlas.mjs", generatorPath],
+  ["tools/import-material-symbols.mjs", importerPath]
 ];
 const testedSourceHasher = createHash("sha256");
 for (const [label, absolute] of testedSourcePaths) {
@@ -76,7 +124,11 @@ check(duplicateIds.length === 0, "html:no-duplicate-ids", duplicateIds.join(", "
 check(!/#[0-9a-fA-F]{3,8}\b/.test(css), "css:no-build-local-raw-hex");
 check(!css.includes("!important"), "css:no-build-local-important");
 check(!css.includes("color-mix("), "css:no-authored-color-synthesis");
-check(!css.includes("var(--product-citychat-gradient)"), "css:product-gradient-not-used-as-data-signal");
+const productGradientSelectors = [...css.matchAll(/([^{}]+)\{[^{}]*var\(--product-citychat-gradient\)[^{}]*\}/g)]
+  .map(match => match[1].trim());
+const productGradientDataSelectors = productGradientSelectors.filter(selector => /scan|map|data|chart|status|readout|score|risk/i.test(selector));
+check(productGradientSelectors.length > 0, "css:product-gradient-used-for-approved-identity-or-atlas-role");
+check(productGradientDataSelectors.length === 0, "css:product-gradient-not-used-as-data-signal", productGradientDataSelectors.join(" | "));
 check(css.includes("var(--surface-atmosphere-ground)") && css.includes("var(--interaction-accent)"), "css:semantic-token-composition");
 check(css.includes("@media (prefers-reduced-motion: reduce)"), "motion:reduced-motion");
 check(css.includes("@media (max-width: 599px)") && css.includes("@media (max-width: 899px)"), "responsive:inherited-lds-layout-thresholds");
@@ -84,16 +136,28 @@ check(!/overflow-x\s*:\s*hidden|backdrop-filter/.test(css), "responsive:no-overf
 check(css.includes("[data-story-view][hidden]") && css.includes("display: none"), "journey:hidden-attribute-not-overridden");
 check(css.includes(".scan-composition") && css.includes(".scan-frame-geometry"), "scan:composition-and-visible-frame-separated");
 check(css.includes("font-synthesis: none"), "type:no-synthetic-fonts");
+check(html.includes('id="implementation-library"') && html.includes('id="control-examples"') && html.includes('id="icon-reference"') && html.includes('id="motion-examples"') && html.includes('id="color-atlas"'), "library:visible-control-icon-motion-color-sections");
+check(!/id="(?:replay-motion|show-final-state)"|>\s*(?:Replay|เล่นซ้ำ|Show final state|ดูสถานะสุดท้าย)\s*</i.test(html), "motion:no-replay-or-show-final-control");
+check(!/\.settle\b/.test(css) && !/classList\.(?:add|toggle)\(["']settle["']\)/.test(app), "motion:no-build-local-settle-activation");
 for (const family of ["Arvo", "IBM Plex Sans Thai Looped", "Bai Jamjuree", "IBM Plex Sans Thai", "JetBrains Mono"]) {
   check(css.includes(`font-family: "${family}"`), `type:${family.toLowerCase().replaceAll(" ", "-")}:declared`);
 }
 
 check(!/fetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon|gtag\s*\(|analytics/i.test(app), "runtime:no-background-network-or-analytics");
+check(/@font-face\s*\{[^}]*font-family:\s*"Material Symbols Rounded"[^}]*material-symbols-rounded-citychat-v368\.ttf[^}]*font-display:\s*block/s.test(css), "icons:self-hosted-material-symbols-font-face");
+const inheritedLdsBase = readFileSync(path.join(deployment, config.upstream.vendorPath, "build-kit/lds-base.css"), "utf8");
+check(/\.icon-symbol\s*\{[^}]*font-family:\s*"Material Symbols Rounded"[^}]*font-variation-settings:\s*['"]FILL['"]\s+0[^}]*['"]wght['"]\s+300[^}]*['"]GRAD['"]\s+0[^}]*['"]opsz['"]\s+24/s.test(inheritedLdsBase), "icons:inherited-lds-class-and-locked-axes");
+check(!css.includes(".material-symbols-rounded") && !/class="[^"]*material-symbols-rounded/.test(html), "icons:no-parallel-local-icon-class");
+check(!/@import[^;]*(?:fonts\.googleapis|fonts\.gstatic)|url\(["']?https?:\/\/[^)]*(?:fonts\.googleapis|fonts\.gstatic)/i.test(css + html), "icons:no-runtime-google-fonts");
+check(html.includes('href="assets/icons/material-symbols-rounded-citychat-v368.ttf"') && html.includes('type="font/ttf"'), "icons:font-preloaded-locally");
 check(app.includes('if (state.scan !== "locked") return') && app.includes("not saved to a system"), "runtime:locked-fixture-boundary");
 check(html.includes('id="open-story-from-lock" hidden'), "runtime:story-handoff-hidden-until-lock");
 check(app.includes("ArrowRight") && app.includes("Home") && app.includes("End"), "a11y:tab-keyboard-contract");
 check(app.includes("navigator.clipboard") && app.includes("document.execCommand"), "effect:clipboard-fallback");
 check(app.includes("คนเห็นคุณค่าอะไรในช่วงแรก?") && app.includes("What first value does the person receive?"), "handoff:copied-preflight-matches-visible-questions");
+check(app.includes("IntersectionObserver") && app.includes(":scope > [data-reveal-item]") && app.includes("animationend"), "motion:once-only-direct-child-reveal-implementation");
+check(app.includes("prefers-reduced-motion: reduce") && app.includes("unobserve"), "motion:reduced-motion-and-unobserve-contract");
+check(!/setInterval\s*\(|requestAnimationFrame\s*\([^)]*requestAnimationFrame|animationiteration/i.test(app), "motion:no-looping-runtime-mechanism");
 
 const localRefs = [...html.matchAll(/(?:href|src)="([^"]+)"/g)]
   .map(match => match[1])
@@ -126,6 +190,110 @@ const sourceVisualExperience = readFileSync(path.join(deployment, config.sourceV
 check(sourceVisualExperience.includes("not a second DS") && sourceVisualExperience.includes("Thai remains plain, short and human"), "source:ves-authority-and-language-boundary");
 const experienceContract = readFileSync(path.join(deployment, config.productDependencies[0].path), "utf8");
 check(experienceContract.includes("Canonical CityScan events MUST retain their owning names"), "source:canonical-cityscan-event-map");
+
+const colorMapPath = implementationPath("citychat-color-role-map.json");
+const colorSchemaPath = schemaPath("citychat-color-role-map.schema");
+const colorFragmentPath = implementationPath("citychat-color-atlas.fragment.html");
+const colorQaPath = `qa/color-atlas-generation.v${config.artifactVersion}.json`;
+const colorMap = readJson(colorMapPath);
+const colorSchema = readJson(colorSchemaPath);
+const colorQa = readJson(colorQaPath);
+const colorFragment = readFileSync(path.join(deployment, colorFragmentPath), "utf8");
+check(schemaRequiredFields(colorMap, colorSchema).length === 0, "color:schema-required-fields", schemaRequiredFields(colorMap, colorSchema).join(", "));
+check(colorMap.artifactBuildId === config.artifactBuildId && colorMap.mode === "product_usage_overlay" && colorMap.fullLivingReference === false, "color:artifact-scoped-usage-overlay");
+const colorRoleIds = colorMap.roles.map(role => role.roleId);
+const colorStatusCounts = colorMap.roles.reduce((counts, role) => ({ ...counts, [role.status]: (counts[role.status] || 0) + 1 }), {});
+check(colorMap.roles.length === 45 && new Set(colorRoleIds).size === 45, "color:complete-45-role-atlas");
+check(colorMap.router.length === 7 && new Set(colorMap.router.map(route => route.routerId)).size === 7, "color:seven-job-first-router-destinations");
+check(colorStatusCounts.governed === 43 && colorStatusCounts.reference_fixture === 1 && colorStatusCounts.omitted === 1 && !colorStatusCounts.candidate, "color:governance-status-coverage", JSON.stringify(colorStatusCounts));
+check(!/#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})\b|\brgba?\(|color-mix\(/i.test(JSON.stringify(colorMap.roles)), "color:no-local-literal-or-runtime-mixing");
+check(colorMap.roles.every(role => role.status === "omitted" || (role.redundantCue?.length > 0 && role.acceptanceIds?.length > 0)), "color:roles-have-redundant-cues-and-acceptance-ids");
+const analyticalScaleRole = colorMap.roles.find(role => role.roleId === "cc.data.scale");
+const linkedScaleSource = colorMap.sourceFiles.find(source => source.sourceId === "ldsScales");
+check(analyticalScaleRole?.status === "reference_fixture" && /linked-exact-lut/.test(JSON.stringify(analyticalScaleRole)) && /"sourceId":"ldsScales"/.test(JSON.stringify(analyticalScaleRole)) && linkedScaleSource?.availability === "linked_not_vendored" && /raw\.githubusercontent\.com\/montri-th\/Landometer\/d82ac775/.test(linkedScaleSource.immutableUrl || ""), "color:analytical-scale-linked-not-reminted");
+const supportingAssetRole = colorMap.roles.find(role => role.roleId === "cc.asset.supporting-color");
+check(supportingAssetRole?.status === "omitted" && supportingAssetRole?.bindings?.length === 0, "color:unapproved-supporting-asset-role-omitted");
+const colorSourceFailures = colorMap.sourceFiles
+  .filter(source => source.availability !== "linked_not_vendored")
+  .flatMap(source => {
+    const absolute = resolveRecordPath(colorMapPath, source.path);
+    if (!existsSync(absolute)) return [`${source.sourceId}:missing`];
+    const actual = sha256(readFileSync(absolute));
+    return actual === source.sha256 ? [] : [`${source.sourceId}:${actual}/${source.sha256}`];
+  });
+check(colorSourceFailures.length === 0, "color:pinned-local-source-hashes", colorSourceFailures.join(" | "));
+check(colorQa.result === "pass" && colorQa.artifactBuildId === config.artifactBuildId && colorQa.counts.roles === 45 && colorQa.counts.routers === 7, "color:generation-qa-pass-and-counts");
+const expectedColorHashes = {
+  roleMapSha256: sha256(readFileSync(path.join(deployment, colorMapPath))),
+  schemaSha256: sha256(readFileSync(path.join(deployment, colorSchemaPath))),
+  generatorSha256: sha256(readFileSync(generatorPath)),
+  generatedFragmentSha256: sha256(Buffer.from(colorFragment))
+};
+check(Object.entries(expectedColorHashes).every(([key, value]) => colorQa.hashes?.[key] === value), "color:generation-qa-byte-bound", JSON.stringify({ expected: expectedColorHashes, recorded: colorQa.hashes }));
+check(html.includes('id="color-atlas"') && html.includes(`href="${colorMapPath}"`) && /data-color-role-id=/.test(html), "color:visible-atlas-and-machine-map-linked");
+const renderedColorRoles = [...html.matchAll(/data-color-role-id="([^"]+)"/g)].map(match => match[1]);
+const governedColorBindings = new Set(colorMap.roles.flatMap(role => role.bindings || []).map(binding => binding.implementation));
+const renderedColorTokens = [...html.matchAll(/data-color-token="([^"]+)"/g)].map(match => match[1]);
+check(renderedColorRoles.length === renderedColorTokens.length && renderedColorTokens.every(token => governedColorBindings.has(token)), "color:visible-swatches-resolve-to-governed-bindings", renderedColorTokens.filter(token => !governedColorBindings.has(token)).join(", "));
+check((colorFragment.match(/data-role-id=/g) || []).length === 45 && colorRoleIds.every(roleId => colorFragment.includes(`data-role-id="${roleId}"`)), "color:generated-fragment-covers-every-role");
+
+const iconMapPath = implementationPath("citychat-icon-map.json");
+const iconResolutionPath = implementationPath("citychat-icon-resolution.json");
+const fontManifestPath = implementationPath("font-assets.manifest.json");
+const iconMap = readJson(iconMapPath);
+const iconResolution = readJson(iconResolutionPath);
+const fontManifest = readJson(fontManifestPath);
+const iconSchemas = [
+  [iconMap, readJson(schemaPath("citychat-icon-map.schema")), "icon-map"],
+  [iconResolution, readJson(schemaPath("citychat-icon-resolution.schema")), "icon-resolution"],
+  [fontManifest, readJson(schemaPath("citychat-font-assets.schema")), "font-assets"]
+];
+for (const [record, schema, label] of iconSchemas) {
+  const missing = schemaRequiredFields(record, schema);
+  check(missing.length === 0, `icons:${label}:schema-required-fields`, missing.join(", "));
+  const schemaAbsolute = resolveRecordPath(label === "font-assets" ? fontManifestPath : label === "icon-map" ? iconMapPath : iconResolutionPath, record.$schema);
+  check(existsSync(schemaAbsolute), `icons:${label}:schema-ref-resolves`, schemaAbsolute);
+}
+check(iconMap.artifactVersion === config.artifactVersion && iconResolution.artifactVersion === config.artifactVersion && fontManifest.artifactVersion === config.artifactVersion, "icons:records-version-bound");
+const fontRecord = fontManifest.fonts.find(font => font.fontAssetId === iconMap.fontAssetId);
+check(Boolean(fontRecord) && iconResolution.fontAssetId === iconMap.fontAssetId, "icons:one-shared-font-asset-id");
+if (fontRecord) {
+  const fontAbsolute = resolveRecordPath(fontManifestPath, fontRecord.assetPath);
+  const noticeAbsolute = resolveRecordPath(fontManifestPath, fontRecord.license.noticePath);
+  const fontBytes = existsSync(fontAbsolute) ? readFileSync(fontAbsolute) : Buffer.alloc(0);
+  const noticeBytes = existsSync(noticeAbsolute) ? readFileSync(noticeAbsolute) : Buffer.alloc(0);
+  check(fontBytes.length === fontRecord.bytes && sha256(fontBytes) === fontRecord.sha256, "icons:font-binary-bytes-and-hash");
+  check(noticeBytes.length === fontRecord.license.noticeBytes && sha256(noticeBytes) === fontRecord.license.noticeSha256 && fontRecord.license.spdxId === "Apache-2.0", "icons:license-bytes-hash-and-spdx");
+  check(fontRecord.delivery.selfHosted === true && fontRecord.delivery.remoteRuntimeAllowed === false, "icons:self-hosted-delivery-boundary");
+  const importerAbsolute = resolveRecordPath(fontManifestPath, fontRecord.source.importerEvidencePath);
+  check(importerAbsolute === importerPath && sha256(readFileSync(importerAbsolute)) === fontRecord.source.importerEvidenceSha256, "icons:importer-evidence-byte-bound");
+  const fontGlyphs = new Map(fontRecord.glyphs.map(glyph => [glyph.glyphName, glyph.codepoint]));
+  check(iconMap.roles.length === 9 && iconMap.roles.every(role => fontGlyphs.get(role.glyph) === role.codepoint), "icons:closed-nine-role-glyph-map");
+}
+check(iconMap.axes.FILL === 0 && iconMap.axes.wght === 300 && iconMap.axes.GRAD === 0 && iconMap.axes.opsz === 24 && iconMap.axes.selectedFill1Supported === false, "icons:static-axes-contract");
+check(iconMap.galleryPolicy.allowedContainer === "#icon-reference [role=list]" && iconResolution.librarySpecimens.containerSelector === "#icon-reference [role=list]", "icons:gallery-selector-current");
+check(iconResolution.blockedBindings.length === 0, "icons:no-unresolved-blocked-bindings", iconResolution.blockedBindings.map(binding => binding.selector).join(" | "));
+check(iconResolution.bindings.every(binding => !/#(?:implementation|control|icon|motion)-lab\b/.test(binding.selector)), "icons:no-stale-lab-selectors");
+const gatedGlyphs = iconMap.roles.filter(role => role.artifactUseClass === "library_only_capability_gated").map(role => role.glyph);
+const iconGalleryStart = html.indexOf('id="icon-reference"');
+const iconGalleryEnd = iconGalleryStart < 0 ? -1 : html.indexOf('</article>', iconGalleryStart);
+const outsideIconGallery = iconGalleryStart < 0 ? html : `${html.slice(0, iconGalleryStart)}${html.slice(iconGalleryEnd + 10)}`;
+check(gatedGlyphs.every(glyph => !new RegExp(`>\\s*${escapeRegex(glyph)}\\s*<`).test(outsideIconGallery)), "icons:capability-gated-glyphs-remain-gallery-only");
+
+const motionPath = implementationPath("semantic-motion.citychat.yml");
+const motion = JSON.parse(readFileSync(path.join(deployment, motionPath), "utf8"));
+const motionSchema = readJson(schemaPath("semantic-motion-citychat.schema"));
+const motionMissing = schemaRequiredFields(motion, motionSchema);
+check(motionMissing.length === 0, "motion:schema-required-fields", motionMissing.join(", "));
+check(motion.artifactBuildId === config.artifactBuildId && motion.recordVersion === config.artifactVersion, "motion:artifact-and-version-bound");
+check(motion.scope.fullLivingReference === false && motion.scope.localFixtureStateOnly === true && motion.scope.remoteEffect === false && motion.scope.telemetry === false, "motion:scoped-local-boundary");
+check(motion.executablePrimitives.length === 2 && motion.executablePrimitives.some(primitive => primitive.selector === ".btn") && motion.executablePrimitives.some(primitive => primitive.selector === ".reveal"), "motion:only-inherited-button-and-reveal-primitives");
+check(motion.semanticEventsEmitted.length === 0 && motion.semanticBindings.every(binding => binding.semanticEventEmission === "none" && binding.telemetryFromAnimation === false), "motion:no-semantic-event-or-telemetry-from-animation");
+const revealEnhancement = motion.presentationEnhancements.find(enhancement => enhancement.selectorContract === "[data-reveal-group] > [data-reveal-item]");
+check(Boolean(revealEnhancement) && revealEnhancement.peerCount.maximum <= 5 && revealEnhancement.executionPolicy === "once_per_page_approach" && /class_not_applied/.test(revealEnhancement.reducedMotion), "motion:once-only-max-five-reduced-final-state");
+check((html.match(/<li\b[^>]*data-reveal-item/g) || []).length === 3 && (html.match(/data-reveal-group/g) || []).length === 1, "motion:one-three-item-reading-order-example");
+const motionExample = elementFragmentById("motion-examples");
+check(/nothing is sent or persisted|ไม่มีการส่งหรือบันทึก/i.test(motionExample) && !/class="[^"]*(?:receipt|success|celebrat)/i.test(motionExample), "motion:example-states-local-non-persistent-boundary");
 
 const identity = readJson(config.identityManifest.path);
 check(identity.artifactBuildId === config.artifactBuildId && identity.canonicalUrl === config.canonicalUrl, "identity:artifact-and-url-bound");
@@ -185,10 +353,35 @@ check(buildCard.includes(config.identityManifest.sha256), "build-card:identity-m
 
 const controlInventory = readJson(config.releaseArtifacts.controlInventory);
 const missingControls = controlInventory.controls
-  .filter(control => !html.includes(`id="${control.id}"`) && !html.includes(`class="${control.id}`))
+  .filter(control => !html.includes(`id="${control.id}"`))
   .map(control => control.id);
 check(missingControls.length === 0, "controls:inventory-resolves", missingControls.join(", "));
+check(controlInventory.artifactBuildId === config.artifactBuildId && controlInventory.iconMapRef === iconMapPath, "controls:artifact-and-icon-map-bound");
+check(new Set(controlInventory.controls.map(control => control.id)).size === controlInventory.controls.length, "controls:inventory-ids-unique");
+const geometryFailures = controlInventory.controls.flatMap(control => {
+  const tag = openingTagById(control.id);
+  if (!tag) return [];
+  if (control.geometryRole === "lds_labelled_capsule" && !/class="[^"]*\bbtn\b/.test(tag)) return [`${control.id}:missing-btn`];
+  if (control.geometryRole === "lds_icon_circle" && !/class="[^"]*\bbtn-icon\b/.test(tag)) return [`${control.id}:missing-btn-icon`];
+  return [];
+});
+check(geometryFailures.length === 0, "controls:geometry-role-resolves", geometryFailures.join(" | "));
+const resolutionBySelector = iconResolution.bindings;
+const iconControlFailures = controlInventory.controls.filter(control => control.iconRole).flatMap(control => {
+  const fragment = elementFragmentById(control.id);
+  const role = iconMap.roles.find(candidate => candidate.roleId === control.iconRole);
+  const hasMappedGlyph = role && new RegExp(`<span[^>]*\\bicon-symbol\\b[^>]*>\\s*${escapeRegex(role.glyph)}\\s*</span>`).test(fragment);
+  const hasResolution = resolutionBySelector.some(binding => binding.roleId === control.iconRole && binding.glyph === role?.glyph && binding.selector.includes(`#${control.id}`));
+  return hasMappedGlyph && hasResolution ? [] : [`${control.id}:${control.iconRole}:${hasMappedGlyph ? "glyph-ok" : "glyph-missing"}:${hasResolution ? "binding-ok" : "binding-missing"}`];
+});
+check(iconControlFailures.length === 0, "controls:icon-roles-resolve-through-versioned-map", iconControlFailures.join(" | "));
+const disabledSpecimenFailures = controlInventory.controls
+  .filter(control => /disabled/.test(control.kind))
+  .filter(control => !/\bdisabled\b|aria-disabled="true"/.test(openingTagById(control.id)))
+  .map(control => control.id);
+check(disabledSpecimenFailures.length === 0, "controls:disabled-specimens-are-inert", disabledSpecimenFailures.join(", "));
 check(controlInventory.remoteEffects.length === 0, "controls:no-remote-effects");
+check(controlInventory.presentationEnhancements?.length === 1 && controlInventory.presentationEnhancements[0].replay === false && controlInventory.presentationEnhancements[0].telemetry === false, "controls:one-nonsemantic-once-only-enhancement");
 
 const manifestPath = path.join(deployment, config.releaseArtifacts.manifest);
 if (!writeReport) {
@@ -200,7 +393,12 @@ if (!writeReport) {
     check(manifest.publication.indexable === false && manifest.publication.evidenceStatus === "source_limited", "manifest:publication-truth");
     check(manifest.publication.machineValidation === "pending", "manifest:honest-machine-validation");
     check(manifest.identityManifest.sha256 === config.identityManifest.sha256, "manifest:identity-bound");
+    check(JSON.stringify(manifest.implementationRecords) === JSON.stringify(config.implementationRecords), "manifest:implementation-record-index-bound");
     check(JSON.stringify(manifest.triggeredPacks) === JSON.stringify(config.triggeredPacks), "manifest:triggered-packs");
+    const criticalPaths = new Set(manifest.criticalAssets.map(record => record.path));
+    check(versionedMachineSources.every(relative => criticalPaths.has(relative)), "manifest:implementation-library-machine-records-critical");
+    const priorV06 = manifest.historicalRecords.find(record => record.path === "site-manifest.v0.6.json");
+    check(priorV06?.artifactBuildId === "citychat-ui-20260822-03" && priorV06?.rollbackCommit === "d610ba86ab2e7d4322b38ae5868cb828220d772d" && priorV06?.manifestSha256 === "0ac4ef511bd24f6d696534d3b8443720cbed612cdc5b6ce4f872553c4b2fc46a", "manifest:v0.6-rollback-record-byte-bound");
   }
 }
 
@@ -249,7 +447,7 @@ const report = {
   validator: {
     path: "tools/validate-release.mjs",
     sha256: validatorSha256,
-    contractVersion: "1.0"
+    contractVersion: "1.1"
   },
   scope: "source and contract validation; not native-device or product-runtime certification",
   totals: { checks: checks.length, failures },

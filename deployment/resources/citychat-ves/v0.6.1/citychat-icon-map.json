@@ -1,0 +1,132 @@
+{
+  "$schema": "../../../schemas/citychat-icon-map.schema.v0.6.1.json",
+  "schemaVersion": "1.0",
+  "mapVersion": "citychat-icon-map-v0.6.1",
+  "artifactVersion": "0.6.1",
+  "status": "artifact_governance_record",
+  "scope": "citychat_team_playground_only",
+  "authority": {
+    "vesPath": "../../../assets/downloads/citychat-visual-experience-specification-v0.6.md",
+    "vesSha256": "5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21",
+    "ldsPackagePath": "../../../vendor/landometer/v0.9.0/package.json",
+    "ldsPackageSha256": "0b4b8bfd9abcf403cfebdc8fe9b3299a821eb6e2e96d0d5c9495f1627f206e47",
+    "authorityBoundary": "implementation_binding_under_approved_ves_v0.6_not_new_normative_authority"
+  },
+  "fontManifestRef": "font-assets.manifest.json",
+  "fontAssetId": "material-symbols-rounded-citychat-v368-static-24-300-0-0",
+  "axes": { "FILL": 0, "wght": 300, "GRAD": 0, "opsz": 24, "selectedFill1Supported": false },
+  "roles": [
+    {
+      "roleId": "place",
+      "glyph": "location_on",
+      "codepoint": "U+E0C8",
+      "labelTh": "สถานที่",
+      "labelEn": "Place",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_and_local_teaching",
+      "useBoundary": "Place cue only; never proof of a precise location.",
+      "capabilityGate": { "capabilityId": null, "requiredForProductBinding": false, "currentArtifactState": "available_local_teaching_only", "productBindingAllowed": false }
+    },
+    {
+      "roleId": "conversation",
+      "glyph": "forum",
+      "codepoint": "U+E0BF",
+      "labelTh": "บทสนทนา",
+      "labelEn": "Conversation",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_and_local_teaching",
+      "useBoundary": "Story or thread entry whose visible label names the destination.",
+      "capabilityGate": { "capabilityId": null, "requiredForProductBinding": false, "currentArtifactState": "available_local_teaching_only", "productBindingAllowed": false }
+    },
+    {
+      "roleId": "evidence",
+      "glyph": "description",
+      "codepoint": "U+E683",
+      "labelTh": "ที่มา",
+      "labelEn": "Evidence",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_and_local_teaching",
+      "useBoundary": "Opens a governed local source or implementation record; never means verified by itself.",
+      "capabilityGate": { "capabilityId": null, "requiredForProductBinding": false, "currentArtifactState": "available_local_teaching_only", "productBindingAllowed": false }
+    },
+    {
+      "roleId": "reply",
+      "glyph": "reply",
+      "codepoint": "U+E15E",
+      "labelTh": "ตอบ",
+      "labelEn": "Reply",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_only_capability_gated",
+      "useBoundary": "Replies to the named object or thread only after a real reply effect exists.",
+      "capabilityGate": { "capabilityId": "replyAction", "requiredForProductBinding": true, "currentArtifactState": "not_evidenced", "productBindingAllowed": false }
+    },
+    {
+      "roleId": "share",
+      "glyph": "share",
+      "codepoint": "U+E80D",
+      "labelTh": "แชร์",
+      "labelEn": "Share",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_only_capability_gated",
+      "useBoundary": "Shown only after first value and public-safe preview readiness.",
+      "capabilityGate": { "capabilityId": "networkShare", "requiredForProductBinding": true, "currentArtifactState": "disabled", "productBindingAllowed": false }
+    },
+    {
+      "roleId": "history",
+      "glyph": "history",
+      "codepoint": "U+E28E",
+      "labelTh": "สิ่งที่เปลี่ยน",
+      "labelEn": "What changed",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_only_capability_gated",
+      "useBoundary": "Opens a real versioned change or history; never a synthetic return scene.",
+      "capabilityGate": { "capabilityId": "remotePersistence", "requiredForProductBinding": true, "currentArtifactState": "disabled", "productBindingAllowed": false }
+    },
+    {
+      "roleId": "receipt",
+      "glyph": "receipt_long",
+      "codepoint": "U+EF6E",
+      "labelTh": "ผลการส่ง",
+      "labelEn": "Receipt",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_only_capability_gated",
+      "useBoundary": "Shown only after authoritative persistence from the owning system.",
+      "capabilityGate": { "capabilityId": "remotePersistence", "requiredForProductBinding": true, "currentArtifactState": "disabled", "productBindingAllowed": false }
+    },
+    {
+      "roleId": "officer_work",
+      "glyph": "assignment",
+      "codepoint": "U+E85D",
+      "labelTh": "งานเจ้าหน้าที่",
+      "labelEn": "Officer work",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_only_capability_gated",
+      "useBoundary": "Opens an authorized native work item, not a conceptual officer fixture.",
+      "capabilityGate": { "capabilityId": "officerOperations", "requiredForProductBinding": true, "currentArtifactState": "disabled", "productBindingAllowed": false }
+    },
+    {
+      "roleId": "map",
+      "glyph": "map",
+      "codepoint": "U+E55B",
+      "labelTh": "แผนที่",
+      "labelEn": "Map",
+      "visibleOrAccessibleLabelRequired": true,
+      "artifactUseClass": "library_and_local_teaching",
+      "useBoundary": "Declared local map or context view; never proof that live map data or scoring exists.",
+      "capabilityGate": { "capabilityId": null, "requiredForProductBinding": false, "currentArtifactState": "available_local_teaching_only", "productBindingAllowed": false }
+    }
+  ],
+  "galleryPolicy": {
+    "allowedContainer": "#icon-reference [role=list]",
+    "nonInteractiveSpecimensOnly": true,
+    "doesNotEnableProductCapability": true
+  },
+  "prohibitions": [
+    "Do not use a CityChat logo fragment, motif, emoji or ad-hoc vector as a functional icon.",
+    "Do not infer a synonym outside this closed role map, even when the subset contains an alias.",
+    "Do not let an icon carry status, evidence, priority or effect without visible or accessible text.",
+    "Do not render FILL 1 with this static subset; selectedFill1Supported is false.",
+    "Do not bind library-only roles to product controls until their named capability is evidenced and enabled.",
+    "Do not load Google Fonts at runtime; this artifact uses only the hashed local file."
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0",
+  "authorizationId": "CC-VES-PLAYGROUND-REL-20260823-01",
+  "recordedAt": "2026-08-23",
+  "approverRef": "user:03-citychat-project-owner",
+  "source": "Explicit user request in the current 03 CityChat project task",
+  "sourceExcerptTh": "จัดไปครับ ทำให้ครบ republish ใหม่",
+  "precedingScope": "Complete the CityChat button, governed self-hosted icon, scoped motion/interaction, and CityChat Color Usage Atlas implementation, then replace the existing playground at the same URL.",
+  "artifact": {
+    "name": "CityChat VES Interactive Playground",
+    "version": "0.6.1",
+    "artifactBuildId": "citychat-ui-20260823-01",
+    "canonicalUrl": "https://montri-th.github.io/CityChat/",
+    "delivery": "internal_demo_public_projection",
+    "publicationBoundary": "source_limited_noindex_page_request"
+  },
+  "authorizes": [
+    "Publish artifact v0.6.1 as an implementation of approved CityChat VES v0.6",
+    "Replace the prior playground at the same canonical URL after source, rendered, provider and live-byte gates pass",
+    "Use the exact unchanged CityChat horizontal lockup PNG as separately governed header and footer roles for this exact build and URL",
+    "Use the exact self-hosted LDS type delivery and the exact self-hosted Material Symbols Rounded subset registered for this artifact",
+    "Teach LDS button geometry through working local controls and exact resource links",
+    "Teach scoped once-only reading-order motion through executable LDS primitives without replay, fake liveness or fake persistence",
+    "Publish a CityChat Color Usage Atlas that maps CityChat jobs to the pinned LDS color registry without copying a second design system"
+  ],
+  "identityRoleApprovals": [
+    {
+      "approvalId": "CC-ID-ROLE-APP-20260823-HEADER-01",
+      "role": "header_lockup",
+      "assetPath": "assets/identity/citychat-horizontal-lockup.png",
+      "approvedContentHash": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62",
+      "artifactBuildId": "citychat-ui-20260823-01",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/",
+      "surfaceRef": "lds:--brand-beige",
+      "surfaceDecision": "direct_surface",
+      "themes": ["light", "dark", "system"],
+      "outputTypes": ["webpage"],
+      "transformPolicy": "none",
+      "cropPolicy": "none",
+      "maskPolicy": "none",
+      "filterPolicy": "none",
+      "recolorPolicy": "none",
+      "animationPolicy": "none",
+      "qaRequired": ["CC-AC-IDENTITY-03", "CC-AC-IDENTITY-05", "rendered-local.v0.6.1", "provider-required-check"]
+    },
+    {
+      "approvalId": "CC-ID-ROLE-APP-20260823-FOOTER-01",
+      "role": "footer_lockup",
+      "assetPath": "assets/identity/citychat-horizontal-lockup.png",
+      "approvedContentHash": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62",
+      "artifactBuildId": "citychat-ui-20260823-01",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/",
+      "surfaceRef": "lds:--brand-beige",
+      "surfaceDecision": "direct_surface",
+      "themes": ["light", "dark", "system"],
+      "outputTypes": ["webpage"],
+      "transformPolicy": "none",
+      "cropPolicy": "none",
+      "maskPolicy": "none",
+      "filterPolicy": "none",
+      "recolorPolicy": "none",
+      "animationPolicy": "none",
+      "qaRequired": ["CC-AC-IDENTITY-03", "CC-AC-IDENTITY-05", "rendered-local.v0.6.1", "provider-required-check"]
+    }
+  ],
+  "doesNotAuthorize": [
+    "A new VES version; approved CityChat VES v0.6 remains the normative authoring authority",
+    "Any product runtime, remote effect, persistence, receipt, LINE, CityScan scoring, sharing or officer workflow capability",
+    "Use of library-only icon roles as product controls without their capability and privacy preconditions",
+    "A reusable logo role outside this exact build and URL",
+    "Any logo redraw, crop, recolor, filter, mask, animation or screenshot-derived asset",
+    "Use of source SVG files as runtime, compact, favicon, touch, maskable, social or motif assets",
+    "A complete LDS living reference, analytical color scale, search indexing, telemetry or production conformance claim"
+  ],
+  "publicationAuthorization": true,
+  "runtimeProductReleaseApproved": false,
+  "effectiveWhen": [
+    "Local source and rendered checks pass on the frozen bytes",
+    "Protected pull-request checks pass on the exact reviewed commit",
+    "The main-branch Pages deployment succeeds",
+    "Live critical assets match the merged source bytes"
+  ]
+}

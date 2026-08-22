@@ -1,0 +1,104 @@
+citychatBuild:
+  artifact:
+    name: CityChat VES Interactive Playground
+    product: citychat
+    version: 0.6.1
+    artifactBuildId: citychat-ui-20260823-01
+    pageKind: design-identity-playground
+    profile: designsystem.adoption
+    oneJob: help the CityChat team see, try, explain, and implement approved VES v0.6 through working examples
+    delivery: internal_demo_public_projection
+    outputType: webpage
+    language: th
+    additionalLanguages: [en]
+  publication:
+    visibility: public
+    indexable: false
+    evidenceStatus: source_limited
+    canonicalUrl: https://montri-th.github.io/CityChat/
+    machineValidation: pending
+    deliveryConformance: not_claimed
+  landometerFoundation:
+    dsVersion: 0.9.0
+    authoringRevision: v0.9.0-r7
+    machinePackage: v0.9.0-mp1
+    colorSetId: color-srgb-05
+    kitVersion: lds-kit-0.9.0-r4
+    upstreamArtifactBuildId: ui-20260821-05
+    upstreamCommit: d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665
+    vendorPath: vendor/landometer/v0.9.0
+    vendorPolicy: immutable byte-identical snapshot
+  citychatAuthority:
+    visualExperiencePath: assets/downloads/citychat-visual-experience-specification-v0.6.md
+    visualExperienceSha256: 5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21
+    visualExperienceStatus: approved_normative_authoring_authority
+    normativeApprovalPath: assets/downloads/citychat-ves-v0.6-approval.json
+    normativeApprovalSha256: 9e9caa440f07348a0e2cabb53390e0aaab830e0aa1e3a742c51011a5cb0796cd
+    normativeApprovalId: CC-VES-APP-20260822-01
+    releaseAuthorizationPath: assets/downloads/citychat-ves-playground-release-authorization.v0.6.1.json
+    releaseAuthorizationSha256: 5c31044ac030fbcca3335fdbb6c8cef7d943737d6b150956dfcb5bdbf17cc4e3
+    releaseAuthorizationId: CC-VES-PLAYGROUND-REL-20260823-01
+    experienceContractPath: assets/downloads/citychat-product-experience-profile-v0.4.md
+    experienceContractSha256: f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba
+    experienceContractStatus: draft_candidate
+    productAuthority: draft_truth
+    visualExperienceAuthorityScope: approved_composition_narrative_presentation_motion_application_and_implementation_recipes
+    capabilityEvidenceStatus: source_limited
+    deliveryAvailability: accepted
+    deliveryAvailabilityScope: this_team_playground_only
+    identityManifestPath: assets/identity/identity-assets.v0.6.1.json
+    identityManifestSha256: 56a5cc6f4fbecdcb150deea5fc91f81a795cab32d8b746eeb639fd3b8bce6bef
+  identity:
+    headerRoleApproval: CC-ID-ROLE-APP-20260823-HEADER-01
+    footerRoleApproval: CC-ID-ROLE-APP-20260823-FOOTER-01
+    assetSha256: 94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62
+    surfaceRef: lds:--brand-beige
+    transformPolicy: none
+    omittedRoles: [compact_product_mark, browser_tab_favicon, search_result_favicon, apple_touch_icon, maskable_app_icon, social_preview_identity, share_preview_identity, splash_identity, watermark, export_mark, identity_motif, supporting_illustration]
+  implementationLibrary:
+    fullLivingReference: false
+    search: false
+    referenceFixtures: []
+    buttons: pinned_lds_btn_capsule_or_circle
+    icons: self_hosted_material_symbols_rounded_subset_v368
+    iconFontSha256: 42cd00d98dd631ddf6b3d5a47ba34e6eed83d2a6e3fd35ef5f4f8e0e6632ba30
+    motion: scoped_once_only_reading_order_and_button_feedback
+    colorAtlas: product_usage_overlay_not_full_lds_atlas
+    analyticalScale: unavailable_without_owning_registry
+  triggeredPacks: [PUB-01, DELIVERY-01:web]
+  supportedChannels: [github_pages_team_playground]
+  qaEvidence:
+    automatedPath: qa/automated.v0.6.1.json
+    renderedPath: qa/rendered-local.v0.6.1.json
+    renderedProviderCheck: pending_required_pr_check
+    manualPath: qa/manual-gates.v0.6.1.md
+    nativeDeviceStatus: open
+  releaseReceipt:
+    status: pending_provider_deploy
+    targetUrl: https://montri-th.github.io/CityChat/
+  firstValue:
+    target: first viewport shows one place, one honest local meaning, one supported question, and the expected consequence of one preview action
+    maximumEssentialInputs: zero before first value
+    primaryAction: ลองตัวอย่าง VES
+  privacy:
+    visibility: public
+    sensitivity: public
+    personalData: none
+    analytics: false
+    remotePersistence: false
+    localStorage: theme and locale preferences only
+  effects:
+    remoteMutation: false
+    localFixtureState: true
+    clipboardCopy: true
+    receiptPolicy: conceptual saved-and-return examples never claim product persistence
+  disabledCapabilities: [lineIntegration, productionCityScanScoring, productReceiptPersistence, officerOperationsRuntime, remoteShare, telemetry]
+  releaseBoundary:
+    approvedVesDoesNotMeanRuntime: true
+    targetDoesNotMeanShipped: true
+    fixturesAreConceptual: true
+    fullLivingReference: false
+    noNamedMunicipalityProof: true
+    identityHeaderFooterApproval: exact_build_and_url_only
+    identityFaviconApproval: unresolved
+    nativeDeviceGate: open

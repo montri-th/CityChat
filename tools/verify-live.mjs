@@ -29,15 +29,21 @@ const mimeByExtension = {
   ".yml": ["text/yaml", "application/yaml", "text/plain", "application/octet-stream"],
   ".png": ["image/png"],
   ".svg": ["image/svg+xml"],
-  ".woff2": ["font/woff2", "application/font-woff", "application/octet-stream"]
+  ".woff2": ["font/woff2", "application/font-woff", "application/octet-stream"],
+  ".ttf": ["font/ttf", "font/sfnt", "application/x-font-ttf", "application/octet-stream"]
 };
+
+for (const record of manifest.historicalRecords || []) {
+  if (!record.manifestSha256) continue;
+  const bytes = readFileSync(path.join(deployment, record.path));
+  if (sha256(bytes) !== record.manifestSha256) throw new Error(`Historical manifest hash mismatch: ${record.path}`);
+}
 
 const critical = [...new Set([
   "index.html",
   config.releaseArtifacts.manifest,
   config.releaseArtifacts.checksums,
-  "site-manifest.v0.5.json",
-  "site-manifest.v0.4.json",
+  ...(manifest.historicalRecords || []).map(record => record.path),
   ...manifest.criticalAssets.map(record => record.path)
 ])];
 

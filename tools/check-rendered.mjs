@@ -25,6 +25,9 @@ const checks = [];
 let failures = 0;
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
 const validatorSha256 = sha256(readFileSync(validatorPath));
+const implementationRecordRoot = `resources/citychat-ves/v${config.artifactVersion}`;
+const implementationPath = name => `${implementationRecordRoot}/${name}`;
+const schemaPath = name => `schemas/${name}.v${config.artifactVersion}.json`;
 
 function check(ok, name, detail = "") {
   checks.push({ name, ok: Boolean(ok), ...(detail ? { detail } : {}) });
@@ -41,11 +44,22 @@ const testedSourcePaths = [
   ["deployment/app.js", path.join(deployment, "app.js")],
   [`deployment/${config.releaseArtifacts.buildCard}`, path.join(deployment, config.releaseArtifacts.buildCard)],
   [`deployment/${config.releaseArtifacts.controlInventory}`, path.join(deployment, config.releaseArtifacts.controlInventory)],
-  [`deployment/${config.identityManifest.path}`, path.join(deployment, config.identityManifest.path)]
+  [`deployment/${config.identityManifest.path}`, path.join(deployment, config.identityManifest.path)],
+  [`deployment/${implementationPath("citychat-color-role-map.json")}`, path.join(deployment, implementationPath("citychat-color-role-map.json"))],
+  [`deployment/${implementationPath("citychat-icon-map.json")}`, path.join(deployment, implementationPath("citychat-icon-map.json"))],
+  [`deployment/${implementationPath("citychat-icon-resolution.json")}`, path.join(deployment, implementationPath("citychat-icon-resolution.json"))],
+  [`deployment/${implementationPath("font-assets.manifest.json")}`, path.join(deployment, implementationPath("font-assets.manifest.json"))],
+  [`deployment/${implementationPath("semantic-motion.citychat.yml")}`, path.join(deployment, implementationPath("semantic-motion.citychat.yml"))],
+  [`deployment/${schemaPath("citychat-color-role-map.schema")}`, path.join(deployment, schemaPath("citychat-color-role-map.schema"))],
+  [`deployment/${schemaPath("citychat-icon-map.schema")}`, path.join(deployment, schemaPath("citychat-icon-map.schema"))],
+  [`deployment/${schemaPath("semantic-motion-citychat.schema")}`, path.join(deployment, schemaPath("semantic-motion-citychat.schema"))],
+  ["tools/check-rendered.mjs", validatorPath]
 ];
 const sourceHasher = createHash("sha256");
 for (const [label, absolute] of testedSourcePaths) sourceHasher.update(label).update("\0").update(readFileSync(absolute)).update("\0");
 const testedSourceDigest = sourceHasher.digest("hex");
+const iconMap = JSON.parse(readFileSync(path.join(deployment, implementationPath("citychat-icon-map.json")), "utf8"));
+const iconResolution = JSON.parse(readFileSync(path.join(deployment, implementationPath("citychat-icon-resolution.json")), "utf8"));
 
 const mime = {
   ".html": "text/html; charset=utf-8",
@@ -58,7 +72,8 @@ const mime = {
   ".yaml": "text/yaml; charset=utf-8",
   ".png": "image/png",
   ".svg": "image/svg+xml",
-  ".woff2": "font/woff2"
+  ".woff2": "font/woff2",
+  ".ttf": "font/ttf"
 };
 
 const server = createServer((request, response) => {
@@ -102,7 +117,8 @@ async function loadFonts(page) {
       document.fonts.load('700 24px "IBM Plex Sans Thai Looped"', "หัวข้อภาษาไทย"),
       document.fonts.load('700 24px "Arvo"', "English heading"),
       document.fonts.load('400 14px "IBM Plex Sans Thai"', "ข้อมูล 2569"),
-      document.fonts.load('400 14px "JetBrains Mono"', "FIXTURE-01")
+      document.fonts.load('400 14px "JetBrains Mono"', "FIXTURE-01"),
+      document.fonts.load('300 24px "Material Symbols Rounded"', "location_on forum description reply share history receipt_long assignment map")
     ]);
   });
 }
@@ -146,7 +162,8 @@ try {
         thaiHeading: document.fonts.check('700 24px "IBM Plex Sans Thai Looped"', "หัวข้อภาษาไทย"),
         englishHeading: document.fonts.check('700 24px "Arvo"', "English heading"),
         thaiTechnical: document.fonts.check('400 14px "IBM Plex Sans Thai"', "ข้อมูล 2569"),
-        latinTechnical: document.fonts.check('400 14px "JetBrains Mono"', "FIXTURE-01")
+        latinTechnical: document.fonts.check('400 14px "JetBrains Mono"', "FIXTURE-01"),
+        materialSymbols: document.fonts.check('300 24px "Material Symbols Rounded"', "location_on forum description reply share history receipt_long assignment map")
       };
       const identity = [...document.querySelectorAll("[data-identity-role]")].map(node => {
         const image = node.querySelector("img");
@@ -177,6 +194,7 @@ try {
         viewportHeight: window.innerHeight,
         h1Visible: Boolean(document.querySelector("h1")?.getClientRects().length),
         heroActionVisible: Boolean(document.querySelector(".hero-action")?.getClientRects().length),
+        implementationLibraryVisible: Boolean(document.querySelector("#implementation-library")?.getClientRects().length),
         firstMeaningInViewport: Boolean(heroMeaning && heroMeaning.top < window.innerHeight && heroMeaning.bottom > 0),
         locale: document.documentElement.lang,
         themePreference: document.documentElement.dataset.themePreference,
@@ -194,7 +212,45 @@ try {
         targetHeights: [...document.querySelectorAll("button, summary, .btn")]
           .filter(node => node.getClientRects().length)
           .map(node => ({ label: node.textContent.trim().slice(0, 40), height: node.getBoundingClientRect().height })),
-        criticalOverflow: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .scan-state-preview, .scan-composition, .scan-frame-geometry, .component-index, .case-grid, .preflight-layout, .resource-grid, .footer-grid")]
+        controlGeometry: [...document.querySelectorAll(".btn")]
+          .filter(node => node.getClientRects().length)
+          .map(node => {
+            const style = getComputedStyle(node);
+            const rect = node.getBoundingClientRect();
+            const icon = node.querySelector(".icon-symbol");
+            return {
+              id: node.id || node.textContent.trim().slice(0, 32),
+              iconOnly: node.classList.contains("btn-icon"),
+              width: rect.width,
+              height: rect.height,
+              paddingLeft: parseFloat(style.paddingLeft),
+              paddingRight: parseFloat(style.paddingRight),
+              gap: parseFloat(style.gap),
+              alignItems: style.alignItems,
+              borderRadius: parseFloat(style.borderTopLeftRadius),
+              hasIcon: Boolean(icon),
+              accessibleName: node.getAttribute("aria-label") || node.textContent.trim()
+            };
+          }),
+        iconMetrics: [...document.querySelectorAll(".icon-symbol")]
+          .filter(node => node.getClientRects().length)
+          .map(node => {
+            const style = getComputedStyle(node);
+            const rect = node.getBoundingClientRect();
+            return {
+              glyph: node.textContent.trim(),
+              family: style.fontFamily,
+              axes: style.fontVariationSettings,
+              color: style.color,
+              width: rect.width,
+              height: rect.height,
+              hidden: node.getAttribute("aria-hidden")
+            };
+          }),
+        colorTokenValues: [...document.querySelectorAll("[data-color-token] [data-token-value]")]
+          .filter(node => node.getClientRects().length)
+          .map(node => node.textContent.trim()),
+        criticalOverflow: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .scan-state-preview, .scan-composition, .scan-frame-geometry, .component-index, .implementation-library, .implementation-router, .lab-panel, .control-showcase, .icon-grid, .motion-layout, .color-groups, .case-grid, .preflight-layout, .resource-grid, .footer-grid")]
           .filter(node => node.getClientRects().length)
           .map(node => ({ node, rect: node.getBoundingClientRect() }))
           .filter(({ rect }) => rect.left < -1 || rect.right > document.documentElement.clientWidth + 1)
@@ -219,7 +275,7 @@ try {
     check(responseFailures.length === 0, `render:${key}:assets-2xx`, responseFailures.join(" | "));
     check(thirdPartyFontRequests.length === 0, `render:${key}:no-third-party-fonts`, thirdPartyFontRequests.join(" | "));
     check(metrics.htmlWidth <= metrics.clientWidth + 1, `render:${key}:no-horizontal-overflow`, `${metrics.htmlWidth}/${metrics.clientWidth}`);
-    check(metrics.h1Visible && metrics.heroActionVisible, `render:${key}:essential-content-visible`);
+    check(metrics.h1Visible && metrics.heroActionVisible && metrics.implementationLibraryVisible, `render:${key}:essential-content-and-library-rendered`);
     if (item.width <= 390 && item.height >= 760) check(metrics.firstMeaningInViewport, `render:${key}:first-value-in-initial-viewport`);
     check(metrics.boundaryVisible, `render:${key}:fixture-boundary-visible`);
     check(metrics.visibleViews.length === 1 && metrics.visibleViews[0] === item.mode, `render:${key}:exactly-one-journey-view`, JSON.stringify(metrics.visibleViews));
@@ -231,11 +287,21 @@ try {
     check(item.locale === "th" ? metrics.typeDemoFont.includes("IBM Plex Sans Thai Looped") : metrics.typeDemoFont.includes("Arvo"), `render:${key}:type-demo-font`, metrics.typeDemoFont);
     check(metrics.fontSynthesis === "none", `render:${key}:font-synthesis-none`, metrics.fontSynthesis);
     check(Object.values(metrics.fontChecks).every(Boolean), `render:${key}:all-self-hosted-font-faces-loaded`, JSON.stringify(metrics.fontChecks));
+    check(metrics.iconMetrics.length >= 9 && metrics.iconMetrics.every(icon => icon.family.includes("Material Symbols Rounded") && /FILL.+0/.test(icon.axes) && /wght.+300/.test(icon.axes) && /GRAD.+0/.test(icon.axes) && /opsz.+24/.test(icon.axes) && icon.width > 0 && icon.height > 0 && icon.hidden === "true"), `render:${key}:icon-subset-inherited-axes-and-accessibility`, JSON.stringify(metrics.iconMetrics.slice(0, 3)));
     check(metrics.identity.length === 2 && metrics.identity.every(record => record.natural === "380x82" && Math.abs(record.ratio - 380 / 82) < 0.02), `render:${key}:identity-intrinsic-ratio`, JSON.stringify(metrics.identity));
     check(metrics.identity.every(record => /rgba?\(0, 0, 0, 0\)/.test(record.background) && record.filter === "none" && record.opacity === "1" && record.transform === "none" && record.animation === "none" && record.mask === "none"), `render:${key}:identity-no-local-carrier-or-transform`, JSON.stringify(metrics.identity));
     check(metrics.headerBackground === metrics.brandBeige && metrics.footerBackground === metrics.brandBeige, `render:${key}:identity-full-beige-bands`, `${metrics.headerBackground}/${metrics.footerBackground}/${metrics.brandBeige}`);
     const shortTargets = metrics.targetHeights.filter(target => target.height < 43.5);
     check(shortTargets.length === 0, `render:${key}:44px-controls`, shortTargets.slice(0, 3).map(target => `${target.label}:${target.height}`).join(" | "));
+    const labelledGeometryFailures = metrics.controlGeometry
+      .filter(control => !control.iconOnly)
+      .filter(control => control.height < 43.5 || control.paddingLeft < 23.5 || control.paddingRight < 23.5 || control.alignItems !== "center" || control.borderRadius < control.height / 2 - 2 || (control.hasIcon && control.gap < 7.5));
+    check(labelledGeometryFailures.length === 0, `render:${key}:lds-labelled-capsule-geometry`, JSON.stringify(labelledGeometryFailures.slice(0, 4)));
+    const circleGeometryFailures = metrics.controlGeometry
+      .filter(control => control.iconOnly)
+      .filter(control => Math.abs(control.width - 44) > 0.75 || Math.abs(control.height - 44) > 0.75 || control.paddingLeft > 0.5 || control.paddingRight > 0.5 || control.borderRadius < 21 || !control.hasIcon || !control.accessibleName);
+    check(circleGeometryFailures.length === 0 && metrics.controlGeometry.some(control => control.iconOnly), `render:${key}:lds-icon-circle-44px-and-named`, JSON.stringify(circleGeometryFailures));
+    check(metrics.colorTokenValues.length >= 7 && metrics.colorTokenValues.every(value => value && value !== "unresolved"), `render:${key}:visible-color-atlas-values-resolve`, JSON.stringify(metrics.colorTokenValues));
     await page.close();
   }
 
@@ -284,6 +350,34 @@ try {
 
   const interactionPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story`, { waitUntil: "networkidle" });
+  await loadFonts(interactionPage);
+  for (const binding of iconResolution.bindings) {
+    const nodes = interactionPage.locator(binding.selector);
+    const count = await nodes.count();
+    const resolved = count === 1 ? await nodes.first().evaluate((node, expected) => {
+      const icon = node.matches(".icon-symbol") ? node : node.querySelector(".icon-symbol");
+      return {
+        glyph: icon?.textContent.trim() || "",
+        hidden: icon?.getAttribute("aria-hidden") || "",
+        family: icon ? getComputedStyle(icon).fontFamily : "",
+        name: node.getAttribute("aria-label") || node.textContent.trim()
+      };
+    }, binding.glyph) : null;
+    check(count === 1 && resolved?.glyph === binding.glyph && resolved?.hidden === "true" && resolved?.family.includes("Material Symbols Rounded") && Boolean(resolved?.name), `icons:binding:${binding.bindingId}:resolves`, JSON.stringify({ count, resolved }));
+  }
+  const galleryGlyphs = await interactionPage.locator("#icon-reference [role='list'] .icon-symbol").allTextContents();
+  check(galleryGlyphs.length === iconMap.roles.length && iconMap.roles.every(role => galleryGlyphs.map(value => value.trim()).includes(role.glyph)), "icons:gallery-covers-closed-role-map", JSON.stringify(galleryGlyphs));
+  const atlasBefore = await interactionPage.locator("[data-color-token] [data-token-value]").allTextContents();
+  await interactionPage.click("#theme-cycle");
+  const atlasAfter = await interactionPage.locator("[data-color-token] [data-token-value]").allTextContents();
+  check(atlasBefore.length >= 7 && atlasBefore.some((value, index) => value !== atlasAfter[index]) && atlasAfter.every(value => value && value !== "unresolved"), "interaction:color-atlas-updates-with-theme", JSON.stringify({ before: atlasBefore, after: atlasAfter }));
+  await interactionPage.click("#demo-action");
+  await interactionPage.waitForFunction(() => Boolean(document.querySelector('body > .visually-hidden[role="status"]')?.textContent.trim()));
+  const demoAction = await interactionPage.evaluate(() => ({
+    result: document.querySelector("#demo-action-result")?.textContent.trim() || "",
+    announcement: document.querySelector('body > .visually-hidden[role="status"]')?.textContent.trim() || ""
+  }));
+  check(/ทำงานแล้ว|worked locally/i.test(demoAction.result) && Boolean(demoAction.announcement), "interaction:control-example-updates-local-result-and-announces", JSON.stringify(demoAction));
   await interactionPage.focus("#mode-story");
   await interactionPage.keyboard.press("ArrowRight");
   check(await interactionPage.getAttribute("#mode-return", "aria-selected") === "true", "interaction:tab-story-to-return");
@@ -304,15 +398,21 @@ try {
   await interactionPage.click("#open-story-from-lock");
   const lockHandoff = await interactionPage.evaluate(() => {
     const origin = document.querySelector("[data-lock-origin]");
+    const heading = document.querySelector("#story-result-heading");
+    const headingRect = heading?.getBoundingClientRect();
     return {
       visible: Boolean(origin?.getClientRects().length),
       text: origin?.textContent || "",
       placeRef: origin?.dataset.placeRef || "",
-      snapshotRef: origin?.dataset.snapshotRef || ""
+      snapshotRef: origin?.dataset.snapshotRef || "",
+      mode: document.querySelector("[data-story-view]:not([hidden])")?.dataset.storyView || "",
+      activeElement: document.activeElement?.id || "",
+      headingInViewport: Boolean(headingRect && headingRect.top >= 0 && headingRect.bottom <= window.innerHeight)
     };
   });
   check(lockHandoff.visible && /เฉพาะหน้านี้|on this page/i.test(lockHandoff.text), "interaction:locked-fixture-handoff-visible", JSON.stringify(lockHandoff));
   check(lockHandoff.placeRef === "PLACE-DEMO-01" && lockHandoff.snapshotRef === "FIXTURE-SCAN-LOCK-01", "interaction:locked-fixture-context-preserved", JSON.stringify(lockHandoff));
+  check(lockHandoff.mode === "story" && lockHandoff.activeElement === "story-result-heading" && lockHandoff.headingInViewport, "interaction:locked-handoff-focus-and-scroll", JSON.stringify(lockHandoff));
   for (const input of await interactionPage.$$("#preflight-form input[type='checkbox']")) await input.check();
   check(await interactionPage.textContent("#preflight-count") === "6/6", "interaction:preflight-progress");
   if (screenshotPath) {
@@ -321,15 +421,49 @@ try {
   }
   await interactionPage.close();
 
+  const motionPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await motionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story`, { waitUntil: "networkidle" });
+  const motionInitial = await motionPage.evaluate(() => ({
+    groups: document.querySelectorAll("[data-reveal-group]").length,
+    items: document.querySelectorAll("[data-reveal-group] > [data-reveal-item]").length,
+    active: document.querySelectorAll("[data-reveal-item].reveal").length
+  }));
+  check(motionInitial.groups === 1 && motionInitial.items === 3 && motionInitial.active === 0, "motion:reading-order-initially-stable", JSON.stringify(motionInitial));
+  await motionPage.locator("[data-reveal-group]").scrollIntoViewIfNeeded();
+  await motionPage.waitForFunction(() => document.querySelector("[data-reveal-group]")?.dataset.revealComplete === "true");
+  await motionPage.waitForFunction(() => document.querySelectorAll("[data-reveal-item].reveal").length === 3);
+  const activeReveal = await motionPage.evaluate(() => [...document.querySelectorAll("[data-reveal-group] > [data-reveal-item]")].map(node => ({
+    animation: getComputedStyle(node).animationName,
+    delay: getComputedStyle(node).animationDelay
+  })));
+  check(activeReveal.every(item => item.animation === "lds-reveal") && new Set(activeReveal.map(item => item.delay)).size === 3, "motion:inherited-once-only-stagger-runs", JSON.stringify(activeReveal));
+  await motionPage.waitForFunction(() => document.querySelectorAll("[data-reveal-item].reveal").length === 0);
+  await motionPage.evaluate(() => window.scrollTo(0, 0));
+  await motionPage.locator("[data-reveal-group]").scrollIntoViewIfNeeded();
+  await motionPage.waitForTimeout(180);
+  const replayState = await motionPage.evaluate(() => ({
+    complete: document.querySelector("[data-reveal-group]")?.dataset.revealComplete,
+    active: document.querySelectorAll("[data-reveal-item].reveal").length
+  }));
+  check(replayState.complete === "true" && replayState.active === 0, "motion:reading-order-does-not-replay", JSON.stringify(replayState));
+  await motionPage.close();
+
   const reduced = await browser.newContext({ reducedMotion: "reduce", viewport: { width: 390, height: 844 } });
   const reducedPage = await reduced.newPage();
   await reducedPage.goto(`${baseUrl}?lang=th&theme=dark`, { waitUntil: "networkidle" });
+  await reducedPage.locator("[data-reveal-group]").scrollIntoViewIfNeeded();
   const reducedMetrics = await reducedPage.evaluate(() => ({
     scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
-    resourceTransition: getComputedStyle(document.querySelector(".resource-card")).transitionDuration
+    complete: document.querySelector("[data-reveal-group]")?.dataset.revealComplete || "",
+    items: [...document.querySelectorAll("[data-reveal-group] > [data-reveal-item]")].map(node => ({
+      active: node.classList.contains("reveal"),
+      animation: getComputedStyle(node).animationName,
+      opacity: getComputedStyle(node).opacity,
+      transform: getComputedStyle(node).transform
+    }))
   }));
   check(reducedMetrics.scrollBehavior === "auto", "motion:reduced-scroll-final-state", reducedMetrics.scrollBehavior);
-  check(reducedMetrics.resourceTransition.split(",").every(value => parseFloat(value) === 0), "motion:reduced-transition", reducedMetrics.resourceTransition);
+  check(reducedMetrics.complete === "" && reducedMetrics.items.every(item => !item.active && item.animation === "none" && item.opacity === "1" && item.transform === "none"), "motion:reduced-reveal-final-state-without-activation", JSON.stringify(reducedMetrics));
   await reduced.close();
 
   const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 360, height: 800 } });
@@ -341,11 +475,18 @@ try {
     visibleViews: [...document.querySelectorAll("[data-story-view]")].filter(node => node.getClientRects().length).length,
     jsControlsVisible: [...document.querySelectorAll(".js-only")].some(node => node.getClientRects().length),
     noscriptVisible: Boolean(document.querySelector(".noscript-note")?.getClientRects().length),
-    overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
+    overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+    implementationLibraryVisible: Boolean(document.querySelector("#implementation-library")?.getClientRects().length),
+    revealItems: [...document.querySelectorAll("[data-reveal-group] > [data-reveal-item]")].map(node => ({
+      active: node.classList.contains("reveal"),
+      opacity: getComputedStyle(node).opacity,
+      transform: getComputedStyle(node).transform
+    }))
   }));
   check(noJsMetrics.h1Visible && noJsMetrics.storyVisible && noJsMetrics.visibleViews === 1, "no-js:single-read-only-guidance-visible");
   check(!noJsMetrics.jsControlsVisible && noJsMetrics.noscriptVisible, "no-js:honest-non-operable-fallback");
   check(!noJsMetrics.overflow, "no-js:no-horizontal-overflow");
+  check(noJsMetrics.implementationLibraryVisible && noJsMetrics.revealItems.length === 3 && noJsMetrics.revealItems.every(item => !item.active && item.opacity === "1" && item.transform === "none"), "no-js:library-and-motion-final-state-visible", JSON.stringify(noJsMetrics.revealItems));
   await noJs.close();
 
   const stressPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
@@ -358,7 +499,7 @@ try {
   const thaiStress = await stressPage.evaluate(() => ({
     page: `${document.documentElement.scrollWidth}/${document.documentElement.clientWidth}`,
     overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-    wideNodes: [...document.querySelectorAll("h1, h2, h3, h4, p, li, button, summary, .card, .context-place, .site-header, .route-list, .play-controls, .journey-layout, .scan-composition, .resource-grid")]
+    wideNodes: [...document.querySelectorAll("h1, h2, h3, h4, p, li, button, summary, .card, .context-place, .site-header, .route-list, .play-controls, .journey-layout, .scan-composition, .implementation-library, .implementation-router, .control-showcase, .icon-grid, .motion-layout, .color-groups, .resource-grid")]
       .filter(node => node.getClientRects().length)
       .filter(node => {
         const rect = node.getBoundingClientRect();
@@ -385,10 +526,22 @@ try {
   await zoomPage.evaluate(() => { document.body.style.zoom = "2"; });
   const zoomMetrics = await zoomPage.evaluate(() => ({
     overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
+    page: `${document.documentElement.scrollWidth}/${document.documentElement.clientWidth}`,
     h1Visible: Boolean(document.querySelector("h1")?.getClientRects().length),
-    firstActionVisible: Boolean(document.querySelector(".hero-action")?.getClientRects().length)
+    firstActionVisible: Boolean(document.querySelector(".hero-action")?.getClientRects().length),
+    wideNodes: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .implementation-library, .implementation-router, .lab-panel, .control-showcase, .icon-grid, .motion-layout, .color-groups, .preflight-layout, .resource-grid, .footer-grid")]
+      .filter(node => node.getClientRects().length)
+      .filter(node => {
+        const rect = node.getBoundingClientRect();
+        return rect.left < -1 || rect.right > document.documentElement.clientWidth + 1 || node.scrollWidth > node.clientWidth + 2;
+      })
+      .slice(0, 12)
+      .map(node => {
+        const rect = node.getBoundingClientRect();
+        return { node: `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}.${String(node.className).replace(/\s+/g, ".")}`, rect: `${Math.round(rect.left)}..${Math.round(rect.right)}`, size: `${node.scrollWidth}/${node.clientWidth}` };
+      })
   }));
-  check(!zoomMetrics.overflow && zoomMetrics.h1Visible && zoomMetrics.firstActionVisible, "type:200-percent-zoom-essential-content");
+  check(!zoomMetrics.overflow && zoomMetrics.h1Visible && zoomMetrics.firstActionVisible, "type:200-percent-zoom-essential-content", JSON.stringify(zoomMetrics));
   await zoomPage.close();
 } finally {
   await browser.close();
@@ -427,7 +580,7 @@ const report = {
   validator: {
     path: "tools/check-rendered.mjs",
     sha256: validatorSha256,
-    contractVersion: "1.0"
+    contractVersion: "1.1"
   },
   browser: "Chromium via Playwright 1.54.1 contract",
   scope: "rendered local HTTP; native-device, screen-reader, and product-runtime gates remain open",

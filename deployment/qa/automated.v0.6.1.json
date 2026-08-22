@@ -1,0 +1,609 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260823-01",
+  "testedSourceDigest": "4ff13b17cd96e268bfda49d5a9b6386fee5ba39711cea9d11526f83f9aa1de71",
+  "testedSourceDigestAlgorithm": "sha256(path-NUL-bytes-NUL in declared order)",
+  "testedSourcePaths": [
+    "release.config.json",
+    "deployment/index.html",
+    "deployment/citychat.css",
+    "deployment/app.js",
+    "deployment/build-card.v0.6.1.yml",
+    "deployment/control-inventory.v0.6.1.json",
+    "deployment/implementation-notes.v0.6.1.md",
+    "deployment/assets/identity/identity-assets.v0.6.1.json",
+    "deployment/assets/downloads/citychat-visual-experience-specification-v0.6.md",
+    "deployment/assets/downloads/citychat-ves-v0.6-approval.json",
+    "deployment/assets/downloads/citychat-ves-playground-release-authorization.v0.6.1.json",
+    "deployment/resources/citychat-ves/v0.6.1/citychat-color-atlas.fragment.html",
+    "deployment/resources/citychat-ves/v0.6.1/citychat-color-role-map.json",
+    "deployment/resources/citychat-ves/v0.6.1/citychat-icon-map.json",
+    "deployment/resources/citychat-ves/v0.6.1/citychat-icon-resolution.json",
+    "deployment/resources/citychat-ves/v0.6.1/font-assets.manifest.json",
+    "deployment/resources/citychat-ves/v0.6.1/semantic-motion.citychat.yml",
+    "deployment/schemas/citychat-color-role-map.schema.v0.6.1.json",
+    "deployment/schemas/citychat-font-assets.schema.v0.6.1.json",
+    "deployment/schemas/citychat-icon-map.schema.v0.6.1.json",
+    "deployment/schemas/citychat-icon-resolution.schema.v0.6.1.json",
+    "deployment/schemas/semantic-motion-citychat.schema.v0.6.1.json",
+    "deployment/qa/color-atlas-generation.v0.6.1.json",
+    "deployment/assets/icons/material-symbols-rounded-citychat-v368.ttf",
+    "deployment/assets/icons/LICENSE.material-symbols.txt",
+    "tools/generate-citychat-color-atlas.mjs",
+    "tools/import-material-symbols.mjs"
+  ],
+  "validator": {
+    "path": "tools/validate-release.mjs",
+    "sha256": "f890864ad8e2fdddc334d04265f52b022cb3dd4316f7cd68f339e6e84a2fab88",
+    "contractVersion": "1.1"
+  },
+  "scope": "source and contract validation; not native-device or product-runtime certification",
+  "totals": {
+    "checks": 138,
+    "failures": 0
+  },
+  "result": "passed",
+  "checks": [
+    {
+      "name": "html:one-h1",
+      "ok": true
+    },
+    {
+      "name": "html:skip-link",
+      "ok": true
+    },
+    {
+      "name": "publication:noindex-in-initial-html",
+      "ok": true
+    },
+    {
+      "name": "publication:canonical",
+      "ok": true
+    },
+    {
+      "name": "identity:no-unapproved-public-discovery-assets",
+      "ok": true
+    },
+    {
+      "name": "truth:visible-source-limited-boundary",
+      "ok": true
+    },
+    {
+      "name": "ves:visible-version-and-fixture-boundary",
+      "ok": true
+    },
+    {
+      "name": "copy:plain-thai-truth-and-disclosure",
+      "ok": true
+    },
+    {
+      "name": "copy:team-layer-explicit",
+      "ok": true
+    },
+    {
+      "name": "copy:no-internal-jargon-in-frontstage",
+      "ok": true
+    },
+    {
+      "name": "fixture:synthetic-object-labelled",
+      "ok": true
+    },
+    {
+      "name": "continuity:receipt-and-material-return-taught",
+      "ok": true
+    },
+    {
+      "name": "journey:nondefault-views-hidden-in-initial-html",
+      "ok": true
+    },
+    {
+      "name": "rejected:popularity-is-labelled-teaching-only",
+      "ok": true
+    },
+    {
+      "name": "rejected:optimistic-receipt-is-labelled-teaching-only",
+      "ok": true
+    },
+    {
+      "name": "truth:no-rejected-pattern-in-runtime-layer",
+      "ok": true
+    },
+    {
+      "name": "locale:thai-english-content-present",
+      "ok": true
+    },
+    {
+      "name": "html:no-duplicate-ids",
+      "ok": true
+    },
+    {
+      "name": "css:no-build-local-raw-hex",
+      "ok": true
+    },
+    {
+      "name": "css:no-build-local-important",
+      "ok": true
+    },
+    {
+      "name": "css:no-authored-color-synthesis",
+      "ok": true
+    },
+    {
+      "name": "css:product-gradient-used-for-approved-identity-or-atlas-role",
+      "ok": true
+    },
+    {
+      "name": "css:product-gradient-not-used-as-data-signal",
+      "ok": true
+    },
+    {
+      "name": "css:semantic-token-composition",
+      "ok": true
+    },
+    {
+      "name": "motion:reduced-motion",
+      "ok": true
+    },
+    {
+      "name": "responsive:inherited-lds-layout-thresholds",
+      "ok": true
+    },
+    {
+      "name": "responsive:no-overflow-masking-or-backdrop-blur",
+      "ok": true
+    },
+    {
+      "name": "journey:hidden-attribute-not-overridden",
+      "ok": true
+    },
+    {
+      "name": "scan:composition-and-visible-frame-separated",
+      "ok": true
+    },
+    {
+      "name": "type:no-synthetic-fonts",
+      "ok": true
+    },
+    {
+      "name": "library:visible-control-icon-motion-color-sections",
+      "ok": true
+    },
+    {
+      "name": "motion:no-replay-or-show-final-control",
+      "ok": true
+    },
+    {
+      "name": "motion:no-build-local-settle-activation",
+      "ok": true
+    },
+    {
+      "name": "type:arvo:declared",
+      "ok": true
+    },
+    {
+      "name": "type:ibm-plex-sans-thai-looped:declared",
+      "ok": true
+    },
+    {
+      "name": "type:bai-jamjuree:declared",
+      "ok": true
+    },
+    {
+      "name": "type:ibm-plex-sans-thai:declared",
+      "ok": true
+    },
+    {
+      "name": "type:jetbrains-mono:declared",
+      "ok": true
+    },
+    {
+      "name": "runtime:no-background-network-or-analytics",
+      "ok": true
+    },
+    {
+      "name": "icons:self-hosted-material-symbols-font-face",
+      "ok": true
+    },
+    {
+      "name": "icons:inherited-lds-class-and-locked-axes",
+      "ok": true
+    },
+    {
+      "name": "icons:no-parallel-local-icon-class",
+      "ok": true
+    },
+    {
+      "name": "icons:no-runtime-google-fonts",
+      "ok": true
+    },
+    {
+      "name": "icons:font-preloaded-locally",
+      "ok": true
+    },
+    {
+      "name": "runtime:locked-fixture-boundary",
+      "ok": true
+    },
+    {
+      "name": "runtime:story-handoff-hidden-until-lock",
+      "ok": true
+    },
+    {
+      "name": "a11y:tab-keyboard-contract",
+      "ok": true
+    },
+    {
+      "name": "effect:clipboard-fallback",
+      "ok": true
+    },
+    {
+      "name": "handoff:copied-preflight-matches-visible-questions",
+      "ok": true
+    },
+    {
+      "name": "motion:once-only-direct-child-reveal-implementation",
+      "ok": true
+    },
+    {
+      "name": "motion:reduced-motion-and-unobserve-contract",
+      "ok": true
+    },
+    {
+      "name": "motion:no-looping-runtime-mechanism",
+      "ok": true
+    },
+    {
+      "name": "html:local-references-exist",
+      "ok": true
+    },
+    {
+      "name": "delivery:project-relative-paths",
+      "ok": true
+    },
+    {
+      "name": "json:all-parse",
+      "ok": true
+    },
+    {
+      "name": "source:citychat-visual-experience-specification-v0.6.md:hash",
+      "ok": true
+    },
+    {
+      "name": "source:citychat-ves-v0.6-approval.json:hash",
+      "ok": true
+    },
+    {
+      "name": "source:citychat-ves-playground-release-authorization.v0.6.1.json:hash",
+      "ok": true
+    },
+    {
+      "name": "source:citychat-product-experience-profile-v0.4.md:hash",
+      "ok": true
+    },
+    {
+      "name": "source:citychat-component-contracts.v0.4.json:hash",
+      "ok": true
+    },
+    {
+      "name": "source:identity-assets.v0.6.1.json:hash",
+      "ok": true
+    },
+    {
+      "name": "source:ves-authority-and-language-boundary",
+      "ok": true
+    },
+    {
+      "name": "source:canonical-cityscan-event-map",
+      "ok": true
+    },
+    {
+      "name": "color:schema-required-fields",
+      "ok": true
+    },
+    {
+      "name": "color:artifact-scoped-usage-overlay",
+      "ok": true
+    },
+    {
+      "name": "color:complete-45-role-atlas",
+      "ok": true
+    },
+    {
+      "name": "color:seven-job-first-router-destinations",
+      "ok": true
+    },
+    {
+      "name": "color:governance-status-coverage",
+      "ok": true,
+      "detail": "{\"governed\":43,\"reference_fixture\":1,\"omitted\":1}"
+    },
+    {
+      "name": "color:no-local-literal-or-runtime-mixing",
+      "ok": true
+    },
+    {
+      "name": "color:roles-have-redundant-cues-and-acceptance-ids",
+      "ok": true
+    },
+    {
+      "name": "color:analytical-scale-linked-not-reminted",
+      "ok": true
+    },
+    {
+      "name": "color:unapproved-supporting-asset-role-omitted",
+      "ok": true
+    },
+    {
+      "name": "color:pinned-local-source-hashes",
+      "ok": true
+    },
+    {
+      "name": "color:generation-qa-pass-and-counts",
+      "ok": true
+    },
+    {
+      "name": "color:generation-qa-byte-bound",
+      "ok": true,
+      "detail": "{\"expected\":{\"roleMapSha256\":\"7d1bbb86623a5cd0785ea16f8dcf80ace1a2137a15c7c04cc1df73b64e9606d8\",\"schemaSha256\":\"05c67ef2ae1cfdf5371e54fc92ee2cbbf884fc557c26a9e9fbab906b804f8646\",\"generatorSha256\":\"786edc6e57276af75bb275bf1e3af9c7c48ad552fc44d55bfbafd7c58781767d\",\"generatedFragmentSha256\":\"fa72ca1acd523d72f0dde7126bc4fd8573a5a2a8ced5f5befd120af968050163\"},\"recorded\":{\"roleMapSha256\":\"7d1bbb86623a5cd0785ea16f8dcf80ace1a2137a15c7c04cc1df73b64e9606d8\",\"schemaSha256\":\"05c67ef2ae1cfdf5371e54fc92ee2cbbf884fc557c26a9e9fbab906b804f8646\",\"generatorSha256\":\"786edc6e57276af75bb275bf1e3af9c7c48ad552fc44d55bfbafd7c58781767d\",\"generatedFragmentSha256\":\"fa72ca1acd523d72f0dde7126bc4fd8573a5a2a8ced5f5befd120af968050163\",\"sources\":{\"ldsTokens\":{\"availability\":\"vendored\",\"sha256\":\"5afa9a93bafa8f2e5edb7e929d4924bc548a415098377ad53e18097c56980287\"},\"ldsCss\":{\"availability\":\"vendored\",\"sha256\":\"aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323\"},\"colorDelivery\":{\"availability\":\"vendored\",\"sha256\":\"aa6833b5286f6eb957925cb0c538c951d6822217fb83b051a71473ff2bdbd9c5\"},\"surfaceRecipes\":{\"availability\":\"vendored\",\"sha256\":\"9e849896c0fa49411e226bfa7ca094d939e7e36cbd31e67cd0a76c44f0027d92\"},\"identityManifest\":{\"availability\":\"local_approved\",\"sha256\":\"56a5cc6f4fbecdcb150deea5fc91f81a795cab32d8b746eeb639fd3b8bce6bef\"},\"approvedVes\":{\"availability\":\"local_approved\",\"sha256\":\"5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21\"},\"ldsScales\":{\"availability\":\"linked_not_vendored\",\"sha256\":\"daf8e5219f1da9229d7fb474fdaba3957f37c0cfe18eef7527e551c37d88d235\",\"immutableUrl\":\"https://raw.githubusercontent.com/montri-th/Landometer/d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665/assets/data/scales.json\"}}}}"
+    },
+    {
+      "name": "color:visible-atlas-and-machine-map-linked",
+      "ok": true
+    },
+    {
+      "name": "color:visible-swatches-resolve-to-governed-bindings",
+      "ok": true
+    },
+    {
+      "name": "color:generated-fragment-covers-every-role",
+      "ok": true
+    },
+    {
+      "name": "icons:icon-map:schema-required-fields",
+      "ok": true
+    },
+    {
+      "name": "icons:icon-map:schema-ref-resolves",
+      "ok": true,
+      "detail": "/Users/montri/.codex/.chatgpt-projects/g-p-69e8ec0f0f188191bda9c76f917fb5c0/citychat_publish_repo/deployment/schemas/citychat-icon-map.schema.v0.6.1.json"
+    },
+    {
+      "name": "icons:icon-resolution:schema-required-fields",
+      "ok": true
+    },
+    {
+      "name": "icons:icon-resolution:schema-ref-resolves",
+      "ok": true,
+      "detail": "/Users/montri/.codex/.chatgpt-projects/g-p-69e8ec0f0f188191bda9c76f917fb5c0/citychat_publish_repo/deployment/schemas/citychat-icon-resolution.schema.v0.6.1.json"
+    },
+    {
+      "name": "icons:font-assets:schema-required-fields",
+      "ok": true
+    },
+    {
+      "name": "icons:font-assets:schema-ref-resolves",
+      "ok": true,
+      "detail": "/Users/montri/.codex/.chatgpt-projects/g-p-69e8ec0f0f188191bda9c76f917fb5c0/citychat_publish_repo/deployment/schemas/citychat-font-assets.schema.v0.6.1.json"
+    },
+    {
+      "name": "icons:records-version-bound",
+      "ok": true
+    },
+    {
+      "name": "icons:one-shared-font-asset-id",
+      "ok": true
+    },
+    {
+      "name": "icons:font-binary-bytes-and-hash",
+      "ok": true
+    },
+    {
+      "name": "icons:license-bytes-hash-and-spdx",
+      "ok": true
+    },
+    {
+      "name": "icons:self-hosted-delivery-boundary",
+      "ok": true
+    },
+    {
+      "name": "icons:importer-evidence-byte-bound",
+      "ok": true
+    },
+    {
+      "name": "icons:closed-nine-role-glyph-map",
+      "ok": true
+    },
+    {
+      "name": "icons:static-axes-contract",
+      "ok": true
+    },
+    {
+      "name": "icons:gallery-selector-current",
+      "ok": true
+    },
+    {
+      "name": "icons:no-unresolved-blocked-bindings",
+      "ok": true
+    },
+    {
+      "name": "icons:no-stale-lab-selectors",
+      "ok": true
+    },
+    {
+      "name": "icons:capability-gated-glyphs-remain-gallery-only",
+      "ok": true
+    },
+    {
+      "name": "motion:schema-required-fields",
+      "ok": true
+    },
+    {
+      "name": "motion:artifact-and-version-bound",
+      "ok": true
+    },
+    {
+      "name": "motion:scoped-local-boundary",
+      "ok": true
+    },
+    {
+      "name": "motion:only-inherited-button-and-reveal-primitives",
+      "ok": true
+    },
+    {
+      "name": "motion:no-semantic-event-or-telemetry-from-animation",
+      "ok": true
+    },
+    {
+      "name": "motion:once-only-max-five-reduced-final-state",
+      "ok": true
+    },
+    {
+      "name": "motion:one-three-item-reading-order-example",
+      "ok": true
+    },
+    {
+      "name": "motion:example-states-local-non-persistent-boundary",
+      "ok": true
+    },
+    {
+      "name": "identity:artifact-and-url-bound",
+      "ok": true
+    },
+    {
+      "name": "identity:official-lockup-recorded",
+      "ok": true
+    },
+    {
+      "name": "identity:lockup-bytes-and-hash",
+      "ok": true
+    },
+    {
+      "name": "identity:lockup-used-exactly-header-and-footer",
+      "ok": true,
+      "detail": "2"
+    },
+    {
+      "name": "identity:header_lockup:exact-role-approval",
+      "ok": true
+    },
+    {
+      "name": "identity:header_lockup:markup-bound",
+      "ok": true
+    },
+    {
+      "name": "identity:footer_lockup:exact-role-approval",
+      "ok": true
+    },
+    {
+      "name": "identity:footer_lockup:markup-bound",
+      "ok": true
+    },
+    {
+      "name": "identity:source-assets-not-rendered",
+      "ok": true
+    },
+    {
+      "name": "identity:unapproved-roles-omitted",
+      "ok": true
+    },
+    {
+      "name": "identity:full-lds-beige-bands",
+      "ok": true
+    },
+    {
+      "name": "identity:no-local-logo-carrier-or-transform",
+      "ok": true
+    },
+    {
+      "name": "vendor:package-revision",
+      "ok": true
+    },
+    {
+      "name": "vendor:color-set",
+      "ok": true
+    },
+    {
+      "name": "vendor:upstream-artifact-build",
+      "ok": true
+    },
+    {
+      "name": "vendor:package-file-hashes",
+      "ok": true
+    },
+    {
+      "name": "vendor:recorded-package-validation",
+      "ok": true
+    },
+    {
+      "name": "vendor:validation-boundary",
+      "ok": true
+    },
+    {
+      "name": "build-card:one-profile",
+      "ok": true
+    },
+    {
+      "name": "build-card:publication-truth",
+      "ok": true
+    },
+    {
+      "name": "build-card:no-remote-effect",
+      "ok": true
+    },
+    {
+      "name": "build-card:triggered-packs-match-noindex-artifact",
+      "ok": true
+    },
+    {
+      "name": "build-card:identity-manifest-bound",
+      "ok": true
+    },
+    {
+      "name": "controls:inventory-resolves",
+      "ok": true
+    },
+    {
+      "name": "controls:artifact-and-icon-map-bound",
+      "ok": true
+    },
+    {
+      "name": "controls:inventory-ids-unique",
+      "ok": true
+    },
+    {
+      "name": "controls:geometry-role-resolves",
+      "ok": true
+    },
+    {
+      "name": "controls:icon-roles-resolve-through-versioned-map",
+      "ok": true
+    },
+    {
+      "name": "controls:disabled-specimens-are-inert",
+      "ok": true
+    },
+    {
+      "name": "controls:no-remote-effects",
+      "ok": true
+    },
+    {
+      "name": "controls:one-nonsemantic-once-only-enhancement",
+      "ok": true
+    },
+    {
+      "name": "privacy:no-personal-absolute-paths",
+      "ok": true
+    },
+    {
+      "name": "qa:automated-report-bound-to-tested-sources",
+      "ok": true,
+      "detail": "a2e67e6839ac07253cceba893848eb4623cfb30fe85ad08369ea2d474d40b351/4ff13b17cd96e268bfda49d5a9b6386fee5ba39711cea9d11526f83f9aa1de71"
+    },
+    {
+      "name": "qa:automated-report-contract-parity",
+      "ok": true,
+      "detail": "{\"recordedValidator\":\"f890864ad8e2fdddc334d04265f52b022cb3dd4316f7cd68f339e6e84a2fab88\",\"currentValidator\":\"f890864ad8e2fdddc334d04265f52b022cb3dd4316f7cd68f339e6e84a2fab88\",\"recordedChecks\":138,\"currentChecks\":138}"
+    }
+  ],
+  "openManualGateRef": "qa/manual-gates.v0.6.1.md"
+}
