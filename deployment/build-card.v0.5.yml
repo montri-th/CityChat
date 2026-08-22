@@ -1,0 +1,96 @@
+citychatBuild:
+  artifact:
+    name: CityChat Design Identity Playground
+    product: citychat
+    version: 0.5.0
+    artifactBuildId: citychat-ui-20260822-02
+    pageKind: design-identity-playground
+    profile: designsystem.adoption
+    oneJob: help the CityChat team understand, try, align and build from the same user intent
+    delivery: internal_demo_public_projection
+    outputType: webpage
+    language: th
+    additionalLanguages: [en]
+  publication:
+    visibility: public
+    indexable: false
+    evidenceStatus: source_limited
+    canonicalUrl: https://montri-th.github.io/CityChat/
+    machineValidation: pending
+    deliveryConformance: not_claimed
+  landometerFoundation:
+    dsVersion: 0.9.0
+    authoringRevision: v0.9.0-r7
+    machinePackage: v0.9.0-mp1
+    colorSetId: color-srgb-05
+    kitVersion: lds-kit-0.9.0-r4
+    upstreamArtifactBuildId: ui-20260821-05
+    upstreamCommit: d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665
+    vendorPath: vendor/landometer/v0.9.0
+    vendorPolicy: immutable byte-identical snapshot
+  citychatAuthority:
+    visualExperiencePath: assets/downloads/citychat-visual-experience-specification-v0.5.md
+    visualExperienceSha256: 57eee9139a247f1ed728ee070138b8250c29533c249bed2e0e3fcab83b10acd6
+    experienceContractPath: assets/downloads/citychat-product-experience-profile-v0.4.md
+    experienceContractSha256: f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba
+    productAuthority: draft_truth
+    capabilityEvidenceStatus: source_limited
+    deliveryAvailability: designed
+    identityManifestPath: assets/identity/identity-assets.v0.5.json
+    identityManifestSha256: 628b40f0a604257f38135b6afe2ac615762c760ea8ed75999f94cfa53f5cf25f
+    narrativeBaseline:
+      ref: Product_brief_CityChat_Landometer_v7_CityStory_First.md
+      sha256: ffba6c6d5adfa29be6ffa791614db108268a5d1c4ff763fb05d7a7147c23c0e8
+      status: current_narrative_baseline_approval_unrecorded
+    candidateProductBrief:
+      ref: Product_brief_CityChat_Landometer_v8_CityScan_Ecosystem_Aligned.md
+      sha256: 607bd2c42cab7a164274d0b3dbbcfd1e8f3d66f185ce2921123cdd9a0b222098
+      status: draft_candidate
+    cityScanReference:
+      ref: cityscan_dev_handoff_v1/01_PRODUCT_BRIEF_CITYSCAN.md
+      sha256: b7674f7be7becc87b9c972b05bcb311cb4d62d0b7d1accd83037469f9479713d
+      status: proposed_reference_runtime_unavailable
+  triggeredPacks:
+    - PUB-01
+    - DELIVERY-01:web
+  supportedChannels:
+    - github_pages_team_playground
+  qaEvidence:
+    automatedPath: qa/automated.v0.5.json
+    renderedProviderCheck: pending_required_pr_check
+    manualPath: qa/manual-gates.v0.5.md
+    nativeDeviceStatus: open
+  releaseReceipt:
+    status: pending_provider_deploy
+    targetUrl: https://montri-th.github.io/CityChat/
+  firstAha:
+    target: see the CityChat visual lineage and one citizen/officer benefit within 30 seconds
+    maximumEssentialInputs: one mode choice
+    primaryAction: ลองเส้นทาง CityChat
+  privacy:
+    visibility: public
+    sensitivity: public
+    personalData: none
+    analytics: false
+    remotePersistence: false
+    localStorage: theme and locale preferences only
+  effects:
+    remoteMutation: false
+    localFixtureState: true
+    clipboardCopy: true
+    receiptPolicy: local fixture acknowledgement is never labelled as a product receipt
+  disabledCapabilities:
+    - lineIntegration
+    - productionCityScanScoring
+    - productReceiptPersistence
+    - officerOperationsRuntime
+    - remoteShare
+    - telemetry
+  releaseBoundary:
+    targetDoesNotMeanShipped: true
+    fixturesAreConceptual: true
+    noNamedMunicipalityProof: true
+    identityFaviconApproval: unresolved
+    identityLockupApproval: authorized_for_this_build_header_and_footer_only
+    manualVisualGates: open
+    nativeDeviceGate: open

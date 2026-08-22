@@ -1,0 +1,300 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260822-02",
+  "testedSourceDigest": "e3485e3a34195419bdff61c40179e9558978c31c3bf62844060dac2772cfb6e6",
+  "testedSourceDigestAlgorithm": "sha256(path-NUL-bytes-NUL in declared order)",
+  "testedSourcePaths": [
+    "release.config.json",
+    "deployment/index.html",
+    "deployment/citychat.css",
+    "deployment/app.js",
+    "deployment/build-card.v0.5.yml",
+    "deployment/control-inventory.v0.5.json",
+    "deployment/implementation-notes.v0.5.md",
+    "deployment/assets/identity/identity-assets.v0.5.json",
+    "deployment/assets/downloads/citychat-visual-experience-specification-v0.5.md"
+  ],
+  "scope": "source and contract validation; not native-device or product-runtime certification",
+  "totals": {
+    "checks": 68,
+    "failures": 0
+  },
+  "result": "passed",
+  "checks": [
+    {
+      "name": "html:one-h1",
+      "ok": true
+    },
+    {
+      "name": "html:skip-link",
+      "ok": true
+    },
+    {
+      "name": "publication:noindex-in-initial-html",
+      "ok": true
+    },
+    {
+      "name": "publication:canonical",
+      "ok": true
+    },
+    {
+      "name": "identity:no-unapproved-public-discovery-assets",
+      "ok": true
+    },
+    {
+      "name": "truth:visible-source-limited-boundary",
+      "ok": true
+    },
+    {
+      "name": "ves:visible-version-and-fixture-boundary",
+      "ok": true
+    },
+    {
+      "name": "copy:plain-thai-truth-and-disclosure",
+      "ok": true
+    },
+    {
+      "name": "copy:team-layer-explicit",
+      "ok": true
+    },
+    {
+      "name": "copy:no-internal-jargon-in-frontstage",
+      "ok": true
+    },
+    {
+      "name": "fixture:synthetic-object-labelled",
+      "ok": true
+    },
+    {
+      "name": "rejected:popularity-is-labelled-teaching-only",
+      "ok": true
+    },
+    {
+      "name": "rejected:optimistic-receipt-is-labelled-teaching-only",
+      "ok": true
+    },
+    {
+      "name": "truth:no-rejected-pattern-in-runtime-layer",
+      "ok": true
+    },
+    {
+      "name": "locale:thai-english-content-present",
+      "ok": true
+    },
+    {
+      "name": "html:no-duplicate-ids",
+      "ok": true
+    },
+    {
+      "name": "css:no-build-local-raw-hex",
+      "ok": true
+    },
+    {
+      "name": "css:no-build-local-important",
+      "ok": true
+    },
+    {
+      "name": "css:product-gradient-not-used-as-data-signal",
+      "ok": true
+    },
+    {
+      "name": "css:semantic-token-composition",
+      "ok": true
+    },
+    {
+      "name": "motion:reduced-motion",
+      "ok": true
+    },
+    {
+      "name": "responsive:inherited-lds-layout-thresholds",
+      "ok": true
+    },
+    {
+      "name": "responsive:no-overflow-masking-or-backdrop-blur",
+      "ok": true
+    },
+    {
+      "name": "scan:composition-and-visible-frame-separated",
+      "ok": true
+    },
+    {
+      "name": "runtime:no-background-network-or-analytics",
+      "ok": true
+    },
+    {
+      "name": "runtime:locked-fixture-boundary",
+      "ok": true
+    },
+    {
+      "name": "runtime:story-handoff-hidden-until-lock",
+      "ok": true
+    },
+    {
+      "name": "a11y:tab-keyboard-contract",
+      "ok": true
+    },
+    {
+      "name": "effect:clipboard-fallback",
+      "ok": true
+    },
+    {
+      "name": "html:local-references-exist",
+      "ok": true
+    },
+    {
+      "name": "delivery:project-relative-paths",
+      "ok": true
+    },
+    {
+      "name": "json:all-parse",
+      "ok": true
+    },
+    {
+      "name": "source:citychat-ves-hash",
+      "ok": true
+    },
+    {
+      "name": "source:ves-no-fork-decision",
+      "ok": true
+    },
+    {
+      "name": "source:plain-language-contract",
+      "ok": true
+    },
+    {
+      "name": "source:experience-contract-hash",
+      "ok": true
+    },
+    {
+      "name": "source:canonical-cityscan-event-map",
+      "ok": true
+    },
+    {
+      "name": "source:component-contracts-hash",
+      "ok": true
+    },
+    {
+      "name": "identity:artifact-build-bound",
+      "ok": true
+    },
+    {
+      "name": "identity:manifest-hash-bound",
+      "ok": true
+    },
+    {
+      "name": "identity:horizontal_lockup_png:bytes-and-hash",
+      "ok": true
+    },
+    {
+      "name": "identity:symbol_source:bytes-and-hash",
+      "ok": true
+    },
+    {
+      "name": "identity:horizontal_lockup_svg_source:bytes-and-hash",
+      "ok": true
+    },
+    {
+      "name": "identity:lockup-used-exactly-header-and-footer",
+      "ok": true,
+      "detail": "2"
+    },
+    {
+      "name": "identity:source-assets-not-rendered",
+      "ok": true
+    },
+    {
+      "name": "identity:lockup-not-filtered",
+      "ok": true
+    },
+    {
+      "name": "identity:favicon-omission-recorded",
+      "ok": true
+    },
+    {
+      "name": "vendor:package-revision",
+      "ok": true
+    },
+    {
+      "name": "vendor:color-set",
+      "ok": true
+    },
+    {
+      "name": "vendor:upstream-artifact-build",
+      "ok": true
+    },
+    {
+      "name": "vendor:package-file-hashes",
+      "ok": true
+    },
+    {
+      "name": "vendor:recorded-package-validation",
+      "ok": true
+    },
+    {
+      "name": "vendor:validation-boundary",
+      "ok": true
+    },
+    {
+      "name": "build-card:one-profile",
+      "ok": true
+    },
+    {
+      "name": "build-card:publication-truth",
+      "ok": true
+    },
+    {
+      "name": "build-card:no-remote-effect",
+      "ok": true
+    },
+    {
+      "name": "build-card:triggered-packs-match-noindex-artifact",
+      "ok": true
+    },
+    {
+      "name": "build-card:identity-manifest-bound",
+      "ok": true
+    },
+    {
+      "name": "controls:inventory-resolves",
+      "ok": true
+    },
+    {
+      "name": "controls:no-remote-effects",
+      "ok": true
+    },
+    {
+      "name": "manifest:artifact-build",
+      "ok": true
+    },
+    {
+      "name": "manifest:profile",
+      "ok": true
+    },
+    {
+      "name": "manifest:publication-truth",
+      "ok": true
+    },
+    {
+      "name": "manifest:honest-machine-validation",
+      "ok": true
+    },
+    {
+      "name": "manifest:identity-bound",
+      "ok": true
+    },
+    {
+      "name": "manifest:triggered-packs",
+      "ok": true
+    },
+    {
+      "name": "privacy:no-personal-absolute-paths",
+      "ok": true
+    },
+    {
+      "name": "qa:automated-report-bound-to-tested-sources",
+      "ok": true,
+      "detail": "c7e6f3226612811d5333804a5d4c2c75b20b82ce5ed3601cc9f183c66f394759/e3485e3a34195419bdff61c40179e9558978c31c3bf62844060dac2772cfb6e6"
+    }
+  ],
+  "openManualGateRef": "manual-gates.v0.5.md"
+}

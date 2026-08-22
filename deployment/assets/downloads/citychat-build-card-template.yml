@@ -21,8 +21,12 @@ citychatBuild:
     kitVersion: derive_from_validated_package
     upstreamCommit: pin_exact_commit
   citychatAuthority:
-    profilePath: pin_exact_profile
-    profileSha256: pin_exact_hash
+    visualExperiencePath: pin_exact_ves
+    visualExperienceSha256: pin_exact_hash
+    experienceContractPath: pin_exact_profile_or_successor
+    experienceContractSha256: pin_exact_hash
+    identityManifestPath: pin_exact_role_manifest
+    identityManifestSha256: pin_exact_hash
     productAuthority: approved_truth | draft_truth | proposed | candidate | out_of_scope
     capabilityEvidenceStatus: observed | release_proven | source_limited | not_evidenced | unresolved
     deliveryAvailability: not_designed | designed | implemented | pilot | accepted | unresolved
@@ -35,6 +39,11 @@ citychatBuild:
     coCreate: false
     telemetry: false
     hook: false
+  triggeredPacks:
+    - PUB-01
+    - DELIVERY-01:matching_delivery
+  supportedChannels:
+    - declare_exact_surface_or_adapter
   firstAha:
     target: required_from_selected_profile
     maximumEssentialInputs: required_from_selected_profile
@@ -50,3 +59,10 @@ citychatBuild:
     fixturesAreConceptual: true
     manualVisualGates: open | passed
     nativeDeviceGate: open | passed
+  qaEvidence:
+    automatedPath: required
+    renderedProviderCheck: required_when_visual
+    manualPath: required
+  releaseReceipt:
+    status: pending_provider_deploy | passed | failed
+    targetUrl: required_when_published

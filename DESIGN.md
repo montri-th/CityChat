@@ -1,4 +1,6 @@
-# CityChat design identity
+# CityChat visual experience
+
+CityChat keeps its own face and way of speaking. Landometer DS supplies the shared visual foundation; CityChat VES v0.5 composes it for citizens and officers without creating a second token system.
 
 ## North-star interaction
 
@@ -38,6 +40,17 @@ Use the exact Landometer v0.9.0 machine package in `deployment/vendor/landometer
 ```
 
 Build-local CSS may compose layout from semantic `var()` tokens. It must not copy retired CityChat v0.3 colours, font values, radii or motion tokens.
+
+## CityChat visual signatures
+
+- `CityBand` keeps product, place and useful role context together.
+- `PlaceStage` gives the story a real place without turning atmosphere into evidence.
+- `PlaceThread` separates community conversation from governed `StoryCell` evidence.
+- `CommunityPresence` shows permissioned people and local participation cues without turning popularity into civic priority.
+- `CivicAction` shows zero or one clear next step.
+- `OutcomeReturn` shows a real saved state, honest recovery, or clean completion instead of rank or points.
+
+Frontstage Thai uses ordinary verbs—ดู, เลือก, ตอบ, แจ้ง, ติดตาม, แก้ไข, กลับไป. Internal vocabulary belongs in a team/developer disclosure, not in citizen or officer copy.
 
 ## Truth boundary
 

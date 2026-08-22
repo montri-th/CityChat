@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const deployment = path.join(root, "deployment");
 const config = JSON.parse(readFileSync(path.join(root, "release.config.json"), "utf8"));
 const checkOnly = process.argv.includes("--check");
-const manifestRel = "site-manifest.v0.4.json";
+const manifestRel = "site-manifest.v0.5.json";
 const sumsRel = "assets/downloads/SHA256SUMS.txt";
 
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
@@ -36,13 +36,18 @@ const requiredCritical = [
   "index.html",
   "citychat.css",
   "app.js",
-  "build-card.v0.4.yml",
+  "build-card.v0.5.yml",
+  "control-inventory.v0.5.json",
+  "implementation-notes.v0.5.md",
+  "qa/automated.v0.5.json",
+  "qa/manual-gates.v0.5.md",
+  "assets/downloads/citychat-visual-experience-specification-v0.5.md",
   "assets/downloads/citychat-product-experience-profile-v0.4.md",
   "assets/downloads/citychat-component-contracts.v0.4.json",
   "assets/downloads/citychat-build-card-template.yml",
   "assets/downloads/vibe-coding-prompt.md",
   "assets/identity/citychat-horizontal-lockup.png",
-  "assets/identity/identity-assets.v0.4.json",
+  "assets/identity/identity-assets.v0.5.json",
   "resources/starter/index.html",
   "resources/index.json",
   "vendor/landometer/v0.9.0/package.json",
@@ -78,9 +83,27 @@ const manifest = {
     canonicalUrl: config.canonicalUrl,
     deliveryConformance: "not_claimed"
   },
-  sourceProfile: config.sourceProfile,
+  sourceVisualExperience: config.sourceVisualExperience,
+  productDependencies: config.productDependencies,
+  governanceReferences: config.governanceReferences,
+  identityManifest: config.identityManifest,
+  triggeredPacks: config.triggeredPacks,
+  supportedChannels: config.supportedChannels,
   upstream: config.upstream,
   capabilities: config.capabilities,
+  historicalRecords: [
+    {
+      path: "site-manifest.v0.4.json",
+      artifactBuildId: "citychat-ui-20260822-01",
+      currentBaseParity: false,
+      boundary: "Historical record only; repository history is required to verify its original relative paths."
+    },
+    {
+      paths: ["build-card.v0.4.yml", "control-inventory.v0.4.json", "implementation-notes.v0.4.md", "qa/automated.v0.4.json", "qa/manual-gates.v0.4.md", "qa/rendered-local.v0.4.json"],
+      artifactBuildId: "citychat-ui-20260822-01",
+      currentAuthority: false
+    }
+  ],
   releaseBoundary: {
     publicProjectionOfInternalTeamLearning: true,
     conceptualFixtures: true,

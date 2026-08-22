@@ -3,7 +3,7 @@ const allowedThemes = ["system", "light", "dark"];
 const allowedLocales = ["th", "en"];
 const allowedModes = ["story", "scan", "officer"];
 const allowedViews = ["baseline", "assisted"];
-const allowedScanStates = ["signal", "no-score", "locked"];
+const allowedScanStates = ["no-score", "signal", "locked"];
 
 const query = new URLSearchParams(window.location.search);
 const state = {
@@ -11,7 +11,7 @@ const state = {
   locale: allowedLocales.includes(query.get("lang")) ? query.get("lang") : (root.dataset.locale || "th"),
   mode: allowedModes.includes(query.get("mode")) ? query.get("mode") : "story",
   view: allowedViews.includes(query.get("view")) ? query.get("view") : "assisted",
-  scan: allowedScanStates.includes(query.get("scan")) ? query.get("scan") : "signal",
+  scan: allowedScanStates.includes(query.get("scan")) ? query.get("scan") : "no-score",
   storyOrigin: "direct"
 };
 
@@ -30,21 +30,21 @@ const words = {
     themes: { system: "ธีม: ระบบ", light: "ธีม: สว่าง", dark: "ธีม: มืด" },
     localeButton: "EN",
     mode: {
-      story: "เปิด Direct Story แล้ว",
-      scan: "เปิด CityScan conceptual fixture แล้ว",
-      officer: "เปิด Officer target fixture แล้ว"
+      story: "เปิดตัวอย่างสำหรับชาวบ้านแล้ว",
+      scan: "เปิดตัวอย่างดูพื้นที่แล้ว",
+      officer: "เปิดตัวอย่างสำหรับเจ้าหน้าที่แล้ว"
     },
     view: {
-      baseline: "แสดงมุมมองที่ยังไม่ align โดยคงข้อเท็จจริงเดิม",
-      assisted: "แสดงมุมมอง Intent-led โดยคงข้อเท็จจริงเดิม"
+      baseline: "แสดงแบบที่ยังต้องปรับ โดยใช้ข้อมูลเดิม",
+      assisted: "แสดงแนวทาง v0.5 โดยใช้ข้อมูลเดิม"
     },
     scan: {
-      signal: "SIGNAL_READY แบบตัวอย่าง ไม่มีข้อมูลจริง",
-      "no-score": "NO_SCORE แบบตัวอย่าง หมายถึงข้อมูลไม่พอ ไม่ใช่ศูนย์",
-      locked: "LOCKED ใน local fixture เท่านั้น ไม่ใช่ product persistence"
+      signal: "กำลังดูหน้าตาสมมติเมื่อข้อมูลพร้อม ยังไม่เชื่อมข้อมูลจริง",
+      "no-score": "ข้อมูลไม่พอ จึงยังคำนวณไม่ได้ และไม่ใช่ศูนย์",
+      locked: "กำลังดูหน้าตาสมมติเมื่อเก็บกรอบแล้ว ยังไม่ได้บันทึกเข้าสู่ระบบ"
     },
-    genericAck: "Demonstration only — ปุ่มนี้ไม่ทำให้เกิดผลและไม่สร้าง receipt",
-    lockStory: "เปิด Story จาก DEMO-LOCK-001 แล้ว — local fixture เท่านั้น",
+    genericAck: "ปุ่มตัวอย่างนี้ยังไม่พาไปหน้าอื่น",
+    lockStory: "เปิดเรื่องจากกรอบตัวอย่างแล้ว ข้อมูลยังอยู่เฉพาะหน้านี้",
     copied: "คัดลอกแล้ว",
     copyFailed: "คัดลอกอัตโนมัติไม่ได้ กรุณาเปิดไฟล์ดาวน์โหลดแล้วคัดลอกข้อความ",
     preflightReady: "ตอบ preflight ครบ 6 ข้อแล้ว — ยังต้องผ่าน release gates ที่เกี่ยวข้อง",
@@ -54,21 +54,21 @@ const words = {
     themes: { system: "Theme: system", light: "Theme: light", dark: "Theme: dark" },
     localeButton: "TH",
     mode: {
-      story: "Direct Story fixture opened",
-      scan: "CityScan conceptual fixture opened",
-      officer: "Officer target fixture opened"
+      story: "Citizen example opened",
+      scan: "Place exploration example opened",
+      officer: "Officer example opened"
     },
     view: {
-      baseline: "Needs-alignment view shown with the facts unchanged",
-      assisted: "Intent-led view shown with the facts unchanged"
+      baseline: "Needs-refinement view shown with the same facts",
+      assisted: "v0.5 direction shown with the same facts"
     },
     scan: {
-      signal: "Sample SIGNAL_READY; no real data is present",
-      "no-score": "Sample NO_SCORE means insufficient data, not zero",
-      locked: "LOCKED in local fixture state only; not product persistence"
+      signal: "Previewing a hypothetical ready state; it is not connected to real data",
+      "no-score": "There is not enough data to calculate a result; this is not zero",
+      locked: "Previewing a hypothetical kept frame; it has not been saved to a system"
     },
-    genericAck: "Demonstration only — this control creates no effect or receipt",
-    lockStory: "Story opened from DEMO-LOCK-001 — local fixture only",
+    genericAck: "This example button does not open another page yet",
+    lockStory: "Story opened from the sample frame; the state remains on this page",
     copied: "Copied",
     copyFailed: "Automatic copy was unavailable. Open the downloadable file and copy the text.",
     preflightReady: "All six preflight questions are answered; applicable release gates still remain",
@@ -85,6 +85,14 @@ function announce(message) {
   window.requestAnimationFrame(() => {
     liveRegion.textContent = message;
   });
+}
+
+function setBilingualText(node, th, en) {
+  if (!node) return;
+  const thNode = node.querySelector("[data-th]");
+  const enNode = node.querySelector("[data-en]");
+  if (thNode) thNode.textContent = th;
+  if (enNode) enNode.textContent = en;
 }
 
 function resolvedTheme(preference = state.theme) {
@@ -123,15 +131,14 @@ function applyTheme({ persist = false, announceChange = false } = {}) {
 function applyLocale({ persist = false, announceChange = false } = {}) {
   root.dataset.locale = state.locale;
   root.lang = state.locale;
-  document.title = state.locale === "th"
-    ? "CityChat Design Identity Playground v0.4"
-    : "CityChat Design Identity Playground v0.4";
+  document.title = "CityChat Design Identity Playground v0.5";
   if (persist) localStorage.setItem("citychat-playground-locale", state.locale);
   if (localeButton) {
     localeButton.textContent = t().localeButton;
     localeButton.setAttribute("aria-label", state.locale === "th" ? "เปลี่ยนเป็น English" : "Switch to Thai");
   }
   applyTheme();
+  applyScan();
   updatePreflight();
   if (announceChange) announce(state.locale === "th" ? "เปลี่ยนเป็นภาษาไทยแล้ว" : "Language changed to English");
   syncUrl();
@@ -160,12 +167,8 @@ function applyMode({ announceChange = false, focusTab = false } = {}) {
   document.querySelectorAll("[data-story-view]").forEach(view => {
     view.hidden = view.dataset.storyView !== state.mode;
   });
-  const storyMeta = document.querySelector("[data-story-view='story'] .technical.meta");
-  if (storyMeta) {
-    storyMeta.textContent = state.storyOrigin === "lock"
-      ? "LOCKED SCAN ORIGIN · DEMO-LOCK-001 · local fixture"
-      : "DIRECT CITYSTORY · PLACE-DEMO-01 · v1";
-  }
+  const lockOrigin = document.querySelector("[data-lock-origin]");
+  if (lockOrigin) lockOrigin.hidden = !(state.mode === "story" && state.storyOrigin === "lock");
   if (announceChange) announce(t().mode[state.mode]);
   syncUrl();
 }
@@ -174,17 +177,26 @@ function applyScan({ announceChange = false } = {}) {
   document.querySelectorAll("[data-scan-state]").forEach(button => {
     button.setAttribute("aria-pressed", String(button.dataset.scanState === state.scan));
   });
-  const frame = document.querySelector(".scan-frame");
+  const frame = document.querySelector(".scan-composition");
   if (frame) frame.dataset.activeScanState = state.scan;
   const label = document.querySelector(".scan-state-label");
-  if (label) {
-    const base = {
-      signal: "SIGNAL_READY · demonstration only",
-      "no-score": "NO_SCORE · demonstration only",
-      locked: "LOCKED · DEMO-LOCK-001 · local fixture only"
-    };
-    label.textContent = base[state.scan];
-  }
+  const labels = {
+    signal: {
+      th: "หน้าตาสมมติเมื่อข้อมูลพร้อม · ยังไม่เชื่อมข้อมูลจริง",
+      en: "Hypothetical ready layout · not connected to real data"
+    },
+    "no-score": {
+      th: "ข้อมูลไม่พอ · ยังไม่แสดงผลและไม่ถือว่าเป็นศูนย์",
+      en: "Not enough data · no result is shown and this is not zero"
+    },
+    locked: {
+      th: "หน้าตาสมมติเมื่อเก็บกรอบแล้ว · ยังไม่ได้บันทึกเข้าสู่ระบบ",
+      en: "Hypothetical kept-frame layout · not saved to a system"
+    }
+  };
+  setBilingualText(label, labels[state.scan].th, labels[state.scan].en);
+  const storyButton = document.querySelector("#open-story-from-lock");
+  if (storyButton) storyButton.hidden = state.scan !== "locked";
   if (announceChange) announce(t().scan[state.scan]);
   syncUrl();
 }
@@ -245,13 +257,10 @@ document.querySelector("[data-local-ack='generic']")?.addEventListener("click", 
 });
 
 document.querySelector("#open-story-from-lock")?.addEventListener("click", () => {
-  state.scan = "locked";
+  if (state.scan !== "locked") return;
   state.storyOrigin = "lock";
   state.mode = "story";
-  applyScan();
   applyMode();
-  const note = document.querySelector("#lock-note");
-  if (note) note.textContent = t().lockStory;
   announce(t().lockStory);
   document.querySelector("[data-story-view='story']")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
 });
@@ -302,14 +311,14 @@ document.querySelector("#copy-preflight")?.addEventListener("click", () => {
   const text = [
     "CityChat 60-second preflight",
     ...checked,
-    "Resolve: person/object/intent · one LDS profile · evidence/claim ceiling · authority/evidence/delivery/authorization · action/effect/recovery · tested matrix",
-    "Boundary: completing this list is not release or compliance certification."
+    "Confirm: person and one job · one LDS profile · source and limitation · actual availability · action and recovery · tested screens and language",
+    "Boundary: completing this list is preparation, not release certification."
   ].join("\n");
   copyText(text, document.querySelector("#copy-status"));
 });
 
 document.querySelector("#copy-prompt")?.addEventListener("click", () => {
-  const text = "Build one CityChat [page/flow] for [person] doing [one job] with governed object [ID/version]. Use the exact vendored Landometer v0.9.0 package and one LDS profile. Keep productAuthority, capabilityEvidenceStatus, deliveryAvailability, authorizationDecision, claim/value and workflow truth separate. StoryCell = 1 signal + up to 3 facts + 1 question + 0–1 safe action. Omit unavailable controls; never simulate persistence, official status, liveness or counts. Return Build Card, state inventory, disabled capabilities, tests and manual gates.";
+  const text = "Build one CityChat [page or flow] for [citizen or officer] doing [one job]. Follow CityChat VES v0.5 for composition and plain language, CityChat Product Experience Profile v0.4 for interaction and state, and the exact vendored Landometer v0.9.0 package for visual foundations. Show one place or matter, what it means, what is still unknown, and zero or one action that really works. Hide unavailable controls; never invent saved state, official status, live counts, or outcomes. Return the Build Card, visible states, unavailable capabilities, tests, and manual checks.";
   copyText(text, document.querySelector("#prompt-copy-status"));
 });
 
