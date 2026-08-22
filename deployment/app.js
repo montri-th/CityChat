@@ -1,7 +1,7 @@
 const root = document.documentElement;
 const allowedThemes = ["system", "light", "dark"];
 const allowedLocales = ["th", "en"];
-const allowedModes = ["story", "scan", "officer"];
+const allowedModes = ["story", "return", "scan", "officer"];
 const allowedViews = ["baseline", "assisted"];
 const allowedScanStates = ["no-score", "signal", "locked"];
 
@@ -30,13 +30,14 @@ const words = {
     themes: { system: "ธีม: ระบบ", light: "ธีม: สว่าง", dark: "ธีม: มืด" },
     localeButton: "EN",
     mode: {
-      story: "เปิดตัวอย่างสำหรับชาวบ้านแล้ว",
+      story: "เปิดตัวอย่างเห็นคุณค่าก่อนแล้ว",
+      return: "เปิดตัวอย่างส่งแล้วและกลับมาแล้ว",
       scan: "เปิดตัวอย่างดูพื้นที่แล้ว",
       officer: "เปิดตัวอย่างสำหรับเจ้าหน้าที่แล้ว"
     },
     view: {
       baseline: "แสดงแบบที่ยังต้องปรับ โดยใช้ข้อมูลเดิม",
-      assisted: "แสดงแนวทาง v0.5 โดยใช้ข้อมูลเดิม"
+      assisted: "แสดงแนวทาง v0.6 โดยใช้ข้อมูลเดิม"
     },
     scan: {
       signal: "กำลังดูหน้าตาสมมติเมื่อข้อมูลพร้อม ยังไม่เชื่อมข้อมูลจริง",
@@ -44,6 +45,8 @@ const words = {
       locked: "กำลังดูหน้าตาสมมติเมื่อเก็บกรอบแล้ว ยังไม่ได้บันทึกเข้าสู่ระบบ"
     },
     genericAck: "ปุ่มตัวอย่างนี้ยังไม่พาไปหน้าอื่น",
+    answerOptionsOpen: "เปิดตัวเลือกคำตอบสำหรับดูรูปแบบแล้ว ยังไม่มีการส่งหรือบันทึกข้อมูล",
+    answerOptionsClosed: "ปิดตัวเลือกคำตอบแล้ว",
     lockStory: "เปิดเรื่องจากกรอบตัวอย่างแล้ว ข้อมูลยังอยู่เฉพาะหน้านี้",
     copied: "คัดลอกแล้ว",
     copyFailed: "คัดลอกอัตโนมัติไม่ได้ กรุณาเปิดไฟล์ดาวน์โหลดแล้วคัดลอกข้อความ",
@@ -54,13 +57,14 @@ const words = {
     themes: { system: "Theme: system", light: "Theme: light", dark: "Theme: dark" },
     localeButton: "TH",
     mode: {
-      story: "Citizen example opened",
+      story: "First-value example opened",
+      return: "Saved-and-return example opened",
       scan: "Place exploration example opened",
       officer: "Officer example opened"
     },
     view: {
       baseline: "Needs-refinement view shown with the same facts",
-      assisted: "v0.5 direction shown with the same facts"
+      assisted: "v0.6 direction shown with the same facts"
     },
     scan: {
       signal: "Previewing a hypothetical ready state; it is not connected to real data",
@@ -68,6 +72,8 @@ const words = {
       locked: "Previewing a hypothetical kept frame; it has not been saved to a system"
     },
     genericAck: "This example button does not open another page yet",
+    answerOptionsOpen: "Answer choices opened for preview; nothing is sent or saved",
+    answerOptionsClosed: "Answer choices closed",
     lockStory: "Story opened from the sample frame; the state remains on this page",
     copied: "Copied",
     copyFailed: "Automatic copy was unavailable. Open the downloadable file and copy the text.",
@@ -131,7 +137,7 @@ function applyTheme({ persist = false, announceChange = false } = {}) {
 function applyLocale({ persist = false, announceChange = false } = {}) {
   root.dataset.locale = state.locale;
   root.lang = state.locale;
-  document.title = "CityChat Design Identity Playground v0.5";
+  document.title = "CityChat VES Interactive Playground v0.6";
   if (persist) localStorage.setItem("citychat-playground-locale", state.locale);
   if (localeButton) {
     localeButton.textContent = t().localeButton;
@@ -256,6 +262,15 @@ document.querySelector("[data-local-ack='generic']")?.addEventListener("click", 
   announce(t().genericAck);
 });
 
+document.querySelector("#preview-answer-options")?.addEventListener("click", event => {
+  const panel = document.querySelector("#answer-options");
+  if (!panel) return;
+  const open = panel.hidden;
+  panel.hidden = !open;
+  event.currentTarget.setAttribute("aria-expanded", String(open));
+  announce(open ? t().answerOptionsOpen : t().answerOptionsClosed);
+});
+
 document.querySelector("#open-story-from-lock")?.addEventListener("click", () => {
   if (state.scan !== "locked") return;
   state.storyOrigin = "lock";
@@ -307,18 +322,36 @@ async function copyText(text, output) {
 }
 
 document.querySelector("#copy-preflight")?.addEventListener("click", () => {
-  const checked = preflightInputs.map((input, index) => `${input.checked ? "[x]" : "[ ]"} ${index + 1}`);
+  const questions = state.locale === "th"
+    ? [
+        "คนเห็นคุณค่าอะไรในช่วงแรก?",
+        "ใช้โลโก้ พื้นผิว และฟอนต์ตามบทบาทหรือยัง?",
+        "ข้อมูลมาจากไหน และยังบอกอะไรไม่ได้?",
+        "สิ่งที่เห็นเปิดใช้จริงหรือยัง?",
+        "กดแล้วเกิดอะไร บันทึกจริงไหม และพลาดแล้วกลับอย่างไร?",
+        "คนกลับมาเพราะมีอะไรเปลี่ยนจริงหรือไม่?"
+      ]
+    : [
+        "What first value does the person receive?",
+        "Are identity, surface, and type roles correct?",
+        "Where does the data come from, and what cannot it establish?",
+        "Is the visible capability actually available?",
+        "What happens, is it really saved, and how does it recover?",
+        "Is a return caused by a material change?"
+      ];
+  const checked = preflightInputs.map((input, index) => `${input.checked ? "[x]" : "[ ]"} ${questions[index]}`);
   const text = [
-    "CityChat 60-second preflight",
+    state.locale === "th" ? "CityChat: เช็ก 60 วินาที" : "CityChat 60-second preflight",
     ...checked,
-    "Confirm: person and one job · one LDS profile · source and limitation · actual availability · action and recovery · tested screens and language",
-    "Boundary: completing this list is preparation, not release certification."
+    state.locale === "th"
+      ? "ขอบเขต: การตอบครบช่วยเตรียมงาน แต่ยังไม่ใช่หลักฐานว่า release ผ่านทุก gate"
+      : "Boundary: completing this list is preparation, not release certification."
   ].join("\n");
   copyText(text, document.querySelector("#copy-status"));
 });
 
 document.querySelector("#copy-prompt")?.addEventListener("click", () => {
-  const text = "Build one CityChat [page or flow] for [citizen or officer] doing [one job]. Follow CityChat VES v0.5 for composition and plain language, CityChat Product Experience Profile v0.4 for interaction and state, and the exact vendored Landometer v0.9.0 package for visual foundations. Show one place or matter, what it means, what is still unknown, and zero or one action that really works. Hide unavailable controls; never invent saved state, official status, live counts, or outcomes. Return the Build Card, visible states, unavailable capabilities, tests, and manual checks.";
+  const text = "Build one CityChat [page or flow] for [citizen or officer] doing [one job]. Use approved CityChat VES v0.6 for composition, first value, living-city identity, civic continuity, motion application, and plain frontstage language. Use the approved owning product/state/effect source when one exists; CityChat Product Experience Profile v0.4 remains a draft dependency. Inherit exact visual foundations from the pinned Landometer v0.9.0 package. Show one place or matter, one honest meaning, one supported question when useful, and zero or one action with its expected consequence. Remember a contribution only after real persistence; invite a return only for a material change; otherwise show recovery or clean completion. Hide unavailable controls and never invent saved state, official status, liveness, counts, or outcomes. Return the Build Card, authority refs, visible states, blocked reasons, tests, and manual checks.";
   copyText(text, document.querySelector("#prompt-copy-status"));
 });
 

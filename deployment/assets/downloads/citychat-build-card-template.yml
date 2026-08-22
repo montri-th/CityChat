@@ -47,7 +47,16 @@ citychatBuild:
   firstAha:
     target: required_from_selected_profile
     maximumEssentialInputs: required_from_selected_profile
-    primaryActionOrCleanCompletion: required
+    firstValueBeforeNonIntrinsicAsk: required
+    livingCityMeaning: real_place_people_evidence_time_or_change
+    supportedQuestionCount: zero_or_one
+    primaryActionOrCleanCompletion: zero_or_one_action_or_explicit_clean_completion
+  civicContinuity:
+    memoryRequiresRealPersistence: true
+    returnRequiresMaterialChange: true
+    nextTriggerOrCleanCompletion: required_after_persisted_effect
+    shareOnlyAfterFirstValue: true
+    relevantCircleBenefit: required_when_share_enabled
   privacy:
     visibility: public | internal | private
     sensitivity: public | internal | confidential | restricted

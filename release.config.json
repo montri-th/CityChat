@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
   "product": "citychat",
-  "artifactName": "CityChat Design Identity Playground",
-  "artifactVersion": "0.5.0",
-  "artifactBuildId": "citychat-ui-20260822-02",
+  "artifactName": "CityChat VES Interactive Playground",
+  "artifactVersion": "0.6.0",
+  "artifactBuildId": "citychat-ui-20260822-03",
   "pageKind": "design-identity-playground",
   "profile": "designsystem.adoption",
   "language": "th",
@@ -14,11 +14,33 @@
   "evidenceStatus": "source_limited",
   "machineValidation": "pending",
   "canonicalUrl": "https://montri-th.github.io/CityChat/",
-  "sourceVisualExperience": {
-    "path": "assets/downloads/citychat-visual-experience-specification-v0.5.md",
-    "sha256": "57eee9139a247f1ed728ee070138b8250c29533c249bed2e0e3fcab83b10acd6",
-    "status": "draft_candidate"
+  "releaseArtifacts": {
+    "manifest": "site-manifest.v0.6.json",
+    "buildCard": "build-card.v0.6.yml",
+    "controlInventory": "control-inventory.v0.6.json",
+    "implementationNotes": "implementation-notes.v0.6.md",
+    "automatedQa": "qa/automated.v0.6.json",
+    "renderedQa": "qa/rendered-local.v0.6.json",
+    "manualQa": "qa/manual-gates.v0.6.md",
+    "checksums": "assets/downloads/SHA256SUMS.txt"
   },
+  "sourceVisualExperience": {
+    "path": "assets/downloads/citychat-visual-experience-specification-v0.6.md",
+    "sha256": "5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21",
+    "status": "approved_normative_authoring_authority"
+  },
+  "approvalRecords": [
+    {
+      "path": "assets/downloads/citychat-ves-v0.6-approval.json",
+      "sha256": "9e9caa440f07348a0e2cabb53390e0aaab830e0aa1e3a742c51011a5cb0796cd",
+      "approvalId": "CC-VES-APP-20260822-01"
+    },
+    {
+      "path": "assets/downloads/citychat-ves-playground-release-authorization.v0.6.json",
+      "sha256": "4d3b9bf32212453eccb5748ae09f66b8e3f4e14b3c1c49bdf5d47cb7cda13d6e",
+      "approvalId": "CC-VES-PLAYGROUND-REL-20260822-01"
+    }
+  ],
   "productDependencies": [
     {
       "path": "assets/downloads/citychat-product-experience-profile-v0.4.md",
@@ -49,8 +71,8 @@
     }
   ],
   "identityManifest": {
-    "path": "assets/identity/identity-assets.v0.5.json",
-    "sha256": "628b40f0a604257f38135b6afe2ac615762c760ea8ed75999f94cfa53f5cf25f"
+    "path": "assets/identity/identity-assets.v0.6.json",
+    "sha256": "00dc490543e9fa6c20f588c0edda791e9e131a1579b9051f35bade0adb044b0d"
   },
   "triggeredPacks": ["PUB-01", "DELIVERY-01:web"],
   "supportedChannels": ["github_pages_team_playground"],

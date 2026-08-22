@@ -1,4 +1,4 @@
-# CityChat Design Identity Playground v0.5
+# CityChat VES Interactive Playground v0.6
 
 Navigation aid only. This file is not access control, permission, a ranking signal, product readiness, design-system conformance, or authority for an agent to act.
 
@@ -9,21 +9,23 @@ Canonical route: https://montri-th.github.io/CityChat/
 
 Human guide:
 - ./index.html
-- ./assets/downloads/citychat-visual-experience-specification-v0.5.md
+- ./assets/downloads/citychat-visual-experience-specification-v0.6.md
+- ./assets/downloads/citychat-ves-v0.6-approval.json
+- ./assets/downloads/citychat-ves-playground-release-authorization.v0.6.json
 - ./assets/downloads/citychat-product-experience-profile-v0.4.md
 - ./assets/downloads/vibe-coding-prompt.md
 
 Machine-readable resources:
 - ./assets/downloads/citychat-component-contracts.v0.4.json
-- ./build-card.v0.5.yml
-- ./site-manifest.v0.5.json
+- ./build-card.v0.6.yml
+- ./site-manifest.v0.6.json
 - ./resources/index.json
 - ./vendor/landometer/v0.9.0/package.json
 - ./vendor/landometer/v0.9.0/SHA256SUMS.txt
 
 Boundaries:
 - Product Brief v7 remains the current narrative baseline until v8 approval is recorded.
-- CityChat VES v0.5 and Product Experience Profile v0.4 are draft candidates.
+- CityChat VES v0.6 is approved normative authoring guidance; Product Experience Profile v0.4 remains a draft dependency.
 - CityScan interaction/spec material is proposed and runtime-unverified.
 - LINE, persistence, receipts, sharing, officer operations, and telemetry are not enabled in this artifact.
 - Open sources and verify important claims before promoting anything into a governed product object.

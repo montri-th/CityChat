@@ -6,7 +6,7 @@ To use it:
 
 1. Keep the vendored Landometer package beside the same `deployment/` directory structure, or update the two stylesheet paths without changing their bytes.
 2. Resolve `build-card.yml` for the real route and deployment.
-3. Read CityChat VES v0.5 and replace the conceptual fixture with a governed object, evidence and current capability truth.
+3. Read approved CityChat VES v0.6 and replace the conceptual fixture with a governed object, evidence and current capability truth.
 4. Add an action only when its destination/effect, permission, persistence and recovery exist.
 5. Run the repository validators and the applicable product tests.
 
