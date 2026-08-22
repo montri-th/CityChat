@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:citychat:schema:icon-map:v0.6.1",
+  "title": "CityChat icon role map v0.6.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "mapVersion", "artifactVersion", "status", "scope", "authority", "fontManifestRef", "fontAssetId", "axes", "roles", "galleryPolicy", "prohibitions"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "1.0" },
+    "mapVersion": { "const": "citychat-icon-map-v0.6.1" },
+    "artifactVersion": { "const": "0.6.1" },
+    "status": { "const": "artifact_governance_record" },
+    "scope": { "const": "citychat_team_playground_only" },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vesPath", "vesSha256", "ldsPackagePath", "ldsPackageSha256", "authorityBoundary"],
+      "properties": {
+        "vesPath": { "const": "../../../assets/downloads/citychat-visual-experience-specification-v0.6.md" },
+        "vesSha256": { "const": "5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21" },
+        "ldsPackagePath": { "const": "../../../vendor/landometer/v0.9.0/package.json" },
+        "ldsPackageSha256": { "const": "0b4b8bfd9abcf403cfebdc8fe9b3299a821eb6e2e96d0d5c9495f1627f206e47" },
+        "authorityBoundary": { "const": "implementation_binding_under_approved_ves_v0.6_not_new_normative_authority" }
+      }
+    },
+    "fontManifestRef": { "const": "font-assets.manifest.json" },
+    "fontAssetId": { "const": "material-symbols-rounded-citychat-v368-static-24-300-0-0" },
+    "axes": { "$ref": "#/$defs/axisState" },
+    "roles": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/role" },
+      "allOf": [
+        { "contains": { "properties": { "roleId": { "const": "place" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "conversation" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "evidence" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "reply" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "share" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "history" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "receipt" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "officer_work" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "map" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 }
+      ]
+    },
+    "galleryPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowedContainer", "nonInteractiveSpecimensOnly", "doesNotEnableProductCapability"],
+      "properties": {
+        "allowedContainer": { "const": "#icon-reference [role=list]" },
+        "nonInteractiveSpecimensOnly": { "const": true },
+        "doesNotEnableProductCapability": { "const": true }
+      }
+    },
+    "prohibitions": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$defs": {
+    "axisState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["FILL", "wght", "GRAD", "opsz", "selectedFill1Supported"],
+      "properties": {
+        "FILL": { "const": 0 },
+        "wght": { "const": 300 },
+        "GRAD": { "const": 0 },
+        "opsz": { "const": 24 },
+        "selectedFill1Supported": { "const": false }
+      }
+    },
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roleId", "glyph", "codepoint", "labelTh", "labelEn", "visibleOrAccessibleLabelRequired", "artifactUseClass", "useBoundary", "capabilityGate"],
+      "oneOf": [
+        {
+          "properties": {
+            "roleId": { "const": "place" }, "glyph": { "const": "location_on" }, "codepoint": { "const": "U+E0C8" },
+            "artifactUseClass": { "const": "library_and_local_teaching" },
+            "capabilityGate": { "$ref": "#/$defs/localTeachingGate" }
+          }
+        },
+        {
+          "properties": {
+            "roleId": { "const": "conversation" }, "glyph": { "const": "forum" }, "codepoint": { "const": "U+E0BF" },
+            "artifactUseClass": { "const": "library_and_local_teaching" },
+            "capabilityGate": { "$ref": "#/$defs/localTeachingGate" }
+          }
+        },
+        {
+          "properties": {
+            "roleId": { "const": "evidence" }, "glyph": { "const": "description" }, "codepoint": { "const": "U+E683" },
+            "artifactUseClass": { "const": "library_and_local_teaching" },
+            "capabilityGate": { "$ref": "#/$defs/localTeachingGate" }
+          }
+        },
+        {
+          "properties": {
+            "roleId": { "const": "reply" }, "glyph": { "const": "reply" }, "codepoint": { "const": "U+E15E" },
+            "artifactUseClass": { "const": "library_only_capability_gated" },
+            "capabilityGate": { "$ref": "#/$defs/replyGate" }
+          }
+        },
+        {
+          "properties": {
+            "roleId": { "const": "share" }, "glyph": { "const": "share" }, "codepoint": { "const": "U+E80D" },
+            "artifactUseClass": { "const": "library_only_capability_gated" },
+            "capabilityGate": { "$ref": "#/$defs/shareGate" }
+          }
+        },
+        {
+          "properties": {
+            "roleId": { "const": "history" }, "glyph": { "const": "history" }, "codepoint": { "const": "U+E28E" },
+            "artifactUseClass": { "const": "library_only_capability_gated" },
+            "capabilityGate": { "$ref": "#/$defs/persistenceGate" }
+          }
+        },
+        {
+          "properties": {
+            "roleId": { "const": "receipt" }, "glyph": { "const": "receipt_long" }, "codepoint": { "const": "U+EF6E" },
+            "artifactUseClass": { "const": "library_only_capability_gated" },
+            "capabilityGate": { "$ref": "#/$defs/persistenceGate" }
+          }
+        },
+        {
+          "properties": {
+            "roleId": { "const": "officer_work" }, "glyph": { "const": "assignment" }, "codepoint": { "const": "U+E85D" },
+            "artifactUseClass": { "const": "library_only_capability_gated" },
+            "capabilityGate": { "$ref": "#/$defs/officerGate" }
+          }
+        },
+        {
+          "properties": {
+            "roleId": { "const": "map" }, "glyph": { "const": "map" }, "codepoint": { "const": "U+E55B" },
+            "artifactUseClass": { "const": "library_and_local_teaching" },
+            "capabilityGate": { "$ref": "#/$defs/localTeachingGate" }
+          }
+        }
+      ],
+      "properties": {
+        "roleId": { "enum": ["place", "conversation", "evidence", "reply", "share", "history", "receipt", "officer_work", "map"] },
+        "glyph": { "enum": ["location_on", "forum", "description", "reply", "share", "history", "receipt_long", "assignment", "map"] },
+        "codepoint": { "type": "string", "pattern": "^U\\+[0-9A-F]{4,6}$" },
+        "labelTh": { "type": "string", "minLength": 1 },
+        "labelEn": { "type": "string", "minLength": 1 },
+        "visibleOrAccessibleLabelRequired": { "const": true },
+        "artifactUseClass": { "enum": ["library_and_local_teaching", "library_only_capability_gated"] },
+        "useBoundary": { "type": "string", "minLength": 1 },
+        "capabilityGate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["capabilityId", "requiredForProductBinding", "currentArtifactState", "productBindingAllowed"],
+          "properties": {
+            "capabilityId": { "type": ["string", "null"] },
+            "requiredForProductBinding": { "type": "boolean" },
+            "currentArtifactState": { "enum": ["available_local_teaching_only", "disabled", "not_evidenced"] },
+            "productBindingAllowed": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "localTeachingGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "requiredForProductBinding", "currentArtifactState", "productBindingAllowed"],
+      "properties": {
+        "capabilityId": { "const": null },
+        "requiredForProductBinding": { "const": false },
+        "currentArtifactState": { "const": "available_local_teaching_only" },
+        "productBindingAllowed": { "const": false }
+      }
+    },
+    "replyGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "requiredForProductBinding", "currentArtifactState", "productBindingAllowed"],
+      "properties": {
+        "capabilityId": { "const": "replyAction" },
+        "requiredForProductBinding": { "const": true },
+        "currentArtifactState": { "const": "not_evidenced" },
+        "productBindingAllowed": { "const": false }
+      }
+    },
+    "shareGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "requiredForProductBinding", "currentArtifactState", "productBindingAllowed"],
+      "properties": {
+        "capabilityId": { "const": "networkShare" },
+        "requiredForProductBinding": { "const": true },
+        "currentArtifactState": { "const": "disabled" },
+        "productBindingAllowed": { "const": false }
+      }
+    },
+    "persistenceGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "requiredForProductBinding", "currentArtifactState", "productBindingAllowed"],
+      "properties": {
+        "capabilityId": { "const": "remotePersistence" },
+        "requiredForProductBinding": { "const": true },
+        "currentArtifactState": { "const": "disabled" },
+        "productBindingAllowed": { "const": false }
+      }
+    },
+    "officerGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capabilityId", "requiredForProductBinding", "currentArtifactState", "productBindingAllowed"],
+      "properties": {
+        "capabilityId": { "const": "officerOperations" },
+        "requiredForProductBinding": { "const": true },
+        "currentArtifactState": { "const": "disabled" },
+        "productBindingAllowed": { "const": false }
+      }
+    }
+  }
+}

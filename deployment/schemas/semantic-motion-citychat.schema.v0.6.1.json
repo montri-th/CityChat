@@ -1,0 +1,673 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/CityChat/schemas/semantic-motion-citychat.schema.v0.6.1.json",
+  "title": "CityChat semantic motion machine record v0.6.1",
+  "description": "Fail-closed CityChat VES motion intent resolved against the exact vendored LDS package. This schema authorizes no runtime capability or release.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "recordId",
+    "recordVersion",
+    "status",
+    "artifactBuildId",
+    "scope",
+    "authority",
+    "capabilityBoundary",
+    "aliasResolutionPolicy",
+    "executablePrimitives",
+    "semanticBindings",
+    "presentationEnhancements",
+    "semanticEventsEmitted",
+    "prohibitions",
+    "releaseBoundary"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../../../schemas/semantic-motion-citychat.schema.v0.6.1.json"
+    },
+    "schemaVersion": {"const": "1.0"},
+    "recordId": {"const": "citychat-playground-semantic-motion"},
+    "recordVersion": {"const": "0.6.1"},
+    "status": {"enum": ["candidate", "approved"]},
+    "artifactBuildId": {
+      "type": ["string", "null"]
+    },
+    "scope": {"$ref": "#/$defs/scope"},
+    "authority": {"$ref": "#/$defs/authority"},
+    "capabilityBoundary": {"$ref": "#/$defs/capabilityBoundary"},
+    "aliasResolutionPolicy": {"$ref": "#/$defs/aliasResolutionPolicy"},
+    "executablePrimitives": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        {"$ref": "#/$defs/buttonPrimitive"},
+        {"$ref": "#/$defs/revealPrimitive"}
+      ],
+      "items": false
+    },
+    "semanticBindings": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "allOf": [
+            {"$ref": "#/$defs/semanticBinding"},
+            {
+              "properties": {
+                "bindingId": {"const": "action-press"},
+                "applicability": {"const": "applicable"},
+                "primitiveRef": {"const": "lds.btn.press"}
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/semanticBinding"},
+            {
+              "properties": {
+                "bindingId": {"const": "place-to-story"},
+                "applicability": {"const": "applicable_without_motion"},
+                "primitiveRef": {"const": "none"}
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/semanticBinding"},
+            {
+              "properties": {
+                "bindingId": {"const": "question-callout"},
+                "applicability": {"const": "deliberate_none"},
+                "primitiveRef": {"const": "none"}
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {"$ref": "#/$defs/semanticBinding"},
+            {
+              "properties": {
+                "bindingId": {"const": "evidence-settle"},
+                "applicability": {"const": "deliberate_none"},
+                "primitiveRef": {"const": "none"}
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "presentationEnhancements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "prefixItems": [{"$ref": "#/$defs/readingOrderEnhancement"}],
+      "items": false
+    },
+    "semanticEventsEmitted": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "prohibitions": {
+      "type": "array",
+      "minItems": 6,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "releaseBoundary": {"$ref": "#/$defs/releaseBoundary"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"status": {"const": "candidate"}},
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {"artifactBuildId": {"const": null}}
+      }
+    },
+    {
+      "if": {
+        "properties": {"status": {"const": "approved"}},
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "artifactBuildId": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "product",
+        "artifactKind",
+        "profileId",
+        "profileMotionIntensity",
+        "fullLivingReference",
+        "officialFixture",
+        "localFixtureStateOnly",
+        "remoteEffect",
+        "telemetry"
+      ],
+      "properties": {
+        "product": {"const": "citychat"},
+        "artifactKind": {"const": "design_identity_playground"},
+        "profileId": {"const": "designsystem.adoption"},
+        "profileMotionIntensity": {"const": "guided"},
+        "fullLivingReference": {"const": false},
+        "officialFixture": {"const": false},
+        "localFixtureStateOnly": {"const": true},
+        "remoteEffect": {"const": false},
+        "telemetry": {"const": false}
+      }
+    },
+    "authorityRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256", "availability"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "kitId": {"type": "string", "minLength": 1},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "availability": {"enum": ["repository_pinned", "external_pinned", "vendored"]},
+        "role": {"type": "string", "minLength": 1}
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactReleaseAuthorization",
+        "cityChatVes",
+        "landometerAuthoring",
+        "landometerMachinePackage",
+        "landometerCore",
+        "landometerProfile",
+        "landometerPrimitiveCss",
+        "landometerTokenCss",
+        "landometerChecksumLedger",
+        "landometerSelfCheckMap"
+      ],
+      "properties": {
+        "artifactReleaseAuthorization": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/assets/downloads/citychat-ves-playground-release-authorization.v0.6.1.json"},
+                "version": {"const": "0.6.1"},
+                "sha256": {"const": "5c31044ac030fbcca3335fdbb6c8cef7d943737d6b150956dfcb5bdbf17cc4e3"},
+                "availability": {"const": "repository_pinned"},
+                "role": {"const": "exact_artifact_scoped_motion_authorization"}
+              }
+            }
+          ]
+        },
+        "cityChatVes": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/assets/downloads/citychat-visual-experience-specification-v0.6.md"},
+                "version": {"const": "0.6"},
+                "sha256": {"const": "5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21"},
+                "availability": {"const": "repository_pinned"},
+                "role": {"const": "approved_product_specific_motion_intent"}
+              }
+            }
+          ]
+        },
+        "landometerAuthoring": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "sources/Landometer Design System v0.9.0-r7.md"},
+                "version": {"const": "0.9.0-r7"},
+                "sha256": {"const": "52ef41f1b231f8b84955a40c21a018991a114a4f5eaabd8c5111816bf8d645b1"},
+                "availability": {"const": "external_pinned"},
+                "role": {"const": "approved_visual_authoring_authority"}
+              }
+            }
+          ]
+        },
+        "landometerMachinePackage": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/vendor/landometer/v0.9.0/package.json"},
+                "version": {"const": "v0.9.0-mp1"},
+                "kitId": {"const": "lds-kit-0.9.0-r4"},
+                "commit": {"const": "d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665"},
+                "sha256": {"const": "0b4b8bfd9abcf403cfebdc8fe9b3299a821eb6e2e96d0d5c9495f1627f206e47"},
+                "availability": {"const": "vendored"},
+                "role": {"const": "active_machine_package"}
+              }
+            }
+          ]
+        },
+        "landometerCore": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/vendor/landometer/v0.9.0/core.md"},
+                "sha256": {"const": "76f98de642926aa06d00211e690fa70353ccdc87faadcafc39842d9d6683b544"},
+                "availability": {"const": "vendored"}
+              }
+            }
+          ]
+        },
+        "landometerProfile": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/vendor/landometer/v0.9.0/profiles/designsystem.adoption.json"},
+                "sha256": {"const": "203644fc1e7f8babbca9ee3307a5dce5de7cd36f9636d0e37fb767a6e6c8fa10"},
+                "availability": {"const": "vendored"}
+              }
+            }
+          ]
+        },
+        "landometerPrimitiveCss": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/vendor/landometer/v0.9.0/build-kit/lds-base.css"},
+                "sha256": {"const": "47eb23f0b2a06bd6882080bcc693384f5d59791b434045e7281b98fa2831903c"},
+                "availability": {"const": "vendored"}
+              }
+            }
+          ]
+        },
+        "landometerTokenCss": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/vendor/landometer/v0.9.0/build-kit/lds-tokens.css"},
+                "sha256": {"const": "aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323"},
+                "availability": {"const": "vendored"}
+              }
+            }
+          ]
+        },
+        "landometerChecksumLedger": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/vendor/landometer/v0.9.0/SHA256SUMS.txt"},
+                "sha256": {"const": "bae8c0342fbcb48ea9ba972498b0b80505f25503ecffc1efbe5f8ffd7443ab32"},
+                "availability": {"const": "vendored"}
+              }
+            }
+          ]
+        },
+        "landometerSelfCheckMap": {
+          "allOf": [
+            {"$ref": "#/$defs/authorityRecord"},
+            {
+              "properties": {
+                "ref": {"const": "deployment/vendor/landometer/v0.9.0/self-check.map.json"},
+                "sha256": {"const": "a6e95792126079da59cfb6b0670f0d08845491972779ccd8571f524aa9a963f6"},
+                "availability": {"const": "vendored"}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "capabilityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "disabled",
+        "unknownOrDisabledBehavior",
+        "animationMayAuthorizeCapability"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "disabled": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "prefixItems": [
+            {"const": "lineIntegration"},
+            {"const": "productionCityScanScoring"},
+            {"const": "productReceiptPersistence"},
+            {"const": "officerOperationsRuntime"},
+            {"const": "remoteShare"},
+            {"const": "telemetry"}
+          ],
+          "items": false
+        },
+        "unknownOrDisabledBehavior": {"const": "omit_control_and_effect"},
+        "animationMayAuthorizeCapability": {"const": false}
+      }
+    },
+    "aliasResolutionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "machineAliasRegistryStatus",
+        "candidateAliasResolution",
+        "failClosed",
+        "localAliasMintingAllowed",
+        "directPrimitivePolicy"
+      ],
+      "properties": {
+        "machineAliasRegistryStatus": {"const": "absent_from_v0.9.0-mp1"},
+        "candidateAliasResolution": {"const": "none"},
+        "failClosed": {"const": true},
+        "localAliasMintingAllowed": {"const": false},
+        "directPrimitivePolicy": {"const": "exact_selector_and_token_bytes_only"}
+      }
+    },
+    "primitiveCommon": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primitiveId",
+        "selector",
+        "sourceRef",
+        "sourceSha256",
+        "tokenSourceRef",
+        "tokenSourceSha256",
+        "tokenRefs",
+        "allowedUse",
+        "semanticEventEmission",
+        "telemetryFromAnimation"
+      ],
+      "properties": {
+        "primitiveId": {"type": "string", "minLength": 1},
+        "selector": {"enum": [".btn", ".reveal"]},
+        "sourceRef": {"const": "deployment/vendor/landometer/v0.9.0/build-kit/lds-base.css"},
+        "sourceSha256": {"const": "47eb23f0b2a06bd6882080bcc693384f5d59791b434045e7281b98fa2831903c"},
+        "tokenSourceRef": {"const": "deployment/vendor/landometer/v0.9.0/build-kit/lds-tokens.css"},
+        "tokenSourceSha256": {"const": "aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323"},
+        "tokenRefs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^--motion-[a-z0-9-]+$"}
+        },
+        "allowedUse": {"type": "string", "minLength": 1},
+        "semanticEventEmission": {"const": "none"},
+        "telemetryFromAnimation": {"const": false}
+      }
+    },
+    "buttonPrimitive": {
+      "allOf": [
+        {"$ref": "#/$defs/primitiveCommon"},
+        {
+          "properties": {
+            "primitiveId": {"const": "lds.btn.press"},
+            "selector": {"const": ".btn"},
+            "tokenRefs": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "prefixItems": [
+                {"const": "--motion-duration-feedback"},
+                {"const": "--motion-ease-state"},
+                {"const": "--motion-ease-press"},
+                {"const": "--motion-distance-feedback"}
+              ],
+              "items": false
+            },
+            "allowedUse": {"const": "real_native_control_feedback"}
+          }
+        }
+      ]
+    },
+    "revealPrimitive": {
+      "allOf": [
+        {"$ref": "#/$defs/primitiveCommon"},
+        {
+          "properties": {
+            "primitiveId": {"const": "lds.reveal.reading-order"},
+            "selector": {"const": ".reveal"},
+            "tokenRefs": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                {"const": "--motion-duration-reveal"},
+                {"const": "--motion-delay-stagger"},
+                {"const": "--motion-delay-stagger-cap"},
+                {"const": "--motion-distance-reveal"},
+                {"const": "--motion-ease-enter"}
+              ],
+              "items": false
+            },
+            "allowedUse": {"const": "optional_reading_order_entrance"}
+          }
+        }
+      ]
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["canonical_state_transition", "derived_view_transition", "user_feedback"]},
+        "canonicalStateTransitionRef": {"type": "string", "minLength": 1},
+        "fromDerivedViewStateRef": {"type": "string", "minLength": 1},
+        "toDerivedViewStateRef": {"type": "string", "minLength": 1},
+        "userFeedbackEventRef": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"kind": {"const": "canonical_state_transition"}},
+            "required": ["kind"]
+          },
+          "then": {
+            "required": ["canonicalStateTransitionRef"],
+            "not": {
+              "anyOf": [
+                {"required": ["fromDerivedViewStateRef"]},
+                {"required": ["toDerivedViewStateRef"]},
+                {"required": ["userFeedbackEventRef"]}
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"kind": {"const": "derived_view_transition"}},
+            "required": ["kind"]
+          },
+          "then": {
+            "required": ["fromDerivedViewStateRef", "toDerivedViewStateRef"],
+            "not": {
+              "anyOf": [
+                {"required": ["canonicalStateTransitionRef"]},
+                {"required": ["userFeedbackEventRef"]}
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"kind": {"const": "user_feedback"}},
+            "required": ["kind"]
+          },
+          "then": {
+            "required": ["userFeedbackEventRef"],
+            "not": {
+              "anyOf": [
+                {"required": ["canonicalStateTransitionRef"]},
+                {"required": ["fromDerivedViewStateRef"]},
+                {"required": ["toDerivedViewStateRef"]}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "semanticBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bindingId",
+        "applicability",
+        "semanticTransition",
+        "trigger",
+        "candidateLdsAliases",
+        "ldsMotionAlias",
+        "primitiveRef",
+        "profileMotionIntensity",
+        "executionPolicy",
+        "reducedMotion",
+        "noJavaScript",
+        "announcementSource",
+        "semanticEventEmission",
+        "telemetryFromAnimation"
+      ],
+      "properties": {
+        "bindingId": {"enum": ["action-press", "place-to-story", "question-callout", "evidence-settle"]},
+        "applicability": {"enum": ["applicable", "applicable_without_motion", "deliberate_none"]},
+        "semanticTransition": {"type": "string", "minLength": 1},
+        "trigger": {"$ref": "#/$defs/trigger"},
+        "candidateLdsAliases": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^motion\\.[A-Za-z]+\\.[A-Za-z]+$"}
+        },
+        "ldsMotionAlias": {"const": "none"},
+        "primitiveRef": {"enum": ["lds.btn.press", "none"]},
+        "profileMotionIntensity": {"const": "guided"},
+        "executionPolicy": {"const": "once_per_trigger"},
+        "reducedMotion": {"const": "final_state_immediate"},
+        "noJavaScript": {
+          "enum": [
+            "native_control_final_state",
+            "honest_nonoperable_fallback",
+            "final_state_immediate",
+            "native_disclosure_or_final_state"
+          ]
+        },
+        "announcementSource": {"const": "canonical_state_only"},
+        "semanticEventEmission": {"const": "none"},
+        "telemetryFromAnimation": {"const": false}
+      }
+    },
+    "readingOrderEnhancement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enhancementId",
+        "status",
+        "selectorContract",
+        "primitiveRef",
+        "ldsMotionAlias",
+        "activation",
+        "peerCount",
+        "allowedFor",
+        "prohibitedFor",
+        "executionPolicy",
+        "reducedMotion",
+        "noJavaScript",
+        "semanticEventEmission",
+        "telemetryFromAnimation"
+      ],
+      "properties": {
+        "enhancementId": {"const": "reading-order-entrance"},
+        "status": {"const": "approved_for_exact_artifact_pending_release_gates"},
+        "selectorContract": {"const": "[data-reveal-group] > [data-reveal-item]"},
+        "primitiveRef": {"const": "lds.reveal.reading-order"},
+        "ldsMotionAlias": {"const": "none"},
+        "activation": {"const": "approach_once"},
+        "peerCount": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minimum", "maximum"],
+          "properties": {
+            "minimum": {"const": 2},
+            "maximum": {"const": 5}
+          }
+        },
+        "allowedFor": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "prefixItems": [{"const": "secondary_teaching_sequence"}],
+          "items": false
+        },
+        "prohibitedFor": {
+          "type": "array",
+          "minItems": 11,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "first_meaning",
+              "primary_action",
+              "decision_surface",
+              "error",
+              "warning",
+              "waiting_state",
+              "logo",
+              "photo",
+              "hero",
+              "closed_disclosure",
+              "hidden_panel"
+            ]
+          }
+        },
+        "executionPolicy": {"const": "once_per_page_approach"},
+        "reducedMotion": {"const": "class_not_applied_final_state_immediate"},
+        "noJavaScript": {"const": "class_not_applied_final_state_immediate"},
+        "semanticEventEmission": {"const": "none"},
+        "telemetryFromAnimation": {"const": false}
+      }
+    },
+    "releaseBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "machineRecordAuthorizesRuntime",
+        "candidateStatusAuthorizesRelease",
+        "newAppendOnlyBuildRequired",
+        "schemaValidationRequired",
+        "renderedVerificationRequiredBeforeRevealActivation"
+      ],
+      "properties": {
+        "machineRecordAuthorizesRuntime": {"const": false},
+        "candidateStatusAuthorizesRelease": {"const": false},
+        "newAppendOnlyBuildRequired": {"const": true},
+        "schemaValidationRequired": {"const": true},
+        "renderedVerificationRequiredBeforeRevealActivation": {"const": true}
+      }
+    }
+  }
+}

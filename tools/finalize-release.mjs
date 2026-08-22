@@ -11,6 +11,8 @@ const checkOnly = process.argv.includes("--check");
 const manifestRel = config.releaseArtifacts.manifest;
 const sumsRel = config.releaseArtifacts.checksums;
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
+const implementationRecordRoot = `resources/citychat-ves/v${config.artifactVersion}`;
+const versionedSchema = name => `schemas/${name}.v${config.artifactVersion}.json`;
 
 function listFiles(dir, prefix = "") {
   return readdirSync(dir).sort().flatMap(name => {
@@ -27,7 +29,7 @@ const files = listFiles(deployment).map(relative => {
 });
 const byPath = Object.fromEntries(files.map(file => [file.path, file]));
 
-const requiredCritical = [
+const requiredCritical = [...new Set([
   "index.html",
   "citychat.css",
   "app.js",
@@ -46,6 +48,22 @@ const requiredCritical = [
   "assets/identity/citychat-symbol.source.svg",
   "assets/identity/citychat-lockup.source.svg",
   config.identityManifest.path,
+  ...Object.values(config.implementationRecords || {}),
+  "assets/icons/material-symbols-rounded-citychat-v368.ttf",
+  "assets/icons/LICENSE.material-symbols.txt",
+  `${implementationRecordRoot}/README.md`,
+  `${implementationRecordRoot}/citychat-color-atlas.fragment.html`,
+  `${implementationRecordRoot}/citychat-color-role-map.json`,
+  `${implementationRecordRoot}/citychat-icon-map.json`,
+  `${implementationRecordRoot}/citychat-icon-resolution.json`,
+  `${implementationRecordRoot}/font-assets.manifest.json`,
+  `${implementationRecordRoot}/semantic-motion.citychat.yml`,
+  versionedSchema("citychat-color-role-map.schema"),
+  versionedSchema("citychat-font-assets.schema"),
+  versionedSchema("citychat-icon-map.schema"),
+  versionedSchema("citychat-icon-resolution.schema"),
+  versionedSchema("semantic-motion-citychat.schema"),
+  `qa/color-atlas-generation.v${config.artifactVersion}.json`,
   "resources/starter/index.html",
   "resources/starter/citychat.css",
   "resources/index.json",
@@ -55,7 +73,7 @@ const requiredCritical = [
   "vendor/landometer/v0.9.0/build-kit/lds-base.css",
   "llms.txt",
   "robots.txt"
-];
+])];
 
 for (const required of requiredCritical) {
   if (!byPath[required]) throw new Error(`Missing critical release file: ${required}`);
@@ -93,11 +111,20 @@ const manifest = {
   productDependencies: config.productDependencies,
   governanceReferences: config.governanceReferences,
   identityManifest: config.identityManifest,
+  implementationRecords: config.implementationRecords,
   triggeredPacks: config.triggeredPacks,
   supportedChannels: config.supportedChannels,
   upstream: config.upstream,
   capabilities: config.capabilities,
   historicalRecords: [
+    {
+      path: "site-manifest.v0.6.json",
+      artifactBuildId: "citychat-ui-20260822-03",
+      rollbackCommit: "d610ba86ab2e7d4322b38ae5868cb828220d772d",
+      manifestSha256: "0ac4ef511bd24f6d696534d3b8443720cbed612cdc5b6ce4f872553c4b2fc46a",
+      currentBaseParity: false,
+      boundary: "Historical record only; repository history is required to verify its original relative paths."
+    },
     {
       path: "site-manifest.v0.5.json",
       artifactBuildId: "citychat-ui-20260822-02",

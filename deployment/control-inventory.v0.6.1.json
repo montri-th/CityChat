@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.1",
+  "artifactBuildId": "citychat-ui-20260823-01",
+  "iconMapRef": "resources/citychat-ves/v0.6.1/citychat-icon-map.json",
+  "controls": [
+    {"id": "theme-cycle", "kind": "button", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "local theme preference only", "recovery": "system theme remains available"},
+    {"id": "locale-cycle", "kind": "button", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "local language preference only", "recovery": "Thai initial HTML remains readable"},
+    {"id": "clarity-switch", "kind": "segmented_control", "geometryRole": "component_owned_segment", "iconRole": null, "effect": "switches a local fixture comparison", "recovery": "facts remain visible in the fixture record"},
+    {"id": "mode-story", "kind": "tab", "geometryRole": "component_owned_tab", "iconRole": null, "effect": "opens the local first-value fixture", "recovery": "no remote effect"},
+    {"id": "mode-return", "kind": "tab", "geometryRole": "component_owned_tab", "iconRole": null, "effect": "opens the conceptual saved-and-return fixture", "recovery": "no persistence or notification is simulated"},
+    {"id": "mode-scan", "kind": "tab", "geometryRole": "component_owned_tab", "iconRole": null, "effect": "opens the conceptual place-exploration fixture", "recovery": "no CityScan runtime"},
+    {"id": "mode-officer", "kind": "tab", "geometryRole": "component_owned_tab", "iconRole": null, "effect": "opens the conceptual officer fixture", "recovery": "no operational effect"},
+    {"id": "preview-answer-options", "kind": "button", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "reveals local answer-choice anatomy", "recovery": "toggle closes; nothing is sent or saved"},
+    {"id": "scan-state-controls", "kind": "team_only_segmented_preview", "geometryRole": "component_owned_segment", "iconRole": null, "effect": "switches conceptual layouts only; not a product transition", "recovery": "INSUFFICIENT is the fail-closed default"},
+    {"id": "open-story-from-lock", "kind": "button", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "local fixture handoff and immediate focus transfer", "recovery": "Direct Story remains independently reachable"},
+    {"id": "demo-action", "kind": "button", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "updates a local explanatory result", "recovery": "no send, save or navigation"},
+    {"id": "control-disabled-example", "kind": "disabled_specimen", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "none", "recovery": "visible unavailable label"},
+    {"id": "control-busy-example", "kind": "disabled_busy_specimen", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "none", "recovery": "visible preparing label"},
+    {"id": "open-lds-button-rules", "kind": "link", "geometryRole": "lds_labelled_capsule", "iconRole": "evidence", "labelMode": "icon_and_visible_label", "effect": "opens the pinned LDS base CSS", "recovery": "standard browser back navigation"},
+    {"id": "open-icon-map-circle", "kind": "link", "geometryRole": "lds_icon_circle", "iconRole": "evidence", "labelMode": "accessible_name", "effect": "opens the versioned icon map", "recovery": "standard browser back navigation"},
+    {"id": "open-icon-map", "kind": "link", "geometryRole": "lds_labelled_capsule", "iconRole": "evidence", "labelMode": "icon_and_visible_label", "effect": "opens the versioned icon map", "recovery": "standard browser back navigation"},
+    {"id": "open-motion-recipe", "kind": "link", "geometryRole": "lds_labelled_capsule", "iconRole": "evidence", "labelMode": "icon_and_visible_label", "effect": "opens the scoped semantic motion record", "recovery": "standard browser back navigation"},
+    {"id": "open-color-role-map", "kind": "link", "geometryRole": "lds_labelled_capsule", "iconRole": "evidence", "labelMode": "icon_and_visible_label", "effect": "opens the CityChat color role map", "recovery": "standard browser back navigation"},
+    {"id": "open-control-examples", "kind": "link", "geometryRole": "lds_labelled_capsule", "iconRole": "evidence", "labelMode": "icon_and_visible_label", "effect": "moves to the working control examples", "recovery": "standard in-page navigation"},
+    {"id": "preflight-form", "kind": "checklist", "geometryRole": "component_owned_form", "iconRole": null, "effect": "ephemeral local state", "recovery": "reload resets"},
+    {"id": "copy-preflight", "kind": "button", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "clipboard after explicit activation", "recovery": "visible download route"},
+    {"id": "copy-prompt", "kind": "button", "geometryRole": "lds_labelled_capsule", "iconRole": null, "effect": "clipboard after explicit activation", "recovery": "downloadable prompt file"}
+  ],
+  "presentationEnhancements": [
+    {"id": "reading-order-example", "mechanism": "IntersectionObserver adds inherited .reveal once", "semanticEffect": "none", "replay": false, "telemetry": false}
+  ],
+  "remoteEffects": [],
+  "disabledCapabilities": ["analytics", "authentication", "remotePersistence", "networkShare", "cityScanScoring", "lineIntegration", "officerOperations", "telemetry"]
+}

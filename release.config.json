@@ -2,8 +2,8 @@
   "schemaVersion": "1.0",
   "product": "citychat",
   "artifactName": "CityChat VES Interactive Playground",
-  "artifactVersion": "0.6.0",
-  "artifactBuildId": "citychat-ui-20260822-03",
+  "artifactVersion": "0.6.1",
+  "artifactBuildId": "citychat-ui-20260823-01",
   "pageKind": "design-identity-playground",
   "profile": "designsystem.adoption",
   "language": "th",
@@ -15,13 +15,13 @@
   "machineValidation": "pending",
   "canonicalUrl": "https://montri-th.github.io/CityChat/",
   "releaseArtifacts": {
-    "manifest": "site-manifest.v0.6.json",
-    "buildCard": "build-card.v0.6.yml",
-    "controlInventory": "control-inventory.v0.6.json",
-    "implementationNotes": "implementation-notes.v0.6.md",
-    "automatedQa": "qa/automated.v0.6.json",
-    "renderedQa": "qa/rendered-local.v0.6.json",
-    "manualQa": "qa/manual-gates.v0.6.md",
+    "manifest": "site-manifest.v0.6.1.json",
+    "buildCard": "build-card.v0.6.1.yml",
+    "controlInventory": "control-inventory.v0.6.1.json",
+    "implementationNotes": "implementation-notes.v0.6.1.md",
+    "automatedQa": "qa/automated.v0.6.1.json",
+    "renderedQa": "qa/rendered-local.v0.6.1.json",
+    "manualQa": "qa/manual-gates.v0.6.1.md",
     "checksums": "assets/downloads/SHA256SUMS.txt"
   },
   "sourceVisualExperience": {
@@ -36,9 +36,9 @@
       "approvalId": "CC-VES-APP-20260822-01"
     },
     {
-      "path": "assets/downloads/citychat-ves-playground-release-authorization.v0.6.json",
-      "sha256": "4d3b9bf32212453eccb5748ae09f66b8e3f4e14b3c1c49bdf5d47cb7cda13d6e",
-      "approvalId": "CC-VES-PLAYGROUND-REL-20260822-01"
+      "path": "assets/downloads/citychat-ves-playground-release-authorization.v0.6.1.json",
+      "sha256": "5c31044ac030fbcca3335fdbb6c8cef7d943737d6b150956dfcb5bdbf17cc4e3",
+      "approvalId": "CC-VES-PLAYGROUND-REL-20260823-01"
     }
   ],
   "productDependencies": [
@@ -71,8 +71,16 @@
     }
   ],
   "identityManifest": {
-    "path": "assets/identity/identity-assets.v0.6.json",
-    "sha256": "00dc490543e9fa6c20f588c0edda791e9e131a1579b9051f35bade0adb044b0d"
+    "path": "assets/identity/identity-assets.v0.6.1.json",
+    "sha256": "56a5cc6f4fbecdcb150deea5fc91f81a795cab32d8b746eeb639fd3b8bce6bef"
+  },
+  "implementationRecords": {
+    "iconMap": "resources/citychat-ves/v0.6.1/citychat-icon-map.json",
+    "iconResolution": "resources/citychat-ves/v0.6.1/citychat-icon-resolution.json",
+    "fontAssets": "resources/citychat-ves/v0.6.1/font-assets.manifest.json",
+    "semanticMotion": "resources/citychat-ves/v0.6.1/semantic-motion.citychat.yml",
+    "colorRoleMap": "resources/citychat-ves/v0.6.1/citychat-color-role-map.json",
+    "colorAtlasGenerationQa": "qa/color-atlas-generation.v0.6.1.json"
   },
   "triggeredPacks": ["PUB-01", "DELIVERY-01:web"],
   "supportedChannels": ["github_pages_team_playground"],
@@ -99,6 +107,7 @@
     "localFixtureState": true,
     "clipboardCopy": true,
     "themePreference": true,
-    "localePreference": true
+    "localePreference": true,
+    "implementationLibraryLocalInteractions": true
   }
 }

@@ -1,0 +1,1513 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260823-01",
+  "testedSourceDigest": "a5841740b150686bfd0df41bd45deaef2de8cf6436d15a95a1f3101dce6c63a5",
+  "testedSourceDigestAlgorithm": "sha256(path-NUL-bytes-NUL in declared order)",
+  "testedSourcePaths": [
+    "release.config.json",
+    "deployment/index.html",
+    "deployment/citychat.css",
+    "deployment/app.js",
+    "deployment/build-card.v0.6.1.yml",
+    "deployment/control-inventory.v0.6.1.json",
+    "deployment/assets/identity/identity-assets.v0.6.1.json",
+    "deployment/resources/citychat-ves/v0.6.1/citychat-color-role-map.json",
+    "deployment/resources/citychat-ves/v0.6.1/citychat-icon-map.json",
+    "deployment/resources/citychat-ves/v0.6.1/citychat-icon-resolution.json",
+    "deployment/resources/citychat-ves/v0.6.1/font-assets.manifest.json",
+    "deployment/resources/citychat-ves/v0.6.1/semantic-motion.citychat.yml",
+    "deployment/schemas/citychat-color-role-map.schema.v0.6.1.json",
+    "deployment/schemas/citychat-icon-map.schema.v0.6.1.json",
+    "deployment/schemas/semantic-motion-citychat.schema.v0.6.1.json",
+    "tools/check-rendered.mjs"
+  ],
+  "validator": {
+    "path": "tools/check-rendered.mjs",
+    "sha256": "2a3094430abc65d57759334fd6e88314b13507e21ed98f4f1bc92595a51677a3",
+    "contractVersion": "1.1"
+  },
+  "browser": "Chromium via Playwright 1.54.1 contract",
+  "scope": "rendered local HTTP; native-device, screen-reader, and product-runtime gates remain open",
+  "totals": {
+    "checks": 313,
+    "failures": 0
+  },
+  "result": "passed",
+  "checks": [
+    {
+      "name": "render:320x760-th-light-story:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:no-horizontal-overflow",
+      "ok": true,
+      "detail": "320/320"
+    },
+    {
+      "name": "render:320x760-th-light-story:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:first-value-in-initial-viewport",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"story\"]"
+    },
+    {
+      "name": "render:320x760-th-light-story:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:320x760-th-light-story:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:320x760-th-light-story:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:320x760-th-light-story:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:320x760-th-light-story:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:320x760-th-light-story:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:320x760-th-light-story:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:320x760-th-light-story:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:320x760-th-light-story:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:320x760-th-light-story:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:320x760-th-light-story:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:320x760-th-light-story:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:320x760-th-light-story:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:320x760-th-light-story:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#F2F1DF\",\"linear-gradient(135deg, #007A58 0%, #007E79 100%)\",\"#0AD69C\",\"#F6F7F3\",\"#EEF1EE\",\"#FCFCFA\",\"#E5E9E6\"]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:no-horizontal-overflow",
+      "ok": true,
+      "detail": "360/360"
+    },
+    {
+      "name": "render:360x800-th-dark-return:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:first-value-in-initial-viewport",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"return\"]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360x800-th-dark-return:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360x800-th-dark-return:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360x800-th-dark-return:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:360x800-th-dark-return:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:360x800-th-dark-return:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:360x800-th-dark-return:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#D8CFB2\",\"linear-gradient(135deg, #3BD19B 0%, #3BD3CB 100%)\",\"#0AD69C\",\"#11191D\",\"#172126\",\"#20292D\",\"#2B3534\"]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:no-horizontal-overflow",
+      "ok": true,
+      "detail": "360/360"
+    },
+    {
+      "name": "render:360x800-en-system-officer:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:first-value-in-initial-viewport",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"officer\"]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360x800-en-system-officer:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:360x800-en-system-officer:type-demo-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:360x800-en-system-officer:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:360x800-en-system-officer:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:360x800-en-system-officer:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:360x800-en-system-officer:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#F2F1DF\",\"linear-gradient(135deg, #007A58 0%, #007E79 100%)\",\"#0AD69C\",\"#F6F7F3\",\"#EEF1EE\",\"#FCFCFA\",\"#E5E9E6\"]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:no-horizontal-overflow",
+      "ok": true,
+      "detail": "390/390"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:first-value-in-initial-viewport",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"scan\"]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#D8CFB2\",\"linear-gradient(135deg, #3BD19B 0%, #3BD3CB 100%)\",\"#0AD69C\",\"#11191D\",\"#172126\",\"#20292D\",\"#2B3534\"]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:no-horizontal-overflow",
+      "ok": true,
+      "detail": "844/844"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"scan\"]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#F2F1DF\",\"linear-gradient(135deg, #007A58 0%, #007E79 100%)\",\"#0AD69C\",\"#F6F7F3\",\"#EEF1EE\",\"#FCFCFA\",\"#E5E9E6\"]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:no-horizontal-overflow",
+      "ok": true,
+      "detail": "390/390"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"scan\"]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#F2F1DF\",\"linear-gradient(135deg, #007A58 0%, #007E79 100%)\",\"#0AD69C\",\"#F6F7F3\",\"#EEF1EE\",\"#FCFCFA\",\"#E5E9E6\"]"
+    },
+    {
+      "name": "render:768x900-en-light-story:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:no-horizontal-overflow",
+      "ok": true,
+      "detail": "768/768"
+    },
+    {
+      "name": "render:768x900-en-light-story:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"story\"]"
+    },
+    {
+      "name": "render:768x900-en-light-story:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:768x900-en-light-story:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:768x900-en-light-story:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:768x900-en-light-story:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:768x900-en-light-story:type-demo-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:768x900-en-light-story:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:768x900-en-light-story:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:768x900-en-light-story:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:768x900-en-light-story:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:768x900-en-light-story:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:768x900-en-light-story:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:768x900-en-light-story:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:768x900-en-light-story:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:768x900-en-light-story:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#F2F1DF\",\"linear-gradient(135deg, #007A58 0%, #007E79 100%)\",\"#0AD69C\",\"#F6F7F3\",\"#EEF1EE\",\"#FCFCFA\",\"#E5E9E6\"]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:no-horizontal-overflow",
+      "ok": true,
+      "detail": "834/834"
+    },
+    {
+      "name": "render:834x900-th-dark-return:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"return\"]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:834x900-th-dark-return:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:834x900-th-dark-return:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:834x900-th-dark-return:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:834x900-th-dark-return:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:834x900-th-dark-return:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:834x900-th-dark-return:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#D8CFB2\",\"linear-gradient(135deg, #3BD19B 0%, #3BD3CB 100%)\",\"#0AD69C\",\"#11191D\",\"#172126\",\"#20292D\",\"#2B3534\"]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1024/1024"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"scan\"]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#F2F1DF\",\"linear-gradient(135deg, #007A58 0%, #007E79 100%)\",\"#0AD69C\",\"#F6F7F3\",\"#EEF1EE\",\"#FCFCFA\",\"#E5E9E6\"]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1180/1180"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"officer\"]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:type-demo-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#D8CFB2\",\"linear-gradient(135deg, #3BD19B 0%, #3BD3CB 100%)\",\"#0AD69C\",\"#11191D\",\"#172126\",\"#20292D\",\"#2B3534\"]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1366/1366"
+    },
+    {
+      "name": "render:1366x768-th-light-story:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"story\"]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1366x768-th-light-story:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1366x768-th-light-story:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1366x768-th-light-story:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:1366x768-th-light-story:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:1366x768-th-light-story:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(24, 35, 39)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:1366x768-th-light-story:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#F2F1DF\",\"linear-gradient(135deg, #007A58 0%, #007E79 100%)\",\"#0AD69C\",\"#F6F7F3\",\"#EEF1EE\",\"#FCFCFA\",\"#E5E9E6\"]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1440/1440"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:essential-content-and-library-rendered",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"return\"]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:type-demo-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true,\"materialSymbols\":true}"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:icon-subset-inherited-axes-and-accessibility",
+      "ok": true,
+      "detail": "[{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"},{\"glyph\":\"description\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"axes\":\"\\\"FILL\\\" 0, \\\"GRAD\\\" 0, \\\"opsz\\\" 24, \\\"wght\\\" 300\",\"color\":\"rgb(241, 244, 239)\",\"width\":24,\"height\":24,\"hidden\":\"true\"}]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:lds-labelled-capsule-geometry",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:lds-icon-circle-44px-and-named",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:visible-color-atlas-values-resolve",
+      "ok": true,
+      "detail": "[\"#D8CFB2\",\"linear-gradient(135deg, #3BD19B 0%, #3BD3CB 100%)\",\"#0AD69C\",\"#11191D\",\"#172126\",\"#20292D\",\"#2B3534\"]"
+    },
+    {
+      "name": "contrast:light:representative-text-pairs",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "contrast:dark:representative-text-pairs",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "icons:binding:control-examples.open-icon-map-circle:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"เปิด icon map / Open icon map\"}}"
+    },
+    {
+      "name": "icons:binding:icon-reference.open-icon-map:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionเปิด icon mapOpen icon map\"}}"
+    },
+    {
+      "name": "icons:binding:motion-examples.open-motion-recipe:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionเปิด motion recipeOpen motion recipe\"}}"
+    },
+    {
+      "name": "icons:binding:color-atlas.open-color-role-map:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionเปิด role mapOpen role map\"}}"
+    },
+    {
+      "name": "icons:binding:implementation-library.control-examples-link:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionปุ่มControlsสองทรง หนึ่งผลลัพธ์Two shapes, one consequence\"}}"
+    },
+    {
+      "name": "icons:binding:implementation-library.icon-reference-link:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionไอคอนและ assetIcons & assetsมีที่มา ไม่เดา glyphMapped, never guessed\"}}"
+    },
+    {
+      "name": "icons:binding:implementation-library.motion-examples-link:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionMotionอธิบายสิ่งที่เปลี่ยนExplain a change\"}}"
+    },
+    {
+      "name": "icons:binding:implementation-library.color-atlas-link:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionสีColourเลือกตามงาน ไม่เลือกตามชอบChoose by job\"}}"
+    },
+    {
+      "name": "icons:binding:control-examples.open-lds-button-rules:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionเปิดกติกาปุ่ม LDSOpen the LDS button rules\"}}"
+    },
+    {
+      "name": "icons:binding:motion-examples.evidence-disclosure:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionดูที่มาและข้อจำกัดView source and limitation\"}}"
+    },
+    {
+      "name": "icons:binding:color-atlas.open-control-examples:resolves",
+      "ok": true,
+      "detail": "{\"count\":1,\"resolved\":{\"glyph\":\"description\",\"hidden\":\"true\",\"family\":\"\\\"Material Symbols Rounded\\\"\",\"name\":\"descriptionดูตัวอย่างปุ่มที่ทำงานจริงView the working control examples\"}}"
+    },
+    {
+      "name": "icons:gallery-covers-closed-role-map",
+      "ok": true,
+      "detail": "[\"location_on\",\"forum\",\"description\",\"reply\",\"share\",\"history\",\"receipt_long\",\"assignment\",\"map\"]"
+    },
+    {
+      "name": "interaction:color-atlas-updates-with-theme",
+      "ok": true,
+      "detail": "{\"before\":[\"#F2F1DF\",\"linear-gradient(135deg, #007A58 0%, #007E79 100%)\",\"#0AD69C\",\"#F6F7F3\",\"#EEF1EE\",\"#FCFCFA\",\"#E5E9E6\"],\"after\":[\"#D8CFB2\",\"linear-gradient(135deg, #3BD19B 0%, #3BD3CB 100%)\",\"#0AD69C\",\"#11191D\",\"#172126\",\"#20292D\",\"#2B3534\"]}"
+    },
+    {
+      "name": "interaction:control-example-updates-local-result-and-announces",
+      "ok": true,
+      "detail": "{\"result\":\"ปุ่มทำงานแล้วในหน้านี้ · ไม่มีการส่งหรือบันทึกข้อมูลThe control worked locally · nothing was sent or persisted\",\"announcement\":\"ปุ่มทำงานแล้วในหน้านี้ · ไม่มีการส่งหรือบันทึกข้อมูล\"}"
+    },
+    {
+      "name": "interaction:tab-story-to-return",
+      "ok": true
+    },
+    {
+      "name": "interaction:return-is-single-visible-view",
+      "ok": true
+    },
+    {
+      "name": "interaction:tab-return-to-scan",
+      "ok": true
+    },
+    {
+      "name": "interaction:no-score-state",
+      "ok": true
+    },
+    {
+      "name": "interaction:no-score-cannot-open-story",
+      "ok": true
+    },
+    {
+      "name": "interaction:return-url-restoration",
+      "ok": true
+    },
+    {
+      "name": "interaction:answer-preview-initially-closed",
+      "ok": true
+    },
+    {
+      "name": "interaction:answer-preview-opens-locally",
+      "ok": true
+    },
+    {
+      "name": "interaction:locked-state",
+      "ok": true
+    },
+    {
+      "name": "interaction:locked-can-open-story",
+      "ok": true
+    },
+    {
+      "name": "interaction:locked-fixture-handoff-visible",
+      "ok": true,
+      "detail": "{\"visible\":true,\"text\":\"\\n                  มาจากกรอบตัวอย่างริมคลองกลางเมืองFrom the sample inner-city canal frame\\n                  ใช้ข้อมูลชุดเดิมและเก็บไว้เฉพาะหน้านี้Uses the same fixture and remains only on this page\\n                \",\"placeRef\":\"PLACE-DEMO-01\",\"snapshotRef\":\"FIXTURE-SCAN-LOCK-01\",\"mode\":\"story\",\"activeElement\":\"story-result-heading\",\"headingInViewport\":true}"
+    },
+    {
+      "name": "interaction:locked-fixture-context-preserved",
+      "ok": true,
+      "detail": "{\"visible\":true,\"text\":\"\\n                  มาจากกรอบตัวอย่างริมคลองกลางเมืองFrom the sample inner-city canal frame\\n                  ใช้ข้อมูลชุดเดิมและเก็บไว้เฉพาะหน้านี้Uses the same fixture and remains only on this page\\n                \",\"placeRef\":\"PLACE-DEMO-01\",\"snapshotRef\":\"FIXTURE-SCAN-LOCK-01\",\"mode\":\"story\",\"activeElement\":\"story-result-heading\",\"headingInViewport\":true}"
+    },
+    {
+      "name": "interaction:locked-handoff-focus-and-scroll",
+      "ok": true,
+      "detail": "{\"visible\":true,\"text\":\"\\n                  มาจากกรอบตัวอย่างริมคลองกลางเมืองFrom the sample inner-city canal frame\\n                  ใช้ข้อมูลชุดเดิมและเก็บไว้เฉพาะหน้านี้Uses the same fixture and remains only on this page\\n                \",\"placeRef\":\"PLACE-DEMO-01\",\"snapshotRef\":\"FIXTURE-SCAN-LOCK-01\",\"mode\":\"story\",\"activeElement\":\"story-result-heading\",\"headingInViewport\":true}"
+    },
+    {
+      "name": "interaction:preflight-progress",
+      "ok": true
+    },
+    {
+      "name": "motion:reading-order-initially-stable",
+      "ok": true,
+      "detail": "{\"groups\":1,\"items\":3,\"active\":0}"
+    },
+    {
+      "name": "motion:inherited-once-only-stagger-runs",
+      "ok": true,
+      "detail": "[{\"animation\":\"lds-reveal\",\"delay\":\"0s\"},{\"animation\":\"lds-reveal\",\"delay\":\"0.12s\"},{\"animation\":\"lds-reveal\",\"delay\":\"0.24s\"}]"
+    },
+    {
+      "name": "motion:reading-order-does-not-replay",
+      "ok": true,
+      "detail": "{\"complete\":\"true\",\"active\":0}"
+    },
+    {
+      "name": "motion:reduced-scroll-final-state",
+      "ok": true,
+      "detail": "auto"
+    },
+    {
+      "name": "motion:reduced-reveal-final-state-without-activation",
+      "ok": true,
+      "detail": "{\"scrollBehavior\":\"auto\",\"complete\":\"\",\"items\":[{\"active\":false,\"animation\":\"none\",\"opacity\":\"1\",\"transform\":\"none\"},{\"active\":false,\"animation\":\"none\",\"opacity\":\"1\",\"transform\":\"none\"},{\"active\":false,\"animation\":\"none\",\"opacity\":\"1\",\"transform\":\"none\"}]}"
+    },
+    {
+      "name": "no-js:single-read-only-guidance-visible",
+      "ok": true
+    },
+    {
+      "name": "no-js:honest-non-operable-fallback",
+      "ok": true
+    },
+    {
+      "name": "no-js:no-horizontal-overflow",
+      "ok": true
+    },
+    {
+      "name": "no-js:library-and-motion-final-state-visible",
+      "ok": true,
+      "detail": "[{\"active\":false,\"opacity\":\"1\",\"transform\":\"none\"},{\"active\":false,\"opacity\":\"1\",\"transform\":\"none\"},{\"active\":false,\"opacity\":\"1\",\"transform\":\"none\"}]"
+    },
+    {
+      "name": "type:thai-130-no-page-overflow",
+      "ok": true,
+      "detail": "390/390 []"
+    },
+    {
+      "name": "type:thai-long-copy-critical-containment",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "type:thai-130-no-control-or-heading-clipping",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "type:200-percent-zoom-essential-content",
+      "ok": true,
+      "detail": "{\"overflow\":false,\"page\":\"720/720\",\"h1Visible\":true,\"firstActionVisible\":true,\"wideNodes\":[]}"
+    },
+    {
+      "name": "qa:rendered-report-bound-to-tested-sources",
+      "ok": true,
+      "detail": "a2d002a6c9779bacb281f3401d1b43bc233bab28fa74000a506906b49dac2777/a5841740b150686bfd0df41bd45deaef2de8cf6436d15a95a1f3101dce6c63a5"
+    },
+    {
+      "name": "qa:rendered-report-contract-parity",
+      "ok": true,
+      "detail": "{\"recordedValidator\":\"2a3094430abc65d57759334fd6e88314b13507e21ed98f4f1bc92595a51677a3\",\"currentValidator\":\"2a3094430abc65d57759334fd6e88314b13507e21ed98f4f1bc92595a51677a3\",\"recordedChecks\":313,\"currentChecks\":313}"
+    }
+  ]
+}

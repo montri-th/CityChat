@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:citychat:schema:icon-resolution:v0.6.1",
+  "title": "CityChat icon resolution v0.6.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "resolutionVersion", "artifactVersion", "status", "scope", "fontManifestRef", "iconMapRef", "fontAssetId", "bindings", "librarySpecimens", "excludedProductCapabilities", "blockedBindings"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "1.0" },
+    "resolutionVersion": { "const": "citychat-icon-resolution-v0.6.1" },
+    "artifactVersion": { "const": "0.6.1" },
+    "status": { "const": "governed_local_bindings_only" },
+    "scope": { "const": "citychat_team_playground_only" },
+    "fontManifestRef": { "const": "font-assets.manifest.json" },
+    "iconMapRef": { "const": "citychat-icon-map.json" },
+    "fontAssetId": { "const": "material-symbols-rounded-citychat-v368-static-24-300-0-0" },
+    "bindings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/binding" }
+    },
+    "librarySpecimens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["containerSelector", "roleIds", "nonInteractive", "productCapabilityEnabled"],
+      "properties": {
+        "containerSelector": { "const": "#icon-reference [role=list]" },
+        "roleIds": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": { "enum": ["place", "conversation", "evidence", "reply", "share", "history", "receipt", "officer_work", "map"] }
+        },
+        "nonInteractive": { "const": true },
+        "productCapabilityEnabled": { "const": false }
+      }
+    },
+    "excludedProductCapabilities": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/exclusion" },
+      "allOf": [
+        { "contains": { "properties": { "roleId": { "const": "reply" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "share" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "history" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "receipt" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 },
+        { "contains": { "properties": { "roleId": { "const": "officer_work" } }, "required": ["roleId"] }, "minContains": 1, "maxContains": 1 }
+      ]
+    },
+    "blockedBindings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/blockedBinding" }
+    }
+  },
+  "$defs": {
+    "axisState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["FILL", "wght", "GRAD", "opsz"],
+      "properties": {
+        "FILL": { "const": 0 },
+        "wght": { "const": 300 },
+        "GRAD": { "const": 0 },
+        "opsz": { "const": 24 }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bindingId", "selector", "iconSelector", "controlKind", "effectClass", "roleId", "glyph", "labelMode", "iconAccessibility", "axisState", "colorMode", "colorRoleRef", "surfaceContractRef"],
+      "properties": {
+        "bindingId": { "type": "string", "pattern": "^[a-z0-9._-]+$" },
+        "selector": { "type": "string", "minLength": 1 },
+        "iconSelector": { "type": "string", "pattern": "\\.icon-symbol$" },
+        "controlKind": { "enum": ["local_document_link", "local_teaching_action", "local_section_navigation"] },
+        "effectClass": { "const": "local_only_no_remote_effect" },
+        "roleId": { "const": "evidence" },
+        "glyph": { "const": "description" },
+        "labelMode": { "enum": ["visible_label", "accessible_name"] },
+        "iconAccessibility": { "const": "aria-hidden" },
+        "axisState": { "$ref": "#/$defs/axisState" },
+        "colorMode": { "const": "currentColor_from_citychat_role" },
+        "colorRoleRef": { "const": "citychat.action.default" },
+        "surfaceContractRef": { "const": "inherits_governed_control_foreground_and_surface" }
+      }
+    },
+    "exclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roleId", "glyph", "capabilityId", "currentArtifactState", "reason"],
+      "oneOf": [
+        { "properties": { "roleId": { "const": "reply" }, "glyph": { "const": "reply" }, "capabilityId": { "const": "replyAction" } } },
+        { "properties": { "roleId": { "const": "share" }, "glyph": { "const": "share" }, "capabilityId": { "const": "networkShare" } } },
+        { "properties": { "roleId": { "const": "history" }, "glyph": { "const": "history" }, "capabilityId": { "const": "remotePersistence" } } },
+        { "properties": { "roleId": { "const": "receipt" }, "glyph": { "const": "receipt_long" }, "capabilityId": { "const": "remotePersistence" } } },
+        { "properties": { "roleId": { "const": "officer_work" }, "glyph": { "const": "assignment" }, "capabilityId": { "const": "officerOperations" } } }
+      ],
+      "properties": {
+        "roleId": { "enum": ["reply", "share", "history", "receipt", "officer_work"] },
+        "glyph": { "enum": ["reply", "share", "history", "receipt_long", "assignment"] },
+        "capabilityId": { "type": "string", "minLength": 1 },
+        "currentArtifactState": { "const": false },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "blockedBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selector", "observedGlyph", "reason", "requiredChange"],
+      "properties": {
+        "selector": { "type": "string", "minLength": 1 },
+        "observedGlyph": { "enum": ["reply", "history", "description", "map", "forum"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "requiredChange": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
