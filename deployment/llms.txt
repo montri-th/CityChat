@@ -1,0 +1,28 @@
+# CityChat Design Identity Playground v0.4
+
+Navigation aid only. This file is not access control, permission, a ranking signal, product readiness, design-system conformance, or authority for an agent to act.
+
+Status: source_limited
+Indexing: HTML entry points request page-level noindex; public files may still be indexed independently
+Artifact: conceptual design guidance; not CityChat runtime evidence
+Canonical route: https://montri-th.github.io/CityChat/
+
+Human guide:
+- ./index.html
+- ./assets/downloads/citychat-product-experience-profile-v0.4.md
+- ./assets/downloads/vibe-coding-prompt.md
+
+Machine-readable resources:
+- ./assets/downloads/citychat-component-contracts.v0.4.json
+- ./build-card.v0.4.yml
+- ./site-manifest.v0.4.json
+- ./resources/index.json
+- ./vendor/landometer/v0.9.0/package.json
+- ./vendor/landometer/v0.9.0/SHA256SUMS.txt
+
+Boundaries:
+- Product Brief v7 remains the current baseline until v8 is approved.
+- CityChat Profile v0.4 is a draft candidate.
+- CityScan interaction/spec material is proposed and runtime-unverified.
+- LINE, persistence, receipts, sharing, officer operations, and telemetry are not enabled in this artifact.
+- Open sources and verify important claims before promoting anything into a governed product object.

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/Landometer/machine/v0.9.0/connector.schema.json",
+  "title": "Landometer connector record",
+  "description": "Connectors encode a real relationship or they do not render (edge-rail/bracket-spine decoration is prohibited by owner amendment).",
+  "type": "object",
+  "properties": {
+    "connectors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Named real relationship the connector encodes; decorative lines are prohibited"
+          },
+          "styleMeaning": {
+            "type": "string"
+          },
+          "arrowMeaning": {
+            "type": "string"
+          },
+          "mobileBehavior": {
+            "type": "string"
+          },
+          "accessibleAlternative": {
+            "type": "string"
+          },
+          "deletionResult": {
+            "type": "string",
+            "description": "What breaks if the connector is deleted; empty means the connector should not exist"
+          }
+        },
+        "required": [
+          "relationship"
+        ]
+      }
+    }
+  },
+  "required": [
+    "connectors"
+  ]
+}

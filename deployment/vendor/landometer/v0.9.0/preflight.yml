@@ -1,0 +1,187 @@
+# Landometer DS v0.9.0 machine preflight — generated, rule-ID keyed
+# Source of authority: assets/downloads/landometer-design-system-v0.9.0.md (v0.9.0-r7)
+# Tests are keyed by rule ID; every entry maps back to the authoring master.
+package:
+  dsVersion: "0.9.0"
+  packageRevision: v0.9.0-mp1
+  colorSetId: color-srgb-05
+  artifactBuildId: ui-20260821-05
+  kitVersion: lds-kit-0.9.0-r4
+  tokenSchemaVersion: 6
+  manifestVersion: "2.1"
+
+identityMarkers:   # [PROV-01] / SC-01 — required on the html root of every conforming page
+  - attr: data-ds-version
+    equals: "0.9.0"
+  - attr: data-color-registry
+    equals: color-srgb-05
+  - attr: data-artifact-build
+    equals: ui-20260821-05
+  - attr: data-build-channel
+    oneOf: [latest-alias, immutable-color-set, immutable-artifact-build]
+
+colorPurge:        # [VIS-04] 2026-08-20 owner amendment; SC-17
+  retiredValues:   # exact v0.8.x values that MUST NOT appear anywhere
+    - "#795300"
+    - "#846100"
+    - "#686354"
+    - "#8B877A"
+    - "#B6AD98"
+    - "#A59A80"
+    - "#9E476F"
+    - "#E982AE"
+    - "#827C68"
+    - "#85837A"
+  bannedWindows:   # OKLCh; deterministic validation windows
+    purple:
+      hueDeg: [285, 345]
+      chromaMin: 0.03
+      note: banned at chroma >= 0.03
+    muddyDarkPink:
+      hueDeg: [345, 360]
+      chromaMax: 0.14
+      lightnessMax: 0.65
+      note: muddy dark pinks banned; approved Warm Pink series.10 ("#B23F74"/"#F06FA6") sits outside
+    brown:
+      hueDeg: [45, 110]
+      lightness: [0.25, 0.80]
+      chromaMax: 0.115
+      note: brown/tan/khaki/olive-brown/mustard/bronze banned; vivid golds chroma >= 0.115 stay approved
+  exemptions:
+    - approved Warm Pink series.10 "#B23F74" / "#F06FA6" (ijji identity)
+    - vivid golds with chroma >= 0.115 (e.g. "#E0B443", "#F4C44E", "#F5C15C", "#A87B00")
+
+kitBytes:          # [KIT-01] E0 rule 1 — copy verbatim; hashes bind package copies to the master blocks
+  lds-tokens.css: aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323
+  lds-base.css: 47eb23f0b2a06bd6882080bcc693384f5d59791b434045e7281b98fa2831903c
+  skeleton.html: bd6f1ad7fa4c7b2600587769131ec364bad36e951ac78bb057ec1fb748b26405
+
+manifestHtmlMatch: # §9.4 manifest.html.match — fields the embedded/adjacent manifest repeats and matches
+  fields:
+    - designSystemVersion
+    - buildCardVersion
+    - manifestVersion
+    - tokenSchemaVersion
+    - product
+    - profile
+    - pageKind + pageKindSourceRef
+    - generation/outputType
+    - delivery (+ static export record when applicable)
+    - languages
+    - per-locale voice rule/source/copy-hash/review references
+    - publication/evidence status + four discovery states
+    - visibility/index policy
+    - canonicalUrl
+    - theme support/default/preference/override
+    - identity-delivery contexts (exact asset/hash/canvas/placement/surface/approval/size/URL)
+    - motion intensity
+    - capabilities (live + fixture-scoped)
+    - network mode + channel parity key
+    - proof object/version
+    - quiet-region evidence + local foreground contracts + gradient-surface records
+    - connector records
+    - Context Discovery actions
+    - Color Set / artifact-build / registry / artifact hashes
+    - hook-loop, cross-product, tool-handoff, web-discovery, social-preview records (when triggered)
+    - release receipt + conformance level + self-check results + machine-validation status
+
+selfCheck:         # [SELFCHECK-01] — 23 binary items; map in self-check.map.json
+  items: 23
+  automatedEvidence:
+    - qa/v0.9.0-automated.json
+    - qa/v0.9.0-gradient-contrast.json
+    - qa/v0.9.0-scale-geometry.json
+    - qa/v0.9.0-container-fit.json
+    - qa/v0.9.0-rendered-affordances.json
+    - qa/v0.9.0-thai-leading.json
+  manualGates: qa/v0.9.0-manual-gates.md
+
+ruleIds:           # every v0.9.0 rule ID found in the authoring master; preflight tests key on these
+  - "ABUSE-INTEGRITY-01"
+  - "ADOPT-01"
+  - "AGENT-01"
+  - "AGENT-OUT-01"
+  - "AHA-01"
+  - "AUTH-01"
+  - "BRAND-01"
+  - "BRAND-02"
+  - "BRAND-03"
+  - "BRAND-04"
+  - "BTN-GEOM-01"
+  - "BUILD-01"
+  - "CATEGORY-ID-01"
+  - "CITYMETER-VOICE-01"
+  - "COCREATE-01"
+  - "CONTAINER-FIT-01"
+  - "CONTEXT-01"
+  - "COPY-01"
+  - "CORE-01"
+  - "CORE-02"
+  - "CORE-03"
+  - "CORE-04"
+  - "CORE-05"
+  - "CORE-06"
+  - "CORE-07"
+  - "CORE-08"
+  - "CORE-09"
+  - "CORE-10"
+  - "CTRL-01"
+  - "CTRL-02"
+  - "CULTURE-01"
+  - "DATA-01"
+  - "DATAVIZ-01"
+  - "DELIVERY-01"
+  - "DISCLOSURE-01"
+  - "DONE-01"
+  - "EFFECT-01"
+  - "EXCEPTION-01"
+  - "FLOW-01"
+  - "FLOW-02"
+  - "FLOW-03"
+  - "FLOW-04"
+  - "FLOW-05"
+  - "FLOW-06"
+  - "HOOK-01"
+  - "ICON-01"
+  - "INTERNAL-SEARCH-01"
+  - "KIT-01"
+  - "LAYER-FIELD-01"
+  - "LAYOUT-01"
+  - "LDM-VOICE-01"
+  - "LEARN-01"
+  - "LOCALE-01"
+  - "LOCALE-TH-01"
+  - "LOGO-SURFACE-01"
+  - "MACHINE-01"
+  - "MAP-01"
+  - "MEDIA-LADDER-01"
+  - "MOTIF-01"
+  - "MOTION-01"
+  - "PHOTO-01"
+  - "POSITION-01"
+  - "PRODUCT-01"
+  - "PROFILE-01"
+  - "PUB-01"
+  - "QA-01"
+  - "REFERENCE-01"
+  - "RELATION-01"
+  - "REVEAL-01"
+  - "SEARCH-01"
+  - "SELFCHECK-01"
+  - "SHARE-01"
+  - "SPACE-01"
+  - "STATE-01"
+  - "SURFACE-01"
+  - "TELEMETRY-01"
+  - "THEME-01"
+  - "TOKEN-01"
+  - "TOOL-HANDOFF-01"
+  - "TYPE-01"
+  - "VALUE-PROOF-01"
+  - "VIS-01"
+  - "VIS-02"
+  - "VIS-03"
+  - "VIS-04"
+  - "VOICE-01"
+  - "WEB-DISCOVERY-01"
+  - "XPRODUCT-01"

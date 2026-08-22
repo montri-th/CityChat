@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "id": "presentation",
+  "ruleId": "[PROFILE-01]",
+  "oneJob": "follow a narrative and make/understand a decision",
+  "firstAha": "answer and proof early in deck",
+  "character": "presenter-readable",
+  "impliedTrigger": "evidence as needed",
+  "motionIntensity": "export_safe",
+  "ahaBudget": {
+    "maxActions": "per §8.1",
+    "target": "per §8.1"
+  },
+  "delivery": {
+    "rejectsStaticExport": false,
+    "requiresStaticExport": false
+  },
+  "evidenceBranch": "per capability declarations",
+  "source": {
+    "path": "assets/downloads/landometer-design-system-v0.9.0.md",
+    "sections": [
+      "§8 [PROFILE-01]",
+      "§8.1 [AHA-01]",
+      "Build Card gates §2"
+    ]
+  },
+  "boundary": "Exactly one profile loads per artifact; this record is a projection — the master's profile clauses remain the authority."
+}

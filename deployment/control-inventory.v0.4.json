@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260822-01",
+  "controls": [
+    {"id": "theme-cycle", "kind": "button", "effect": "local preference only", "recovery": "system theme remains available"},
+    {"id": "locale-cycle", "kind": "button", "effect": "local preference only", "recovery": "Thai initial HTML remains readable"},
+    {"id": "clarity-switch", "kind": "segmented control", "effect": "local fixture view", "recovery": "facts remain visible in fixture record"},
+    {"id": "mode-story", "kind": "tab", "effect": "local fixture view", "recovery": "no remote effect"},
+    {"id": "mode-scan", "kind": "tab", "effect": "local fixture view", "recovery": "no remote effect"},
+    {"id": "mode-officer", "kind": "tab", "effect": "local fixture view", "recovery": "no remote effect"},
+    {"id": "scan-state-controls", "kind": "segmented control", "effect": "local conceptual scan state", "recovery": "SIGNAL_READY default"},
+    {"id": "open-story-from-lock", "kind": "button", "effect": "local fixture handoff only", "recovery": "Direct Story remains independently reachable"},
+    {"id": "preflight-form", "kind": "checklist", "effect": "ephemeral local state", "recovery": "reload resets"},
+    {"id": "copy-preflight", "kind": "button", "effect": "clipboard after explicit activation", "recovery": "visible download route"},
+    {"id": "copy-prompt", "kind": "button", "effect": "clipboard after explicit activation", "recovery": "downloadable prompt file"}
+  ],
+  "remoteEffects": [],
+  "disabledCapabilities": ["analytics", "authentication", "remotePersistence", "networkShare", "cityScanScoring", "lineIntegration", "officerOperations"]
+}

@@ -1,0 +1,295 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/Landometer/machine/v0.9.0/build-card.schema.json",
+  "title": "Landometer Build Card 0.9.0",
+  "description": "Validates the shipped Build Card projection (build-card.v0.9.0.yml). Structural + identity validation; §9.4 cross-field/parity gates and manual reviews remain normative on top of this schema.",
+  "type": "object",
+  "properties": {
+    "landometerBuild": {
+      "type": "object",
+      "properties": {
+        "dsVersion": {
+          "const": "0.9.0"
+        },
+        "authoringRevision": {
+          "type": "string",
+          "pattern": "^v0\\.9\\.0-r\\d+$"
+        },
+        "schemas": {
+          "type": "object",
+          "properties": {
+            "buildCard": {
+              "const": "0.9.0"
+            },
+            "manifest": {
+              "enum": [
+                "2.1",
+                2.1
+              ]
+            },
+            "tokens": {
+              "const": 6
+            }
+          },
+          "required": [
+            "buildCard",
+            "manifest",
+            "tokens"
+          ]
+        },
+        "colorDelivery": {
+          "type": "object",
+          "properties": {
+            "registryId": {
+              "type": "string",
+              "pattern": "^color-srgb-\\d{2}$"
+            },
+            "registryPath": {
+              "type": "string"
+            },
+            "tokenRegistry": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ]
+            },
+            "scaleRegistry": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ]
+            },
+            "immutableColorBaseline": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "path"
+              ]
+            },
+            "currentArtifactBuild": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^ui-\\d{8}-\\d{2}$"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "path"
+              ]
+            },
+            "previousArtifactBuild": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "registryId",
+            "tokenRegistry",
+            "scaleRegistry",
+            "immutableColorBaseline",
+            "currentArtifactBuild"
+          ]
+        },
+        "deliveryIdentity": {
+          "type": "object",
+          "properties": {
+            "colorSetId": {
+              "type": "string",
+              "pattern": "^color-srgb-\\d{2}$"
+            },
+            "artifactBuildId": {
+              "type": "string",
+              "pattern": "^ui-\\d{8}-\\d{2}$"
+            },
+            "tokenRegistry": {
+              "type": "object"
+            },
+            "scaleRegistry": {
+              "type": "object"
+            },
+            "artifactHashes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "channel": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "bytes": {
+                    "type": "integer"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  },
+                  "colorSetId": {
+                    "type": "string"
+                  },
+                  "artifactBuildId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "channel",
+                  "path",
+                  "sha256"
+                ]
+              }
+            }
+          },
+          "required": [
+            "colorSetId",
+            "artifactBuildId",
+            "artifactHashes"
+          ]
+        },
+        "artifact": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "product": {
+              "type": "string"
+            },
+            "profile": {
+              "type": "string"
+            },
+            "pageKind": {
+              "type": "string"
+            },
+            "pageKindSourceRef": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "product",
+            "profile",
+            "pageKind"
+          ]
+        },
+        "publication": {
+          "type": "object"
+        },
+        "audience": {
+          "type": "object"
+        },
+        "voice": {
+          "type": "object"
+        },
+        "experience": {
+          "type": "object"
+        },
+        "composition": {
+          "type": "object"
+        },
+        "brandAlignment": {
+          "type": "object"
+        },
+        "proof": {
+          "type": "object"
+        },
+        "theme": {
+          "type": "object"
+        },
+        "localeControls": {
+          "type": "object"
+        },
+        "motion": {
+          "type": "object"
+        },
+        "capabilities": {
+          "type": "object"
+        },
+        "fixtureCapabilities": {
+          "type": "object"
+        },
+        "referenceFixtures": {
+          "type": "array"
+        },
+        "privacy": {
+          "type": "object"
+        },
+        "telemetry": {
+          "type": "object"
+        },
+        "network": {
+          "type": "object"
+        },
+        "assets": {
+          "type": "object"
+        },
+        "artifactIdentityEvidence": {
+          "type": "object"
+        },
+        "referenceDocuments": {
+          "type": "array"
+        },
+        "qa": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "dsVersion",
+        "authoringRevision",
+        "schemas",
+        "colorDelivery",
+        "deliveryIdentity",
+        "artifact",
+        "publication",
+        "voice",
+        "experience",
+        "composition",
+        "capabilities",
+        "network",
+        "privacy",
+        "qa"
+      ]
+    }
+  },
+  "required": [
+    "landometerBuild"
+  ]
+}

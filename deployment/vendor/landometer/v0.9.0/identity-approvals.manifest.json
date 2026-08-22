@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "boundary": "Records approved exact hashes and use boundaries only; the public-safe package excludes logo, photograph, poster, font, PDF, and other protected source binaries. An artifact cannot pass identity gates until it supplies the exact permitted binaries and validates them against these records.",
+  "identity": {
+    "headerLockup": {
+      "path": "assets/images/landometer-logo-banner.png",
+      "variant": "transparent_horizontal_lockup",
+      "sha256": "f6ed8748d32d11514c94ce6a639491120489ce8c3ab6fff073d7ca9638a87535",
+      "status": "source_limited; formal current identity approval remains pending"
+    },
+    "browserTabIcon": {
+      "status": "approved",
+      "rendered": true,
+      "path": "assets/images/landometer-symbol-transparent.png",
+      "href": "assets/images/landometer-symbol-transparent.png?v=35a1496f",
+      "standaloneHref": "https://montri-th.github.io/Landometer/assets/images/landometer-symbol-transparent.png?v=35a1496f",
+      "cacheRevision": "35a1496f",
+      "variant": "transparent_compact_symbol",
+      "context": "browser_tab_favicon_only",
+      "mimeType": "image/png",
+      "intrinsicSize": "192x192",
+      "declaredSizes": [
+        "192x192"
+      ],
+      "bytes": 11001,
+      "sha256": "35a1496f6e8c502cef82f0a46de5dacff98718ff9f5a6c07ccc3783d76e3ae85",
+      "transparentCanvas": true,
+      "alphaBounds": "x=4..187, y=0..191 on the approved 192x192 canvas",
+      "transform": "none",
+      "themeStrategy": "same transparent RGBA bytes for light, dark, and system; no carrier, recolor, filter, crop, mask, or reconstructed padding",
+      "approvalScope": "browser-tab favicon only; not social-preview, touch, maskable application-icon, or horizontal-header-lockup approval",
+      "approvalSource": "repository main commit ce785864e5341321e1957dce35a8326732764432 · Use transparent Landometer symbol favicon",
+      "manualReview": "small-size browser-tab, bookmark, shortcut, and supported-theme review remains open",
+      "hostSearchFaviconControl": "Search-result favicon selection is hostname-level; a GitHub Pages project subpath cannot independently guarantee a distinct search-result favicon."
+    }
+  },
+  "status": "records mirror site-manifest.v0.9.0.json#identity for this artifact; formal identity/media approval records beyond those listed remain open (approval_missing entries stay honest)."
+}

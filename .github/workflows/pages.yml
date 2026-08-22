@@ -1,0 +1,68 @@
+name: Deploy CityChat playground to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "deployment/**"
+      - "tools/**"
+      - "package.json"
+      - "release.config.json"
+      - "README.md"
+      - "DESIGN.md"
+      - "AGENTS.md"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Validate and deploy exact release
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate deterministic release source
+        run: npm test
+
+      - name: Install browser dependency
+        run: |
+          npm install --no-save --no-package-lock playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Validate rendered states before deployment
+        run: npm run render
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload exact static tree
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: deployment
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify live bytes match deployed source
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+          LOCAL_DEPLOYMENT_DIR: deployment
+          VERIFY_ATTEMPTS: "30"
+          VERIFY_DELAY_MS: "10000"
+        run: node tools/verify-live.mjs

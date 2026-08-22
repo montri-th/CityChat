@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "1.0",
+  "ruleId": "[SELFCHECK-01]",
+  "source": {
+    "path": "assets/downloads/landometer-design-system-v0.9.0.md",
+    "authoringRevision": "v0.9.0-r7"
+  },
+  "items": [
+    {
+      "id": "SC-01",
+      "requirement": "`<html>` carries the §9.4 identity attributes and `<head>` carries the four `landometer:*` receipt metas",
+      "owningRules": [
+        "[PUB-01]",
+        "§9.4"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-02",
+      "requirement": "The theme-init script is inline in `<head>` before any stylesheet, resolving stored choice → system, exactly as the kit ships it",
+      "owningRules": [
+        "[THEME-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-03",
+      "requirement": "The Appendix E token block is present unmodified; zero hex colors appear outside it (build-local layer uses `var()` derivations only)",
+      "owningRules": [
+        "[TOKEN-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-04",
+      "requirement": "Every button computes `border-radius` to the pill token (capsule) or `50%` with equal width/height (circle); no other button radius exists",
+      "owningRules": [
+        "[BTN-GEOM-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-05",
+      "requirement": "Every `:focus-visible` indicator resolves `var(--interaction-focus-ring)` or a declared local-contract focus pair; no fixed-hex focus anywhere",
+      "owningRules": [
+        "[A11Y-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-06",
+      "requirement": "A global `@media (prefers-reduced-motion: reduce)` block disables all animation and transition",
+      "owningRules": [
+        "[MOTION-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-07",
+      "requirement": "Interactive targets are ≥44×44 CSS px; user-read text is ≥11 px Latin / ≥12 px Thai",
+      "owningRules": [
+        "[A11Y-01]",
+        "[TYPE-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-08",
+      "requirement": "Exactly one `<h1>`; `<html lang>` matches the active language; landmarks present; skip link is the first focusable",
+      "owningRules": [
+        "[A11Y-01]",
+        "[LOCALE-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-09",
+      "requirement": "Every rendered gradient string equals an exact Appendix A recipe (angle adaptations recorded); no other `linear-gradient`/`radial-gradient`/`conic-gradient` exists",
+      "owningRules": [
+        "[SURFACE-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-10",
+      "requirement": "The build-local layer contains zero `!important` and every custom property it defines derives via `var()`",
+      "owningRules": [
+        "[DELIVERY-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-11",
+      "requirement": "Fonts are packaged/self-hosted; the artifact works with all third-party runtime requests blocked",
+      "owningRules": [
+        "[TYPE-01]",
+        "[DELIVERY-01]"
+      ],
+      "acceptance": "both",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-12",
+      "requirement": "Public page: title, description, canonical, robots, Open Graph, and JSON-LD present and matching visible content; the URL is in the sitemap; the favicon context record matches the owning product",
+      "owningRules": [
+        "[WEB-DISCOVERY-01]",
+        "[PUB-01]"
+      ],
+      "acceptance": "both",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-13",
+      "requirement": "Share-promoted page: one complete `socialPreview` record per promoted destination, with its rendered-preview test",
+      "owningRules": [
+        "[PUB-01]"
+      ],
+      "acceptance": "both",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-14",
+      "requirement": "Every visible control appears in the control inventory and reaches its asserted final state",
+      "owningRules": [
+        "[CTRL-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-15",
+      "requirement": "Zero dead links, empty `href`s, placeholder destinations, or simulated capabilities",
+      "owningRules": [
+        "CORE-04",
+        "[CTRL-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-16",
+      "requirement": "Manifest values equal rendered/DOM values for every field both declare",
+      "owningRules": [
+        "§9.4"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-17",
+      "requirement": "None of the retired v0.8.x color values appears anywhere: `#795300` `#846100` `#686354` `#8B877A` `#B6AD98` `#A59A80` `#9E476F` `#E982AE` `#827C68` `#85837A`",
+      "owningRules": [
+        "[VIS-04]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-18",
+      "requirement": "The first-view DOM contains no warning/caution banner, no `role=\"alert\"` outside a real error state, and none of the Appendix D caution-phrase lint list; the evidence affordance exists where claims render",
+      "owningRules": [
+        "[DISCLOSURE-01]"
+      ],
+      "acceptance": "both",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-19",
+      "requirement": "Every UI icon resolves `font-family: \"Material Symbols Rounded\"` with the locked axes (or an approved registered custom glyph); no other icon set, emoji, or ad-hoc vector renders; production/portable builds load the icon face from a self-hosted subset, not fonts.googleapis.com",
+      "owningRules": [
+        "[ICON-01]"
+      ],
+      "acceptance": "both",
+      "evidence": "qa/v0.9.0-automated.json"
+    },
+    {
+      "id": "SC-20",
+      "requirement": "No bounded container (card, tile, panel sharing a grid row) overflows its own box or exceeds the tallest sibling in its row beyond the stated tolerance, at every governed breakpoint and in both visual baselines; any enumeration past the §4.4C threshold carries an answer-first summary and a bounded expander",
+      "owningRules": [
+        "[CONTAINER-FIT-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-container-fit.json"
+    },
+    {
+      "id": "SC-21",
+      "requirement": "Every rendered capsule action carries at least `--space-5` inline padding on both sides, centres its label on both axes, meets the 44 px minimum target, and neither clips nor overruns its shape",
+      "owningRules": [
+        "[BTN-GEOM-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-rendered-affordances.json"
+    },
+    {
+      "id": "SC-22",
+      "requirement": "No group the reader has reached is left invisible by an entrance; no group inside a closed disclosure or hidden panel carries the hidden state; a landed group stays landed after scrolling away and back; reduced-motion and no-JavaScript never apply the hidden state",
+      "owningRules": [
+        "[REVEAL-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-rendered-affordances.json"
+    },
+    {
+      "id": "SC-23",
+      "requirement": "Every icon inside a labelled capsule centres with the label, keeps the `--space-2` gap to it, and stays inside the capsule box; every icon inside a circle action centres on the circle",
+      "owningRules": [
+        "[BTN-GEOM-01]"
+      ],
+      "acceptance": "automated",
+      "evidence": "qa/v0.9.0-rendered-affordances.json"
+    }
+  ],
+  "boundary": "Binary per-item outcomes; exceptions are recorded per item in the artifact (this page: SC-02/SC-03 [EXCEPTION-01], pre-Kit build upgraded in place)."
+}

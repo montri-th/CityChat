@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260822-01",
+  "status": "source_limited",
+  "resources": [
+    {"id": "profile", "path": "../assets/downloads/citychat-product-experience-profile-v0.4.md", "format": "markdown", "authority": "draft_candidate"},
+    {"id": "component-contracts", "path": "../assets/downloads/citychat-component-contracts.v0.4.json", "format": "json", "authority": "draft_candidate"},
+    {"id": "build-card-template", "path": "../assets/downloads/citychat-build-card-template.yml", "format": "yaml", "authority": "implementation_template"},
+    {"id": "vibe-prompt", "path": "../assets/downloads/vibe-coding-prompt.md", "format": "markdown", "authority": "implementation_aid"},
+    {"id": "starter", "path": "starter/index.html", "format": "html", "authority": "conceptual_fixture"},
+    {"id": "landometer-machine-package", "path": "../vendor/landometer/v0.9.0/package.json", "format": "json", "authority": "pinned_upstream_package"}
+  ],
+  "boundary": "Resources do not authorize capabilities or certify downstream artifacts."
+}

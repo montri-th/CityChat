@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.0",
+  "authority": "pageKindSourceRef resolves to the applicable approved Product Brief/Statement, a named profile rule in the master, or this generated registry; agents MUST NOT mint a page kind or use a utility label to bypass [FLOW-03].",
+  "kinds": [
+    {
+      "id": "design-identity-playground",
+      "profile": "designsystem.adoption",
+      "actionPolicy": "real first-viewport action required ([FLOW-03])",
+      "currentArtifact": "design_identity_playground_with_implementation_library"
+    },
+    {
+      "id": "brand-home-solution-product-proof-careers",
+      "profile": "brand.public",
+      "actionPolicy": "real first-viewport action required"
+    },
+    {
+      "id": "brand-about-team",
+      "profile": "brand.public",
+      "actionPolicy": "none_deliberate allowed"
+    },
+    {
+      "id": "legal",
+      "profile": "brand.public",
+      "actionPolicy": "none_deliberate allowed"
+    },
+    {
+      "id": "privacy",
+      "profile": "brand.public",
+      "actionPolicy": "none_deliberate allowed"
+    },
+    {
+      "id": "accessibility",
+      "profile": "brand.public",
+      "actionPolicy": "none_deliberate allowed"
+    },
+    {
+      "id": "utility-reference",
+      "profile": "brand.public",
+      "actionPolicy": "none_deliberate allowed"
+    },
+    {
+      "id": "campaign-landing",
+      "profile": "campaign.public",
+      "actionPolicy": "one visible CTA/destination; static export uses declared canvas"
+    },
+    {
+      "id": "social-static-asset",
+      "profile": "social.static",
+      "actionPolicy": "destination journey only; no simulated control"
+    },
+    {
+      "id": "presentation-deck",
+      "profile": "presentation",
+      "actionPolicy": "evidence as needed"
+    },
+    {
+      "id": "product-task-surface",
+      "profile": "product.app|citychat.app|ijji.app|citymeter.dataset|citywiki.public|data.explainer",
+      "actionPolicy": "per product profile; product briefs own product-specific kinds"
+    }
+  ]
+}

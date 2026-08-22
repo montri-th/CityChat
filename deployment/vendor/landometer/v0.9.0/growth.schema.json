@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/Landometer/machine/v0.9.0/growth.schema.json",
+  "title": "Landometer growth records — [HOOK-01] / [XPRODUCT-01] / [TOOL-HANDOFF-01] / [ABUSE-INTEGRITY-01]",
+  "description": "Honest growth surfaces: declared loops with every phase field non-empty, or an explicit one-line disabledReason. LOI/experiments/test sites never count as external users; handoff is never labelled a network effect.",
+  "type": "object",
+  "properties": {
+    "hookLoop": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "matchedIntent": {
+          "type": "string"
+        },
+        "trigger": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        },
+        "reward": {
+          "type": "string"
+        },
+        "investment": {
+          "type": "string"
+        },
+        "nextTrigger": {
+          "type": "string"
+        },
+        "disabledReason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled"
+      ]
+    },
+    "crossProductPaths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "fromProduct": {
+            "type": "string"
+          },
+          "toProduct": {
+            "type": "string"
+          },
+          "userBenefit": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fromProduct",
+          "toProduct",
+          "userBenefit"
+        ]
+      }
+    },
+    "toolHandoffs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "intent": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "returnPath": {
+            "type": "string"
+          },
+          "benefit": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "intent",
+          "destination"
+        ]
+      }
+    },
+    "abuseIntegrity": {
+      "type": "object",
+      "properties": {
+        "contracts": {
+          "type": "array"
+        }
+      },
+      "description": "Gated growth mechanics stay at ungated fallback until contracts exist"
+    }
+  }
+}

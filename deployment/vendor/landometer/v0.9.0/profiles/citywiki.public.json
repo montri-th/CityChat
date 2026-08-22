@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "id": "citywiki.public",
+  "ruleId": "[PROFILE-01]",
+  "oneJob": "understand a place quickly and confidently",
+  "firstAha": "sourced one-minute answer",
+  "character": "editorial, warm, boundary-aware",
+  "impliedTrigger": "analyticalEvidence: true",
+  "motionIntensity": "restrained",
+  "ahaBudget": {
+    "maxActions": "0",
+    "target": "one-minute answer visible immediately (precomputed)"
+  },
+  "delivery": {
+    "rejectsStaticExport": false,
+    "requiresStaticExport": false
+  },
+  "evidenceBranch": "non-none proof required",
+  "source": {
+    "path": "assets/downloads/landometer-design-system-v0.9.0.md",
+    "sections": [
+      "§8 [PROFILE-01]",
+      "§8.1 [AHA-01]",
+      "Build Card gates §2"
+    ]
+  },
+  "boundary": "Exactly one profile loads per artifact; this record is a projection — the master's profile clauses remain the authority."
+}

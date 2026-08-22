@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "1.0",
+  "boundary": "Recipes REFERENCE canonical registry values; they never duplicate or alter the token registry (packaging rule). Exact stops, angles, and foreground contracts resolve through color-delivery.json in this package.",
+  "colorSetId": "color-srgb-05",
+  "sharedAtmosphereGradients": [
+    {
+      "source": {
+        "path": "color-delivery.json",
+        "section": "sharedAtmosphereGradients"
+      },
+      "id": "atmosphere.gradient.measure.deep",
+      "job": "entry, direction, high-confidence orientation, or closure"
+    },
+    {
+      "source": {
+        "path": "color-delivery.json",
+        "section": "sharedAtmosphereGradients"
+      },
+      "id": "atmosphere.gradient.measure.luminous",
+      "job": "orientation and measurement becoming action"
+    },
+    {
+      "source": {
+        "path": "color-delivery.json",
+        "section": "sharedAtmosphereGradients"
+      },
+      "id": "atmosphere.gradient.ground.current",
+      "job": "context reveal and evidence becoming understandable"
+    },
+    {
+      "source": {
+        "path": "color-delivery.json",
+        "section": "sharedAtmosphereGradients"
+      },
+      "id": "atmosphere.gradient.ground.mist",
+      "job": "calm context, collaboration, and Brand Voice proof"
+    },
+    {
+      "source": {
+        "path": "color-delivery.json",
+        "section": "sharedAtmosphereGradients"
+      },
+      "id": "atmosphere.gradient.cultivate.glow",
+      "job": "action and credible momentum"
+    },
+    {
+      "source": {
+        "path": "color-delivery.json",
+        "section": "sharedAtmosphereGradients"
+      },
+      "id": "atmosphere.gradient.cultivate.mist",
+      "job": "completion and handoff"
+    },
+    {
+      "source": {
+        "path": "color-delivery.json",
+        "section": "sharedAtmosphereGradients"
+      },
+      "id": "atmosphere.gradient.diversity.spectrum",
+      "job": "rare evidenced diverse participation or co-creation"
+    }
+  ],
+  "motifGradients": {
+    "resolve": "color-delivery.json#motifGradients"
+  },
+  "productIdentityGradients": {
+    "resolve": "color-delivery.json#productIdentityGradients"
+  },
+  "atmosphereThemeDefaults": {
+    "resolve": "color-delivery.json#atmosphereThemeDefaults"
+  },
+  "surfaceForegroundContracts": {
+    "resolve": "color-delivery.json#surfaceForegroundContracts"
+  },
+  "contrastEvidence": "qa/v0.9.0-gradient-contrast.json (7 gradients x 1001 samples x 2 foregrounds)"
+}

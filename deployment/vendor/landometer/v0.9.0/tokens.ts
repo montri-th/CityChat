@@ -1,0 +1,513 @@
+/** Landometer DS v0.9.0 — generated token export (Token Schema 6).
+ *  Package v0.9.0-mp1 · Color Set color-srgb-05 · source assets/data/tokens.json. */
+export const tokenSchemaVersion = 6 as const;
+export const colorSetId = "color-srgb-05" as const;
+export const tokens = {
+  "meta": {
+    "designSystem": "Landometer",
+    "version": "0.8.6",
+    "tokenSchemaVersion": 6,
+    "machineValidation": "pending",
+    "status": "canonical active authoring subset; generated schema/preflight package pending",
+    "sourceRule": "TOKEN-01"
+  },
+  "brand": {
+    "blue": "#1D4497",
+    "beige": "#F2F1DF",
+    "darkBeige": "#D8CFB2"
+  },
+  "energy": {
+    "sky": "#59D2FE",
+    "mint": "#0AD69C",
+    "coral": "#FF5A5F",
+    "yellow": "#FFBC1F"
+  },
+  "foundation": {
+    "surface.canvas": [
+      "#F6F7F3",
+      "#11191D"
+    ],
+    "surface.alt": [
+      "#EEF1EE",
+      "#172126"
+    ],
+    "surface.card": [
+      "#FCFCFA",
+      "#20292D"
+    ],
+    "surface.raised": [
+      "#FFFFFF",
+      "#293337"
+    ],
+    "surface.soft": [
+      "#E5E9E6",
+      "#2B3534"
+    ],
+    "surface.blueTint": [
+      "#E2E9ED",
+      "#18333E"
+    ],
+    "surface.beigeTint": [
+      "#F2F1DF",
+      "#2C2A22"
+    ],
+    "text.primary": [
+      "#182327",
+      "#F1F4EF"
+    ],
+    "text.secondary": [
+      "#5F635A",
+      "#C4CECA"
+    ],
+    "text.metadata": [
+      "#5C6A61",
+      "#A6B5B1"
+    ],
+    "text.muted": [
+      "#7B877D",
+      "#8D9D99"
+    ],
+    "text.disabled": [
+      "#A7B3A9",
+      "#71817D"
+    ],
+    "border.hairline": [
+      "#DCE1DD",
+      "#33403D"
+    ],
+    "border.default": [
+      "#C9D0CB",
+      "#46524F"
+    ],
+    "border.emphasis": [
+      "#7D877F",
+      "#7C8A84"
+    ],
+    "interaction.accent": [
+      "#176B82",
+      "#68C4E2"
+    ],
+    "interaction.focus.ring": [
+      "#176B82",
+      "#68C4E2"
+    ]
+  },
+  "semantic": {
+    "success": {
+      "light": [
+        "#E2F4E5",
+        "#126B49"
+      ],
+      "dark": [
+        "#17362D",
+        "#72E8C4"
+      ]
+    },
+    "warning": {
+      "light": [
+        "#FFF1D1",
+        "#A64A00"
+      ],
+      "dark": [
+        "#3B2E16",
+        "#F5C15C"
+      ]
+    },
+    "danger": {
+      "light": [
+        "#FCE5DF",
+        "#B43A3A"
+      ],
+      "dark": [
+        "#3A1F21",
+        "#FF7C72"
+      ]
+    },
+    "info": {
+      "light": [
+        "#E8EEF0",
+        "#176B82"
+      ],
+      "dark": [
+        "#18333E",
+        "#68C4E2"
+      ]
+    },
+    "neutral": {
+      "light": [
+        "#ECE4D2",
+        "#5F635A"
+      ],
+      "dark": [
+        "#2B3534",
+        "#C4CECA"
+      ]
+    },
+    "pending": {
+      "light": [
+        "#F3EEDB",
+        "#5C6A61"
+      ],
+      "dark": [
+        "#2C2A22",
+        "#D8CFB2"
+      ]
+    },
+    "assisted": {
+      "light": [
+        "#DFF3F1",
+        "#176C67"
+      ],
+      "dark": [
+        "#163331",
+        "#79D9D1"
+      ]
+    }
+  },
+  "signature": {
+    "closingLight": "linear-gradient(135deg, #1D4497 0%, #176B82 54%, #08756F 100%)",
+    "closingDark": "linear-gradient(135deg, #68C4E2 0%, #15919A 52%, #08756F 100%)"
+  },
+  "product": {
+    "citymeter": {
+      "light": [
+        "#12669B",
+        "#36BCE4"
+      ],
+      "dark": [
+        "#4C99D5",
+        "#59C7E8"
+      ]
+    },
+    "citywiki": {
+      "light": [
+        "#176B82",
+        "#007E79"
+      ],
+      "dark": [
+        "#59C7E8",
+        "#3BD3CB"
+      ]
+    },
+    "citychat": {
+      "light": [
+        "#007A58",
+        "#007E79"
+      ],
+      "dark": [
+        "#3BD19B",
+        "#3BD3CB"
+      ]
+    },
+    "ijji": {
+      "light": [
+        "#C52C00",
+        "#B23F74"
+      ],
+      "dark": [
+        "#FF8A4C",
+        "#F06FA6"
+      ]
+    }
+  },
+  "series": {
+    "registryId": "landometer-series-10-v5",
+    "values": [
+      {
+        "id": "series.01",
+        "name": "Coral",
+        "light": "#C33F55",
+        "dark": "#FF6B7F",
+        "cue": "circle / solid"
+      },
+      {
+        "id": "series.02",
+        "name": "Signal Orange",
+        "light": "#C52C00",
+        "dark": "#FF8A4C",
+        "cue": "square / solid"
+      },
+      {
+        "id": "series.03",
+        "name": "Marigold",
+        "light": "#A87B00",
+        "dark": "#F4C44E",
+        "cue": "triangle / solid"
+      },
+      {
+        "id": "series.04",
+        "name": "Lime",
+        "light": "#5D7400",
+        "dark": "#B5E34E",
+        "cue": "diamond / solid"
+      },
+      {
+        "id": "series.05",
+        "name": "Green",
+        "light": "#007A58",
+        "dark": "#3BD19B",
+        "cue": "cross / solid"
+      },
+      {
+        "id": "series.06",
+        "name": "Aqua",
+        "light": "#007E79",
+        "dark": "#3BD3CB",
+        "cue": "star / solid"
+      },
+      {
+        "id": "series.07",
+        "name": "Sky",
+        "light": "#147A9F",
+        "dark": "#59C7E8",
+        "cue": "hexagon / diagonal45"
+      },
+      {
+        "id": "series.08",
+        "name": "Ocean",
+        "light": "#1F629B",
+        "dark": "#4C99D5",
+        "cue": "ring / diagonal135"
+      },
+      {
+        "id": "series.09",
+        "name": "Civic Slate",
+        "light": "#536B70",
+        "dark": "#A9C4C7",
+        "cue": "dash / dot"
+      },
+      {
+        "id": "series.10",
+        "name": "Warm Pink",
+        "light": "#B23F74",
+        "dark": "#F06FA6",
+        "cue": "plus / crosshatch"
+      }
+    ]
+  },
+  "scales": {
+    "growth": {
+      "kind": "sequential",
+      "light": [
+        "#F2F1DF",
+        "#55B8C2",
+        "#126F68"
+      ],
+      "dark": [
+        "#6F8984",
+        "#53BDD0",
+        "#86E0B8"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    },
+    "water": {
+      "kind": "sequential",
+      "light": [
+        "#F2F1DF",
+        "#55B8C2",
+        "#206C9A"
+      ],
+      "dark": [
+        "#6C838C",
+        "#55B8C2",
+        "#68C4E2"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    },
+    "risk": {
+      "kind": "sequential",
+      "light": [
+        "#F2F1DF",
+        "#E0B443",
+        "#B74436"
+      ],
+      "dark": [
+        "#8D9D99",
+        "#D0A42F",
+        "#FF8C7D"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    },
+    "activity": {
+      "kind": "sequential",
+      "light": [
+        "#F2F1DF",
+        "#E86A8C",
+        "#C52C00"
+      ],
+      "dark": [
+        "#808A96",
+        "#F079A1",
+        "#FFB06A"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    },
+    "density": {
+      "kind": "sequential",
+      "light": [
+        "#F2F1DF",
+        "#6797AF",
+        "#225F78"
+      ],
+      "dark": [
+        "#728C9A",
+        "#47A6C4",
+        "#9BE4F2"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    },
+    "confidence": {
+      "kind": "sequential",
+      "light": [
+        "#F2F1DF",
+        "#85A5A2",
+        "#08756F"
+      ],
+      "dark": [
+        "#7C8B8C",
+        "#95A9AA",
+        "#D8E6E5"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    },
+    "balance": {
+      "kind": "diverging",
+      "light": [
+        "#C52C00",
+        "#F2F1DF",
+        "#186A9E"
+      ],
+      "dark": [
+        "#FF8A4C",
+        "#7C8A84",
+        "#4FAFE0"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    },
+    "delta": {
+      "kind": "diverging",
+      "light": [
+        "#B74436",
+        "#F2F1DF",
+        "#007C78"
+      ],
+      "dark": [
+        "#F28575",
+        "#7C8A84",
+        "#55C8BC"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    },
+    "tradeoff": {
+      "kind": "diverging",
+      "light": [
+        "#B23F74",
+        "#F2F1DF",
+        "#007E91"
+      ],
+      "dark": [
+        "#F06FA6",
+        "#7C8A84",
+        "#61C2D3"
+      ],
+      "sourceRule": "DATAVIZ-01 / TOKEN-01"
+    }
+  },
+  "dataState": {
+    "noData": {
+      "light": "#D5DAD6",
+      "dark": "#404844",
+      "cue": "diagonal pattern + label"
+    },
+    "zero": {
+      "light": "#7D877F",
+      "dark": "#93A398",
+      "cue": "distinct outline only when zero is a fact"
+    }
+  },
+  "map": {
+    "activeLayer": [
+      "#347DA8",
+      "#65B6DB"
+    ],
+    "hoverStroke": [
+      "#347DA8",
+      "#65B6DB"
+    ],
+    "selectedStroke": [
+      "#176B82",
+      "#68C4E2"
+    ],
+    "focusStroke": [
+      "#176B82",
+      "#68C4E2"
+    ],
+    "markerHalo": [
+      "#FFFFFF",
+      "#101318"
+    ],
+    "markerStroke": [
+      "#182327",
+      "#F1F4EF"
+    ]
+  },
+  "type": {
+    "caption": ".75rem",
+    "label": ".8125rem",
+    "bodySm": ".875rem",
+    "body": "1rem",
+    "bodyLg": "1.125rem",
+    "h3": "clamp(1.35rem, 2vw, 1.75rem)",
+    "h2": "clamp(2rem, 4vw, 3.25rem)",
+    "h1En": "clamp(3.25rem, 7vw, 6.5rem)",
+    "h1Th": "clamp(2.5rem, 6vw, 5rem)"
+  },
+  "spacing": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48,
+    64,
+    96,
+    128
+  ],
+  "radius": {
+    "xs": 6,
+    "sm": 10,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "pill": 999
+  },
+  "container": {
+    "reading": 760,
+    "default": 1120,
+    "wide": 1280
+  },
+  "breakpoint": {
+    "xs": 360,
+    "sm": 600,
+    "md": 900,
+    "lg": 1200,
+    "xl": 1600
+  },
+  "motion": {
+    "durationFeedback": 120,
+    "durationState": 200,
+    "durationMap": 280,
+    "durationChart": 360,
+    "durationReveal": 640,
+    "durationEmphasis": 560,
+    "delayStagger": 120,
+    "delayStaggerCap": 600,
+    "distanceFeedback": 2,
+    "distanceReveal": 20,
+    "easeState": "cubic-bezier(.2,0,0,1)",
+    "easeEnter": "cubic-bezier(.16,1,.3,1)"
+  }
+} as const;
+export type Tokens = typeof tokens;

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "id": "[DELIVERY-01]",
+  "section": "§7.10",
+  "title": "Delivery and resilience pack",
+  "triggeredWhen": "always for delivered artifacts",
+  "loadRule": "Trigger Packs load only the matching branch (§7); unloaded packs never become visible UI",
+  "source": {
+    "path": "assets/downloads/landometer-design-system-v0.9.0.md"
+  },
+  "boundary": "Machine pointer record; the master section is the authority for the pack's requirements."
+}

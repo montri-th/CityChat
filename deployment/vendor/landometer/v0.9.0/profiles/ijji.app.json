@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "id": "ijji.app",
+  "ruleId": "[PROFILE-01]",
+  "oneJob": "diagnose a local-business problem and start achievable progress",
+  "firstAha": "diagnosis plus a credible 7-day direction",
+  "character": "friendly, low-jargon, progress- and outcome-aware",
+  "impliedTrigger": "learning/persistence when enabled",
+  "motionIntensity": "guided",
+  "ahaBudget": {
+    "maxActions": "up to 3 short essential inputs",
+    "target": "<=15s"
+  },
+  "delivery": {
+    "rejectsStaticExport": true,
+    "requiresStaticExport": false
+  },
+  "evidenceBranch": "non-none proof required",
+  "source": {
+    "path": "assets/downloads/landometer-design-system-v0.9.0.md",
+    "sections": [
+      "§8 [PROFILE-01]",
+      "§8.1 [AHA-01]",
+      "Build Card gates §2"
+    ]
+  },
+  "boundary": "Exactly one profile loads per artifact; this record is a projection — the master's profile clauses remain the authority."
+}

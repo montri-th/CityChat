@@ -1,0 +1,66 @@
+citychatBuild:
+  artifact:
+    name: CityChat Design Identity Playground
+    product: citychat
+    version: 0.4.0
+    artifactBuildId: citychat-ui-20260822-01
+    pageKind: design-identity-playground
+    profile: designsystem.adoption
+    oneJob: help the CityChat team understand, try, align and build from the same user intent
+    delivery: internal_demo_public_projection
+    outputType: webpage
+    language: th
+    additionalLanguages: [en]
+  publication:
+    visibility: public
+    indexable: false
+    evidenceStatus: source_limited
+    canonicalUrl: https://montri-th.github.io/CityChat/
+    machineValidation: pending
+    deliveryConformance: not_claimed
+  landometerFoundation:
+    dsVersion: 0.9.0
+    authoringRevision: v0.9.0-r7
+    machinePackage: v0.9.0-mp1
+    colorSetId: color-srgb-05
+    kitVersion: lds-kit-0.9.0-r4
+    upstreamArtifactBuildId: ui-20260821-05
+    upstreamCommit: d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665
+    vendorPath: vendor/landometer/v0.9.0
+    vendorPolicy: immutable byte-identical snapshot
+  citychatAuthority:
+    profilePath: assets/downloads/citychat-product-experience-profile-v0.4.md
+    profileSha256: f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba
+    productAuthority: draft_truth
+    capabilityEvidenceStatus: source_limited
+    deliveryAvailability: designed
+  firstAha:
+    target: role-specific before/after benefit within 30 seconds
+    maximumEssentialInputs: one mode choice
+    primaryAction: ลองเส้นทาง CityChat
+  privacy:
+    visibility: public
+    sensitivity: public
+    personalData: none
+    analytics: false
+    remotePersistence: false
+    localStorage: theme and locale preferences only
+  effects:
+    remoteMutation: false
+    localFixtureState: true
+    clipboardCopy: true
+    receiptPolicy: local fixture acknowledgement is never labelled as a product receipt
+  disabledCapabilities:
+    - lineIntegration
+    - productionCityScanScoring
+    - productReceiptPersistence
+    - officerOperationsRuntime
+    - remoteShare
+    - telemetry
+  releaseBoundary:
+    targetDoesNotMeanShipped: true
+    fixturesAreConceptual: true
+    noNamedMunicipalityProof: true
+    identityFaviconApproval: unresolved
+    manualVisualGates: open
+    nativeDeviceGate: open

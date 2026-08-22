@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# This file lives under /CityChat/ and does not control the github.io host root.
+# Page-level noindex metadata is the artifact's authoritative indexing boundary.

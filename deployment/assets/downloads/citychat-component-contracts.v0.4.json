@@ -1,0 +1,175 @@
+{
+  "schemaVersion": "1.0",
+  "profileVersion": "0.4.0",
+  "status": "draft_candidate",
+  "sourceRef": "citychat-product-experience-profile-v0.4.md",
+  "sourceSha256": "f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba",
+  "lds": {
+    "dsVersion": "0.9.0",
+    "authoringRevision": "v0.9.0-r7",
+    "machinePackage": "v0.9.0-mp1",
+    "colorSetId": "color-srgb-05",
+    "upstreamCommit": "d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665"
+  },
+  "antiCollision": {
+    "forbiddenBareFields": ["status", "stage", "phase", "claim"],
+    "typedNamespaces": [
+      "capabilityTruth.productAuthority",
+      "capabilityTruth.capabilityEvidenceStatus",
+      "capabilityTruth.deliveryAvailability",
+      "authorizationTruth.currentActorDecision",
+      "analyticalTruth.claimLevel",
+      "analyticalTruth.claimLabel",
+      "analyticalTruth.signalClass",
+      "analyticalTruth.valueState",
+      "publicationTruth.publicationEvidenceStatus",
+      "workflowTruth.workflowStatusRef"
+    ]
+  },
+  "truthEnvelope": {
+    "capabilityTruth": {
+      "required": true,
+      "fields": {
+        "productAuthority": ["approved_truth", "draft_truth", "proposed", "candidate", "out_of_scope"],
+        "capabilityEvidenceStatus": ["observed", "release_proven", "source_limited", "not_evidenced", "unresolved"],
+        "deliveryAvailability": ["not_designed", "designed", "implemented", "pilot", "accepted", "unresolved"],
+        "sourceRef": "required"
+      }
+    },
+    "analyticalTruth": {
+      "requiredWhen": "analytical",
+      "fields": {
+        "claimLevel": ["no_claim", "observe", "compare", "flag", "suggest_question", "validate", "prioritize", "verified_status"],
+        "claimLabel": ["verified", "current", "estimate", "forecast", "user_report", "ai_synthesis", "planned"],
+        "signalClass": ["observed", "official", "calculated", "proxy", "modelled", "recommendation"],
+        "valueState": ["observed", "observed_zero", "censored_above", "censored_below", "unknown", "out_of_coverage", "not_applicable", "suppressed_privacy", "stale"],
+        "evidenceRef": "requiredWhen claimLevel != no_claim",
+        "noClaimReasonRef": "requiredWhen claimLevel == no_claim"
+      }
+    },
+    "authorizationTruth": {
+      "requiredWhen": "permission_or_effect",
+      "fields": {
+        "currentActorDecision": ["allowed", "denied", "expired", "checking", "not_applicable"],
+        "tenantRef": "requiredWhen tenant_scoped",
+        "requestedScope": "required",
+        "evaluatedAt": "required",
+        "policyRef": "required"
+      }
+    },
+    "publicationTruth": {
+      "required": true,
+      "fields": {
+        "publicationVisibility": ["public", "internal", "private"],
+        "sensitivityClass": ["public", "internal", "confidential", "restricted"],
+        "publicationEvidenceStatus": ["verified", "provisional", "source_limited"],
+        "publicSafeProjectionRef": "requiredWhen public_or_shared"
+      }
+    },
+    "workflowTruth": {
+      "requiredWhen": "workflow_exists",
+      "fields": {
+        "workflowStatusRef": "required",
+        "authoritativeOwnerRef": "required"
+      }
+    }
+  },
+  "components": {
+    "GovernedContextHeader": {
+      "job": "keep place/object identity and authority visible",
+      "required": ["contextRef", "placeLabel", "truthEnvelopeRef", "publicSafeProjectionRef"],
+      "boundary": "direct Story does not require H3; scan-origin Story references a Locked Scan"
+    },
+    "StoryCell": {
+      "job": "turn evidence into one understandable meaning and safe next step",
+      "required": ["contextRef", "mainSignal", "question", "truthEnvelopeRef", "evidenceSummary"],
+      "cardinality": {
+        "mainSignal": 1,
+        "facts": "0..3",
+        "question": 1,
+        "primaryAction": "0..1"
+      },
+      "factShape": ["factId", "text", "evidenceRef", "claimLevel"],
+      "postAction": {
+        "receiptRef": "requiredWhen persisted_effect",
+        "completion": "nextTrigger | cleanCompletion",
+        "recoveryRef": "requiredWhen effect_can_fail"
+      },
+      "boundary": "presentation component; never identified by H3"
+    },
+    "EvidenceSummary": {
+      "job": "keep truth wording, source status and evidence affordance beside a claim",
+      "required": ["truthEnvelopeRef", "sourceLabel", "period", "coverage", "freshness", "limitationRef"],
+      "disclosure": "answer first; full evidence one interaction deep"
+    },
+    "EvidenceDrawer": {
+      "job": "show source, owner, date, grain, method, coverage, limitation and claim ceiling",
+      "required": ["evidenceRef", "signalClass", "sourceStatusRef", "methodRef", "allowedUses", "effectiveClaimCeiling"],
+      "boundary": "does not promote evidence or authorize action"
+    },
+    "AreaSignalStatus": {
+      "job": "show a settled non-scan area signal without implying live telemetry",
+      "states": ["loading", "ready", "partial", "stale", "empty", "restricted", "error"],
+      "boundary": "no LivePulse naming; unknown and no-score are not zero"
+    },
+    "PrimaryAction": {
+      "job": "invoke one real navigation or effect with known consequence",
+      "required": ["actionId", "intent", "targetContextRef", "capabilityRef", "authorizationDecisionRef", "navigationOrEffect", "destinationOrEffectTarget", "immediateConsequence", "failureRecovery"],
+      "rule": "unknown or false capability omits the control; disabled is allowed only when the user can remedy the requirement"
+    },
+    "ActionReceipt": {
+      "job": "prove an effect persisted and show what happens next",
+      "required": ["receiptId", "actionId", "targetContextRef", "persistedAt", "authoritativeStateRef", "visibility", "nextTriggerOrCleanCompletion"],
+      "boundary": "render only after authoritative persistence; local fixture acknowledgement is not a product receipt"
+    },
+    "CityScanFrame": {
+      "job": "keep visible geometry equal to calculation geometry",
+      "required": ["geometryRef", "geometryHash", "scanWindowRef", "topicSignals", "coverage", "freshness", "baselineRef", "noScoreReasonRef"],
+      "topicSignals": "exactly three separate topic signals in proposed baseline-v1",
+      "boundary": "CityScan scoring and final public labels remain proposed"
+    },
+    "LockControl": {
+      "job": "freeze one reproducible scan snapshot",
+      "required": ["latestSignalReadyToken", "canonicalPolygon", "effectiveSurfaceVersion", "orderedRes10CellIds", "overlapWeights", "aggregationMode", "sourceSnapshotVersions", "baselineAndEligibilityUniverse", "exactScoreResponseRef"],
+      "security": ["serverIssuedOpaqueId", "serverDerivedScope", "permissionRecheckOnReopenAndShare", "idorTest"],
+      "boundary": "no ID on failure; no share before lock"
+    },
+    "ContributionPrompt": {
+      "job": "ask for the minimum useful contribution with visible purpose and privacy",
+      "required": ["purpose", "minimalFields", "sensitivity", "visibility", "consentOrLegalBasis", "retention", "moderationStateRef", "correctionWithdrawDispute", "failureRecovery"],
+      "boundary": "does not render until submission, moderation, receipt and correction paths work"
+    },
+    "SharePreview": {
+      "job": "help a relevant recipient use an exact public-safe object",
+      "required": ["contextRef", "objectVersion", "recipientBenefit", "visibility", "claimAndLimitation", "verifiedDestination", "fallback"],
+      "boundary": "copy/send success is a handoff receipt only, not delivery, understanding or network effect"
+    },
+    "OperationsObject": {
+      "job": "render an object-native operational record through role-specific views",
+      "required": ["nativeObjectId", "schemaVersion", "authoritativeOwner", "sourceOrImportRef", "workflowStatusRef", "allowedTransitions", "ownerRole", "permissionRef", "publicProjectionRef", "auditRef"],
+      "boundary": "capability-gated target; never forced into H3 or prioritized by popularity"
+    }
+  },
+  "stateMachines": {
+    "evidenceRead": ["idle", "loading", "ready", "partial", "stale", "empty", "restricted", "error"],
+    "actionEffect": ["eligible", "confirming", "submitting", "persisted", "persisted_pending_authoritative_effect", "failed", "conflict", "cancelled"],
+    "permission": ["checking", "allowed", "denied", "expired"],
+    "cityScan": ["idle", "scanning", "settling", "signal_ready", "insufficient", "out_of_range", "error", "locking", "locked", "story_loading", "story_ready", "story_error", "snapshot_unavailable"]
+  },
+  "canonicalCityScanEvents": {
+    "scan_ready": "scan_settled",
+    "scan_locked": "locked_scan_persisted only after authoritative persistence",
+    "scan_lock_failed": "action_failed_recovery_offered only when recovery is rendered",
+    "story_opened": "story_answer_presented only after the answer is rendered"
+  },
+  "acceptance": [
+    "one signal, one question, at most three facts and zero or one primary action",
+    "direct Story passes without H3",
+    "evidence is reachable in one interaction",
+    "unknown, stale, privacy-suppressed and no-score never render as zero",
+    "persisted effect has receipt plus next trigger or clean completion",
+    "failed effect has honest recovery and no optimistic receipt",
+    "critical path works at 320, 360 and 390 CSS px, 200% zoom and reduced motion",
+    "every fixture is visibly conceptual and never claims a deployed capability"
+  ]
+}

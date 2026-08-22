@@ -1,0 +1,16 @@
+{
+  "name": "citychat-design-identity-playground",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "finalize": "node tools/finalize-release.mjs",
+    "validate": "node tools/validate-release.mjs",
+    "render": "node tools/check-rendered.mjs",
+    "test": "node tools/finalize-release.mjs --check && node tools/validate-release.mjs",
+    "serve": "python3 -m http.server 8000 --directory deployment"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
