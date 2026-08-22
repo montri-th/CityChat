@@ -1,8 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "artifactBuildId": "citychat-ui-20260822-01",
+  "artifactBuildId": "citychat-ui-20260822-02",
   "status": "source_limited",
   "resources": [
+    {"id": "ves", "path": "../assets/downloads/citychat-visual-experience-specification-v0.5.md", "format": "markdown", "authority": "draft_candidate"},
     {"id": "profile", "path": "../assets/downloads/citychat-product-experience-profile-v0.4.md", "format": "markdown", "authority": "draft_candidate"},
     {"id": "component-contracts", "path": "../assets/downloads/citychat-component-contracts.v0.4.json", "format": "json", "authority": "draft_candidate"},
     {"id": "build-card-template", "path": "../assets/downloads/citychat-build-card-template.yml", "format": "yaml", "authority": "implementation_template"},

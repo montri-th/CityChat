@@ -14,6 +14,7 @@ User intent
 Authority
 - Use Landometer Design System v0.9.0-r7 from vendor/landometer/v0.9.0.
 - Load exactly one LDS profile: [profile ID].
+- Use CityChat Visual Experience Specification v0.5 for CityChat composition, contrast, density and plain-language frontstage copy.
 - Use CityChat Product Experience Profile v0.4 for product interaction intent.
 - Do not copy CityChat v0.3 visual tokens or invent local colour/type/motion values.
 
@@ -26,6 +27,9 @@ Truth
 - source, period, grain, coverage, freshness and limitation: [records]
 
 Required experience
+- Preserve the exact role-authorized CityChat identity asset and use stable LDS reading surfaces.
+- Keep citizen scenes low-density; keep officer scenes compact but explicit about owner, current step, missing information and one allowed action.
+- Use short, natural Thai in the interface. Keep internal field names in the handoff, not in citizen/officer copy.
 - Show one main meaning before a dashboard.
 - StoryCell: one signal, up to three facts, one question, zero or one primary action.
 - Put source/status beside the claim; put full evidence one interaction deep.

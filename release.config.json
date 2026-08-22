@@ -2,8 +2,8 @@
   "schemaVersion": "1.0",
   "product": "citychat",
   "artifactName": "CityChat Design Identity Playground",
-  "artifactVersion": "0.4.0",
-  "artifactBuildId": "citychat-ui-20260822-01",
+  "artifactVersion": "0.5.0",
+  "artifactBuildId": "citychat-ui-20260822-02",
   "pageKind": "design-identity-playground",
   "profile": "designsystem.adoption",
   "language": "th",
@@ -14,11 +14,46 @@
   "evidenceStatus": "source_limited",
   "machineValidation": "pending",
   "canonicalUrl": "https://montri-th.github.io/CityChat/",
-  "sourceProfile": {
-    "path": "assets/downloads/citychat-product-experience-profile-v0.4.md",
-    "sha256": "f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba",
+  "sourceVisualExperience": {
+    "path": "assets/downloads/citychat-visual-experience-specification-v0.5.md",
+    "sha256": "57eee9139a247f1ed728ee070138b8250c29533c249bed2e0e3fcab83b10acd6",
     "status": "draft_candidate"
   },
+  "productDependencies": [
+    {
+      "path": "assets/downloads/citychat-product-experience-profile-v0.4.md",
+      "sha256": "f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba",
+      "status": "draft_candidate"
+    },
+    {
+      "path": "assets/downloads/citychat-component-contracts.v0.4.json",
+      "sha256": "10f1fd0e32a0dd5f7ca36ea3270b44bb35be2d651d3bf76990b8b645d0c06bc4",
+      "status": "draft_candidate"
+    }
+  ],
+  "governanceReferences": [
+    {
+      "ref": "Product_brief_CityChat_Landometer_v7_CityStory_First.md",
+      "sha256": "ffba6c6d5adfa29be6ffa791614db108268a5d1c4ff763fb05d7a7147c23c0e8",
+      "status": "current_narrative_baseline_approval_unrecorded"
+    },
+    {
+      "ref": "Product_brief_CityChat_Landometer_v8_CityScan_Ecosystem_Aligned.md",
+      "sha256": "607bd2c42cab7a164274d0b3dbbcfd1e8f3d66f185ce2921123cdd9a0b222098",
+      "status": "draft_candidate"
+    },
+    {
+      "ref": "cityscan_dev_handoff_v1/01_PRODUCT_BRIEF_CITYSCAN.md",
+      "sha256": "b7674f7be7becc87b9c972b05bcb311cb4d62d0b7d1accd83037469f9479713d",
+      "status": "proposed_reference_runtime_unavailable"
+    }
+  ],
+  "identityManifest": {
+    "path": "assets/identity/identity-assets.v0.5.json",
+    "sha256": "628b40f0a604257f38135b6afe2ac615762c760ea8ed75999f94cfa53f5cf25f"
+  },
+  "triggeredPacks": ["PUB-01", "DELIVERY-01:web"],
+  "supportedChannels": ["github_pages_team_playground"],
   "upstream": {
     "repository": "https://github.com/montri-th/Landometer",
     "commit": "d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665",

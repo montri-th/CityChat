@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260822-02",
+  "assets": [
+    {
+      "role": "header_and_footer_lockup",
+      "path": "assets/identity/citychat-horizontal-lockup.png",
+      "variant": "horizontal_lockup_png",
+      "approvalScope": "user-supplied project asset; owner-authorized reuse for artifact citychat-ui-20260822-02 header and footer at the existing CityChat playground URL only, with an LDS fixed-light component surface to address the requested contrast problem; no transfer to another role or artifact",
+      "mime": "image/png",
+      "intrinsicWidth": 380,
+      "intrinsicHeight": 82,
+      "bytes": 8371,
+      "sha256": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62",
+      "transparentCanvas": true,
+      "themeStrategy": "exact transparent PNG on the fixed LDS fg-interactive-surface so the protected blue wordmark remains readable in light and dark themes",
+      "sourceVersion": "project source supplied before 2026-08-22; role reuse authorized in republish request on 2026-08-22",
+      "cacheRevision": "94055c9b"
+    },
+    {
+      "role": "source_asset_public_download_only",
+      "path": "assets/identity/citychat-symbol.source.svg",
+      "variant": "symbol_source",
+      "approvalScope": "owner-authorized continued public distribution at the existing repository/playground paths for this republish only; not approved for favicon, touch, maskable, social or runtime rendering",
+      "mime": "image/svg+xml",
+      "intrinsicWidth": 156,
+      "intrinsicHeight": 127,
+      "bytes": 3714,
+      "sha256": "4d8dfd72be8a666a80040291b8b75411854b9a0c90d6693111f79c721bbf1e74",
+      "transparentCanvas": true,
+      "themeStrategy": "not_applicable",
+      "sourceVersion": "project source supplied before 2026-08-22",
+      "cacheRevision": "4d8dfd72"
+    },
+    {
+      "role": "source_asset_public_download_only",
+      "path": "assets/identity/citychat-lockup.source.svg",
+      "variant": "horizontal_lockup_svg_source",
+      "approvalScope": "owner-authorized continued public distribution at the existing repository/playground paths for this republish only; retained as source evidence and not approved for runtime rendering",
+      "mime": "image/svg+xml",
+      "intrinsicWidth": 190,
+      "intrinsicHeight": 41,
+      "bytes": 18376,
+      "sha256": "3a3cd1b4c6091a107bd41502e6df04ddfc62c3074b75b850bfabdf9ddacab98c",
+      "transparentCanvas": true,
+      "themeStrategy": "not_applicable",
+      "sourceVersion": "project source supplied before 2026-08-22",
+      "cacheRevision": "3a3cd1b4"
+    }
+  ],
+  "omittedRoles": [
+    {
+      "role": "favicon",
+      "reason": "pending approved compact/favicon asset"
+    },
+    {
+      "role": "apple_touch_icon",
+      "reason": "pending approved touch rendition"
+    },
+    {
+      "role": "maskable_install_icon",
+      "reason": "pending approved app rendition"
+    },
+    {
+      "role": "social_preview",
+      "reason": "source-limited artifact whose HTML entry points request page-level noindex; no approved public preview asset"
+    }
+  ]
+}
