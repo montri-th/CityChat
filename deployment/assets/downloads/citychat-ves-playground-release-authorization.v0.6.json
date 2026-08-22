@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "1.0",
+  "authorizationId": "CC-VES-PLAYGROUND-REL-20260822-01",
+  "recordedAt": "2026-08-22",
+  "approverRef": "user:03-citychat-project-owner",
+  "source": "Explicit user request in the current 03 CityChat project task",
+  "sourceExcerptTh": "อนุมัติ และ สร้าง interactive VES playground ที่โชว์ good example ในการ implement ตาม DS + VES จริงๆ ... improve then publish แทนอันเดิม",
+  "artifact": {
+    "name": "CityChat VES Interactive Playground",
+    "version": "0.6.0",
+    "artifactBuildId": "citychat-ui-20260822-03",
+    "canonicalUrl": "https://montri-th.github.io/CityChat/",
+    "delivery": "internal_demo_public_projection",
+    "publicationBoundary": "source_limited_noindex_page_request"
+  },
+  "authorizes": [
+    "Improve the existing CityChat playground into an interactive VES v0.6 learning artifact",
+    "Replace the prior playground at the same canonical URL after source, rendered, provider and live-byte gates pass",
+    "Use the exact unchanged CityChat horizontal lockup PNG in the header_lockup role for this exact build and URL",
+    "Use the exact unchanged CityChat horizontal lockup PNG in the footer_lockup role for this exact build and URL",
+    "Place the transparent lockup directly on the theme-resolved Landometer DS brand-beige identity band, with no local white logo card",
+    "Use the exact self-hosted Landometer DS font families and declared weights for this artifact",
+    "Publish the approved VES v0.6 and its approval record as team resources"
+  ],
+  "identityRoleApprovals": [
+    {
+      "approvalId": "CC-ID-ROLE-APP-20260822-HEADER-01",
+      "role": "header_lockup",
+      "assetPath": "assets/identity/citychat-horizontal-lockup.png",
+      "approvedContentHash": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62",
+      "artifactBuildId": "citychat-ui-20260822-03",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/",
+      "surfaceRef": "lds:--brand-beige",
+      "surfaceDecision": "direct_surface",
+      "themes": ["light", "dark", "system"],
+      "outputTypes": ["webpage"],
+      "transformPolicy": "none",
+      "cropPolicy": "none",
+      "maskPolicy": "none",
+      "filterPolicy": "none",
+      "recolorPolicy": "none",
+      "animationPolicy": "none",
+      "qaRequired": ["CC-AC-IDENTITY-03", "CC-AC-IDENTITY-05", "rendered-local.v0.6", "provider-required-check"]
+    },
+    {
+      "approvalId": "CC-ID-ROLE-APP-20260822-FOOTER-01",
+      "role": "footer_lockup",
+      "assetPath": "assets/identity/citychat-horizontal-lockup.png",
+      "approvedContentHash": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62",
+      "artifactBuildId": "citychat-ui-20260822-03",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/",
+      "surfaceRef": "lds:--brand-beige",
+      "surfaceDecision": "direct_surface",
+      "themes": ["light", "dark", "system"],
+      "outputTypes": ["webpage"],
+      "transformPolicy": "none",
+      "cropPolicy": "none",
+      "maskPolicy": "none",
+      "filterPolicy": "none",
+      "recolorPolicy": "none",
+      "animationPolicy": "none",
+      "qaRequired": ["CC-AC-IDENTITY-03", "CC-AC-IDENTITY-05", "rendered-local.v0.6", "provider-required-check"]
+    }
+  ],
+  "doesNotAuthorize": [
+    "Any product runtime, persistence, receipt, LINE, CityScan scoring or officer workflow capability",
+    "A reusable logo role outside this exact build and URL",
+    "Any logo redraw, crop, recolor, filter, mask, animation or screenshot-derived asset",
+    "Use of source SVG files as runtime, compact, favicon, touch, maskable, social or motif assets",
+    "Any unregistered CityChat motif, supporting illustration or functional icon",
+    "Search indexing, social preview, installable-app identity or production conformance claims"
+  ],
+  "publicationAuthorization": true,
+  "runtimeProductReleaseApproved": false,
+  "effectiveWhen": [
+    "Local source and rendered checks pass on the frozen bytes",
+    "Protected pull-request checks pass on the exact reviewed commit",
+    "The main-branch Pages deployment succeeds",
+    "Live critical assets match the merged source bytes"
+  ]
+}

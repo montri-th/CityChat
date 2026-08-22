@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
 import { createServer } from "node:http";
 import { readFileSync, existsSync, statSync, writeFileSync } from "node:fs";
@@ -14,12 +15,16 @@ try {
   process.exit(2);
 }
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const validatorPath = fileURLToPath(import.meta.url);
+const root = path.resolve(path.dirname(validatorPath), "..");
 const deployment = path.join(root, "deployment");
+const config = JSON.parse(readFileSync(path.join(root, "release.config.json"), "utf8"));
 const writeReport = process.argv.includes("--write");
 const screenshotPath = process.argv.find(arg => arg.startsWith("--screenshot="))?.split("=").slice(1).join("=");
 const checks = [];
 let failures = 0;
+const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
+const validatorSha256 = sha256(readFileSync(validatorPath));
 
 function check(ok, name, detail = "") {
   checks.push({ name, ok: Boolean(ok), ...(detail ? { detail } : {}) });
@@ -28,6 +33,19 @@ function check(ok, name, detail = "") {
     console.error(`FAIL ${name}${detail ? ` — ${detail}` : ""}`);
   }
 }
+
+const testedSourcePaths = [
+  ["release.config.json", path.join(root, "release.config.json")],
+  ["deployment/index.html", path.join(deployment, "index.html")],
+  ["deployment/citychat.css", path.join(deployment, "citychat.css")],
+  ["deployment/app.js", path.join(deployment, "app.js")],
+  [`deployment/${config.releaseArtifacts.buildCard}`, path.join(deployment, config.releaseArtifacts.buildCard)],
+  [`deployment/${config.releaseArtifacts.controlInventory}`, path.join(deployment, config.releaseArtifacts.controlInventory)],
+  [`deployment/${config.identityManifest.path}`, path.join(deployment, config.identityManifest.path)]
+];
+const sourceHasher = createHash("sha256");
+for (const [label, absolute] of testedSourcePaths) sourceHasher.update(label).update("\0").update(readFileSync(absolute)).update("\0");
+const testedSourceDigest = sourceHasher.digest("hex");
 
 const mime = {
   ".html": "text/html; charset=utf-8",
@@ -75,82 +93,154 @@ const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
   || (!existsSync(bundledExecutable) && existsSync(systemChrome) ? systemChrome : undefined);
 const browser = await chromium.launch({ headless: true, ...(executablePath ? { executablePath } : {}) });
 
+async function loadFonts(page) {
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all([
+      document.fonts.load('400 16px "Bai Jamjuree"', "ภาษาไทย English"),
+      document.fonts.load('600 16px "Bai Jamjuree"', "ภาษาไทย English"),
+      document.fonts.load('700 24px "IBM Plex Sans Thai Looped"', "หัวข้อภาษาไทย"),
+      document.fonts.load('700 24px "Arvo"', "English heading"),
+      document.fonts.load('400 14px "IBM Plex Sans Thai"', "ข้อมูล 2569"),
+      document.fonts.load('400 14px "JetBrains Mono"', "FIXTURE-01")
+    ]);
+  });
+}
+
 try {
   const matrix = [
-    { width: 320, height: 760, locale: "th", theme: "light", mode: "scan" },
-    { width: 360, height: 800, locale: "th", theme: "dark", mode: "officer" },
-    { width: 360, height: 800, locale: "en", theme: "dark" },
+    { width: 320, height: 760, locale: "th", theme: "light", mode: "story" },
+    { width: 360, height: 800, locale: "th", theme: "dark", mode: "return" },
+    { width: 360, height: 800, locale: "en", theme: "system", mode: "officer" },
     { width: 390, height: 844, locale: "th", theme: "dark", mode: "scan" },
     { width: 844, height: 390, locale: "th", theme: "light", mode: "scan", label: "mobile-landscape" },
     { width: 390, height: 480, locale: "th", theme: "light", mode: "scan", label: "short-viewport" },
-    { width: 768, height: 900, locale: "en", theme: "light" },
-    { width: 834, height: 900, locale: "th", theme: "dark" },
+    { width: 768, height: 900, locale: "en", theme: "light", mode: "story" },
+    { width: 834, height: 900, locale: "th", theme: "dark", mode: "return" },
     { width: 1024, height: 900, locale: "th", theme: "light", mode: "scan" },
-    { width: 1180, height: 900, locale: "en", theme: "dark" },
-    { width: 1366, height: 768, locale: "th", theme: "light" },
-    { width: 1440, height: 1000, locale: "en", theme: "dark" }
+    { width: 1180, height: 900, locale: "en", theme: "dark", mode: "officer" },
+    { width: 1366, height: 768, locale: "th", theme: "light", mode: "story" },
+    { width: 1440, height: 1000, locale: "en", theme: "dark", mode: "return" }
   ];
 
   for (const item of matrix) {
     const page = await browser.newPage({ viewport: { width: item.width, height: item.height } });
     const responseFailures = [];
+    const thirdPartyFontRequests = [];
     page.on("response", response => {
       if (response.url().startsWith(baseUrl) && response.status() >= 400) responseFailures.push(`${response.status()} ${response.url()}`);
     });
-    await page.goto(`${baseUrl}?lang=${item.locale}&theme=${item.theme}${item.mode ? `&mode=${item.mode}` : ""}`, { waitUntil: "networkidle" });
-    if (item.mode === "scan") {
-      await page.$eval(".scan-state-preview", node => { node.open = true; });
-    }
-    const metrics = await page.evaluate(() => ({
-      htmlWidth: document.documentElement.scrollWidth,
-      clientWidth: document.documentElement.clientWidth,
-      h1Visible: Boolean(document.querySelector("h1")?.getClientRects().length),
-      heroActionVisible: Boolean(document.querySelector(".hero-action")?.getClientRects().length),
-      locale: document.documentElement.lang,
-      theme: document.documentElement.dataset.theme,
-      bodyFont: getComputedStyle(document.body).fontFamily,
-      h2Font: getComputedStyle(document.querySelector("h2")).fontFamily,
-      targetHeights: [...document.querySelectorAll("button, summary, .btn")]
-        .filter(node => node.getClientRects().length)
-        .map(node => ({ label: node.textContent.trim().slice(0, 40), height: node.getBoundingClientRect().height })),
-      sourceStatusVisible: Boolean(document.querySelector(".header-actions .source-status")?.getClientRects().length),
-      criticalOverflow: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .scan-state-preview, .scan-composition, .scan-frame-geometry, .component-index, .case-grid, .preflight-layout, .resource-grid, .footer-grid")]
-        .filter(node => node.getClientRects().length)
-        .map(node => ({ node, rect: node.getBoundingClientRect() }))
-        .filter(({ rect }) => rect.left < -1 || rect.right > document.documentElement.clientWidth + 1)
-        .map(({ node, rect }) => ({
-          node: `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}${node.className ? `.${String(node.className).replace(/\s+/g, ".")}` : ""}`,
-          rect: `${Math.round(rect.left)}..${Math.round(rect.right)}`
-        })),
-      frameIntersections: (() => {
-        const frame = document.querySelector(".scan-frame-geometry");
-        if (!frame?.getClientRects().length) return [];
-        const frameRect = frame.getBoundingClientRect();
-        const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
-        return [...document.querySelectorAll(".site-header, .scan-state-preview[open], .scan-readout, .story-footer, details[open]")]
-          .filter(node => node !== frame && !frame.contains(node) && node.getClientRects().length)
+    page.on("request", request => {
+      const url = request.url();
+      if (request.resourceType() === "font" && !url.startsWith(baseUrl)) thirdPartyFontRequests.push(url);
+    });
+    await page.goto(`${baseUrl}?lang=${item.locale}&theme=${item.theme}&mode=${item.mode}`, { waitUntil: "networkidle" });
+    await loadFonts(page);
+    if (item.mode === "scan") await page.$eval(".scan-state-preview", node => { node.open = true; });
+    const metrics = await page.evaluate(() => {
+      const visibleViews = [...document.querySelectorAll("[data-story-view]")].filter(node => node.getClientRects().length);
+      const heroMeaning = document.querySelector(".hero-story strong")?.getBoundingClientRect();
+      const fontChecks = {
+        body400: document.fonts.check('400 16px "Bai Jamjuree"', "ภาษาไทย English"),
+        body600: document.fonts.check('600 16px "Bai Jamjuree"', "ภาษาไทย English"),
+        thaiHeading: document.fonts.check('700 24px "IBM Plex Sans Thai Looped"', "หัวข้อภาษาไทย"),
+        englishHeading: document.fonts.check('700 24px "Arvo"', "English heading"),
+        thaiTechnical: document.fonts.check('400 14px "IBM Plex Sans Thai"', "ข้อมูล 2569"),
+        latinTechnical: document.fonts.check('400 14px "JetBrains Mono"', "FIXTURE-01")
+      };
+      const identity = [...document.querySelectorAll("[data-identity-role]")].map(node => {
+        const image = node.querySelector("img");
+        const style = getComputedStyle(node);
+        const imageStyle = image ? getComputedStyle(image) : null;
+        const rect = image?.getBoundingClientRect();
+        return {
+          role: node.dataset.identityRole,
+          natural: image ? `${image.naturalWidth}x${image.naturalHeight}` : "missing",
+          ratio: rect ? rect.width / rect.height : 0,
+          background: style.backgroundColor,
+          filter: imageStyle?.filter,
+          opacity: imageStyle?.opacity,
+          transform: imageStyle?.transform,
+          animation: imageStyle?.animationName,
+          mask: imageStyle?.maskImage || imageStyle?.webkitMaskImage || "none"
+        };
+      });
+      const brandBeigeProbe = document.createElement("span");
+      brandBeigeProbe.style.backgroundColor = "var(--brand-beige)";
+      brandBeigeProbe.hidden = true;
+      document.body.append(brandBeigeProbe);
+      const resolvedBrandBeige = getComputedStyle(brandBeigeProbe).backgroundColor;
+      brandBeigeProbe.remove();
+      return {
+        htmlWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+        viewportHeight: window.innerHeight,
+        h1Visible: Boolean(document.querySelector("h1")?.getClientRects().length),
+        heroActionVisible: Boolean(document.querySelector(".hero-action")?.getClientRects().length),
+        firstMeaningInViewport: Boolean(heroMeaning && heroMeaning.top < window.innerHeight && heroMeaning.bottom > 0),
+        locale: document.documentElement.lang,
+        themePreference: document.documentElement.dataset.themePreference,
+        bodyFont: getComputedStyle(document.body).fontFamily,
+        h2Font: getComputedStyle(document.querySelector("h2")).fontFamily,
+        typeDemoFont: getComputedStyle(document.querySelector(".type-role-demo__heading")).fontFamily,
+        fontSynthesis: getComputedStyle(document.body).fontSynthesis,
+        fontChecks,
+        visibleViews: visibleViews.map(node => node.dataset.storyView),
+        boundaryVisible: Boolean(document.querySelector(".header-actions .source-status")?.getClientRects().length || document.querySelector(".hero-boundary")?.getClientRects().length),
+        identity,
+        brandBeige: resolvedBrandBeige,
+        headerBackground: getComputedStyle(document.querySelector(".site-header")).backgroundColor,
+        footerBackground: getComputedStyle(document.querySelector(".site-footer")).backgroundColor,
+        targetHeights: [...document.querySelectorAll("button, summary, .btn")]
+          .filter(node => node.getClientRects().length)
+          .map(node => ({ label: node.textContent.trim().slice(0, 40), height: node.getBoundingClientRect().height })),
+        criticalOverflow: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .scan-state-preview, .scan-composition, .scan-frame-geometry, .component-index, .case-grid, .preflight-layout, .resource-grid, .footer-grid")]
+          .filter(node => node.getClientRects().length)
           .map(node => ({ node, rect: node.getBoundingClientRect() }))
-          .filter(({ rect }) => overlaps(frameRect, rect))
-          .map(({ node }) => `${node.tagName.toLowerCase()}${node.className ? `.${String(node.className).replace(/\s+/g, ".")}` : ""}`);
-      })()
-    }));
-    const key = `${item.label || `${item.width}x${item.height}`}-${item.locale}-${item.theme}-${item.mode || "story"}`;
+          .filter(({ rect }) => rect.left < -1 || rect.right > document.documentElement.clientWidth + 1)
+          .map(({ node, rect }) => ({
+            node: `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}${node.className ? `.${String(node.className).replace(/\s+/g, ".")}` : ""}`,
+            rect: `${Math.round(rect.left)}..${Math.round(rect.right)}`
+          })),
+        frameIntersections: (() => {
+          const frame = document.querySelector(".scan-frame-geometry");
+          if (!frame?.getClientRects().length) return [];
+          const frameRect = frame.getBoundingClientRect();
+          const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+          return [...document.querySelectorAll(".site-header, .scan-state-preview[open], .scan-readout, .story-footer, details[open]")]
+            .filter(node => node !== frame && !frame.contains(node) && node.getClientRects().length)
+            .map(node => ({ node, rect: node.getBoundingClientRect() }))
+            .filter(({ rect }) => overlaps(frameRect, rect))
+            .map(({ node }) => `${node.tagName.toLowerCase()}${node.className ? `.${String(node.className).replace(/\s+/g, ".")}` : ""}`);
+        })()
+      };
+    });
+    const key = `${item.label || `${item.width}x${item.height}`}-${item.locale}-${item.theme}-${item.mode}`;
     check(responseFailures.length === 0, `render:${key}:assets-2xx`, responseFailures.join(" | "));
+    check(thirdPartyFontRequests.length === 0, `render:${key}:no-third-party-fonts`, thirdPartyFontRequests.join(" | "));
     check(metrics.htmlWidth <= metrics.clientWidth + 1, `render:${key}:no-horizontal-overflow`, `${metrics.htmlWidth}/${metrics.clientWidth}`);
-    check(metrics.h1Visible && metrics.heroActionVisible, `render:${key}:first-viewport-content`);
-    check(metrics.sourceStatusVisible, `render:${key}:source-boundary-visible`);
+    check(metrics.h1Visible && metrics.heroActionVisible, `render:${key}:essential-content-visible`);
+    if (item.width <= 390 && item.height >= 760) check(metrics.firstMeaningInViewport, `render:${key}:first-value-in-initial-viewport`);
+    check(metrics.boundaryVisible, `render:${key}:fixture-boundary-visible`);
+    check(metrics.visibleViews.length === 1 && metrics.visibleViews[0] === item.mode, `render:${key}:exactly-one-journey-view`, JSON.stringify(metrics.visibleViews));
     check(metrics.criticalOverflow.length === 0, `render:${key}:critical-containers-contained`, JSON.stringify(metrics.criticalOverflow));
     check(metrics.frameIntersections.length === 0, `render:${key}:scan-frame-zero-intersection`, JSON.stringify(metrics.frameIntersections));
-    check(metrics.locale === item.locale && metrics.theme === item.theme, `render:${key}:locale-theme`);
+    check(metrics.locale === item.locale && metrics.themePreference === item.theme, `render:${key}:locale-theme-preference`);
     check(metrics.bodyFont.includes("Bai Jamjuree"), `render:${key}:body-font`, metrics.bodyFont);
     check(item.locale === "th" ? metrics.h2Font.includes("IBM Plex Sans Thai Looped") : metrics.h2Font.includes("Arvo"), `render:${key}:heading-font`, metrics.h2Font);
+    check(item.locale === "th" ? metrics.typeDemoFont.includes("IBM Plex Sans Thai Looped") : metrics.typeDemoFont.includes("Arvo"), `render:${key}:type-demo-font`, metrics.typeDemoFont);
+    check(metrics.fontSynthesis === "none", `render:${key}:font-synthesis-none`, metrics.fontSynthesis);
+    check(Object.values(metrics.fontChecks).every(Boolean), `render:${key}:all-self-hosted-font-faces-loaded`, JSON.stringify(metrics.fontChecks));
+    check(metrics.identity.length === 2 && metrics.identity.every(record => record.natural === "380x82" && Math.abs(record.ratio - 380 / 82) < 0.02), `render:${key}:identity-intrinsic-ratio`, JSON.stringify(metrics.identity));
+    check(metrics.identity.every(record => /rgba?\(0, 0, 0, 0\)/.test(record.background) && record.filter === "none" && record.opacity === "1" && record.transform === "none" && record.animation === "none" && record.mask === "none"), `render:${key}:identity-no-local-carrier-or-transform`, JSON.stringify(metrics.identity));
+    check(metrics.headerBackground === metrics.brandBeige && metrics.footerBackground === metrics.brandBeige, `render:${key}:identity-full-beige-bands`, `${metrics.headerBackground}/${metrics.footerBackground}/${metrics.brandBeige}`);
     const shortTargets = metrics.targetHeights.filter(target => target.height < 43.5);
     check(shortTargets.length === 0, `render:${key}:44px-controls`, shortTargets.slice(0, 3).map(target => `${target.label}:${target.height}`).join(" | "));
     await page.close();
   }
 
   for (const theme of ["light", "dark"]) {
-    const contrastPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const contrastPage = await browser.newPage({ viewport: { width: 834, height: 900 } });
     await contrastPage.goto(`${baseUrl}?lang=th&theme=${theme}`, { waitUntil: "networkidle" });
     const pairs = await contrastPage.evaluate(() => {
       const parseRgb = value => {
@@ -174,7 +264,7 @@ try {
         return (light + 0.05) / (dark + 0.05);
       };
       return [
-        ["header-status", ".header-actions .source-status", ".header-actions .source-status"],
+        ["header-status", ".header-actions .source-status", ".site-header"],
         ["story-title", ".story-specimen h3", ".story-specimen"],
         ["scan-label", ".scan-state-label", ".scan-readout"],
         ["primary-action", ".hero-action", ".hero-action"]
@@ -193,12 +283,21 @@ try {
   }
 
   const interactionPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  await interactionPage.goto(`${baseUrl}?lang=th&theme=light`, { waitUntil: "networkidle" });
+  await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story`, { waitUntil: "networkidle" });
   await interactionPage.focus("#mode-story");
   await interactionPage.keyboard.press("ArrowRight");
-  check(await interactionPage.getAttribute("#mode-scan", "aria-selected") === "true", "interaction:tab-arrow-navigation");
+  check(await interactionPage.getAttribute("#mode-return", "aria-selected") === "true", "interaction:tab-story-to-return");
+  check((await interactionPage.locator("[data-story-view]:visible").count()) === 1 && await interactionPage.isVisible("[data-story-view='return']"), "interaction:return-is-single-visible-view");
+  await interactionPage.keyboard.press("ArrowRight");
+  check(await interactionPage.getAttribute("#mode-scan", "aria-selected") === "true", "interaction:tab-return-to-scan");
   check(await interactionPage.getAttribute(".scan-composition", "data-active-scan-state") === "no-score", "interaction:no-score-state");
   check(await interactionPage.isHidden("#open-story-from-lock"), "interaction:no-score-cannot-open-story");
+  await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=return`, { waitUntil: "networkidle" });
+  check(await interactionPage.getAttribute("#mode-return", "aria-selected") === "true" && await interactionPage.isVisible("[data-story-view='return']"), "interaction:return-url-restoration");
+  await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story`, { waitUntil: "networkidle" });
+  check(await interactionPage.isHidden("#answer-options") && await interactionPage.getAttribute("#preview-answer-options", "aria-expanded") === "false", "interaction:answer-preview-initially-closed");
+  await interactionPage.click("#preview-answer-options");
+  check(await interactionPage.isVisible("#answer-options") && await interactionPage.getAttribute("#preview-answer-options", "aria-expanded") === "true", "interaction:answer-preview-opens-locally");
   await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=scan&scan=locked`, { waitUntil: "networkidle" });
   check(await interactionPage.getAttribute(".scan-composition", "data-active-scan-state") === "locked", "interaction:locked-state");
   check(await interactionPage.isVisible("#open-story-from-lock"), "interaction:locked-can-open-story");
@@ -216,7 +315,6 @@ try {
   check(lockHandoff.placeRef === "PLACE-DEMO-01" && lockHandoff.snapshotRef === "FIXTURE-SCAN-LOCK-01", "interaction:locked-fixture-context-preserved", JSON.stringify(lockHandoff));
   for (const input of await interactionPage.$$("#preflight-form input[type='checkbox']")) await input.check();
   check(await interactionPage.textContent("#preflight-count") === "6/6", "interaction:preflight-progress");
-  await interactionPage.click("#components").catch(() => {});
   if (screenshotPath) {
     await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story&view=assisted`, { waitUntil: "networkidle" });
     await interactionPage.screenshot({ path: screenshotPath, fullPage: true });
@@ -240,11 +338,12 @@ try {
   const noJsMetrics = await noJsPage.evaluate(() => ({
     h1Visible: Boolean(document.querySelector("h1")?.getClientRects().length),
     storyVisible: Boolean(document.querySelector("[data-story-view='story']")?.getClientRects().length),
+    visibleViews: [...document.querySelectorAll("[data-story-view]")].filter(node => node.getClientRects().length).length,
     jsControlsVisible: [...document.querySelectorAll(".js-only")].some(node => node.getClientRects().length),
     noscriptVisible: Boolean(document.querySelector(".noscript-note")?.getClientRects().length),
     overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1
   }));
-  check(noJsMetrics.h1Visible && noJsMetrics.storyVisible, "no-js:read-only-guidance-visible");
+  check(noJsMetrics.h1Visible && noJsMetrics.storyVisible && noJsMetrics.visibleViews === 1, "no-js:single-read-only-guidance-visible");
   check(!noJsMetrics.jsControlsVisible && noJsMetrics.noscriptVisible, "no-js:honest-non-operable-fallback");
   check(!noJsMetrics.overflow, "no-js:no-horizontal-overflow");
   await noJs.close();
@@ -268,22 +367,13 @@ try {
       .slice(0, 10)
       .map(node => {
         const rect = node.getBoundingClientRect();
-        return {
-          node: `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}${node.className ? `.${String(node.className).replace(/\s+/g, ".")}` : ""}`,
-          rect: `${Math.round(rect.left)}..${Math.round(rect.right)}`,
-          size: `${node.scrollWidth}/${node.clientWidth}`,
-          text: node.textContent.trim().slice(0, 48)
-        };
+        return { node: `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}`, rect: `${Math.round(rect.left)}..${Math.round(rect.right)}`, size: `${node.scrollWidth}/${node.clientWidth}`, text: node.textContent.trim().slice(0, 48) };
       }),
     clippedNodes: [...document.querySelectorAll("h1, h2, h3, button, summary")]
       .filter(node => node.getClientRects().length)
       .filter(node => node.scrollHeight > node.clientHeight + 2 || node.scrollWidth > node.clientWidth + 2)
       .slice(0, 8)
-      .map(node => ({
-        node: `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}${node.className ? `.${String(node.className).replace(/\s+/g, ".")}` : ""}`,
-        size: `${node.scrollWidth}x${node.scrollHeight}/${node.clientWidth}x${node.clientHeight}`,
-        text: node.textContent.trim().slice(0, 48)
-      }))
+      .map(node => ({ node: `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}`, size: `${node.scrollWidth}x${node.scrollHeight}/${node.clientWidth}x${node.clientHeight}`, text: node.textContent.trim().slice(0, 48) }))
   }));
   check(!thaiStress.overflow, "type:thai-130-no-page-overflow", `${thaiStress.page} ${JSON.stringify(thaiStress.wideNodes)}`);
   check(thaiStress.wideNodes.length === 0, "type:thai-long-copy-critical-containment", JSON.stringify(thaiStress.wideNodes));
@@ -305,17 +395,47 @@ try {
   await new Promise(resolve => server.close(resolve));
 }
 
+const renderedReportPath = path.join(deployment, config.releaseArtifacts.renderedQa);
+let priorReport = null;
+if (existsSync(renderedReportPath)) {
+  try { priorReport = JSON.parse(readFileSync(renderedReportPath, "utf8")); }
+  catch { priorReport = null; }
+}
+const priorDigest = priorReport?.testedSourceDigest || "";
+check(writeReport || priorDigest === testedSourceDigest, "qa:rendered-report-bound-to-tested-sources", `${priorDigest || "missing"}/${testedSourceDigest}`);
+
+const parityCheckName = "qa:rendered-report-contract-parity";
+const expectedCheckNames = [...checks.map(record => record.name), parityCheckName];
+const recordedCheckNames = priorReport?.checks?.map(record => record.name) || [];
+const reportContractMatches = priorReport
+  && priorReport.validator?.sha256 === validatorSha256
+  && priorReport.totals?.checks === expectedCheckNames.length
+  && JSON.stringify(recordedCheckNames) === JSON.stringify(expectedCheckNames);
+check(writeReport || reportContractMatches, parityCheckName, JSON.stringify({
+  recordedValidator: priorReport?.validator?.sha256 || "missing",
+  currentValidator: validatorSha256,
+  recordedChecks: priorReport?.totals?.checks ?? "missing",
+  currentChecks: expectedCheckNames.length
+}));
+
 const report = {
   schemaVersion: "1.0",
-  artifactBuildId: "citychat-ui-20260822-02",
-  checkedAt: new Date().toISOString(),
+  artifactBuildId: config.artifactBuildId,
+  testedSourceDigest,
+  testedSourceDigestAlgorithm: "sha256(path-NUL-bytes-NUL in declared order)",
+  testedSourcePaths: testedSourcePaths.map(([label]) => label),
+  validator: {
+    path: "tools/check-rendered.mjs",
+    sha256: validatorSha256,
+    contractVersion: "1.0"
+  },
   browser: "Chromium via Playwright 1.54.1 contract",
-  scope: "rendered local HTTP; native-device and product-runtime gates remain open",
+  scope: "rendered local HTTP; native-device, screen-reader, and product-runtime gates remain open",
   totals: { checks: checks.length, failures },
   result: failures === 0 ? "passed" : "failed",
   checks
 };
 
-if (writeReport) writeFileSync(path.join(deployment, "qa/rendered-local.v0.5.json"), `${JSON.stringify(report, null, 2)}\n`);
+if (writeReport) writeFileSync(renderedReportPath, `${JSON.stringify(report, null, 2)}\n`);
 if (failures > 0) process.exit(1);
 console.log(`Rendered ${checks.length} checks with 0 failures.`);

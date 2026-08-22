@@ -8,9 +8,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const deployment = path.join(root, "deployment");
 const config = JSON.parse(readFileSync(path.join(root, "release.config.json"), "utf8"));
 const checkOnly = process.argv.includes("--check");
-const manifestRel = "site-manifest.v0.5.json";
-const sumsRel = "assets/downloads/SHA256SUMS.txt";
-
+const manifestRel = config.releaseArtifacts.manifest;
+const sumsRel = config.releaseArtifacts.checksums;
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
 
 function listFiles(dir, prefix = "") {
@@ -24,31 +23,31 @@ function listFiles(dir, prefix = "") {
 
 const files = listFiles(deployment).map(relative => {
   const bytes = readFileSync(path.join(deployment, relative));
-  return {
-    path: relative,
-    bytes: bytes.length,
-    sha256: sha256(bytes)
-  };
+  return { path: relative, bytes: bytes.length, sha256: sha256(bytes) };
 });
-
 const byPath = Object.fromEntries(files.map(file => [file.path, file]));
+
 const requiredCritical = [
   "index.html",
   "citychat.css",
   "app.js",
-  "build-card.v0.5.yml",
-  "control-inventory.v0.5.json",
-  "implementation-notes.v0.5.md",
-  "qa/automated.v0.5.json",
-  "qa/manual-gates.v0.5.md",
-  "assets/downloads/citychat-visual-experience-specification-v0.5.md",
-  "assets/downloads/citychat-product-experience-profile-v0.4.md",
-  "assets/downloads/citychat-component-contracts.v0.4.json",
+  config.releaseArtifacts.buildCard,
+  config.releaseArtifacts.controlInventory,
+  config.releaseArtifacts.implementationNotes,
+  config.releaseArtifacts.automatedQa,
+  config.releaseArtifacts.renderedQa,
+  config.releaseArtifacts.manualQa,
+  config.sourceVisualExperience.path,
+  ...config.approvalRecords.map(record => record.path),
+  ...config.productDependencies.map(record => record.path),
   "assets/downloads/citychat-build-card-template.yml",
   "assets/downloads/vibe-coding-prompt.md",
   "assets/identity/citychat-horizontal-lockup.png",
-  "assets/identity/identity-assets.v0.5.json",
+  "assets/identity/citychat-symbol.source.svg",
+  "assets/identity/citychat-lockup.source.svg",
+  config.identityManifest.path,
   "resources/starter/index.html",
+  "resources/starter/citychat.css",
   "resources/index.json",
   "vendor/landometer/v0.9.0/package.json",
   "vendor/landometer/v0.9.0/SHA256SUMS.txt",
@@ -60,6 +59,11 @@ const requiredCritical = [
 
 for (const required of requiredCritical) {
   if (!byPath[required]) throw new Error(`Missing critical release file: ${required}`);
+}
+
+for (const record of [config.sourceVisualExperience, ...config.approvalRecords, ...config.productDependencies, config.identityManifest]) {
+  const actual = byPath[record.path]?.sha256;
+  if (actual !== record.sha256) throw new Error(`Pinned hash mismatch: ${record.path} (${actual || "missing"}/${record.sha256})`);
 }
 
 const manifest = {
@@ -83,7 +87,9 @@ const manifest = {
     canonicalUrl: config.canonicalUrl,
     deliveryConformance: "not_claimed"
   },
+  releaseArtifacts: config.releaseArtifacts,
   sourceVisualExperience: config.sourceVisualExperience,
+  approvalRecords: config.approvalRecords,
   productDependencies: config.productDependencies,
   governanceReferences: config.governanceReferences,
   identityManifest: config.identityManifest,
@@ -93,15 +99,18 @@ const manifest = {
   capabilities: config.capabilities,
   historicalRecords: [
     {
-      path: "site-manifest.v0.4.json",
-      artifactBuildId: "citychat-ui-20260822-01",
+      path: "site-manifest.v0.5.json",
+      artifactBuildId: "citychat-ui-20260822-02",
+      rollbackCommit: "77da60b4bc04abe62e5a63dbf0742eabb104769c",
+      manifestSha256: "d5e6141231296e368f0efa64b690dd612869700fbcfb523df5596a5647dae68d",
       currentBaseParity: false,
       boundary: "Historical record only; repository history is required to verify its original relative paths."
     },
     {
-      paths: ["build-card.v0.4.yml", "control-inventory.v0.4.json", "implementation-notes.v0.4.md", "qa/automated.v0.4.json", "qa/manual-gates.v0.4.md", "qa/rendered-local.v0.4.json"],
+      path: "site-manifest.v0.4.json",
       artifactBuildId: "citychat-ui-20260822-01",
-      currentAuthority: false
+      currentBaseParity: false,
+      boundary: "Historical record only; repository history is required to verify its original relative paths."
     }
   ],
   releaseBoundary: {
@@ -118,7 +127,7 @@ const manifest = {
   },
   criticalAssets: requiredCritical.map(relative => byPath[relative]),
   files,
-  boundary: "This manifest records source bytes for a source-limited design guidance artifact. It does not authorize CityChat capabilities or certify a downstream product."
+  boundary: "This manifest records source bytes for a source-limited design-guidance artifact. It does not authorize CityChat capabilities or certify a downstream product."
 };
 
 const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;

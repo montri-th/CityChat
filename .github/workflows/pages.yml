@@ -47,6 +47,9 @@ jobs:
       - name: Validate rendered states before deployment
         run: npm run render
 
+      - name: Confirm validators did not rewrite release source
+        run: git diff --exit-code
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0",
+  "approvalId": "CC-VES-APP-20260822-01",
+  "decisionClass": "approved_normative_authoring_authority",
+  "recordedAt": "2026-08-22",
+  "effectiveAt": "2026-08-22",
+  "approverRef": "user:03-citychat-project-owner",
+  "authorityEvidence": {
+    "source": "Explicit user reply in the current 03 CityChat project task",
+    "ownerReplyTh": "อนุมัติ",
+    "precedingDecisionContext": "Approve the revised CityChat VES v0.6 direction and proceed with role-governed CityChat logo, icon and motif implementation without inventing missing assets or approvals."
+  },
+  "approvedDocument": {
+    "path": "CityChat_design_system_v0_6_living_city_first_value_civic_continuity.md",
+    "version": "0.6",
+    "submittedForApprovalSha256": "5c7a8c2deb29865f72f2acd08eeeb1ffc4d49bb442d46cd88d99756484b17e82",
+    "approvedIntegratedSha256": "5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21",
+    "approvedIntegratedBytes": 121200
+  },
+  "approvedScope": [
+    "CityChat VES composition and visual signatures",
+    "Living City and first-value operating directive",
+    "CityStory narrative presentation and plain-language frontstage form",
+    "Civic continuity, contribution memory and honest return patterns",
+    "CityChat identity semantics and LDS-governed color direction",
+    "Product-specific application of inherited LDS motion primitives",
+    "Human and AI implementation contracts",
+    "Normative asset-role policy requiring exact one-role approvals"
+  ],
+  "supersession": {
+    "authoringDomains": "v0.6 supersedes v0.5 for new work in the approved VES-owned domains",
+    "existingArtifacts": "Existing v0.5 artifacts remain governed by their release records until migration parity and a v0.6 release receipt exist"
+  },
+  "assetRoleDecision": {
+    "requestedScope": "CityChat logo, functional icon and motif roles",
+    "interpretation": "Approve the normative role policy; activate only exact, fully bound role approvals that already exist",
+    "activatedReusableV06RoleApprovals": [],
+    "reaffirmedLegacyExactUse": {
+      "assetPath": "citychat_publish_repo/deployment/assets/identity/citychat-horizontal-lockup.png",
+      "sha256": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62",
+      "historicalPlacements": [
+        "header",
+        "footer"
+      ],
+      "legacyCombinedRole": "header_and_footer_lockup",
+      "artifactBuildId": "citychat-ui-20260822-02",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/",
+      "sourceManifestPath": "citychat_publish_repo/deployment/assets/identity/identity-assets.v0.5.json",
+      "sourceManifestSha256": "628b40f0a604257f38135b6afe2ac615762c760ea8ed75999f94cfa53f5cf25f",
+      "transferPolicy": "prohibited",
+      "note": "This reaffirms the existing exact-build use only; it does not create reusable v0.6 header or footer approvals."
+    },
+    "sourceOnlyAssets": [
+      {
+        "path": "citychat_publish_repo/deployment/assets/identity/citychat-lockup.source.svg",
+        "sha256": "3a3cd1b4c6091a107bd41502e6df04ddfc62c3074b75b850bfabdf9ddacab98c",
+        "legacyRole": "source_asset_public_download_only",
+        "approvalState": "source_only",
+        "renderable": false,
+        "transferPolicy": "prohibited"
+      },
+      {
+        "path": "citychat_publish_repo/deployment/assets/identity/citychat-symbol.source.svg",
+        "sha256": "4d8dfd72be8a666a80040291b8b75411854b9a0c90d6693111f79c721bbf1e74",
+        "legacyRole": "source_asset_public_download_only",
+        "approvalState": "source_only",
+        "renderable": false,
+        "transferPolicy": "prohibited"
+      }
+    ],
+    "unapprovedOrOmittedRoles": [
+      "header_lockup for a reusable v0.6 release series",
+      "footer_lockup for a reusable v0.6 release series",
+      "compact_product_mark",
+      "browser_tab_favicon",
+      "search_result_favicon",
+      "apple_touch_icon",
+      "maskable_app_icon",
+      "social_preview_identity",
+      "share_preview_identity",
+      "splash_identity",
+      "watermark",
+      "export_mark",
+      "identity_motif",
+      "supporting_illustration"
+    ],
+    "reason": "No exact role-bound file, rights record, artifact binding, theme/backdrop/surface contract and completed role QA were supplied for these roles."
+  },
+  "doesNotApprove": [
+    "Product Brief v8 or CityChat Product Experience Profile v0.4",
+    "CityScan topic, metric, eligibility, coverage, scale, geometry or LOCK contracts",
+    "Any runtime capability, channel, workflow status or official closure authority",
+    "Machine-package or artifact conformance",
+    "Migration parity",
+    "Publication, deployment or shipped-state claims",
+    "Any unbound logo variant, favicon, touch, maskable, social, share, export, motif or illustration asset",
+    "Any logo redraw, crop, recolor, filter, mask or animation",
+    "Any ijji identity asset, trademark, copied product token or derivative right"
+  ],
+  "requiredBeforeArtifactConformance": [
+    "Generate the versioned v0.6 implementation package and schemas",
+    "Create exact one-role identity approvals for every rendered asset",
+    "Complete migration parity against the governed v0.5 baseline",
+    "Pass all applicable LDS, VES, product, data, privacy, security and accessibility gates",
+    "Issue an artifact-specific immutable release receipt"
+  ],
+  "publicationAuthorization": false,
+  "runtimeReleaseApproved": false,
+  "artifactConformanceClaimed": false
+}

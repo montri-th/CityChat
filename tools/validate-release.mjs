@@ -24,23 +24,26 @@ function check(ok, name, detail = "") {
 }
 
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
+const validatorSha256 = sha256(readFileSync(fileURLToPath(import.meta.url)));
 const readJson = relative => JSON.parse(readFileSync(path.join(deployment, relative), "utf8"));
 const testedSourcePaths = [
   ["release.config.json", path.join(root, "release.config.json")],
   ["deployment/index.html", path.join(deployment, "index.html")],
   ["deployment/citychat.css", path.join(deployment, "citychat.css")],
   ["deployment/app.js", path.join(deployment, "app.js")],
-  ["deployment/build-card.v0.5.yml", path.join(deployment, "build-card.v0.5.yml")],
-  ["deployment/control-inventory.v0.5.json", path.join(deployment, "control-inventory.v0.5.json")],
-  ["deployment/implementation-notes.v0.5.md", path.join(deployment, "implementation-notes.v0.5.md")],
-  ["deployment/assets/identity/identity-assets.v0.5.json", path.join(deployment, "assets/identity/identity-assets.v0.5.json")],
-  ["deployment/assets/downloads/citychat-visual-experience-specification-v0.5.md", path.join(deployment, config.sourceVisualExperience.path)]
+  [`deployment/${config.releaseArtifacts.buildCard}`, path.join(deployment, config.releaseArtifacts.buildCard)],
+  [`deployment/${config.releaseArtifacts.controlInventory}`, path.join(deployment, config.releaseArtifacts.controlInventory)],
+  [`deployment/${config.releaseArtifacts.implementationNotes}`, path.join(deployment, config.releaseArtifacts.implementationNotes)],
+  [`deployment/${config.identityManifest.path}`, path.join(deployment, config.identityManifest.path)],
+  [`deployment/${config.sourceVisualExperience.path}`, path.join(deployment, config.sourceVisualExperience.path)],
+  ...config.approvalRecords.map(record => [`deployment/${record.path}`, path.join(deployment, record.path)])
 ];
 const testedSourceHasher = createHash("sha256");
 for (const [label, absolute] of testedSourcePaths) {
   testedSourceHasher.update(label).update("\0").update(readFileSync(absolute)).update("\0");
 }
 const testedSourceDigest = testedSourceHasher.digest("hex");
+
 const frontstageHtml = html
   .replace(/<details\b[^>]*data-copy-layer="team"[^>]*>[\s\S]*?<\/details>/gi, "")
   .replace(/<section\b[^>]*data-copy-layer="team"[^>]*>[\s\S]*?<\/section>/gi, "")
@@ -49,19 +52,22 @@ const frontstageHtml = html
 check((html.match(/<h1\b/g) || []).length === 1, "html:one-h1");
 check(html.includes('id="main"') && html.includes('href="#main"'), "html:skip-link");
 check(html.includes('name="robots" content="noindex,nofollow,noarchive"'), "publication:noindex-in-initial-html");
-check(html.includes('rel="canonical" href="https://montri-th.github.io/CityChat/"'), "publication:canonical");
+check(html.includes(`rel="canonical" href="${config.canonicalUrl}"`), "publication:canonical");
 check(!/(property="og:|name="twitter:|application\/ld\+json|rel="manifest"|rel="icon")/.test(html), "identity:no-unapproved-public-discovery-assets");
 check(html.includes("source_limited") && html.includes("not a product runtime"), "truth:visible-source-limited-boundary");
-check(html.includes("CityChat VES v0.5") && html.includes("ตัวอย่างสำหรับทีม"), "ves:visible-version-and-fixture-boundary");
+check(html.includes("CityChat VES v0.6") && html.includes("ตัวอย่างสำหรับทีม"), "ves:visible-version-and-fixture-boundary");
 check(html.includes("ยังบอกไม่ได้") && html.includes("ดูที่มา"), "copy:plain-thai-truth-and-disclosure");
 check(html.includes('data-copy-layer="team"'), "copy:team-layer-explicit");
-check(!/\bAI\b|inspector|claim ceiling|truth envelope|source_limited|DEMO-LOCK|SIGNAL_READY|NO_SCORE/i.test(frontstageHtml), "copy:no-internal-jargon-in-frontstage");
+check(!/\bAI\b|inspector|claim ceiling|truth envelope|source_limited|SIGNAL_READY|NO_SCORE/i.test(frontstageHtml), "copy:no-internal-jargon-in-frontstage");
 check(html.includes("PLACE-DEMO-01") && html.includes("SYNTHETIC"), "fixture:synthetic-object-labelled");
+check(html.includes("FIXTURE-RECEIPT-01") && html.includes("Version v2"), "continuity:receipt-and-material-return-taught");
+check(html.includes('data-story-view="return" hidden') && html.includes('data-story-view="scan" hidden') && html.includes('data-story-view="officer" hidden'), "journey:nondefault-views-hidden-in-initial-html");
+
 const rejectedStart = html.indexOf('class="case-card card rejected-case"');
-check(rejectedStart >= 0 && /ยอดนิยม|popularity/i.test(html.slice(rejectedStart)), "rejected:popularity-is-labelled-teaching-only");
-check(rejectedStart >= 0 && /ไม่บอกว่าเทศบาลรับเรื่อง|Do not claim municipal receipt/i.test(html.slice(rejectedStart)), "rejected:optimistic-receipt-is-labelled-teaching-only");
+check(rejectedStart >= 0 && /อันดับ|ranks?|popularity/i.test(html.slice(rejectedStart)), "rejected:popularity-is-labelled-teaching-only");
+check(rejectedStart >= 0 && /ไม่บอกว่าส่งแล้วหรือเทศบาลรับเรื่อง|Never claim saved or received/i.test(html.slice(rejectedStart)), "rejected:optimistic-receipt-is-labelled-teaching-only");
 check(!/LivePulse|เทศบาลรับเรื่องแล้ว|municipality received/i.test(app + css), "truth:no-rejected-pattern-in-runtime-layer");
-check((html.match(/data-th/g) || []).length > 80 && (html.match(/data-en/g) || []).length > 80, "locale:thai-english-content-present");
+check((html.match(/data-th/g) || []).length > 100 && (html.match(/data-en/g) || []).length > 100, "locale:thai-english-content-present");
 
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
 const duplicateIds = ids.filter((id, index) => ids.indexOf(id) !== index);
@@ -69,18 +75,25 @@ check(duplicateIds.length === 0, "html:no-duplicate-ids", duplicateIds.join(", "
 
 check(!/#[0-9a-fA-F]{3,8}\b/.test(css), "css:no-build-local-raw-hex");
 check(!css.includes("!important"), "css:no-build-local-important");
-check(css.includes("var(--product-citychat-gradient)") === false, "css:product-gradient-not-used-as-data-signal");
+check(!css.includes("color-mix("), "css:no-authored-color-synthesis");
+check(!css.includes("var(--product-citychat-gradient)"), "css:product-gradient-not-used-as-data-signal");
 check(css.includes("var(--surface-atmosphere-ground)") && css.includes("var(--interaction-accent)"), "css:semantic-token-composition");
 check(css.includes("@media (prefers-reduced-motion: reduce)"), "motion:reduced-motion");
 check(css.includes("@media (max-width: 599px)") && css.includes("@media (max-width: 899px)"), "responsive:inherited-lds-layout-thresholds");
 check(!/overflow-x\s*:\s*hidden|backdrop-filter/.test(css), "responsive:no-overflow-masking-or-backdrop-blur");
+check(css.includes("[data-story-view][hidden]") && css.includes("display: none"), "journey:hidden-attribute-not-overridden");
 check(css.includes(".scan-composition") && css.includes(".scan-frame-geometry"), "scan:composition-and-visible-frame-separated");
+check(css.includes("font-synthesis: none"), "type:no-synthetic-fonts");
+for (const family of ["Arvo", "IBM Plex Sans Thai Looped", "Bai Jamjuree", "IBM Plex Sans Thai", "JetBrains Mono"]) {
+  check(css.includes(`font-family: "${family}"`), `type:${family.toLowerCase().replaceAll(" ", "-")}:declared`);
+}
 
 check(!/fetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon|gtag\s*\(|analytics/i.test(app), "runtime:no-background-network-or-analytics");
-check(app.includes("if (state.scan !== \"locked\") return") && app.includes("not saved to a system"), "runtime:locked-fixture-boundary");
+check(app.includes('if (state.scan !== "locked") return') && app.includes("not saved to a system"), "runtime:locked-fixture-boundary");
 check(html.includes('id="open-story-from-lock" hidden'), "runtime:story-handoff-hidden-until-lock");
 check(app.includes("ArrowRight") && app.includes("Home") && app.includes("End"), "a11y:tab-keyboard-contract");
 check(app.includes("navigator.clipboard") && app.includes("document.execCommand"), "effect:clipboard-fallback");
+check(app.includes("คนเห็นคุณค่าอะไรในช่วงแรก?") && app.includes("What first value does the person receive?"), "handoff:copied-preflight-matches-visible-questions");
 
 const localRefs = [...html.matchAll(/(?:href|src)="([^"]+)"/g)]
   .map(match => match[1])
@@ -106,29 +119,43 @@ for (const file of jsonFiles) {
 }
 check(jsonErrors.length === 0, "json:all-parse", jsonErrors.slice(0, 3).join(" | "));
 
-const sourceVisualExperience = readFileSync(path.join(deployment, config.sourceVisualExperience.path), "utf8");
-check(sha256(Buffer.from(sourceVisualExperience)) === config.sourceVisualExperience.sha256, "source:citychat-ves-hash");
-check(sourceVisualExperience.includes("LDS + CityChat VES") && sourceVisualExperience.includes("not a second independent visual system"), "source:ves-no-fork-decision");
-check(sourceVisualExperience.includes("public copy is short natural Thai") && sourceVisualExperience.includes("no AI/inspector/internal terms"), "source:plain-language-contract");
-const experienceContract = readFileSync(path.join(deployment, config.productDependencies[0].path), "utf8");
-check(sha256(Buffer.from(experienceContract)) === config.productDependencies[0].sha256, "source:experience-contract-hash");
-check(experienceContract.includes("Canonical CityScan events MUST retain their owning names"), "source:canonical-cityscan-event-map");
-const componentContracts = readFileSync(path.join(deployment, config.productDependencies[1].path));
-check(sha256(componentContracts) === config.productDependencies[1].sha256, "source:component-contracts-hash");
-
-const identity = readJson("assets/identity/identity-assets.v0.5.json");
-check(identity.artifactBuildId === config.artifactBuildId, "identity:artifact-build-bound");
-check(sha256(readFileSync(path.join(deployment, config.identityManifest.path))) === config.identityManifest.sha256, "identity:manifest-hash-bound");
-for (const asset of identity.assets) {
-  const bytes = readFileSync(path.join(deployment, asset.path));
-  check(bytes.length === asset.bytes && sha256(bytes) === asset.sha256, `identity:${asset.variant}:bytes-and-hash`);
+for (const record of [config.sourceVisualExperience, ...config.approvalRecords, ...config.productDependencies, config.identityManifest]) {
+  check(sha256(readFileSync(path.join(deployment, record.path))) === record.sha256, `source:${path.basename(record.path)}:hash`);
 }
-const runtimeLockup = identity.assets.find(asset => asset.role === "header_and_footer_lockup");
-const lockupUses = runtimeLockup ? (html.match(new RegExp(`(?:src|href)="${runtimeLockup.path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`, "g")) || []).length : 0;
-check(Boolean(runtimeLockup) && lockupUses === 2, "identity:lockup-used-exactly-header-and-footer", String(lockupUses));
-check(identity.assets.filter(asset => asset.role === "source_asset_public_download_only").every(asset => !html.includes(`src="${asset.path}"`)), "identity:source-assets-not-rendered");
-check(!/\.brand-lockup\s+img\s*\{[^}]*filter\s*:/s.test(css), "identity:lockup-not-filtered");
-check(identity.omittedRoles.some(role => role.role === "favicon"), "identity:favicon-omission-recorded");
+const sourceVisualExperience = readFileSync(path.join(deployment, config.sourceVisualExperience.path), "utf8");
+check(sourceVisualExperience.includes("not a second DS") && sourceVisualExperience.includes("Thai remains plain, short and human"), "source:ves-authority-and-language-boundary");
+const experienceContract = readFileSync(path.join(deployment, config.productDependencies[0].path), "utf8");
+check(experienceContract.includes("Canonical CityScan events MUST retain their owning names"), "source:canonical-cityscan-event-map");
+
+const identity = readJson(config.identityManifest.path);
+check(identity.artifactBuildId === config.artifactBuildId && identity.canonicalUrl === config.canonicalUrl, "identity:artifact-and-url-bound");
+const lockup = identity.assets.find(asset => asset.assetId === "citychat-horizontal-lockup-png-94055c9b");
+check(Boolean(lockup), "identity:official-lockup-recorded");
+if (lockup) {
+  const bytes = readFileSync(path.join(deployment, lockup.path));
+  check(bytes.length === lockup.bytes && sha256(bytes) === lockup.sha256, "identity:lockup-bytes-and-hash");
+  const escaped = lockup.path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const uses = (html.match(new RegExp(`src="${escaped}"`, "g")) || []).length;
+  check(uses === 2, "identity:lockup-used-exactly-header-and-footer", String(uses));
+}
+for (const [role, context] of [["header_lockup", "site_header"], ["footer_lockup", "site_footer"]]) {
+  const approval = identity.roleApprovals.find(record => record.role === role);
+  const valid = approval
+    && approval.approvalState === "approved"
+    && approval.approvedContentHash === lockup?.sha256
+    && approval.artifactBinding?.refs?.includes(config.artifactBuildId)
+    && approval.artifactBinding?.refs?.includes(config.canonicalUrl)
+    && approval.contexts?.includes(context)
+    && approval.surfaceDecision === "direct_surface"
+    && approval.surfaceRef === "lds:--brand-beige";
+  check(valid, `identity:${role}:exact-role-approval`);
+  check(html.includes(`data-identity-role="${role}"`), `identity:${role}:markup-bound`);
+}
+check(identity.sourceOnlyAssets.every(record => !html.includes(`src="${identity.assets.find(asset => asset.assetId === record.assetId)?.path}"`)), "identity:source-assets-not-rendered");
+const requiredOmissions = ["browser_tab_favicon", "apple_touch_icon", "maskable_app_icon", "social_preview_identity", "identity_motif"];
+check(requiredOmissions.every(role => identity.omittedRoles.some(record => record.role === role)), "identity:unapproved-roles-omitted");
+check(/\.site-header\s*\{[^}]*background:\s*var\(--brand-beige\)/s.test(css) && /\.site-footer\s*\{[^}]*background:\s*var\(--brand-beige\)/s.test(css), "identity:full-lds-beige-bands");
+check(!/\.(?:brand|footer)-lockup\s*\{[^}]*(?:background|filter|mask|opacity|transform)\s*:/s.test(css), "identity:no-local-logo-carrier-or-transform");
 
 const vendor = path.join(deployment, config.upstream.vendorPath);
 const vendorPackage = JSON.parse(readFileSync(path.join(vendor, "package.json"), "utf8"));
@@ -138,54 +165,80 @@ check(vendorPackage.artifactBuildId === "ui-20260821-05", "vendor:upstream-artif
 const vendorHashFailures = [];
 for (const file of vendorPackage.files) {
   const absolute = path.join(vendor, file.path);
-  if (!existsSync(absolute)) {
-    vendorHashFailures.push(`${file.path}: missing`);
-    continue;
+  if (!existsSync(absolute)) vendorHashFailures.push(`${file.path}: missing`);
+  else {
+    const bytes = readFileSync(absolute);
+    if (bytes.length !== file.bytes || sha256(bytes) !== file.sha256) vendorHashFailures.push(file.path);
   }
-  const bytes = readFileSync(absolute);
-  if (bytes.length !== file.bytes || sha256(bytes) !== file.sha256) vendorHashFailures.push(file.path);
 }
 check(vendorHashFailures.length === 0, "vendor:package-file-hashes", vendorHashFailures.slice(0, 5).join(", "));
 const vendorReport = JSON.parse(readFileSync(path.join(vendor, "validation-report.json"), "utf8"));
 check(vendorReport.totals.checks === 143 && vendorReport.totals.failures === 0, "vendor:recorded-package-validation");
 check(vendorReport.boundary.includes("never certifies a downstream artifact"), "vendor:validation-boundary");
 
-const buildCard = readFileSync(path.join(deployment, "build-card.v0.5.yml"), "utf8");
+const buildCard = readFileSync(path.join(deployment, config.releaseArtifacts.buildCard), "utf8");
 check(buildCard.includes("profile: designsystem.adoption"), "build-card:one-profile");
 check(buildCard.includes("indexable: false") && buildCard.includes("evidenceStatus: source_limited"), "build-card:publication-truth");
 check(buildCard.includes("remoteMutation: false") && buildCard.includes("remotePersistence: false"), "build-card:no-remote-effect");
 check(buildCard.includes("PUB-01") && buildCard.includes("DELIVERY-01:web") && !buildCard.includes("WEB-DISCOVERY-01"), "build-card:triggered-packs-match-noindex-artifact");
 check(buildCard.includes(config.identityManifest.sha256), "build-card:identity-manifest-bound");
 
-const controlInventory = readJson("control-inventory.v0.5.json");
+const controlInventory = readJson(config.releaseArtifacts.controlInventory);
 const missingControls = controlInventory.controls
   .filter(control => !html.includes(`id="${control.id}"`) && !html.includes(`class="${control.id}`))
   .map(control => control.id);
 check(missingControls.length === 0, "controls:inventory-resolves", missingControls.join(", "));
 check(controlInventory.remoteEffects.length === 0, "controls:no-remote-effects");
 
-const manifest = readJson("site-manifest.v0.5.json");
-check(manifest.artifact.artifactBuildId === config.artifactBuildId, "manifest:artifact-build");
-check(manifest.artifact.profile === "designsystem.adoption", "manifest:profile");
-check(manifest.publication.indexable === false && manifest.publication.evidenceStatus === "source_limited", "manifest:publication-truth");
-check(manifest.publication.machineValidation === "pending", "manifest:honest-machine-validation");
-check(manifest.identityManifest.sha256 === config.identityManifest.sha256, "manifest:identity-bound");
-check(JSON.stringify(manifest.triggeredPacks) === JSON.stringify(["PUB-01", "DELIVERY-01:web"]), "manifest:triggered-packs");
+const manifestPath = path.join(deployment, config.releaseArtifacts.manifest);
+if (!writeReport) {
+  check(existsSync(manifestPath), "manifest:exists");
+  if (existsSync(manifestPath)) {
+    const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+    check(manifest.artifact.artifactBuildId === config.artifactBuildId, "manifest:artifact-build");
+    check(manifest.artifact.profile === config.profile, "manifest:profile");
+    check(manifest.publication.indexable === false && manifest.publication.evidenceStatus === "source_limited", "manifest:publication-truth");
+    check(manifest.publication.machineValidation === "pending", "manifest:honest-machine-validation");
+    check(manifest.identityManifest.sha256 === config.identityManifest.sha256, "manifest:identity-bound");
+    check(JSON.stringify(manifest.triggeredPacks) === JSON.stringify(config.triggeredPacks), "manifest:triggered-packs");
+  }
+}
 
 const personalPathLeaks = [];
-for (const relative of ["index.html", "citychat.css", "app.js", "build-card.v0.5.yml", "implementation-notes.v0.5.md", "llms.txt"]) {
+for (const relative of ["index.html", "citychat.css", "app.js", config.releaseArtifacts.buildCard, config.releaseArtifacts.implementationNotes, "llms.txt"]) {
   const text = readFileSync(path.join(deployment, relative), "utf8");
   if (/\/Users\/|\/home\/|file:\/\//.test(text)) personalPathLeaks.push(relative);
 }
 check(personalPathLeaks.length === 0, "privacy:no-personal-absolute-paths", personalPathLeaks.join(", "));
 
-const priorAutomatedReportPath = path.join(deployment, "qa/automated.v0.5.json");
-let priorAutomatedDigest = "";
-if (existsSync(priorAutomatedReportPath)) {
-  try { priorAutomatedDigest = JSON.parse(readFileSync(priorAutomatedReportPath, "utf8")).testedSourceDigest || ""; }
-  catch { priorAutomatedDigest = ""; }
+const automatedReportPath = path.join(deployment, config.releaseArtifacts.automatedQa);
+let priorReport = null;
+if (existsSync(automatedReportPath)) {
+  try { priorReport = JSON.parse(readFileSync(automatedReportPath, "utf8")); }
+  catch { priorReport = null; }
 }
-check(writeReport || priorAutomatedDigest === testedSourceDigest, "qa:automated-report-bound-to-tested-sources", `${priorAutomatedDigest || "missing"}/${testedSourceDigest}`);
+const priorDigest = priorReport?.testedSourceDigest || "";
+check(writeReport || priorDigest === testedSourceDigest, "qa:automated-report-bound-to-tested-sources", `${priorDigest || "missing"}/${testedSourceDigest}`);
+
+const parityCheckName = "qa:automated-report-contract-parity";
+// Manifest checks run only in read-only release validation because the report is
+// generated before the finalizer writes the new manifest. Keep the persisted
+// source-report contract stable by comparing only checks that run in both modes.
+const expectedCheckNames = [
+  ...checks.filter(record => !record.name.startsWith("manifest:")).map(record => record.name),
+  parityCheckName
+];
+const recordedCheckNames = priorReport?.checks?.map(record => record.name) || [];
+const reportContractMatches = priorReport
+  && priorReport.validator?.sha256 === validatorSha256
+  && priorReport.totals?.checks === expectedCheckNames.length
+  && JSON.stringify(recordedCheckNames) === JSON.stringify(expectedCheckNames);
+check(writeReport || reportContractMatches, parityCheckName, JSON.stringify({
+  recordedValidator: priorReport?.validator?.sha256 || "missing",
+  currentValidator: validatorSha256,
+  recordedChecks: priorReport?.totals?.checks ?? "missing",
+  currentChecks: expectedCheckNames.length
+}));
 
 const report = {
   schemaVersion: "1.0",
@@ -193,16 +246,18 @@ const report = {
   testedSourceDigest,
   testedSourceDigestAlgorithm: "sha256(path-NUL-bytes-NUL in declared order)",
   testedSourcePaths: testedSourcePaths.map(([label]) => label),
+  validator: {
+    path: "tools/validate-release.mjs",
+    sha256: validatorSha256,
+    contractVersion: "1.0"
+  },
   scope: "source and contract validation; not native-device or product-runtime certification",
   totals: { checks: checks.length, failures },
   result: failures === 0 ? "passed" : "failed",
   checks,
-  openManualGateRef: "manual-gates.v0.5.md"
+  openManualGateRef: config.releaseArtifacts.manualQa
 };
 
-if (writeReport) {
-  writeFileSync(path.join(deployment, "qa/automated.v0.5.json"), `${JSON.stringify(report, null, 2)}\n`);
-}
-
+if (writeReport) writeFileSync(automatedReportPath, `${JSON.stringify(report, null, 2)}\n`);
 if (failures > 0) process.exit(1);
 console.log(`Validated ${checks.length} release contracts with 0 failures.`);

@@ -1,0 +1,1168 @@
+{
+  "schemaVersion": "1.0",
+  "artifactBuildId": "citychat-ui-20260822-03",
+  "testedSourceDigest": "3f801f870d0ae924df958354fc16a20a35fd0f473dc3ac49a30f243189d712a9",
+  "testedSourceDigestAlgorithm": "sha256(path-NUL-bytes-NUL in declared order)",
+  "testedSourcePaths": [
+    "release.config.json",
+    "deployment/index.html",
+    "deployment/citychat.css",
+    "deployment/app.js",
+    "deployment/build-card.v0.6.yml",
+    "deployment/control-inventory.v0.6.json",
+    "deployment/assets/identity/identity-assets.v0.6.json"
+  ],
+  "validator": {
+    "path": "tools/check-rendered.mjs",
+    "sha256": "28fd62e28bb34a86d9e59c9c6a3f36f3a42529bc990012bead71125765074652",
+    "contractVersion": "1.0"
+  },
+  "browser": "Chromium via Playwright 1.54.1 contract",
+  "scope": "rendered local HTTP; native-device, screen-reader, and product-runtime gates remain open",
+  "totals": {
+    "checks": 246,
+    "failures": 0
+  },
+  "result": "passed",
+  "checks": [
+    {
+      "name": "render:320x760-th-light-story:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:no-horizontal-overflow",
+      "ok": true,
+      "detail": "320/320"
+    },
+    {
+      "name": "render:320x760-th-light-story:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:first-value-in-initial-viewport",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"story\"]"
+    },
+    {
+      "name": "render:320x760-th-light-story:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:320x760-th-light-story:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:320x760-th-light-story:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:320x760-th-light-story:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:320x760-th-light-story:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:320x760-th-light-story:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:320x760-th-light-story:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:320x760-th-light-story:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:320x760-th-light-story:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:320x760-th-light-story:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:320x760-th-light-story:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:320x760-th-light-story:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:no-horizontal-overflow",
+      "ok": true,
+      "detail": "360/360"
+    },
+    {
+      "name": "render:360x800-th-dark-return:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:first-value-in-initial-viewport",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"return\"]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-th-dark-return:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360x800-th-dark-return:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360x800-th-dark-return:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360x800-th-dark-return:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:360x800-th-dark-return:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:360x800-th-dark-return:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:360x800-th-dark-return:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:360x800-th-dark-return:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:no-horizontal-overflow",
+      "ok": true,
+      "detail": "360/360"
+    },
+    {
+      "name": "render:360x800-en-system-officer:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:first-value-in-initial-viewport",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"officer\"]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:360x800-en-system-officer:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:360x800-en-system-officer:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:360x800-en-system-officer:type-demo-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:360x800-en-system-officer:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:360x800-en-system-officer:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:360x800-en-system-officer:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:360x800-en-system-officer:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:360x800-en-system-officer:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:no-horizontal-overflow",
+      "ok": true,
+      "detail": "390/390"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:first-value-in-initial-viewport",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"scan\"]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:390x844-th-dark-scan:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:390x844-th-dark-scan:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:no-horizontal-overflow",
+      "ok": true,
+      "detail": "844/844"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"scan\"]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:mobile-landscape-th-light-scan:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:no-horizontal-overflow",
+      "ok": true,
+      "detail": "390/390"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"scan\"]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.635514018691588,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:short-viewport-th-light-scan:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:no-horizontal-overflow",
+      "ok": true,
+      "detail": "768/768"
+    },
+    {
+      "name": "render:768x900-en-light-story:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"story\"]"
+    },
+    {
+      "name": "render:768x900-en-light-story:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:768x900-en-light-story:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:768x900-en-light-story:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:768x900-en-light-story:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:768x900-en-light-story:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:768x900-en-light-story:type-demo-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:768x900-en-light-story:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:768x900-en-light-story:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:768x900-en-light-story:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:768x900-en-light-story:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:768x900-en-light-story:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:768x900-en-light-story:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:no-horizontal-overflow",
+      "ok": true,
+      "detail": "834/834"
+    },
+    {
+      "name": "render:834x900-th-dark-return:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"return\"]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:834x900-th-dark-return:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:834x900-th-dark-return:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:834x900-th-dark-return:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:834x900-th-dark-return:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:834x900-th-dark-return:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:834x900-th-dark-return:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:834x900-th-dark-return:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:834x900-th-dark-return:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1024/1024"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"scan\"]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:1024x900-th-light-scan:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:1024x900-th-light-scan:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1180/1180"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"officer\"]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:type-demo-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:1180x900-en-dark-officer:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1366/1366"
+    },
+    {
+      "name": "render:1366x768-th-light-story:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"story\"]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:1366x768-th-light-story:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1366x768-th-light-story:heading-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1366x768-th-light-story:type-demo-font",
+      "ok": true,
+      "detail": "\"IBM Plex Sans Thai Looped\", \"Noto Sans Thai Looped\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1366x768-th-light-story:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:1366x768-th-light-story:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:1366x768-th-light-story:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1366x768-th-light-story:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(242, 241, 223)/rgb(242, 241, 223)/rgb(242, 241, 223)"
+    },
+    {
+      "name": "render:1366x768-th-light-story:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:assets-2xx",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:no-third-party-fonts",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:no-horizontal-overflow",
+      "ok": true,
+      "detail": "1440/1440"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:essential-content-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:fixture-boundary-visible",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:exactly-one-journey-view",
+      "ok": true,
+      "detail": "[\"return\"]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:critical-containers-contained",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:scan-frame-zero-intersection",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:locale-theme-preference",
+      "ok": true
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:body-font",
+      "ok": true,
+      "detail": "\"Bai Jamjuree\", \"Noto Sans Thai\", \"Leelawadee UI\", Tahoma, sans-serif"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:heading-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:type-demo-font",
+      "ok": true,
+      "detail": "Arvo, Georgia, Cambria, \"Times New Roman\", serif"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:font-synthesis-none",
+      "ok": true,
+      "detail": "none"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:all-self-hosted-font-faces-loaded",
+      "ok": true,
+      "detail": "{\"body400\":true,\"body600\":true,\"thaiHeading\":true,\"englishHeading\":true,\"thaiTechnical\":true,\"latinTechnical\":true}"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:identity-intrinsic-ratio",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:identity-no-local-carrier-or-transform",
+      "ok": true,
+      "detail": "[{\"role\":\"header_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"},{\"role\":\"footer_lockup\",\"natural\":\"380x82\",\"ratio\":4.6345878989995235,\"background\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"opacity\":\"1\",\"transform\":\"none\",\"animation\":\"none\",\"mask\":\"none\"}]"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:identity-full-beige-bands",
+      "ok": true,
+      "detail": "rgb(216, 207, 178)/rgb(216, 207, 178)/rgb(216, 207, 178)"
+    },
+    {
+      "name": "render:1440x1000-en-dark-return:44px-controls",
+      "ok": true
+    },
+    {
+      "name": "contrast:light:representative-text-pairs",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "contrast:dark:representative-text-pairs",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "interaction:tab-story-to-return",
+      "ok": true
+    },
+    {
+      "name": "interaction:return-is-single-visible-view",
+      "ok": true
+    },
+    {
+      "name": "interaction:tab-return-to-scan",
+      "ok": true
+    },
+    {
+      "name": "interaction:no-score-state",
+      "ok": true
+    },
+    {
+      "name": "interaction:no-score-cannot-open-story",
+      "ok": true
+    },
+    {
+      "name": "interaction:return-url-restoration",
+      "ok": true
+    },
+    {
+      "name": "interaction:answer-preview-initially-closed",
+      "ok": true
+    },
+    {
+      "name": "interaction:answer-preview-opens-locally",
+      "ok": true
+    },
+    {
+      "name": "interaction:locked-state",
+      "ok": true
+    },
+    {
+      "name": "interaction:locked-can-open-story",
+      "ok": true
+    },
+    {
+      "name": "interaction:locked-fixture-handoff-visible",
+      "ok": true,
+      "detail": "{\"visible\":true,\"text\":\"\\n                  มาจากกรอบตัวอย่างริมคลองกลางเมืองFrom the sample inner-city canal frame\\n                  ใช้ข้อมูลชุดเดิมและเก็บไว้เฉพาะหน้านี้Uses the same fixture and remains only on this page\\n                \",\"placeRef\":\"PLACE-DEMO-01\",\"snapshotRef\":\"FIXTURE-SCAN-LOCK-01\"}"
+    },
+    {
+      "name": "interaction:locked-fixture-context-preserved",
+      "ok": true,
+      "detail": "{\"visible\":true,\"text\":\"\\n                  มาจากกรอบตัวอย่างริมคลองกลางเมืองFrom the sample inner-city canal frame\\n                  ใช้ข้อมูลชุดเดิมและเก็บไว้เฉพาะหน้านี้Uses the same fixture and remains only on this page\\n                \",\"placeRef\":\"PLACE-DEMO-01\",\"snapshotRef\":\"FIXTURE-SCAN-LOCK-01\"}"
+    },
+    {
+      "name": "interaction:preflight-progress",
+      "ok": true
+    },
+    {
+      "name": "motion:reduced-scroll-final-state",
+      "ok": true,
+      "detail": "auto"
+    },
+    {
+      "name": "motion:reduced-transition",
+      "ok": true,
+      "detail": "0s"
+    },
+    {
+      "name": "no-js:single-read-only-guidance-visible",
+      "ok": true
+    },
+    {
+      "name": "no-js:honest-non-operable-fallback",
+      "ok": true
+    },
+    {
+      "name": "no-js:no-horizontal-overflow",
+      "ok": true
+    },
+    {
+      "name": "type:thai-130-no-page-overflow",
+      "ok": true,
+      "detail": "390/390 []"
+    },
+    {
+      "name": "type:thai-long-copy-critical-containment",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "type:thai-130-no-control-or-heading-clipping",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "type:200-percent-zoom-essential-content",
+      "ok": true
+    },
+    {
+      "name": "qa:rendered-report-bound-to-tested-sources",
+      "ok": true,
+      "detail": "dc21c05aa2ddacdb7806160020817662048e4e5c019258ce90cf6bf2f9331aa7/3f801f870d0ae924df958354fc16a20a35fd0f473dc3ac49a30f243189d712a9"
+    },
+    {
+      "name": "qa:rendered-report-contract-parity",
+      "ok": true,
+      "detail": "{\"recordedValidator\":\"28fd62e28bb34a86d9e59c9c6a3f36f3a42529bc990012bead71125765074652\",\"currentValidator\":\"28fd62e28bb34a86d9e59c9c6a3f36f3a42529bc990012bead71125765074652\",\"recordedChecks\":246,\"currentChecks\":246}"
+    }
+  ]
+}
