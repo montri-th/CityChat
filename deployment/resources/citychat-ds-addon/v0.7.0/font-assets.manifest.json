@@ -1,0 +1,81 @@
+{
+  "$schema": "../../../schemas/citychat-font-assets.schema.v0.7.0.json",
+  "schemaVersion": "1.0",
+  "manifestVersion": "citychat-font-assets-v0.7.0",
+  "artifactVersion": "0.7.0",
+  "status": "governance_ready_runtime_bound_in_artifact_v0.7.0",
+  "scope": "citychat_team_playground_only",
+  "authorityRefs": [
+    {
+      "authorityId": "citychat-ds-addon-v0.7-icon-contract",
+      "path": "../../../assets/downloads/citychat-ds-addon-v0.7.md",
+      "sha256": "b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b",
+      "authorityBoundary": "CityChat DS Add-on v0.7 governs the CityChat icon role map for this artifact; it does not enable a product capability."
+    },
+    {
+      "authorityId": "landometer-ds-v0.9.0-r7-icon-01",
+      "path": "../../../vendor/landometer/v0.9.0/package.json",
+      "sha256": "0b4b8bfd9abcf403cfebdc8fe9b3299a821eb6e2e96d0d5c9495f1627f206e47",
+      "authorityBoundary": "The vendored LDS package governs family, axes, currentColor, labels and self-hosting; it does not contain this artifact-owned subset."
+    }
+  ],
+  "fonts": [
+    {
+      "fontAssetId": "material-symbols-rounded-citychat-v368-static-24-300-0-0",
+      "family": "Material Symbols Rounded",
+      "fullName": "Material Symbols Rounded Light",
+      "postScriptName": "MaterialSymbolsRounded-Light",
+      "fontVersion": "2.963",
+      "format": "truetype",
+      "assetPath": "../../../assets/icons/material-symbols-rounded-citychat-v368.ttf",
+      "bytes": 5248,
+      "sha256": "42cd00d98dd631ddf6b3d5a47ba34e6eed83d2a6e3fd35ef5f4f8e0e6632ba30",
+      "source": {
+        "provider": "Google Fonts",
+        "repository": "https://github.com/google/material-design-icons",
+        "cssApiVersion": "v368",
+        "downloadUrl": "https://fonts.gstatic.com/l/font?kit=syl0-zNym6YjUruM-QrEh7-nyTnjDwKNJ_190FjpZIvDmUSVOK7BDB_Qb9vUSzq3wzLK-P0J-V_Zs-QtQth3-jOcbTCVpeRL2w5rwZu2rNmlXxKRP8cDespv7zECSChFHVta9xvedDQEP5diBtrp4FjgZY7dyKYtWU6l2YTz&skey=70ddea8fe54d532e&v=v368",
+        "retrievedAt": "2026-08-23T00:55:27+07:00",
+        "importerEvidencePath": "../../../../tools/import-material-symbols.mjs",
+        "importerEvidenceSha256": "34c91dc772f3268710779e1892c8d70c6167bbe059369a52c81428a26642ec99"
+      },
+      "license": {
+        "spdxId": "Apache-2.0",
+        "noticePath": "../../../assets/icons/LICENSE.material-symbols.txt",
+        "noticeBytes": 861,
+        "noticeSha256": "a5821986e6962ad8b3bb1c6ea99423ca66dc899058b6775e8569488a6d0ea518"
+      },
+      "delivery": {
+        "selfHosted": true,
+        "remoteRuntimeAllowed": false,
+        "binaryClass": "static_instance_used_glyph_subset",
+        "runtimeBindingStatus": "bound_in_artifact_v0.7.0"
+      },
+      "axes": {
+        "FILL": 0,
+        "wght": 300,
+        "GRAD": 0,
+        "opsz": 24,
+        "selectedFill1Supported": false
+      },
+      "glyphs": [
+        { "glyphName": "assignment", "codepoint": "U+E85D" },
+        { "glyphName": "description", "codepoint": "U+E683" },
+        { "glyphName": "forum", "codepoint": "U+E0BF" },
+        { "glyphName": "history", "codepoint": "U+E28E" },
+        { "glyphName": "location_on", "codepoint": "U+E0C8" },
+        { "glyphName": "map", "codepoint": "U+E55B" },
+        { "glyphName": "receipt_long", "codepoint": "U+EF6E" },
+        { "glyphName": "reply", "codepoint": "U+E15E" },
+        { "glyphName": "share", "codepoint": "U+E80D" }
+      ],
+      "glyphAliases": [
+        { "alias": "fmd_good", "canonicalGlyph": "location_on", "codepoint": "U+E0C8" },
+        { "alias": "location_pin", "canonicalGlyph": "location_on", "codepoint": "U+E0C8" },
+        { "alias": "place", "canonicalGlyph": "location_on", "codepoint": "U+E0C8" },
+        { "alias": "room", "canonicalGlyph": "location_on", "codepoint": "U+E0C8" },
+        { "alias": "restore", "canonicalGlyph": "history", "codepoint": "U+E28E" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "$schema": "../../../schemas/semantic-motion-citychat.schema.v0.7.0.json",
+  "schemaVersion": "1.0",
+  "recordId": "citychat-playground-semantic-motion",
+  "recordVersion": "0.7.0",
+  "status": "approved",
+  "artifactBuildId": "citychat-ui-20260823-02",
+  "scope": {
+    "product": "citychat",
+    "artifactKind": "design_identity_playground",
+    "profileId": "designsystem.adoption",
+    "profileMotionIntensity": "guided",
+    "fullLivingReference": false,
+    "officialFixture": false,
+    "localFixtureStateOnly": true,
+    "remoteEffect": false,
+    "telemetry": false
+  },
+  "authority": {
+    "artifactReleaseAuthorization": {
+      "ref": "deployment/assets/downloads/citychat-ds-addon-playground-release-authorization.v0.7.0.json",
+      "version": "0.7.0",
+      "sha256": "9f0194953217d6503af691ba802b627577e2f07b3779ed227ef7539feb905812",
+      "availability": "repository_pinned",
+      "role": "exact_artifact_scoped_motion_authorization"
+    },
+    "cityChatDsAddOn": {
+      "ref": "deployment/assets/downloads/citychat-ds-addon-v0.7.md",
+      "version": "0.7",
+      "sha256": "b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b",
+      "availability": "repository_pinned",
+      "role": "approved_citychat_motion_application_guidance"
+    },
+    "landometerAuthoring": {
+      "ref": "sources/Landometer Design System v0.9.0-r7.md",
+      "version": "0.9.0-r7",
+      "sha256": "52ef41f1b231f8b84955a40c21a018991a114a4f5eaabd8c5111816bf8d645b1",
+      "availability": "external_pinned",
+      "role": "approved_visual_authoring_authority"
+    },
+    "landometerMachinePackage": {
+      "ref": "deployment/vendor/landometer/v0.9.0/package.json",
+      "version": "v0.9.0-mp1",
+      "kitId": "lds-kit-0.9.0-r4",
+      "commit": "d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665",
+      "sha256": "0b4b8bfd9abcf403cfebdc8fe9b3299a821eb6e2e96d0d5c9495f1627f206e47",
+      "availability": "vendored",
+      "role": "active_machine_package"
+    },
+    "landometerCore": {
+      "ref": "deployment/vendor/landometer/v0.9.0/core.md",
+      "sha256": "76f98de642926aa06d00211e690fa70353ccdc87faadcafc39842d9d6683b544",
+      "availability": "vendored"
+    },
+    "landometerProfile": {
+      "ref": "deployment/vendor/landometer/v0.9.0/profiles/designsystem.adoption.json",
+      "sha256": "203644fc1e7f8babbca9ee3307a5dce5de7cd36f9636d0e37fb767a6e6c8fa10",
+      "availability": "vendored"
+    },
+    "landometerPrimitiveCss": {
+      "ref": "deployment/vendor/landometer/v0.9.0/build-kit/lds-base.css",
+      "sha256": "47eb23f0b2a06bd6882080bcc693384f5d59791b434045e7281b98fa2831903c",
+      "availability": "vendored"
+    },
+    "landometerTokenCss": {
+      "ref": "deployment/vendor/landometer/v0.9.0/build-kit/lds-tokens.css",
+      "sha256": "aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323",
+      "availability": "vendored"
+    },
+    "landometerChecksumLedger": {
+      "ref": "deployment/vendor/landometer/v0.9.0/SHA256SUMS.txt",
+      "sha256": "bae8c0342fbcb48ea9ba972498b0b80505f25503ecffc1efbe5f8ffd7443ab32",
+      "availability": "vendored"
+    },
+    "landometerSelfCheckMap": {
+      "ref": "deployment/vendor/landometer/v0.9.0/self-check.map.json",
+      "sha256": "a6e95792126079da59cfb6b0670f0d08845491972779ccd8571f524aa9a963f6",
+      "availability": "vendored"
+    }
+  },
+  "capabilityBoundary": {
+    "enabled": [],
+    "disabled": [
+      "lineIntegration",
+      "productionCityScanScoring",
+      "productReceiptPersistence",
+      "officerOperationsRuntime",
+      "remoteShare",
+      "telemetry"
+    ],
+    "unknownOrDisabledBehavior": "omit_control_and_effect",
+    "animationMayAuthorizeCapability": false
+  },
+  "aliasResolutionPolicy": {
+    "machineAliasRegistryStatus": "absent_from_v0.9.0-mp1",
+    "candidateAliasResolution": "none",
+    "failClosed": true,
+    "localAliasMintingAllowed": false,
+    "directPrimitivePolicy": "exact_selector_and_token_bytes_only"
+  },
+  "executablePrimitives": [
+    {
+      "primitiveId": "lds.btn.press",
+      "selector": ".btn",
+      "sourceRef": "deployment/vendor/landometer/v0.9.0/build-kit/lds-base.css",
+      "sourceSha256": "47eb23f0b2a06bd6882080bcc693384f5d59791b434045e7281b98fa2831903c",
+      "tokenSourceRef": "deployment/vendor/landometer/v0.9.0/build-kit/lds-tokens.css",
+      "tokenSourceSha256": "aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323",
+      "tokenRefs": [
+        "--motion-duration-feedback",
+        "--motion-ease-state",
+        "--motion-ease-press",
+        "--motion-distance-feedback"
+      ],
+      "allowedUse": "real_native_control_feedback",
+      "semanticEventEmission": "none",
+      "telemetryFromAnimation": false
+    },
+    {
+      "primitiveId": "lds.reveal.reading-order",
+      "selector": ".reveal",
+      "sourceRef": "deployment/vendor/landometer/v0.9.0/build-kit/lds-base.css",
+      "sourceSha256": "47eb23f0b2a06bd6882080bcc693384f5d59791b434045e7281b98fa2831903c",
+      "tokenSourceRef": "deployment/vendor/landometer/v0.9.0/build-kit/lds-tokens.css",
+      "tokenSourceSha256": "aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323",
+      "tokenRefs": [
+        "--motion-duration-reveal",
+        "--motion-delay-stagger",
+        "--motion-delay-stagger-cap",
+        "--motion-distance-reveal",
+        "--motion-ease-enter"
+      ],
+      "allowedUse": "optional_reading_order_entrance",
+      "semanticEventEmission": "none",
+      "telemetryFromAnimation": false
+    }
+  ],
+  "semanticBindings": [
+    {
+      "bindingId": "action-press",
+      "applicability": "applicable",
+      "semanticTransition": "acknowledge_real_control_press",
+      "trigger": {
+        "kind": "user_feedback",
+        "userFeedbackEventRef": "native_control_activation"
+      },
+      "candidateLdsAliases": ["motion.cta.depthPress"],
+      "ldsMotionAlias": "none",
+      "primitiveRef": "lds.btn.press",
+      "profileMotionIntensity": "guided",
+      "executionPolicy": "once_per_trigger",
+      "reducedMotion": "final_state_immediate",
+      "noJavaScript": "native_control_final_state",
+      "announcementSource": "canonical_state_only",
+      "semanticEventEmission": "none",
+      "telemetryFromAnimation": false
+    },
+    {
+      "bindingId": "place-to-story",
+      "applicability": "applicable_without_motion",
+      "semanticTransition": "preserve_selected_place_context_when_story_opens",
+      "trigger": {
+        "kind": "derived_view_transition",
+        "fromDerivedViewStateRef": "scan.locked",
+        "toDerivedViewStateRef": "story.from-locked"
+      },
+      "candidateLdsAliases": ["motion.depth.focusIn", "motion.hook.loopContinue"],
+      "ldsMotionAlias": "none",
+      "primitiveRef": "none",
+      "profileMotionIntensity": "guided",
+      "executionPolicy": "once_per_trigger",
+      "reducedMotion": "final_state_immediate",
+      "noJavaScript": "honest_nonoperable_fallback",
+      "announcementSource": "canonical_state_only",
+      "semanticEventEmission": "none",
+      "telemetryFromAnimation": false
+    },
+    {
+      "bindingId": "question-callout",
+      "applicability": "deliberate_none",
+      "semanticTransition": "make_one_supported_question_available",
+      "trigger": {
+        "kind": "derived_view_transition",
+        "fromDerivedViewStateRef": "meaning.ready",
+        "toDerivedViewStateRef": "question.available"
+      },
+      "candidateLdsAliases": ["motion.hook.nextActionCue"],
+      "ldsMotionAlias": "none",
+      "primitiveRef": "none",
+      "profileMotionIntensity": "guided",
+      "executionPolicy": "once_per_trigger",
+      "reducedMotion": "final_state_immediate",
+      "noJavaScript": "final_state_immediate",
+      "announcementSource": "canonical_state_only",
+      "semanticEventEmission": "none",
+      "telemetryFromAnimation": false
+    },
+    {
+      "bindingId": "evidence-settle",
+      "applicability": "deliberate_none",
+      "semanticTransition": "show_open_or_changed_evidence_in_stable_state",
+      "trigger": {
+        "kind": "derived_view_transition",
+        "fromDerivedViewStateRef": "evidence.closed_or_previous_version",
+        "toDerivedViewStateRef": "evidence.open_or_current_version"
+      },
+      "candidateLdsAliases": ["motion.depth.layerCrossfade"],
+      "ldsMotionAlias": "none",
+      "primitiveRef": "none",
+      "profileMotionIntensity": "guided",
+      "executionPolicy": "once_per_trigger",
+      "reducedMotion": "final_state_immediate",
+      "noJavaScript": "native_disclosure_or_final_state",
+      "announcementSource": "canonical_state_only",
+      "semanticEventEmission": "none",
+      "telemetryFromAnimation": false
+    }
+  ],
+  "presentationEnhancements": [
+    {
+      "enhancementId": "reading-order-entrance",
+      "status": "approved_for_exact_artifact_pending_release_gates",
+      "selectorContract": "[data-reveal-group] > [data-reveal-item]",
+      "primitiveRef": "lds.reveal.reading-order",
+      "ldsMotionAlias": "none",
+      "activation": "approach_once",
+      "peerCount": {"minimum": 2, "maximum": 5},
+      "allowedFor": ["secondary_teaching_sequence"],
+      "prohibitedFor": [
+        "first_meaning",
+        "primary_action",
+        "decision_surface",
+        "error",
+        "warning",
+        "waiting_state",
+        "logo",
+        "photo",
+        "hero",
+        "closed_disclosure",
+        "hidden_panel"
+      ],
+      "executionPolicy": "once_per_page_approach",
+      "reducedMotion": "class_not_applied_final_state_immediate",
+      "noJavaScript": "class_not_applied_final_state_immediate",
+      "semanticEventEmission": "none",
+      "telemetryFromAnimation": false
+    }
+  ],
+  "semanticEventsEmitted": [],
+  "prohibitions": [
+    "No local motion alias, duration, easing, distance, keyframe, or transition value.",
+    "No motion control or transition may simulate persistence, completion, sharing, scoring, operations, or a live state.",
+    "No identity asset, personal media, analytical value, workflow status, or official state may animate.",
+    "No motion may delay first meaning, first useful action, proof, focus restoration, or error recovery.",
+    "No loop, flash, shimmer, bounce, orbit, parallax, sweep, countdown, variable reward, or fake urgency.",
+    "No animation lifecycle may emit a semantic product event or telemetry."
+  ],
+  "releaseBoundary": {
+    "machineRecordAuthorizesRuntime": false,
+    "candidateStatusAuthorizesRelease": false,
+    "newAppendOnlyBuildRequired": true,
+    "schemaValidationRequired": true,
+    "renderedVerificationRequiredBeforeRevealActivation": true
+  }
+}

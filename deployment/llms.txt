@@ -1,43 +1,46 @@
-# CityChat VES Interactive Playground v0.6.1
+# CityChat DS Add-on Playground v0.7.0
 
 Navigation aid only. This file is not access control, permission, a ranking signal, product readiness, design-system conformance, or authority for an agent to act.
 
 Status: source_limited
 Indexing: HTML entry points request page-level noindex; public files may still be indexed independently
 Artifact: conceptual design guidance; not CityChat runtime evidence
-Normative authority: approved CityChat VES v0.6; artifact v0.6.1 is an implementation release, not VES v0.6.1 authority
+Normative authority: approved CityChat DS Add-on v0.7; artifact v0.7.0 is an implementation release, not DS Add-on v0.7.0 authority
 Canonical route: https://montri-th.github.io/CityChat/
 
 Human guide:
 - ./index.html
-- ./assets/downloads/citychat-visual-experience-specification-v0.6.md
-- ./assets/downloads/citychat-ves-v0.6-approval.json
-- ./assets/downloads/citychat-ves-playground-release-authorization.v0.6.1.json
+- ./assets/downloads/citychat-ds-addon-v0.7.md
+- ./assets/downloads/citychat-ds-addon-v0.7-approval.json
+- ./assets/downloads/citychat-ds-addon-playground-release-authorization.v0.7.0.json
 - ./assets/downloads/citychat-product-experience-profile-v0.4.md
 - ./assets/downloads/vibe-coding-prompt.md
-- ./implementation-notes.v0.6.1.md
+- ./implementation-notes.v0.7.0.md
 
 Machine-readable resources:
 - ./assets/downloads/citychat-component-contracts.v0.4.json
-- ./build-card.v0.6.1.yml
-- ./control-inventory.v0.6.1.json
-- ./assets/identity/identity-assets.v0.6.1.json
-- ./resources/citychat-ves/v0.6.1/citychat-color-role-map.json
-- ./resources/citychat-ves/v0.6.1/citychat-icon-map.json
-- ./resources/citychat-ves/v0.6.1/citychat-icon-resolution.json
-- ./resources/citychat-ves/v0.6.1/font-assets.manifest.json
-- ./resources/citychat-ves/v0.6.1/semantic-motion.citychat.yml
-- ./qa/automated.v0.6.1.json
-- ./qa/rendered-local.v0.6.1.json
-- ./site-manifest.v0.6.1.json
+- ./build-card.v0.7.0.yml
+- ./control-inventory.v0.7.0.json
+- ./assets/identity/identity-assets.v0.7.0.json
+- ./resources/citychat-ds-addon/v0.7.0/citychat-color-role-map.json
+- ./resources/citychat-ds-addon/v0.7.0/citychat-icon-map.json
+- ./resources/citychat-ds-addon/v0.7.0/citychat-icon-resolution.json
+- ./resources/citychat-ds-addon/v0.7.0/font-assets.manifest.json
+- ./resources/citychat-ds-addon/v0.7.0/semantic-motion.citychat.yml
+- ./resources/citychat-ds-addon/v0.7.0/citychat-button-contract.json
+- ./resources/citychat-ds-addon/v0.7.0/cityscan-hero-specimen.html
+- ./assets/asset-library.v0.7.0.json
+- ./qa/automated.v0.7.0.json
+- ./qa/rendered-local.v0.7.0.json
+- ./site-manifest.v0.7.0.json
 - ./resources/index.json
 - ./vendor/landometer/v0.9.0/package.json
 - ./vendor/landometer/v0.9.0/SHA256SUMS.txt
 
 Boundaries:
 - Product Brief v7 remains the current narrative baseline until v8 approval is recorded.
-- CityChat VES v0.6 is approved normative authoring guidance; Product Experience Profile v0.4 remains a draft dependency.
-- The v0.6.1 control, icon, motion and colour records bind this team-learning artifact only; gallery specimens do not enable product capabilities.
+- CityChat DS Add-on v0.7 is approved normative authoring guidance; Product Experience Profile v0.4 remains a draft dependency.
+- The v0.7.0 control, icon, motion and colour records bind this team-learning artifact only; gallery specimens do not enable product capabilities.
 - CityScan interaction/spec material is proposed and runtime-unverified.
 - LINE, persistence, receipts, sharing, officer operations, and telemetry are not enabled in this artifact.
 - Open sources and verify important claims before promoting anything into a governed product object.

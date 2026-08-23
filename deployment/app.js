@@ -37,7 +37,7 @@ const words = {
     },
     view: {
       baseline: "แสดงแบบที่ยังต้องปรับ โดยใช้ข้อมูลเดิม",
-      assisted: "แสดงแนวทาง v0.6 โดยใช้ข้อมูลเดิม"
+      assisted: "แสดงแนวทาง DS Add-on โดยใช้ข้อมูลเดิม"
     },
     scan: {
       signal: "กำลังดูหน้าตาสมมติเมื่อข้อมูลพร้อม ยังไม่เชื่อมข้อมูลจริง",
@@ -48,7 +48,8 @@ const words = {
     answerOptionsOpen: "เปิดตัวเลือกคำตอบสำหรับดูรูปแบบแล้ว ยังไม่มีการส่งหรือบันทึกข้อมูล",
     answerOptionsClosed: "ปิดตัวเลือกคำตอบแล้ว",
     lockStory: "เปิดเรื่องจากกรอบตัวอย่างแล้ว ข้อมูลยังอยู่เฉพาะหน้านี้",
-    demoAction: "ปุ่มทำงานแล้วในหน้านี้ · ไม่มีการส่งหรือบันทึกข้อมูล",
+    buttonPreview: "ปุ่มตัวอย่างทำงานในหน้านี้แล้ว · ไม่มีการส่งหรือบันทึกข้อมูล",
+    heroCityScan: "เปิดตัวอย่างพื้นที่แล้ว · เป็นข้อมูลจำลองและยังไม่มีการคำนวณจริง",
     copied: "คัดลอกแล้ว",
     copyFailed: "คัดลอกอัตโนมัติไม่ได้ กรุณาเปิดไฟล์ดาวน์โหลดแล้วคัดลอกข้อความ",
     preflightReady: "ตอบ preflight ครบ 6 ข้อแล้ว — ยังต้องผ่าน release gates ที่เกี่ยวข้อง",
@@ -65,7 +66,7 @@ const words = {
     },
     view: {
       baseline: "Needs-refinement view shown with the same facts",
-      assisted: "v0.6 direction shown with the same facts"
+      assisted: "DS Add-on direction shown with the same facts"
     },
     scan: {
       signal: "Previewing a hypothetical ready state; it is not connected to real data",
@@ -76,7 +77,8 @@ const words = {
     answerOptionsOpen: "Answer choices opened for preview; nothing is sent or saved",
     answerOptionsClosed: "Answer choices closed",
     lockStory: "Story opened from the sample frame; the state remains on this page",
-    demoAction: "The control worked locally · nothing was sent or persisted",
+    buttonPreview: "The sample button worked locally · nothing was sent or persisted",
+    heroCityScan: "The place example is open · it uses synthetic data and performs no real calculation",
     copied: "Copied",
     copyFailed: "Automatic copy was unavailable. Open the downloadable file and copy the text.",
     preflightReady: "All six preflight questions are answered; applicable release gates still remain",
@@ -140,7 +142,7 @@ function applyTheme({ persist = false, announceChange = false } = {}) {
 function applyLocale({ persist = false, announceChange = false } = {}) {
   root.dataset.locale = state.locale;
   root.lang = state.locale;
-  document.title = "CityChat VES Interactive Playground v0.6.1";
+  document.title = "CityChat DS Add-on Playground v0.7.0";
   if (persist) localStorage.setItem("citychat-playground-locale", state.locale);
   if (localeButton) {
     localeButton.textContent = t().localeButton;
@@ -148,6 +150,7 @@ function applyLocale({ persist = false, announceChange = false } = {}) {
   }
   applyTheme();
   applyScan();
+  updateButtonBuilder();
   updatePreflight();
   if (announceChange) announce(state.locale === "th" ? "เปลี่ยนเป็นภาษาไทยแล้ว" : "Language changed to English");
   syncUrl();
@@ -285,9 +288,62 @@ document.querySelector("#open-story-from-lock")?.addEventListener("click", () =>
   announce(t().lockStory);
 });
 
-document.querySelector("#demo-action")?.addEventListener("click", () => {
-  setBilingualText(document.querySelector("#demo-action-result"), words.th.demoAction, words.en.demoAction);
-  announce(t().demoAction);
+document.querySelector("#hero-cityscan-action")?.addEventListener("click", () => {
+  state.mode = "scan";
+  state.scan = "no-score";
+  applyMode();
+  applyScan();
+  announce(t().heroCityScan);
+});
+
+const buttonModeInputs = [...document.querySelectorAll("input[name='button-mode']")];
+const buttonLabelInput = document.querySelector("#button-label-input");
+const buttonIconSelect = document.querySelector("#button-icon-select");
+const buttonPreview = document.querySelector("#button-preview");
+const buttonPreviewLabel = buttonPreview?.querySelector(".button-preview-label");
+const buttonPreviewIcon = buttonPreview?.querySelector(".icon-symbol");
+const buttonCodeOutput = document.querySelector("#button-code-output");
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function updateButtonBuilder() {
+  if (!buttonPreview || !buttonLabelInput || !buttonIconSelect) return;
+  const mode = buttonModeInputs.find(input => input.checked)?.value || "labelled";
+  const fallback = state.locale === "th" ? "ดูข้อมูลพื้นที่นี้" : "View this place";
+  const label = buttonLabelInput.value.trim() || fallback;
+  const icon = buttonIconSelect.value;
+  if (buttonPreviewIcon) buttonPreviewIcon.textContent = icon;
+  if (mode === "icon-only") {
+    buttonPreview.classList.add("btn-icon");
+    buttonPreview.setAttribute("aria-label", label);
+    if (buttonPreviewLabel) buttonPreviewLabel.hidden = true;
+    if (buttonCodeOutput) buttonCodeOutput.textContent = `<button class="btn btn-icon" type="button" aria-label="${escapeHtml(label)}">\n  <span class="icon-symbol" aria-hidden="true">${icon}</span>\n</button>`;
+  } else {
+    buttonPreview.classList.remove("btn-icon");
+    buttonPreview.removeAttribute("aria-label");
+    if (buttonPreviewLabel) {
+      buttonPreviewLabel.hidden = false;
+      buttonPreviewLabel.textContent = label;
+    }
+    if (buttonCodeOutput) buttonCodeOutput.textContent = `<button class="btn" type="button">\n  <span class="icon-symbol" aria-hidden="true">${icon}</span>\n  ${escapeHtml(label)}\n</button>`;
+  }
+}
+
+buttonModeInputs.forEach(input => input.addEventListener("change", updateButtonBuilder));
+buttonLabelInput?.addEventListener("input", () => {
+  buttonLabelInput.dataset.userEdited = "true";
+  updateButtonBuilder();
+});
+buttonIconSelect?.addEventListener("change", updateButtonBuilder);
+buttonPreview?.addEventListener("click", () => {
+  setBilingualText(document.querySelector("#button-preview-result"), words.th.buttonPreview, words.en.buttonPreview);
+  announce(t().buttonPreview);
 });
 
 function updateColorTokenValues() {
@@ -399,7 +455,7 @@ document.querySelector("#copy-preflight")?.addEventListener("click", () => {
 });
 
 document.querySelector("#copy-prompt")?.addEventListener("click", () => {
-  const text = "Build one CityChat [page or flow] for [citizen or officer] doing [one job]. Use approved CityChat VES v0.6 for composition, first value, living-city identity, civic continuity, motion application, and plain frontstage language. Use the approved owning product/state/effect source when one exists; CityChat Product Experience Profile v0.4 remains a draft dependency. Inherit exact visual foundations from the pinned Landometer v0.9.0 package. Show one place or matter, one honest meaning, one supported question when useful, and zero or one action with its expected consequence. Remember a contribution only after real persistence; invite a return only for a material change; otherwise show recovery or clean completion. Hide unavailable controls and never invent saved state, official status, liveness, counts, or outcomes. Return the Build Card, authority refs, visible states, blocked reasons, tests, and manual checks.";
+  const text = "Build one CityChat [page or flow] for [citizen or officer] doing [one job]. Use CityChat DS Add-on v0.7 on the pinned Landometer DS package. Start with one place or matter and one plain meaning. Ask one question only when the evidence supports it. Show zero or one action and state what happens next. A labelled action is an LDS capsule; an icon-only action is an LDS 44×44 circle with an accessible name; never create a third button shape. Use only role-approved CityChat assets and mapped icons. Remember a contribution only after real persistence; otherwise show recovery or a clear ending. Hide unavailable controls and never invent saved state, official status, liveness, counts, or outcomes. Return the Build Card, source refs, visible states, blocked reasons, tests, and manual checks.";
   copyText(text, document.querySelector("#prompt-copy-status"));
 });
 
@@ -420,4 +476,5 @@ applyMode();
 applyScan();
 updatePreflight();
 updateColorTokenValues();
+updateButtonBuilder();
 prepareRevealExamples();

@@ -1,0 +1,2850 @@
+{
+  "schemaVersion": "0.7.0",
+  "mapId": "citychat-color-usage-atlas",
+  "mapVersion": "citychat-color-role-map-v0.7.0",
+  "product": "citychat",
+  "artifactBuildId": "citychat-ui-20260823-02",
+  "mode": "product_usage_overlay",
+  "fullLivingReference": false,
+  "authority": {
+    "designAddOn": {
+      "ref": "../../../assets/downloads/citychat-ds-addon-v0.7.md",
+      "sha256": "b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b",
+      "status": "approved_normative_add_on"
+    },
+    "lds": {
+      "ref": "https://github.com/montri-th/Landometer/tree/d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665",
+      "sha256": "5afa9a93bafa8f2e5edb7e929d4924bc548a415098377ad53e18097c56980287",
+      "status": "pinned_upstream_machine_authority",
+      "commit": "d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665",
+      "colorSetId": "color-srgb-05",
+      "machinePackage": "v0.9.0-mp1"
+    },
+    "identity": {
+      "ref": "../../../assets/identity/identity-assets.v0.7.0.json",
+      "sha256": "4b6b6af1861355349ae62fc9a61eb36f77ae403bd17a42f444549c8cbbba7faa",
+      "status": "approved_exact_build_role_manifest"
+    },
+    "sharedAtlas": {
+      "immutableUrl": "https://montri-th.github.io/Landometer/landometer-design-system-v0.9.0-standalone.color-srgb-05.ui-20260821-05.html#atlas-dataviz-title",
+      "relationship": "upstream_complete_reference"
+    }
+  },
+  "capabilityBoundary": {
+    "enabled": [
+      "localFixtureState",
+      "themePreference",
+      "localePreference",
+      "clipboardCopy"
+    ],
+    "disabled": [
+      "analytics",
+      "remotePersistence",
+      "remoteAction",
+      "networkShare",
+      "cityScanScoring",
+      "officerOperations"
+    ],
+    "fallbackRule": {
+      "th": "ถ้าไม่มีต้นทางหรือ capability ที่อนุมัติ ให้แสดงคำว่าไม่มีข้อมูลหรือยังใช้ไม่ได้ ห้ามเดาสี",
+      "en": "When an approved source or capability is absent, show unavailable or no-data copy; never guess a colour."
+    }
+  },
+  "sourceFiles": [
+    {
+      "sourceId": "ldsTokens",
+      "path": "../../../vendor/landometer/v0.9.0/tokens.json",
+      "sha256": "5afa9a93bafa8f2e5edb7e929d4924bc548a415098377ad53e18097c56980287",
+      "declaredSourceSha256": "00863492782b2fb1f93e6229f644fa0c092bde0e8c5d1093619c3120d73a71fc",
+      "authority": "pinned LDS token package",
+      "availability": "vendored"
+    },
+    {
+      "sourceId": "ldsCss",
+      "path": "../../../vendor/landometer/v0.9.0/build-kit/lds-tokens.css",
+      "sha256": "aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323",
+      "authority": "pinned LDS CSS delivery",
+      "availability": "vendored"
+    },
+    {
+      "sourceId": "colorDelivery",
+      "path": "../../../vendor/landometer/v0.9.0/color-delivery.json",
+      "sha256": "aa6833b5286f6eb957925cb0c538c951d6822217fb83b051a71473ff2bdbd9c5",
+      "authority": "pinned LDS gradient and foreground delivery",
+      "availability": "vendored"
+    },
+    {
+      "sourceId": "surfaceRecipes",
+      "path": "../../../vendor/landometer/v0.9.0/surface-recipes.json",
+      "sha256": "9e849896c0fa49411e226bfa7ca094d939e7e36cbd31e67cd0a76c44f0027d92",
+      "authority": "pinned LDS reference-only recipe registry",
+      "availability": "vendored"
+    },
+    {
+      "sourceId": "identityManifest",
+      "path": "../../../assets/identity/identity-assets.v0.7.0.json",
+      "sha256": "4b6b6af1861355349ae62fc9a61eb36f77ae403bd17a42f444549c8cbbba7faa",
+      "authority": "CityChat exact-build identity approval",
+      "availability": "local_approved"
+    },
+    {
+      "sourceId": "approvedDesignAddOn",
+      "path": "../../../assets/downloads/citychat-ds-addon-v0.7.md",
+      "sha256": "b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b",
+      "authority": "CityChat approved normative DS Add-on",
+      "availability": "local_approved"
+    },
+    {
+      "sourceId": "ldsScales",
+      "immutableUrl": "https://raw.githubusercontent.com/montri-th/Landometer/d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665/assets/data/scales.json",
+      "sha256": "daf8e5219f1da9229d7fb474fdaba3957f37c0cfe18eef7527e551c37d88d235",
+      "authority": "pinned LDS analytical scale registry; linked, not vendored",
+      "availability": "linked_not_vendored"
+    }
+  ],
+  "router": [
+    {
+      "routerId": "cc-router-identity",
+      "family": "identity",
+      "label": {
+        "th": "นี่คือ CityChat ไหม",
+        "en": "Is it CityChat?"
+      },
+      "question": {
+        "th": "กำลังบอกตัวตนหรือแค่ตกแต่ง",
+        "en": "Is this identity or decoration?"
+      }
+    },
+    {
+      "routerId": "cc-router-reading",
+      "family": "reading",
+      "label": {
+        "th": "อ่านง่ายไหม",
+        "en": "Can people read it?"
+      },
+      "question": {
+        "th": "กำลังจัดพื้น ข้อความ หรือเส้นขอบ",
+        "en": "Is the job surface, text, or border?"
+      }
+    },
+    {
+      "routerId": "cc-router-action",
+      "family": "action",
+      "label": {
+        "th": "กดต่อได้ไหม",
+        "en": "Can people act?"
+      },
+      "question": {
+        "th": "สิ่งที่กดได้ชัดโดยไม่แปลว่าสำเร็จหรือยัง",
+        "en": "Is the action clear without implying success?"
+      }
+    },
+    {
+      "routerId": "cc-router-state-source",
+      "family": "state-source",
+      "label": {
+        "th": "เกิดอะไรขึ้น",
+        "en": "What happened?"
+      },
+      "question": {
+        "th": "นี่คือสถานะหรือชนิดของที่มา",
+        "en": "Is this a state or a source class?"
+      }
+    },
+    {
+      "routerId": "cc-router-atmosphere",
+      "family": "atmosphere",
+      "label": {
+        "th": "ช่วงนี้ควรรู้สึกอย่างไร",
+        "en": "What should this moment feel like?"
+      },
+      "question": {
+        "th": "กำลังเริ่ม ทำความเข้าใจ ลงมือ หรือร่วมสร้าง",
+        "en": "Is this entry, understanding, action, or co-creation?"
+      }
+    },
+    {
+      "routerId": "cc-router-map-data",
+      "family": "map-data",
+      "label": {
+        "th": "นี่คือแผนที่หรือข้อมูลไหม",
+        "en": "Is it map or data?"
+      },
+      "question": {
+        "th": "มีสัญญาข้อมูลและคำอธิบายครบหรือยัง",
+        "en": "Is the owning data contract complete?"
+      }
+    },
+    {
+      "routerId": "cc-router-assets",
+      "family": "assets",
+      "label": {
+        "th": "มีไฟล์ที่อนุมัติไหม",
+        "en": "Is the asset approved?"
+      },
+      "question": {
+        "th": "มีไฟล์ สิทธิ์ แฮช และบทบาทครบหรือยัง",
+        "en": "Do bytes, rights, hash, and role approval exist?"
+      }
+    }
+  ],
+  "roles": [
+    {
+      "roleId": "cc.identity.logo-band",
+      "family": "identity",
+      "status": "governed",
+      "policy": "required",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "แถบโลโก้ CityChat",
+        "en": "CityChat logo band"
+      },
+      "job": {
+        "th": "ทำให้รู้ว่าอยู่ใน CityChat โดยไม่แตะสีในโลโก้",
+        "en": "Identify CityChat without recolouring the approved lockup."
+      },
+      "useWhen": {
+        "th": "ส่วนหัวและส่วนท้ายที่วางโลโก้จริง",
+        "en": "Header and footer surfaces carrying the approved lockup."
+      },
+      "bindings": [
+        {
+          "slot": "surface",
+          "implementation": "--brand-beige",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/brand/beige"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/brand/darkBeige"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "site_header",
+        "site_footer"
+      ],
+      "redundantCue": [
+        "approved CityChat horizontal lockup"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data",
+        "priority",
+        "logo recolouring"
+      ],
+      "acceptanceIds": [
+        "CC-AC-IDENTITY-01",
+        "CC-AC-IDENTITY-02",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.identity.product-field",
+      "family": "identity",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พื้นบรรยากาศ CityChat",
+        "en": "CityChat product field"
+      },
+      "job": {
+        "th": "ให้กลิ่นอาย CityChat ในพื้นที่เล่าเรื่องขนาดจำกัด",
+        "en": "Carry CityChat atmosphere in a bounded story surface."
+      },
+      "useWhen": {
+        "th": "ฮีโร่หรือช่วงเล่าเรื่องที่คำยังอ่านชัด",
+        "en": "Hero or story moments with an exact foreground contract."
+      },
+      "bindings": [
+        {
+          "slot": "surface",
+          "implementation": "--product-citychat-gradient",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/productIdentityGradients/citychat/light"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/productIdentityGradients/citychat/dark"
+            }
+          }
+        },
+        {
+          "slot": "primary-ink",
+          "implementation": "--cc-on-product-citychat",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onDeep/primary"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onLight/primary"
+            }
+          }
+        },
+        {
+          "slot": "secondary-ink",
+          "implementation": "--cc-on-product-citychat-2",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onDeep/secondary"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onLight/secondary"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "story_hero",
+        "identity_teaching_card"
+      ],
+      "redundantCue": [
+        "CityChat name or approved lockup"
+      ],
+      "doNotUseFor": [
+        "data magnitude",
+        "status",
+        "risk",
+        "full-page wallpaper"
+      ],
+      "acceptanceIds": [
+        "CC-AC-IDENTITY-03",
+        "CC-AC-COLOR-02",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.energy.participation",
+      "family": "identity",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พลังการมีส่วนร่วม",
+        "en": "Participation energy"
+      },
+      "job": {
+        "th": "ชวนให้ลองด้วยจุดสีเล็กและอบอุ่น",
+        "en": "Add a small, warm invitation to participate."
+      },
+      "useWhen": {
+        "th": "ไมโครแอ็กเซนต์ใกล้คำชวน ไม่เกินหนึ่งจุดต่อช่วง",
+        "en": "One small accent near an invitation, at most once per section."
+      },
+      "bindings": [
+        {
+          "slot": "accent",
+          "implementation": "--energy-mint",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/energy/mint"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/energy/mint"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "participation_prompt",
+        "human_energy_teaching"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "plain action label"
+      ],
+      "doNotUseFor": [
+        "success",
+        "saved",
+        "official",
+        "live",
+        "large background"
+      ],
+      "acceptanceIds": [
+        "CC-AC-IDENTITY-04",
+        "CC-AC-COLOR-02"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.surface.canvas",
+      "family": "reading",
+      "status": "governed",
+      "policy": "required",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พื้นอ่านหลัก",
+        "en": "Reading canvas"
+      },
+      "job": {
+        "th": "ใช้พื้นอ่านหลักตามลำดับชั้นการอ่าน",
+        "en": "Use reading canvas in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "background",
+          "implementation": "--surface-canvas",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.canvas/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.canvas/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.surface.alt",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พื้นแบ่งช่วง",
+        "en": "Section surface"
+      },
+      "job": {
+        "th": "ใช้พื้นแบ่งช่วงตามลำดับชั้นการอ่าน",
+        "en": "Use section surface in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "background",
+          "implementation": "--surface-alt",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.alt/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.alt/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.surface.card",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พื้นการ์ด",
+        "en": "Card surface"
+      },
+      "job": {
+        "th": "ใช้พื้นการ์ดตามลำดับชั้นการอ่าน",
+        "en": "Use card surface in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "background",
+          "implementation": "--surface-card",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.card/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.card/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.surface.raised",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พื้นยกชั้น",
+        "en": "Raised surface"
+      },
+      "job": {
+        "th": "ใช้พื้นยกชั้นตามลำดับชั้นการอ่าน",
+        "en": "Use raised surface in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "background",
+          "implementation": "--surface-raised",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.raised/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.raised/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.surface.soft",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พื้นข้อมูลเบา",
+        "en": "Soft surface"
+      },
+      "job": {
+        "th": "ใช้พื้นข้อมูลเบาตามลำดับชั้นการอ่าน",
+        "en": "Use soft surface in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "background",
+          "implementation": "--surface-soft",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.soft/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.soft/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.surface.blue-tint",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พื้นฟ้าอ่อน",
+        "en": "Blue-tint surface"
+      },
+      "job": {
+        "th": "ใช้พื้นฟ้าอ่อนตามลำดับชั้นการอ่าน",
+        "en": "Use blue-tint surface in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "background",
+          "implementation": "--surface-blue-tint",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.blueTint/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.blueTint/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.surface.beige-tint",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "พื้นอุ่นอ่อน",
+        "en": "Beige-tint surface"
+      },
+      "job": {
+        "th": "ใช้พื้นอุ่นอ่อนตามลำดับชั้นการอ่าน",
+        "en": "Use beige-tint surface in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "background",
+          "implementation": "--surface-beige-tint",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.beigeTint/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.beigeTint/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.text.primary",
+      "family": "reading",
+      "status": "governed",
+      "policy": "required",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ข้อความหลัก",
+        "en": "Primary text"
+      },
+      "job": {
+        "th": "ใช้ข้อความหลักตามลำดับชั้นการอ่าน",
+        "en": "Use primary text in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "ink",
+          "implementation": "--text-primary",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.primary/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.primary/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.text.secondary",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ข้อความรอง",
+        "en": "Secondary text"
+      },
+      "job": {
+        "th": "ใช้ข้อความรองตามลำดับชั้นการอ่าน",
+        "en": "Use secondary text in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "ink",
+          "implementation": "--text-secondary",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.secondary/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.secondary/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.text.metadata",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ข้อมูลกำกับ",
+        "en": "Metadata text"
+      },
+      "job": {
+        "th": "ใช้ข้อมูลกำกับตามลำดับชั้นการอ่าน",
+        "en": "Use metadata text in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "ink",
+          "implementation": "--text-metadata",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.metadata/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.metadata/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.text.muted",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ข้อความเบา",
+        "en": "Muted text"
+      },
+      "job": {
+        "th": "ใช้ข้อความเบาตามลำดับชั้นการอ่าน",
+        "en": "Use muted text in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "ink",
+          "implementation": "--text-muted",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.muted/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.muted/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.text.disabled",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ข้อความที่ยังใช้ไม่ได้",
+        "en": "Disabled text"
+      },
+      "job": {
+        "th": "ใช้ข้อความที่ยังใช้ไม่ได้ตามลำดับชั้นการอ่าน",
+        "en": "Use disabled text in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "ink",
+          "implementation": "--text-disabled",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.disabled/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.disabled/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "ordinary secondary text"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.border.hairline",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "เส้นคั่นบาง",
+        "en": "Hairline border"
+      },
+      "job": {
+        "th": "ใช้เส้นคั่นบางตามลำดับชั้นการอ่าน",
+        "en": "Use hairline border in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "border",
+          "implementation": "--border-hairline",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/border.hairline/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/border.hairline/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.border.default",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "เส้นขอบทั่วไป",
+        "en": "Default border"
+      },
+      "job": {
+        "th": "ใช้เส้นขอบทั่วไปตามลำดับชั้นการอ่าน",
+        "en": "Use default border in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "border",
+          "implementation": "--border-default",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/border.default/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/border.default/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.foundation.border.emphasis",
+      "family": "reading",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "เส้นขอบเน้น",
+        "en": "Emphasis border"
+      },
+      "job": {
+        "th": "ใช้เส้นขอบเน้นตามลำดับชั้นการอ่าน",
+        "en": "Use emphasis border in the reading hierarchy."
+      },
+      "useWhen": {
+        "th": "เมื่อหน้าที่ตรงกับชื่อบทบาทนี้",
+        "en": "Only when the content job matches this role."
+      },
+      "bindings": [
+        {
+          "slot": "border",
+          "implementation": "--border-emphasis",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/border.emphasis/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/border.emphasis/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "reading_surface",
+        "content_hierarchy"
+      ],
+      "redundantCue": [
+        "layout and text hierarchy"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.overlay.media-caption",
+      "family": "reading",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "คำอ่านบนภาพ",
+        "en": "Media caption overlay"
+      },
+      "job": {
+        "th": "ทำให้คำสั้นบนภาพอ่านได้โดยไม่เดาคอนทราสต์",
+        "en": "Keep short copy readable over media without guessed contrast."
+      },
+      "useWhen": {
+        "th": "ใช้เฉพาะคำกำกับสั้นบนภาพหรือแผนที่",
+        "en": "Only for short labels over media or a map."
+      },
+      "bindings": [
+        {
+          "slot": "surface",
+          "implementation": "--overlay-glass",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--overlay-glass"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--overlay-glass"
+            }
+          }
+        },
+        {
+          "slot": "primary-ink",
+          "implementation": "--overlay-glass-ink",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--overlay-glass-ink"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--overlay-glass-ink"
+            }
+          }
+        },
+        {
+          "slot": "secondary-ink",
+          "implementation": "--overlay-glass-ink2",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--overlay-glass-ink2"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--overlay-glass-ink2"
+            }
+          }
+        },
+        {
+          "slot": "border",
+          "implementation": "--overlay-glass-border",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--overlay-glass-border"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--overlay-glass-border"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_caption",
+        "media_caption"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "opaque glass surface",
+        "short visible label"
+      ],
+      "doNotUseFor": [
+        "long body copy",
+        "full card",
+        "decorative blur"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.interaction.default-action",
+      "family": "action",
+      "status": "governed",
+      "policy": "required",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "สิ่งที่กดต่อ",
+        "en": "Default action"
+      },
+      "job": {
+        "th": "ทำให้สิ่งที่กดได้ชัดโดยไม่แปลว่าสำเร็จแล้ว",
+        "en": "Make the next action obvious without implying success."
+      },
+      "useWhen": {
+        "th": "ปุ่ม ลิงก์ หรือสิ่งควบคุมหลักของช่วงนั้น",
+        "en": "The section's primary button, link, or control."
+      },
+      "bindings": [
+        {
+          "slot": "accent",
+          "implementation": "--interaction-accent",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/interaction.accent/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/interaction.accent/1"
+            }
+          }
+        },
+        {
+          "slot": "focus-ring",
+          "implementation": "--interaction-focus-ring",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/interaction.focus.ring/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/interaction.focus.ring/1"
+            }
+          }
+        },
+        {
+          "slot": "disabled-surface",
+          "implementation": "--surface-soft",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.soft/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/surface.soft/1"
+            }
+          }
+        },
+        {
+          "slot": "disabled-ink",
+          "implementation": "--text-disabled",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.disabled/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/foundation/text.disabled/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "button",
+        "link",
+        "tab",
+        "form_control"
+      ],
+      "redundantCue": [
+        "visible action label",
+        "focus outline",
+        "disabled state and reason"
+      ],
+      "doNotUseFor": [
+        "saved",
+        "complete",
+        "verified"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.semantic.success",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "สำเร็จ",
+        "en": "Success"
+      },
+      "job": {
+        "th": "บอกสถานะ “สำเร็จ” เมื่อมีหลักฐานรองรับ",
+        "en": "Communicate success only with supporting evidence."
+      },
+      "useWhen": {
+        "th": "เมื่อระบบเจ้าของงานยืนยันผลแล้ว",
+        "en": "When owning system confirms the effect."
+      },
+      "bindings": [
+        {
+          "slot": "fill",
+          "implementation": "--semantic-success-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/success/light/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/success/dark/0"
+            }
+          }
+        },
+        {
+          "slot": "ink",
+          "implementation": "--semantic-success-ink",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/success/light/1"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/success/dark/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "status_chip",
+        "inline_message"
+      ],
+      "redundantCue": [
+        "plain status label",
+        "functional icon when helpful"
+      ],
+      "doNotUseFor": [
+        "popularity"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.semantic.warning",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ต้องดูต่อ",
+        "en": "Warning"
+      },
+      "job": {
+        "th": "บอกสถานะ “ต้องดูต่อ” เมื่อมีหลักฐานรองรับ",
+        "en": "Communicate warning only with supporting evidence."
+      },
+      "useWhen": {
+        "th": "เมื่อต้องระวังหรือตรวจต่อ",
+        "en": "When attention or review is required."
+      },
+      "bindings": [
+        {
+          "slot": "fill",
+          "implementation": "--semantic-warning-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/warning/light/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/warning/dark/0"
+            }
+          }
+        },
+        {
+          "slot": "ink",
+          "implementation": "--semantic-warning-ink",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/warning/light/1"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/warning/dark/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "status_chip",
+        "inline_message"
+      ],
+      "redundantCue": [
+        "plain status label",
+        "functional icon when helpful"
+      ],
+      "doNotUseFor": [
+        "risk score"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.semantic.danger",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "หยุดก่อน",
+        "en": "Danger"
+      },
+      "job": {
+        "th": "บอกสถานะ “หยุดก่อน” เมื่อมีหลักฐานรองรับ",
+        "en": "Communicate danger only with supporting evidence."
+      },
+      "useWhen": {
+        "th": "เมื่อเกิดข้อผิดพลาดหรือต้องหยุด",
+        "en": "When an error or stop condition exists."
+      },
+      "bindings": [
+        {
+          "slot": "fill",
+          "implementation": "--semantic-danger-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/danger/light/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/danger/dark/0"
+            }
+          }
+        },
+        {
+          "slot": "ink",
+          "implementation": "--semantic-danger-ink",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/danger/light/1"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/danger/dark/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "status_chip",
+        "inline_message"
+      ],
+      "redundantCue": [
+        "plain status label",
+        "functional icon when helpful"
+      ],
+      "doNotUseFor": [
+        "civic priority"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.semantic.info",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ข้อมูล",
+        "en": "Information"
+      },
+      "job": {
+        "th": "บอกสถานะ “ข้อมูล” เมื่อมีหลักฐานรองรับ",
+        "en": "Communicate information only with supporting evidence."
+      },
+      "useWhen": {
+        "th": "เมื่อต้องอธิบายข้อมูลที่เป็นกลาง",
+        "en": "When neutral explanation is needed."
+      },
+      "bindings": [
+        {
+          "slot": "fill",
+          "implementation": "--semantic-info-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/info/light/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/info/dark/0"
+            }
+          }
+        },
+        {
+          "slot": "ink",
+          "implementation": "--semantic-info-ink",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/info/light/1"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/info/dark/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "status_chip",
+        "inline_message"
+      ],
+      "redundantCue": [
+        "plain status label",
+        "functional icon when helpful"
+      ],
+      "doNotUseFor": [],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.semantic.neutral",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "เป็นกลาง",
+        "en": "Neutral"
+      },
+      "job": {
+        "th": "บอกสถานะ “เป็นกลาง” เมื่อมีหลักฐานรองรับ",
+        "en": "Communicate neutral only with supporting evidence."
+      },
+      "useWhen": {
+        "th": "เมื่อสถานะไม่มีน้ำหนักบวกหรือลบ",
+        "en": "When the state has no positive or negative weight."
+      },
+      "bindings": [
+        {
+          "slot": "fill",
+          "implementation": "--semantic-neutral-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/neutral/light/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/neutral/dark/0"
+            }
+          }
+        },
+        {
+          "slot": "ink",
+          "implementation": "--semantic-neutral-ink",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/neutral/light/1"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/neutral/dark/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "status_chip",
+        "inline_message"
+      ],
+      "redundantCue": [
+        "plain status label",
+        "functional icon when helpful"
+      ],
+      "doNotUseFor": [],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.semantic.pending",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "กำลังรอ",
+        "en": "Pending"
+      },
+      "job": {
+        "th": "บอกสถานะ “กำลังรอ” เมื่อมีหลักฐานรองรับ",
+        "en": "Communicate pending only with supporting evidence."
+      },
+      "useWhen": {
+        "th": "เมื่อกำลังรอผลที่ตรวจสอบได้",
+        "en": "When waiting for a verifiable effect."
+      },
+      "bindings": [
+        {
+          "slot": "fill",
+          "implementation": "--semantic-pending-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/pending/light/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/pending/dark/0"
+            }
+          }
+        },
+        {
+          "slot": "ink",
+          "implementation": "--semantic-pending-ink",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/pending/light/1"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/pending/dark/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "status_chip",
+        "inline_message"
+      ],
+      "redundantCue": [
+        "plain status label",
+        "functional icon when helpful"
+      ],
+      "doNotUseFor": [
+        "saved",
+        "closed"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.semantic.assisted",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "permitted",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "มีตัวช่วย",
+        "en": "Assisted"
+      },
+      "job": {
+        "th": "บอกสถานะ “มีตัวช่วย” เมื่อมีหลักฐานรองรับ",
+        "en": "Communicate assisted only with supporting evidence."
+      },
+      "useWhen": {
+        "th": "เมื่อมีตัวช่วยแต่ยังไม่ใช่ข้อยืนยัน",
+        "en": "When assistance exists but is not verification."
+      },
+      "bindings": [
+        {
+          "slot": "fill",
+          "implementation": "--semantic-assisted-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/assisted/light/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/assisted/dark/0"
+            }
+          }
+        },
+        {
+          "slot": "ink",
+          "implementation": "--semantic-assisted-ink",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/assisted/light/1"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/semantic/assisted/dark/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "status_chip",
+        "inline_message"
+      ],
+      "redundantCue": [
+        "plain status label",
+        "functional icon when helpful"
+      ],
+      "doNotUseFor": [
+        "official",
+        "verified"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.source.candidate",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ข้อมูลที่ต้องตรวจ",
+        "en": "Candidate source"
+      },
+      "job": {
+        "th": "บอกชนิดของที่มา ไม่ตัดสินเนื้อหา",
+        "en": "Describe source class without judging content."
+      },
+      "useWhen": {
+        "th": "เมื่อที่มายังต้องตรวจเพิ่ม",
+        "en": "When the source still needs review."
+      },
+      "bindings": [
+        {
+          "slot": "source-mark",
+          "implementation": "--status-source-candidate",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--status-source-candidate"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--status-source-candidate"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "source_lineage",
+        "evidence_record"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "source-class text label"
+      ],
+      "doNotUseFor": [
+        "truth score",
+        "quality score",
+        "official status"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01"
+      ]
+    },
+    {
+      "roleId": "cc.source.derived",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ข้อมูลที่คำนวณต่อ",
+        "en": "Derived source"
+      },
+      "job": {
+        "th": "บอกชนิดของที่มา ไม่ตัดสินเนื้อหา",
+        "en": "Describe source class without judging content."
+      },
+      "useWhen": {
+        "th": "เมื่อข้อมูลเกิดจากการแปลงหรือคำนวณ",
+        "en": "When the value is derived or transformed."
+      },
+      "bindings": [
+        {
+          "slot": "source-mark",
+          "implementation": "--status-source-derived",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--status-source-derived"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--status-source-derived"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "source_lineage",
+        "evidence_record"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "source-class text label"
+      ],
+      "doNotUseFor": [
+        "truth score",
+        "quality score",
+        "official status"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01"
+      ]
+    },
+    {
+      "roleId": "cc.source.other",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ที่มาอื่น",
+        "en": "Other source"
+      },
+      "job": {
+        "th": "บอกชนิดของที่มา ไม่ตัดสินเนื้อหา",
+        "en": "Describe source class without judging content."
+      },
+      "useWhen": {
+        "th": "เมื่อที่มาอยู่นอกกลุ่มที่กำหนด",
+        "en": "When the source is outside named classes."
+      },
+      "bindings": [
+        {
+          "slot": "source-mark",
+          "implementation": "--status-source-other",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--status-source-other"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--status-source-other"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "source_lineage",
+        "evidence_record"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "source-class text label"
+      ],
+      "doNotUseFor": [
+        "truth score",
+        "quality score",
+        "official status"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01"
+      ]
+    },
+    {
+      "roleId": "cc.source.verified-lineage",
+      "family": "state-source",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ที่มาครบ",
+        "en": "Verified lineage"
+      },
+      "job": {
+        "th": "บอกชนิดของที่มา ไม่ตัดสินเนื้อหา",
+        "en": "Describe source class without judging content."
+      },
+      "useWhen": {
+        "th": "เมื่อตรวจเส้นทางที่มาครบแล้ว",
+        "en": "When the source lineage has been verified."
+      },
+      "bindings": [
+        {
+          "slot": "source-mark",
+          "implementation": "--status-source-verified-bar",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--status-source-verified-bar"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--status-source-verified-bar"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "source_lineage",
+        "evidence_record"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "source-class text label"
+      ],
+      "doNotUseFor": [
+        "truth score",
+        "quality score",
+        "official status"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-01"
+      ]
+    },
+    {
+      "roleId": "cc.atmosphere.measure",
+      "family": "atmosphere",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "เริ่มและชี้ทาง",
+        "en": "Measure"
+      },
+      "job": {
+        "th": "สร้างจังหวะ “เริ่มและชี้ทาง” โดยไม่แปลเป็นสถานะ",
+        "en": "Create a Measure moment without encoding status."
+      },
+      "useWhen": {
+        "th": "เมื่อเริ่มเรื่อง ชี้ทาง หรือปิดเรื่อง",
+        "en": "When entry, direction, or closure."
+      },
+      "bindings": [
+        {
+          "slot": "surface",
+          "implementation": "--surface-atmosphere-measure",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/sharedAtmosphereGradients/0"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/sharedAtmosphereGradients/1"
+            }
+          }
+        },
+        {
+          "slot": "primary-ink",
+          "implementation": "--on-atmosphere-measure",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onDeep/primary"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onLight/primary"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "story_moment",
+        "teaching_scene"
+      ],
+      "capabilityKeys": [
+        "localFixtureState",
+        "themePreference"
+      ],
+      "redundantCue": [
+        "plain scene heading",
+        "story position"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude",
+        "continuous wallpaper"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-02",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.atmosphere.ground",
+      "family": "atmosphere",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ทำให้บริบทเข้าใจง่าย",
+        "en": "Ground"
+      },
+      "job": {
+        "th": "สร้างจังหวะ “ทำให้บริบทเข้าใจง่าย” โดยไม่แปลเป็นสถานะ",
+        "en": "Create a Ground moment without encoding status."
+      },
+      "useWhen": {
+        "th": "เมื่อเผยบริบทและหลักฐาน",
+        "en": "When context and evidence become understandable."
+      },
+      "bindings": [
+        {
+          "slot": "surface",
+          "implementation": "--surface-atmosphere-ground",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/sharedAtmosphereGradients/3"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/sharedAtmosphereGradients/2"
+            }
+          }
+        },
+        {
+          "slot": "primary-ink",
+          "implementation": "--on-atmosphere-ground",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onLight/primary"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onDeep/primary"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "story_moment",
+        "teaching_scene"
+      ],
+      "capabilityKeys": [
+        "localFixtureState",
+        "themePreference"
+      ],
+      "redundantCue": [
+        "plain scene heading",
+        "story position"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude",
+        "continuous wallpaper"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-02",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.atmosphere.cultivate",
+      "family": "atmosphere",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "ชวนลงมือและส่งต่อ",
+        "en": "Cultivate"
+      },
+      "job": {
+        "th": "สร้างจังหวะ “ชวนลงมือและส่งต่อ” โดยไม่แปลเป็นสถานะ",
+        "en": "Create a Cultivate moment without encoding status."
+      },
+      "useWhen": {
+        "th": "เมื่อชวนลงมือหรือส่งต่องาน",
+        "en": "When action or credible handoff."
+      },
+      "bindings": [
+        {
+          "slot": "surface",
+          "implementation": "--surface-atmosphere-cultivate",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/sharedAtmosphereGradients/4"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/sharedAtmosphereGradients/5"
+            }
+          }
+        },
+        {
+          "slot": "primary-ink",
+          "implementation": "--on-atmosphere-cultivate",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onLight/primary"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onLight/primary"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "story_moment",
+        "teaching_scene"
+      ],
+      "capabilityKeys": [
+        "localFixtureState",
+        "themePreference"
+      ],
+      "redundantCue": [
+        "plain scene heading",
+        "story position"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude",
+        "continuous wallpaper"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-02",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.atmosphere.diversity",
+      "family": "atmosphere",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "rendered",
+      "label": {
+        "th": "หลายเสียงจริง",
+        "en": "Diversity"
+      },
+      "job": {
+        "th": "สร้างจังหวะ “หลายเสียงจริง” โดยไม่แปลเป็นสถานะ",
+        "en": "Create a Diversity moment without encoding status."
+      },
+      "useWhen": {
+        "th": "เมื่อมีหลายมุมมองหรือการร่วมสร้างจริง",
+        "en": "When multiple perspectives or co-creation are evidenced."
+      },
+      "bindings": [
+        {
+          "slot": "surface",
+          "implementation": "--surface-atmosphere-diversity",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/sharedAtmosphereGradients/6"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/sharedAtmosphereGradients/6"
+            }
+          }
+        },
+        {
+          "slot": "primary-ink",
+          "implementation": "--on-atmosphere-diversity",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onLight/primary"
+            },
+            "dark": {
+              "sourceId": "colorDelivery",
+              "pointer": "/surfaceForegroundContracts/surfaceForeground.onLight/primary"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "story_moment",
+        "teaching_scene"
+      ],
+      "capabilityKeys": [
+        "localFixtureState",
+        "themePreference"
+      ],
+      "redundantCue": [
+        "plain scene heading",
+        "story position"
+      ],
+      "doNotUseFor": [
+        "status",
+        "data magnitude",
+        "continuous wallpaper"
+      ],
+      "acceptanceIds": [
+        "CC-AC-COLOR-02",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.map.active-layer",
+      "family": "map-data",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "ชั้นแผนที่ที่กำลังดู",
+        "en": "Active map layer"
+      },
+      "job": {
+        "th": "ชี้ชั้นข้อมูลที่กำลังใช้งาน",
+        "en": "Identify the active data layer."
+      },
+      "useWhen": {
+        "th": "เมื่อมีชั้นข้อมูลที่เลือกจริง",
+        "en": "When a real layer is active."
+      },
+      "bindings": [
+        {
+          "slot": "stroke",
+          "implementation": "--map-active-layer",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/activeLayer/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/activeLayer/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_layer"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "layer name",
+        "selected control state"
+      ],
+      "doNotUseFor": [
+        "data value",
+        "risk"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01"
+      ]
+    },
+    {
+      "roleId": "cc.map.hover",
+      "family": "map-data",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "พื้นที่ที่ชี้อยู่",
+        "en": "Map hover"
+      },
+      "job": {
+        "th": "บอกพื้นที่ใต้ตัวชี้ชั่วคราว",
+        "en": "Show the feature under the pointer."
+      },
+      "useWhen": {
+        "th": "ขณะชี้เมาส์บนพื้นที่ที่กดได้",
+        "en": "While a pointer is over an interactive feature."
+      },
+      "bindings": [
+        {
+          "slot": "stroke",
+          "implementation": "--map-hover-stroke",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/hoverStroke/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/hoverStroke/1"
+            }
+          }
+        },
+        {
+          "slot": "fill",
+          "implementation": "--map-hover-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--map-hover-fill"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--map-hover-fill"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_feature"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "pointer affordance",
+        "feature label"
+      ],
+      "doNotUseFor": [
+        "selected",
+        "focus",
+        "data value"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01"
+      ]
+    },
+    {
+      "roleId": "cc.map.selected",
+      "family": "map-data",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "พื้นที่ที่เลือก",
+        "en": "Selected map feature"
+      },
+      "job": {
+        "th": "ทำให้พื้นที่ที่เลือกค้างอยู่ชัด",
+        "en": "Keep the selected feature visibly persistent."
+      },
+      "useWhen": {
+        "th": "หลังผู้ใช้เลือกพื้นที่",
+        "en": "After the user selects a feature."
+      },
+      "bindings": [
+        {
+          "slot": "stroke",
+          "implementation": "--map-selected-stroke",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/selectedStroke/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/selectedStroke/1"
+            }
+          }
+        },
+        {
+          "slot": "fill",
+          "implementation": "--map-selected-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--map-selected-fill"
+            },
+            "dark": {
+              "sourceId": "ldsCss",
+              "cssVariable": "--map-selected-fill"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_feature"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "selected label",
+        "persistent selection state"
+      ],
+      "doNotUseFor": [
+        "hover",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01"
+      ]
+    },
+    {
+      "roleId": "cc.map.focus",
+      "family": "map-data",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "โฟกัสบนแผนที่",
+        "en": "Map focus"
+      },
+      "job": {
+        "th": "ให้ผู้ใช้แป้นพิมพ์รู้ตำแหน่ง",
+        "en": "Expose keyboard focus on the map."
+      },
+      "useWhen": {
+        "th": "เมื่อฟีเจอร์บนแผนที่รับโฟกัส",
+        "en": "When a map feature receives keyboard focus."
+      },
+      "bindings": [
+        {
+          "slot": "stroke",
+          "implementation": "--map-focus-stroke",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/focusStroke/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/focusStroke/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_feature"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "focus outline",
+        "accessible feature name"
+      ],
+      "doNotUseFor": [
+        "selected",
+        "data magnitude"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01",
+        "CC-AC-CONTRAST-01"
+      ]
+    },
+    {
+      "roleId": "cc.map.marker",
+      "family": "map-data",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "หมุดบนแผนที่",
+        "en": "Map marker"
+      },
+      "job": {
+        "th": "แยกหมุดจากพื้นแผนที่ทุกแบบ",
+        "en": "Separate a marker from varied map imagery."
+      },
+      "useWhen": {
+        "th": "เมื่อมีตำแหน่งหรือเรื่องบนแผนที่",
+        "en": "When a place or story has a map position."
+      },
+      "bindings": [
+        {
+          "slot": "halo",
+          "implementation": "--marker-halo",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/markerHalo/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/markerHalo/1"
+            }
+          }
+        },
+        {
+          "slot": "stroke",
+          "implementation": "--marker-stroke",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/markerStroke/0"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/map/markerStroke/1"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_marker"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "marker shape",
+        "place label"
+      ],
+      "doNotUseFor": [
+        "data magnitude without an owning scale"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01"
+      ]
+    },
+    {
+      "roleId": "cc.data.no-data",
+      "family": "map-data",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "ไม่มีข้อมูล",
+        "en": "No data"
+      },
+      "job": {
+        "th": "บอกว่าไม่มีข้อมูลโดยไม่ทำให้ดูเป็นศูนย์",
+        "en": "Show absence without implying zero."
+      },
+      "useWhen": {
+        "th": "เมื่อเจ้าของข้อมูลยืนยันว่าไม่มีข้อมูล",
+        "en": "When the owning data contract says no data."
+      },
+      "bindings": [
+        {
+          "slot": "fill",
+          "implementation": "--dataviz-no-data-fill",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/dataState/noData/light"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/dataState/noData/dark"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_legend",
+        "chart"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "diagonal pattern",
+        "ไม่มีข้อมูล / No data label"
+      ],
+      "doNotUseFor": [
+        "zero",
+        "unknown inferred from missing UI state"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01"
+      ]
+    },
+    {
+      "roleId": "cc.data.zero",
+      "family": "map-data",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "ศูนย์จริง",
+        "en": "True zero"
+      },
+      "job": {
+        "th": "แยกค่าศูนย์จริงจากไม่มีข้อมูล",
+        "en": "Distinguish a factual zero from no data."
+      },
+      "useWhen": {
+        "th": "เมื่อศูนย์เป็นค่าที่เจ้าของข้อมูลยืนยัน",
+        "en": "When zero is a fact in the owning data contract."
+      },
+      "bindings": [
+        {
+          "slot": "outline",
+          "implementation": "--dataviz-zero-outline",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/dataState/zero/light"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/dataState/zero/dark"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_legend",
+        "chart"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "distinct outline",
+        "0 label"
+      ],
+      "doNotUseFor": [
+        "no data",
+        "disabled"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01"
+      ]
+    },
+    {
+      "roleId": "cc.data.category",
+      "family": "map-data",
+      "status": "governed",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "หมวดข้อมูล",
+        "en": "Categorical data"
+      },
+      "job": {
+        "th": "แยกหมวดด้วยสีพร้อมรูปทรงหรือลาย",
+        "en": "Separate categories with colour plus shape or pattern."
+      },
+      "useWhen": {
+        "th": "เมื่อมีรหัสหมวดที่คงที่จากเจ้าของข้อมูล",
+        "en": "When stable category IDs come from the owning data contract."
+      },
+      "bindings": [
+        {
+          "slot": "registry",
+          "implementation": "landometer-series-10-v5",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/series"
+            },
+            "dark": {
+              "sourceId": "ldsTokens",
+              "pointer": "/values/series"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_legend",
+        "chart_legend"
+      ],
+      "capabilityKeys": [
+        "localFixtureState"
+      ],
+      "redundantCue": [
+        "registered shape or pattern",
+        "category label"
+      ],
+      "doNotUseFor": [
+        "ordered magnitude",
+        "runtime palette assignment by position"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01"
+      ]
+    },
+    {
+      "roleId": "cc.data.scale",
+      "family": "map-data",
+      "status": "reference_fixture",
+      "policy": "conditional",
+      "artifactUse": "teaching_only",
+      "label": {
+        "th": "สเกลตัวเลข",
+        "en": "Analytical scale"
+      },
+      "job": {
+        "th": "ชี้ไปยัง LUT ที่เจ้าของข้อมูลเลือก ไม่สร้างสีเอง",
+        "en": "Reference an owning exact LUT; never create a local ramp."
+      },
+      "useWhen": {
+        "th": "เมื่อมี scaleVersion, domain, breaks, no-data และ zero ครบ",
+        "en": "Only with scaleVersion, domain, breaks, no-data, and zero."
+      },
+      "bindings": [
+        {
+          "slot": "registry",
+          "implementation": "linked-exact-lut",
+          "sourceByTheme": {
+            "light": {
+              "sourceId": "ldsScales",
+              "pointer": "/scales"
+            },
+            "dark": {
+              "sourceId": "ldsScales",
+              "pointer": "/scales"
+            }
+          }
+        }
+      ],
+      "consumers": [
+        "map_legend",
+        "chart"
+      ],
+      "capabilityKeys": [
+        "cityScanScoring"
+      ],
+      "redundantCue": [
+        "numeric legend",
+        "units",
+        "class boundaries"
+      ],
+      "doNotUseFor": [
+        "runtime interpolation",
+        "unowned scoring",
+        "invented ramp"
+      ],
+      "acceptanceIds": [
+        "CC-AC-MAP-01"
+      ]
+    },
+    {
+      "roleId": "cc.asset.supporting-color",
+      "family": "assets",
+      "status": "omitted",
+      "policy": "prohibited",
+      "artifactUse": "omitted",
+      "label": {
+        "th": "สีภาพประกอบเพิ่มเติม",
+        "en": "Supporting asset colour"
+      },
+      "job": {
+        "th": "เว้นไว้จนกว่าจะมีไฟล์ สิทธิ์ แฮช และอนุมัติบทบาท",
+        "en": "Remain absent until bytes, rights, hash, and role approval exist."
+      },
+      "useWhen": {
+        "th": "ยังไม่ใช้ใน v0.7.0",
+        "en": "Not used in v0.7.0."
+      },
+      "bindings": [],
+      "consumers": [],
+      "redundantCue": [],
+      "doNotUseFor": [
+        "invented motif colour",
+        "legacy screenshot sampling",
+        "logo-derived decoration"
+      ],
+      "acceptanceIds": [
+        "CC-AC-ASSET-COLOR-01",
+        "CC-AC-IDENTITY-05"
+      ]
+    }
+  ],
+  "candidateGaps": [
+    {
+      "gapId": "cc-gap-analytical-scale-source",
+      "roleId": "cc.data.scale",
+      "status": "source_limited",
+      "reason": {
+        "th": "ทะเบียน LUT อยู่ที่ LDS ต้นทางและไม่ได้ vendored ใน CityChat",
+        "en": "The exact LUT registry remains upstream and is not vendored into CityChat."
+      },
+      "safeFallback": {
+        "th": "ลิงก์ไป Atlas ต้นทางและแสดงตัวอย่างแบบไม่ให้คะแนน",
+        "en": "Link to the upstream atlas and show a no-score teaching fixture."
+      }
+    },
+    {
+      "gapId": "cc-gap-supporting-asset-colour",
+      "roleId": "cc.asset.supporting-color",
+      "status": "approval_missing",
+      "reason": {
+        "th": "ยังไม่มีภาพประกอบหรือ motif ที่ผูกไฟล์ สิทธิ์ แฮช และอนุมัติบทบาท",
+        "en": "No supporting illustration or motif has bytes, rights, hash, and role approval."
+      },
+      "safeFallback": {
+        "th": "ใช้โลโก้ CityChat ที่อนุมัติและองค์ประกอบ LDS เท่านั้น",
+        "en": "Use only the approved CityChat lockup and governed LDS components."
+      }
+    }
+  ],
+  "coverage": {
+    "expectedRoles": 45,
+    "expectedRouters": 7,
+    "expectedStatusCounts": {
+      "governed": 43,
+      "reference_fixture": 1,
+      "candidate": 0,
+      "omitted": 1
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:citychat:schema:font-assets:v0.7.0",
+  "title": "CityChat font assets manifest v0.7.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "manifestVersion", "artifactVersion", "status", "scope", "authorityRefs", "fonts"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": "1.0" },
+    "manifestVersion": { "const": "citychat-font-assets-v0.7.0" },
+    "artifactVersion": { "const": "0.7.0" },
+    "status": { "const": "governance_ready_runtime_bound_in_artifact_v0.7.0" },
+    "scope": { "const": "citychat_team_playground_only" },
+    "authorityRefs": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/authorityRef" }
+    },
+    "fonts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": { "$ref": "#/$defs/font" }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "authorityRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityId", "path", "sha256", "authorityBoundary"],
+      "properties": {
+        "authorityId": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "authorityBoundary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "glyph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["glyphName", "codepoint"],
+      "oneOf": [
+        { "properties": { "glyphName": { "const": "assignment" }, "codepoint": { "const": "U+E85D" } } },
+        { "properties": { "glyphName": { "const": "description" }, "codepoint": { "const": "U+E683" } } },
+        { "properties": { "glyphName": { "const": "forum" }, "codepoint": { "const": "U+E0BF" } } },
+        { "properties": { "glyphName": { "const": "history" }, "codepoint": { "const": "U+E28E" } } },
+        { "properties": { "glyphName": { "const": "location_on" }, "codepoint": { "const": "U+E0C8" } } },
+        { "properties": { "glyphName": { "const": "map" }, "codepoint": { "const": "U+E55B" } } },
+        { "properties": { "glyphName": { "const": "receipt_long" }, "codepoint": { "const": "U+EF6E" } } },
+        { "properties": { "glyphName": { "const": "reply" }, "codepoint": { "const": "U+E15E" } } },
+        { "properties": { "glyphName": { "const": "share" }, "codepoint": { "const": "U+E80D" } } }
+      ],
+      "properties": {
+        "glyphName": {
+          "enum": ["assignment", "description", "forum", "history", "location_on", "map", "receipt_long", "reply", "share"]
+        },
+        "codepoint": { "type": "string", "pattern": "^U\\+[0-9A-F]{4,6}$" }
+      }
+    },
+    "alias": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alias", "canonicalGlyph", "codepoint"],
+      "oneOf": [
+        {
+          "properties": {
+            "alias": { "enum": ["fmd_good", "location_pin", "place", "room"] },
+            "canonicalGlyph": { "const": "location_on" },
+            "codepoint": { "const": "U+E0C8" }
+          }
+        },
+        {
+          "properties": {
+            "alias": { "const": "restore" },
+            "canonicalGlyph": { "const": "history" },
+            "codepoint": { "const": "U+E28E" }
+          }
+        }
+      ],
+      "properties": {
+        "alias": { "type": "string", "minLength": 1 },
+        "canonicalGlyph": { "enum": ["location_on", "history"] },
+        "codepoint": { "enum": ["U+E0C8", "U+E28E"] }
+      }
+    },
+    "font": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fontAssetId", "family", "fullName", "postScriptName", "fontVersion", "format", "assetPath", "bytes", "sha256", "source", "license", "delivery", "axes", "glyphs", "glyphAliases"],
+      "properties": {
+        "fontAssetId": { "const": "material-symbols-rounded-citychat-v368-static-24-300-0-0" },
+        "family": { "const": "Material Symbols Rounded" },
+        "fullName": { "const": "Material Symbols Rounded Light" },
+        "postScriptName": { "const": "MaterialSymbolsRounded-Light" },
+        "fontVersion": { "const": "2.963" },
+        "format": { "const": "truetype" },
+        "assetPath": { "const": "../../../assets/icons/material-symbols-rounded-citychat-v368.ttf" },
+        "bytes": { "const": 5248 },
+        "sha256": { "const": "42cd00d98dd631ddf6b3d5a47ba34e6eed83d2a6e3fd35ef5f4f8e0e6632ba30" },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provider", "repository", "cssApiVersion", "downloadUrl", "retrievedAt", "importerEvidencePath", "importerEvidenceSha256"],
+          "properties": {
+            "provider": { "const": "Google Fonts" },
+            "repository": { "const": "https://github.com/google/material-design-icons" },
+            "cssApiVersion": { "const": "v368" },
+            "downloadUrl": { "type": "string", "pattern": "^https://fonts\\.gstatic\\.com/" },
+            "retrievedAt": { "const": "2026-08-23T00:55:27+07:00" },
+            "importerEvidencePath": { "const": "../../../../tools/import-material-symbols.mjs" },
+            "importerEvidenceSha256": { "const": "34c91dc772f3268710779e1892c8d70c6167bbe059369a52c81428a26642ec99" }
+          }
+        },
+        "license": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["spdxId", "noticePath", "noticeBytes", "noticeSha256"],
+          "properties": {
+            "spdxId": { "const": "Apache-2.0" },
+            "noticePath": { "const": "../../../assets/icons/LICENSE.material-symbols.txt" },
+            "noticeBytes": { "const": 861 },
+            "noticeSha256": { "const": "a5821986e6962ad8b3bb1c6ea99423ca66dc899058b6775e8569488a6d0ea518" }
+          }
+        },
+        "delivery": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["selfHosted", "remoteRuntimeAllowed", "binaryClass", "runtimeBindingStatus"],
+          "properties": {
+            "selfHosted": { "const": true },
+            "remoteRuntimeAllowed": { "const": false },
+            "binaryClass": { "const": "static_instance_used_glyph_subset" },
+            "runtimeBindingStatus": { "const": "bound_in_artifact_v0.7.0" }
+          }
+        },
+        "axes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["FILL", "wght", "GRAD", "opsz", "selectedFill1Supported"],
+          "properties": {
+            "FILL": { "const": 0 },
+            "wght": { "const": 300 },
+            "GRAD": { "const": 0 },
+            "opsz": { "const": 24 },
+            "selectedFill1Supported": { "const": false }
+          }
+        },
+        "glyphs": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/glyph" }
+        },
+        "glyphAliases": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/alias" }
+        }
+      }
+    }
+  }
+}

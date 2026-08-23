@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/CityChat/schemas/citychat-color-role-map.schema.v0.7.0.json",
+  "title": "CityChat Color Usage Atlas role map v0.7.0",
+  "description": "A product-usage overlay that maps CityChat jobs to pinned LDS sources without creating a second palette.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "mapId",
+    "mapVersion",
+    "product",
+    "artifactBuildId",
+    "mode",
+    "fullLivingReference",
+    "authority",
+    "capabilityBoundary",
+    "sourceFiles",
+    "router",
+    "roles",
+    "candidateGaps",
+    "coverage"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "0.7.0" },
+    "mapId": { "const": "citychat-color-usage-atlas" },
+    "mapVersion": { "const": "citychat-color-role-map-v0.7.0" },
+    "product": { "const": "citychat" },
+    "artifactBuildId": { "type": "string", "minLength": 1 },
+    "mode": { "const": "product_usage_overlay" },
+    "fullLivingReference": { "const": false },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["designAddOn", "lds", "identity", "sharedAtlas"],
+      "properties": {
+        "designAddOn": { "$ref": "#/$defs/authorityRef" },
+        "lds": {
+          "allOf": [
+            { "$ref": "#/$defs/authorityRef" },
+            {
+              "type": "object",
+              "required": ["commit", "colorSetId", "machinePackage"],
+              "properties": {
+                "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+                "colorSetId": { "const": "color-srgb-05" },
+                "machinePackage": { "const": "v0.9.0-mp1" }
+              }
+            }
+          ]
+        },
+        "identity": { "$ref": "#/$defs/authorityRef" },
+        "sharedAtlas": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["immutableUrl", "relationship"],
+          "properties": {
+            "immutableUrl": { "type": "string", "format": "uri" },
+            "relationship": { "const": "upstream_complete_reference" }
+          }
+        }
+      }
+    },
+    "capabilityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "disabled", "fallbackRule"],
+      "properties": {
+        "enabled": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "disabled": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "fallbackRule": { "$ref": "#/$defs/bilingual" }
+      }
+    },
+    "sourceFiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sourceFile" }
+    },
+    "router": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["routerId", "family", "label", "question"],
+        "properties": {
+          "routerId": { "type": "string", "pattern": "^cc-router-[a-z-]+$" },
+          "family": { "$ref": "#/$defs/family" },
+          "label": { "$ref": "#/$defs/bilingual" },
+          "question": { "$ref": "#/$defs/bilingual" }
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "minItems": 45,
+      "maxItems": 45,
+      "items": { "$ref": "#/$defs/role" }
+    },
+    "candidateGaps": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gapId", "roleId", "status", "reason", "safeFallback"],
+        "properties": {
+          "gapId": { "type": "string", "minLength": 1 },
+          "roleId": { "type": "string", "pattern": "^cc\\." },
+          "status": { "enum": ["source_limited", "approval_missing"] },
+          "reason": { "$ref": "#/$defs/bilingual" },
+          "safeFallback": { "$ref": "#/$defs/bilingual" }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expectedRoles", "expectedRouters", "expectedStatusCounts"],
+      "properties": {
+        "expectedRoles": { "const": 45 },
+        "expectedRouters": { "const": 7 },
+        "expectedStatusCounts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["governed", "reference_fixture", "candidate", "omitted"],
+          "properties": {
+            "governed": { "const": 43 },
+            "reference_fixture": { "const": 1 },
+            "candidate": { "const": 0 },
+            "omitted": { "const": 1 }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "bilingual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["th", "en"],
+      "properties": {
+        "th": { "type": "string", "minLength": 1 },
+        "en": { "type": "string", "minLength": 1 }
+      }
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "authorityRef": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["ref", "sha256", "status"],
+      "properties": {
+        "ref": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "status": { "type": "string", "minLength": 1 }
+      }
+    },
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "sha256", "authority", "availability"],
+      "properties": {
+        "sourceId": { "type": "string", "pattern": "^[a-z][a-zA-Z0-9]*$" },
+        "path": { "type": "string", "minLength": 1 },
+        "immutableUrl": { "type": "string", "format": "uri" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "declaredSourceSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "authority": { "type": "string", "minLength": 1 },
+        "availability": { "enum": ["vendored", "local_approved", "linked_not_vendored"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "availability": { "enum": ["vendored", "local_approved"] } } },
+          "then": { "required": ["path"] }
+        },
+        {
+          "if": { "properties": { "availability": { "const": "linked_not_vendored" } } },
+          "then": { "required": ["immutableUrl"] }
+        }
+      ]
+    },
+    "family": {
+      "enum": ["identity", "reading", "action", "state-source", "atmosphere", "map-data", "assets"]
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId"],
+      "properties": {
+        "sourceId": { "type": "string", "minLength": 1 },
+        "pointer": { "type": "string", "pattern": "^/" },
+        "cssVariable": { "type": "string", "pattern": "^--[a-z0-9-]+$" }
+      },
+      "oneOf": [
+        { "required": ["pointer"], "not": { "required": ["cssVariable"] } },
+        { "required": ["cssVariable"], "not": { "required": ["pointer"] } }
+      ]
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot", "implementation", "sourceByTheme"],
+      "properties": {
+        "slot": { "type": "string", "minLength": 1 },
+        "implementation": { "type": "string", "minLength": 1 },
+        "sourceByTheme": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["light", "dark"],
+          "properties": {
+            "light": { "$ref": "#/$defs/locator" },
+            "dark": { "$ref": "#/$defs/locator" }
+          }
+        }
+      }
+    },
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "roleId",
+        "family",
+        "status",
+        "policy",
+        "artifactUse",
+        "label",
+        "job",
+        "useWhen",
+        "bindings",
+        "consumers",
+        "redundantCue",
+        "doNotUseFor",
+        "acceptanceIds"
+      ],
+      "properties": {
+        "roleId": { "type": "string", "pattern": "^cc\\.[a-z0-9.-]+$" },
+        "family": { "$ref": "#/$defs/family" },
+        "status": { "enum": ["governed", "reference_fixture", "candidate", "omitted"] },
+        "policy": { "enum": ["required", "permitted", "conditional", "prohibited"] },
+        "artifactUse": { "enum": ["rendered", "teaching_only", "not_rendered", "omitted"] },
+        "label": { "$ref": "#/$defs/bilingual" },
+        "job": { "$ref": "#/$defs/bilingual" },
+        "useWhen": { "$ref": "#/$defs/bilingual" },
+        "bindings": { "type": "array", "items": { "$ref": "#/$defs/binding" } },
+        "consumers": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "capabilityKeys": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "redundantCue": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "doNotUseFor": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "acceptanceIds": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}

@@ -21,11 +21,14 @@ const deployment = path.join(root, "deployment");
 const config = JSON.parse(readFileSync(path.join(root, "release.config.json"), "utf8"));
 const writeReport = process.argv.includes("--write");
 const screenshotPath = process.argv.find(arg => arg.startsWith("--screenshot="))?.split("=").slice(1).join("=");
+const heroScreenshotPath = process.argv.find(arg => arg.startsWith("--hero-screenshot="))?.split("=").slice(1).join("=");
+const buttonScreenshotPath = process.argv.find(arg => arg.startsWith("--button-screenshot="))?.split("=").slice(1).join("=");
+const assetScreenshotPath = process.argv.find(arg => arg.startsWith("--asset-screenshot="))?.split("=").slice(1).join("=");
 const checks = [];
 let failures = 0;
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
 const validatorSha256 = sha256(readFileSync(validatorPath));
-const implementationRecordRoot = `resources/citychat-ves/v${config.artifactVersion}`;
+const implementationRecordRoot = config.implementationRecordRoot;
 const implementationPath = name => `${implementationRecordRoot}/${name}`;
 const schemaPath = name => `schemas/${name}.v${config.artifactVersion}.json`;
 
@@ -46,13 +49,18 @@ const testedSourcePaths = [
   [`deployment/${config.releaseArtifacts.controlInventory}`, path.join(deployment, config.releaseArtifacts.controlInventory)],
   [`deployment/${config.identityManifest.path}`, path.join(deployment, config.identityManifest.path)],
   [`deployment/${implementationPath("citychat-color-role-map.json")}`, path.join(deployment, implementationPath("citychat-color-role-map.json"))],
+  [`deployment/${implementationPath("citychat-button-contract.json")}`, path.join(deployment, implementationPath("citychat-button-contract.json"))],
+  [`deployment/${implementationPath("cityscan-hero-specimen.html")}`, path.join(deployment, implementationPath("cityscan-hero-specimen.html"))],
   [`deployment/${implementationPath("citychat-icon-map.json")}`, path.join(deployment, implementationPath("citychat-icon-map.json"))],
   [`deployment/${implementationPath("citychat-icon-resolution.json")}`, path.join(deployment, implementationPath("citychat-icon-resolution.json"))],
   [`deployment/${implementationPath("font-assets.manifest.json")}`, path.join(deployment, implementationPath("font-assets.manifest.json"))],
   [`deployment/${implementationPath("semantic-motion.citychat.yml")}`, path.join(deployment, implementationPath("semantic-motion.citychat.yml"))],
   [`deployment/${schemaPath("citychat-color-role-map.schema")}`, path.join(deployment, schemaPath("citychat-color-role-map.schema"))],
+  [`deployment/${schemaPath("citychat-button-contract.schema")}`, path.join(deployment, schemaPath("citychat-button-contract.schema"))],
   [`deployment/${schemaPath("citychat-icon-map.schema")}`, path.join(deployment, schemaPath("citychat-icon-map.schema"))],
   [`deployment/${schemaPath("semantic-motion-citychat.schema")}`, path.join(deployment, schemaPath("semantic-motion-citychat.schema"))],
+  [`deployment/${schemaPath("citychat-asset-library.schema")}`, path.join(deployment, schemaPath("citychat-asset-library.schema"))],
+  [`deployment/${config.implementationRecords.assetLibrary}`, path.join(deployment, config.implementationRecords.assetLibrary)],
   ["tools/check-rendered.mjs", validatorPath]
 ];
 const sourceHasher = createHash("sha256");
@@ -156,6 +164,8 @@ try {
     const metrics = await page.evaluate(() => {
       const visibleViews = [...document.querySelectorAll("[data-story-view]")].filter(node => node.getClientRects().length);
       const heroMeaning = document.querySelector(".hero-story strong")?.getBoundingClientRect();
+      const heroMap = document.querySelector(".hero-map");
+      const heroStageNodes = [...document.querySelectorAll(".hero-map, .map-line, .map-place, .hero-cityscan .hero-story")];
       const fontChecks = {
         body400: document.fonts.check('400 16px "Bai Jamjuree"', "ภาษาไทย English"),
         body600: document.fonts.check('600 16px "Bai Jamjuree"', "ภาษาไทย English"),
@@ -196,6 +206,16 @@ try {
         heroActionVisible: Boolean(document.querySelector(".hero-action")?.getClientRects().length),
         implementationLibraryVisible: Boolean(document.querySelector("#implementation-library")?.getClientRects().length),
         firstMeaningInViewport: Boolean(heroMeaning && heroMeaning.top < window.innerHeight && heroMeaning.bottom > 0),
+        heroCityScan: {
+          visible: Boolean(heroMap?.getClientRects().length),
+          routes: document.querySelectorAll(".hero-map .map-line").length,
+          markers: document.querySelectorAll(".hero-map .map-place").length,
+          syntheticLabel: document.querySelector("#hero-object-caption")?.textContent || "",
+          static: heroStageNodes.every(node => {
+            const style = getComputedStyle(node);
+            return style.animationName === "none" && style.transitionDuration.split(",").every(value => parseFloat(value) === 0);
+          })
+        },
         locale: document.documentElement.lang,
         themePreference: document.documentElement.dataset.themePreference,
         bodyFont: getComputedStyle(document.body).fontFamily,
@@ -276,6 +296,8 @@ try {
     check(thirdPartyFontRequests.length === 0, `render:${key}:no-third-party-fonts`, thirdPartyFontRequests.join(" | "));
     check(metrics.htmlWidth <= metrics.clientWidth + 1, `render:${key}:no-horizontal-overflow`, `${metrics.htmlWidth}/${metrics.clientWidth}`);
     check(metrics.h1Visible && metrics.heroActionVisible && metrics.implementationLibraryVisible, `render:${key}:essential-content-and-library-rendered`);
+    check(metrics.heroCityScan.visible && metrics.heroCityScan.routes >= 2 && metrics.heroCityScan.markers >= 3 && /ข้อมูลจำลอง|synthetic/i.test(metrics.heroCityScan.syntheticLabel), `render:${key}:cityscan-hero-composition-and-truth-label`, JSON.stringify(metrics.heroCityScan));
+    check(metrics.heroCityScan.static, `render:${key}:cityscan-hero-has-no-fake-motion`, JSON.stringify(metrics.heroCityScan));
     if (item.width <= 390 && item.height >= 760) check(metrics.firstMeaningInViewport, `render:${key}:first-value-in-initial-viewport`);
     check(metrics.boundaryVisible, `render:${key}:fixture-boundary-visible`);
     check(metrics.visibleViews.length === 1 && metrics.visibleViews[0] === item.mode, `render:${key}:exactly-one-journey-view`, JSON.stringify(metrics.visibleViews));
@@ -300,7 +322,7 @@ try {
     const circleGeometryFailures = metrics.controlGeometry
       .filter(control => control.iconOnly)
       .filter(control => Math.abs(control.width - 44) > 0.75 || Math.abs(control.height - 44) > 0.75 || control.paddingLeft > 0.5 || control.paddingRight > 0.5 || control.borderRadius < 21 || !control.hasIcon || !control.accessibleName);
-    check(circleGeometryFailures.length === 0 && metrics.controlGeometry.some(control => control.iconOnly), `render:${key}:lds-icon-circle-44px-and-named`, JSON.stringify(circleGeometryFailures));
+    check(circleGeometryFailures.length === 0, `render:${key}:lds-icon-circle-44px-and-named`, JSON.stringify(circleGeometryFailures));
     check(metrics.colorTokenValues.length >= 7 && metrics.colorTokenValues.every(value => value && value !== "unresolved"), `render:${key}:visible-color-atlas-values-resolve`, JSON.stringify(metrics.colorTokenValues));
     await page.close();
   }
@@ -371,13 +393,57 @@ try {
   await interactionPage.click("#theme-cycle");
   const atlasAfter = await interactionPage.locator("[data-color-token] [data-token-value]").allTextContents();
   check(atlasBefore.length >= 7 && atlasBefore.some((value, index) => value !== atlasAfter[index]) && atlasAfter.every(value => value && value !== "unresolved"), "interaction:color-atlas-updates-with-theme", JSON.stringify({ before: atlasBefore, after: atlasAfter }));
-  await interactionPage.click("#demo-action");
+  const initialButton = await interactionPage.locator("#button-preview").evaluate(node => {
+    const style = getComputedStyle(node);
+    const rect = node.getBoundingClientRect();
+    return { classes: node.className, width: rect.width, height: rect.height, radius: parseFloat(style.borderTopLeftRadius), paddingLeft: parseFloat(style.paddingLeft), paddingRight: parseFloat(style.paddingRight), labelHidden: node.querySelector(".button-preview-label")?.hidden };
+  });
+  check(!initialButton.classes.includes("btn-icon") && initialButton.height >= 43.5 && initialButton.paddingLeft >= 23.5 && initialButton.paddingRight >= 23.5 && initialButton.radius >= initialButton.height / 2 - 2 && initialButton.labelHidden === false, "buttons:builder-initial-labelled-capsule", JSON.stringify(initialButton));
+  const specialButtonLabel = 'ดู "ฝน" <วันนี้> & พรุ่งนี้';
+  await interactionPage.fill("#button-label-input", specialButtonLabel);
+  await interactionPage.selectOption("#button-icon-select", "reply");
+  await interactionPage.check("#button-mode-icon");
+  const iconButton = await interactionPage.locator("#button-preview").evaluate(node => {
+    const style = getComputedStyle(node);
+    const rect = node.getBoundingClientRect();
+    const code = document.querySelector("#button-code-output")?.textContent || "";
+    return {
+      classes: node.className,
+      width: rect.width,
+      height: rect.height,
+      radius: parseFloat(style.borderTopLeftRadius),
+      paddingLeft: parseFloat(style.paddingLeft),
+      paddingRight: parseFloat(style.paddingRight),
+      name: node.getAttribute("aria-label"),
+      labelHidden: node.querySelector(".button-preview-label")?.hidden,
+      glyph: node.querySelector(".icon-symbol")?.textContent.trim(),
+      code
+    };
+  });
+  check(iconButton.classes.includes("btn-icon") && Math.abs(iconButton.width - 44) < 0.75 && Math.abs(iconButton.height - 44) < 0.75 && iconButton.radius >= 21 && iconButton.paddingLeft < 0.5 && iconButton.paddingRight < 0.5 && iconButton.name === specialButtonLabel && iconButton.labelHidden === true && iconButton.glyph === "reply", "buttons:builder-icon-only-circle-is-44px-and-named", JSON.stringify(iconButton));
+  check(iconButton.code.includes("&quot;") && iconButton.code.includes("&lt;") && iconButton.code.includes("&gt;") && iconButton.code.includes("&amp;"), "buttons:builder-downloadable-markup-escapes-special-characters", iconButton.code);
+  await interactionPage.click("#button-preview");
   await interactionPage.waitForFunction(() => Boolean(document.querySelector('body > .visually-hidden[role="status"]')?.textContent.trim()));
-  const demoAction = await interactionPage.evaluate(() => ({
-    result: document.querySelector("#demo-action-result")?.textContent.trim() || "",
+  const buttonAction = await interactionPage.evaluate(() => ({
+    result: document.querySelector("#button-preview-result")?.textContent.trim() || "",
     announcement: document.querySelector('body > .visually-hidden[role="status"]')?.textContent.trim() || ""
   }));
-  check(/ทำงานแล้ว|worked locally/i.test(demoAction.result) && Boolean(demoAction.announcement), "interaction:control-example-updates-local-result-and-announces", JSON.stringify(demoAction));
+  check(/ทำงานในหน้านี้แล้ว|worked locally/i.test(buttonAction.result) && Boolean(buttonAction.announcement), "interaction:button-example-updates-local-result-and-announces", JSON.stringify(buttonAction));
+  await interactionPage.check("#button-mode-labelled");
+  const labelledAgain = await interactionPage.locator("#button-preview").evaluate(node => ({
+    classes: node.className,
+    label: node.querySelector(".button-preview-label")?.textContent || "",
+    hidden: node.querySelector(".button-preview-label")?.hidden,
+    name: node.getAttribute("aria-label")
+  }));
+  check(!labelledAgain.classes.includes("btn-icon") && labelledAgain.label === specialButtonLabel && labelledAgain.hidden === false && labelledAgain.name === null, "buttons:builder-returns-to-labelled-capsule", JSON.stringify(labelledAgain));
+  await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story`, { waitUntil: "networkidle" });
+  await Promise.all([
+    interactionPage.waitForURL(url => url.searchParams.get("mode") === "scan" && url.searchParams.get("scan") === "no-score"),
+    interactionPage.click("#hero-cityscan-action")
+  ]);
+  check(await interactionPage.getAttribute("#mode-scan", "aria-selected") === "true" && await interactionPage.getAttribute(".scan-composition", "data-active-scan-state") === "no-score", "interaction:hero-cityscan-action-opens-safe-no-score-view");
+  await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story`, { waitUntil: "networkidle" });
   await interactionPage.focus("#mode-story");
   await interactionPage.keyboard.press("ArrowRight");
   check(await interactionPage.getAttribute("#mode-return", "aria-selected") === "true", "interaction:tab-story-to-return");
@@ -418,6 +484,18 @@ try {
   if (screenshotPath) {
     await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story&view=assisted`, { waitUntil: "networkidle" });
     await interactionPage.screenshot({ path: screenshotPath, fullPage: true });
+  }
+  if (heroScreenshotPath) {
+    await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story&view=assisted`, { waitUntil: "networkidle" });
+    await interactionPage.locator("#top").screenshot({ path: heroScreenshotPath });
+  }
+  if (buttonScreenshotPath) {
+    await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story&view=assisted#control-examples`, { waitUntil: "networkidle" });
+    await interactionPage.locator("#control-examples").screenshot({ path: buttonScreenshotPath });
+  }
+  if (assetScreenshotPath) {
+    await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story&view=assisted#asset-library`, { waitUntil: "networkidle" });
+    await interactionPage.locator("#asset-library").screenshot({ path: assetScreenshotPath });
   }
   await interactionPage.close();
 
@@ -523,13 +601,19 @@ try {
 
   const zoomPage = await browser.newPage({ viewport: { width: 720, height: 900 } });
   await zoomPage.goto(`${baseUrl}?lang=en&theme=dark`, { waitUntil: "networkidle" });
+  await zoomPage.fill("#button-label-input", "ดูข้อมูลพื้นที่ตัวอย่างริมคลองฝั่งตะวันออกและชุมชนต่อเนื่องที่มีชื่อยาวมากโดยไม่ตัดความหมาย");
   await zoomPage.evaluate(() => { document.body.style.zoom = "2"; });
   const zoomMetrics = await zoomPage.evaluate(() => ({
     overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
     page: `${document.documentElement.scrollWidth}/${document.documentElement.clientWidth}`,
     h1Visible: Boolean(document.querySelector("h1")?.getClientRects().length),
     firstActionVisible: Boolean(document.querySelector(".hero-action")?.getClientRects().length),
-    wideNodes: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .implementation-library, .implementation-router, .lab-panel, .control-showcase, .icon-grid, .motion-layout, .color-groups, .preflight-layout, .resource-grid, .footer-grid")]
+    buttonReadable: (() => {
+      const node = document.querySelector("#button-preview");
+      if (!node) return false;
+      return node.scrollHeight <= node.clientHeight + 2 && node.getBoundingClientRect().right <= document.documentElement.clientWidth + 1;
+    })(),
+    wideNodes: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .implementation-library, .implementation-router, .lab-panel, .button-builder-layout, #button-preview, .control-showcase, .icon-grid, .motion-layout, .color-groups, .preflight-layout, .resource-grid, .asset-library-grid, .footer-grid")]
       .filter(node => node.getClientRects().length)
       .filter(node => {
         const rect = node.getBoundingClientRect();
@@ -541,7 +625,7 @@ try {
         return { node: `${node.tagName.toLowerCase()}${node.id ? `#${node.id}` : ""}.${String(node.className).replace(/\s+/g, ".")}`, rect: `${Math.round(rect.left)}..${Math.round(rect.right)}`, size: `${node.scrollWidth}/${node.clientWidth}` };
       })
   }));
-  check(!zoomMetrics.overflow && zoomMetrics.h1Visible && zoomMetrics.firstActionVisible, "type:200-percent-zoom-essential-content", JSON.stringify(zoomMetrics));
+  check(!zoomMetrics.overflow && zoomMetrics.h1Visible && zoomMetrics.firstActionVisible && zoomMetrics.buttonReadable, "type:200-percent-zoom-essential-content-and-long-button", JSON.stringify(zoomMetrics));
   await zoomPage.close();
 } finally {
   await browser.close();

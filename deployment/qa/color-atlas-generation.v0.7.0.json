@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0",
+  "qaId": "citychat-color-atlas-generation-v0.7.0",
+  "generator": "tools/generate-citychat-color-atlas.mjs",
+  "result": "pass",
+  "artifactBuildId": "citychat-ui-20260823-02",
+  "mode": "product_usage_overlay",
+  "counts": {
+    "roles": 45,
+    "routers": 7,
+    "bindings": 66,
+    "familyCounts": {
+      "identity": 3,
+      "reading": 16,
+      "action": 1,
+      "state-source": 11,
+      "atmosphere": 4,
+      "map-data": 9,
+      "assets": 1
+    },
+    "statusCounts": {
+      "governed": 43,
+      "reference_fixture": 1,
+      "candidate": 0,
+      "omitted": 1
+    }
+  },
+  "hashes": {
+    "roleMapSha256": "06a954b4aa22089747c935f8a8816b925fcfa1da764a9010d293056bb6c52ec0",
+    "schemaSha256": "a6853baa4709d9233e1a218186a6b1a067e4ebde5011f51efd5075a52e8da581",
+    "generatorSha256": "e7726b48c410a9d28341ad178edef5a90dcf1e80aed9265a00a950e28eae4af5",
+    "generatedFragmentSha256": "5d3601ae8d74553701032156230635c532774bd8f2e57d1deb7fe554585ce203",
+    "sources": {
+      "ldsTokens": {
+        "availability": "vendored",
+        "sha256": "5afa9a93bafa8f2e5edb7e929d4924bc548a415098377ad53e18097c56980287"
+      },
+      "ldsCss": {
+        "availability": "vendored",
+        "sha256": "aa834b08c6ecd00704a0c3580da83d291237738815a8e2e408aba12bb9551323"
+      },
+      "colorDelivery": {
+        "availability": "vendored",
+        "sha256": "aa6833b5286f6eb957925cb0c538c951d6822217fb83b051a71473ff2bdbd9c5"
+      },
+      "surfaceRecipes": {
+        "availability": "vendored",
+        "sha256": "9e849896c0fa49411e226bfa7ca094d939e7e36cbd31e67cd0a76c44f0027d92"
+      },
+      "identityManifest": {
+        "availability": "local_approved",
+        "sha256": "4b6b6af1861355349ae62fc9a61eb36f77ae403bd17a42f444549c8cbbba7faa"
+      },
+      "approvedDesignAddOn": {
+        "availability": "local_approved",
+        "sha256": "b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b"
+      },
+      "ldsScales": {
+        "availability": "linked_not_vendored",
+        "sha256": "daf8e5219f1da9229d7fb474fdaba3957f37c0cfe18eef7527e551c37d88d235",
+        "immutableUrl": "https://raw.githubusercontent.com/montri-th/Landometer/d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665/assets/data/scales.json"
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "CC-COLOR-ATLAS-01",
+      "status": "pass",
+      "evidence": "45 unique governed role IDs"
+    },
+    {
+      "id": "CC-COLOR-ATLAS-02",
+      "status": "pass",
+      "evidence": "7 bilingual job-first router destinations"
+    },
+    {
+      "id": "CC-COLOR-ATLAS-03",
+      "status": "pass",
+      "evidence": "all local source hashes and locators resolved"
+    },
+    {
+      "id": "CC-COLOR-ATLAS-04",
+      "status": "pass",
+      "evidence": "no raw colour or runtime mixing in role map"
+    },
+    {
+      "id": "CC-COLOR-ATLAS-05",
+      "status": "pass",
+      "evidence": "semantic, source, map, and data roles include redundant cues"
+    },
+    {
+      "id": "CC-COLOR-ATLAS-06",
+      "status": "pass",
+      "evidence": "analytical scale remains linked reference_fixture"
+    },
+    {
+      "id": "CC-COLOR-ATLAS-07",
+      "status": "pass",
+      "evidence": "unapproved supporting asset colour remains omitted"
+    },
+    {
+      "id": "CC-COLOR-ATLAS-08",
+      "status": "pass",
+      "evidence": "generated fragment is deterministic and source-resolved"
+    }
+  ]
+}

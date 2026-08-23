@@ -1,6 +1,6 @@
 # CityChat vibe-coding starter prompt
 
-Use this prompt after replacing every bracketed value with the real work object and release context. Playground artifact v0.6.1 implements approved normative CityChat VES v0.6; its implementation records are examples and bindings for this artifact, not VES v0.6.1 authority.
+Use this prompt after replacing every bracketed value with the real work object and release context. Playground artifact v0.7.0 implements approved normative CityChat DS Add-on v0.7; its implementation records are examples and bindings for this artifact, not DS Add-on v0.7.0 authority.
 
 ```text
 Build a [page/screen/flow] for CityChat.
@@ -14,8 +14,8 @@ User intent
 Authority
 - Use Landometer Design System v0.9.0-r7 from vendor/landometer/v0.9.0.
 - Load exactly one LDS profile: [profile ID].
-- Use approved CityChat Visual Experience Specification v0.6 for first value, living-city identity, civic continuity, motion application, composition, contrast, density and plain-language frontstage copy.
-- When adapting playground artifact v0.6.1, read resources/citychat-ves/v0.6.1/: citychat-color-role-map.json, citychat-icon-map.json, citychat-icon-resolution.json, font-assets.manifest.json and semantic-motion.citychat.yml. Treat them as artifact implementation bindings under VES v0.6, not new normative authority.
+- Use approved CityChat DS Add-on v0.7 for first value, living-city identity, civic continuity, motion application, composition, contrast, density and plain-language frontstage copy.
+- When adapting playground artifact v0.7.0, read resources/citychat-ds-addon/v0.7.0/: citychat-color-role-map.json, citychat-icon-map.json, citychat-icon-resolution.json, font-assets.manifest.json and semantic-motion.citychat.yml. Treat them as artifact implementation bindings under DS Add-on v0.7, not new normative authority.
 - Use an approved owning Product Brief/ADR/profile for product meaning, state, effect and availability. CityChat Product Experience Profile v0.4 remains a draft dependency and cannot authorize a capability by itself.
 - Do not copy CityChat v0.3 visual tokens or invent local colour/type/motion values.
 

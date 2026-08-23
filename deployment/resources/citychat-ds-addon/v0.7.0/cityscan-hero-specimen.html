@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="th" data-locale="th" data-theme="light" data-theme-preference="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="description" content="ตัวอย่าง CityScan hero สำหรับ CityChat DS Add-on v0.7 ใช้ข้อมูลจำลองและไม่เชื่อมระบบจริง">
+  <title>CityChat DS Add-on v0.7 — CityScan hero specimen</title>
+  <link rel="stylesheet" href="../../../vendor/landometer/v0.9.0/build-kit/lds-tokens.css">
+  <link rel="stylesheet" href="../../../vendor/landometer/v0.9.0/build-kit/lds-base.css">
+  <link rel="stylesheet" href="../../../citychat.css">
+</head>
+<body>
+  <!--
+    Bounded implementation specimen for CityChat DS Add-on v0.7.0.
+    Keep this file under deployment/resources/citychat-ds-addon/v0.7.0/ so its
+    pinned LDS and CityChat stylesheet paths continue to resolve.
+    The canonical-page logo is deliberately omitted: its exact-build approval
+    covers the site-header/site-footer roles and must not be transferred here.
+  -->
+  <a class="skip-link" href="#main">ข้ามไปเนื้อหาหลัก</a>
+
+  <main id="main">
+    <section class="hero scene-atmosphere scene-atmosphere--ground" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">พื้นที่มาก่อน</p>
+          <h1 id="hero-title">เห็นว่าเรารู้อะไร แล้วถามสิ่งที่ยังขาด</h1>
+          <p class="hero-support">ตัวอย่างนี้ใช้ข้อมูลจำลองเพื่อสอนลำดับของหน้าจอ CityScan ไม่ใช่ข้อมูลจากพื้นที่จริง</p>
+        </div>
+
+        <figure class="hero-object hero-cityscan" aria-labelledby="hero-story-title hero-object-caption">
+          <div class="hero-map" aria-hidden="true">
+            <span class="hero-map-grid"></span>
+            <span class="map-boundary"></span>
+            <span class="map-line map-line--a"></span>
+            <span class="map-line map-line--b"></span>
+            <span class="map-place map-place--a"></span>
+            <span class="map-place map-place--b"></span>
+            <span class="map-place map-place--c"></span>
+            <span class="hero-scan-window"><i></i><i></i><i></i><i></i></span>
+          </div>
+
+          <article class="hero-story card">
+            <p class="meta">ริมคลองกลางเมือง · หลังฝนตก</p>
+            <strong id="hero-story-title">ยังมีข้อมูลไม่พอว่าทางฝั่งตะวันออกผ่านได้สะดวกหรือไม่</strong>
+            <p>จุดบริการทั้งสามจุดในภาพตัวอย่างอยู่ทางฝั่งตะวันตก จึงยังตอบเรื่องการเดินทางไม่ได้</p>
+            <div class="hero-question">ตอนนี้คนฝั่งตะวันออกเดินทางผ่านได้อย่างไร?</div>
+          </article>
+
+          <figcaption id="hero-object-caption">ตัวอย่าง CityScan · ข้อมูลจำลอง ไม่ใช่ข้อมูลพื้นที่จริง</figcaption>
+        </figure>
+
+        <div class="hero-after">
+          <a class="btn hero-action" href="../../../?lang=th&amp;theme=light&amp;mode=scan&amp;view=assisted&amp;scan=no-score#play">ดูตัวอย่างพื้นที่นี้</a>
+          <p class="hero-boundary">เปิดตัวอย่าง “ข้อมูลยังไม่พอ” ในหน้าหลัก · ไม่มีการคำนวณหรือบันทึกจริง</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-pad" data-copy-layer="team" aria-labelledby="implementation-title">
+      <div class="container container--reading">
+        <header class="section-heading">
+          <p class="eyebrow">สำหรับทีมออกแบบและพัฒนา</p>
+          <h2 id="implementation-title">สิ่งที่ต้องคงไว้เมื่อนำตัวอย่างนี้ไปใช้</h2>
+        </header>
+
+        <div class="principle-grid">
+          <article class="principle-card card">
+            <h3>พื้นที่ช่วยตั้งบริบท</h3>
+            <p>grid เส้นทาง จุด และกรอบเป็นภาพจำลอง ไม่ใช่คะแนน หลักฐาน หรือสถานะทางการ</p>
+          </article>
+          <article class="principle-card card">
+            <h3>ความหมายมาก่อนคำถาม</h3>
+            <p>บอกสิ่งที่รู้และสิ่งที่ยังไม่รู้ก่อนถามหนึ่งคำถามที่ช่วยให้เรื่องไปต่อ</p>
+          </article>
+          <article class="principle-card card">
+            <h3>ทำต่อได้หนึ่งอย่าง</h3>
+            <p>ใช้ปุ่มแคปซูลของ LDS และบอกผลทันที ปุ่มในไฟล์นี้เปิดตัวอย่าง no-score จริงแม้ไม่มี JavaScript</p>
+          </article>
+        </div>
+
+        <details class="team-details">
+          <summary>ไฟล์ที่ตัวอย่างนี้อ้างอิง</summary>
+          <ul>
+            <li><a href="../../../assets/downloads/citychat-ds-addon-v0.7.md">CityChat DS Add-on v0.7</a></li>
+            <li><a href="citychat-color-role-map.json">CityChat color role map v0.7.0</a></li>
+            <li><a href="semantic-motion.citychat.yml">CityChat semantic motion v0.7.0</a> — hero นี้ใช้ <code>none</code></li>
+            <li><a href="../../../build-card.v0.7.0.yml">Build Card v0.7.0</a></li>
+          </ul>
+        </details>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

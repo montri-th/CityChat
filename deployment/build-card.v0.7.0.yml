@@ -1,0 +1,104 @@
+citychatBuild:
+  artifact:
+    name: CityChat DS Add-on Interactive Playground
+    product: citychat
+    version: 0.7.0
+    artifactBuildId: citychat-ui-20260823-02
+    pageKind: design-identity-playground
+    profile: designsystem.adoption
+    oneJob: help the CityChat team see, try, explain, and implement CityChat DS Add-on v0.7 through working examples
+    delivery: internal_demo_public_projection
+    outputType: webpage
+    language: th
+    additionalLanguages: [en]
+  publication:
+    visibility: public
+    indexable: false
+    evidenceStatus: source_limited
+    canonicalUrl: https://montri-th.github.io/CityChat/
+    machineValidation: pending
+    deliveryConformance: not_claimed
+  landometerFoundation:
+    dsVersion: 0.9.0
+    authoringRevision: v0.9.0-r7
+    machinePackage: v0.9.0-mp1
+    colorSetId: color-srgb-05
+    kitVersion: lds-kit-0.9.0-r4
+    upstreamArtifactBuildId: ui-20260821-05
+    upstreamCommit: d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665
+    vendorPath: vendor/landometer/v0.9.0
+    vendorPolicy: immutable byte-identical snapshot
+  citychatAuthority:
+    designAddOnPath: assets/downloads/citychat-ds-addon-v0.7.md
+    designAddOnSha256: b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b
+    designAddOnStatus: approved_normative_add_on
+    normativeApprovalPath: assets/downloads/citychat-ds-addon-v0.7-approval.json
+    normativeApprovalSha256: ac55bab150103da9a2f557345c7f0d99072ed89f433c063b22aabb6b8a4fe2f2
+    normativeApprovalId: CC-DSA-APP-20260823-01
+    releaseAuthorizationPath: assets/downloads/citychat-ds-addon-playground-release-authorization.v0.7.0.json
+    releaseAuthorizationSha256: 9f0194953217d6503af691ba802b627577e2f07b3779ed227ef7539feb905812
+    releaseAuthorizationId: CC-DSA-PLAYGROUND-REL-20260823-01
+    experienceContractPath: assets/downloads/citychat-product-experience-profile-v0.4.md
+    experienceContractSha256: f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba
+    experienceContractStatus: draft_candidate
+    productAuthority: draft_truth
+    designAddOnAuthorityScope: citychat_composition_plain_language_two_shape_actions_assets_place_first_hero_and_implementation_recipes
+    capabilityEvidenceStatus: source_limited
+    deliveryAvailability: accepted
+    deliveryAvailabilityScope: this_team_playground_only
+    identityManifestPath: assets/identity/identity-assets.v0.7.0.json
+    identityManifestSha256: 4b6b6af1861355349ae62fc9a61eb36f77ae403bd17a42f444549c8cbbba7faa
+  identity:
+    headerRoleApproval: CC-ID-ROLE-APP-20260823-HEADER-02
+    footerRoleApproval: CC-ID-ROLE-APP-20260823-FOOTER-02
+    assetSha256: 94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62
+    surfaceRef: lds:--brand-beige
+    transformPolicy: none
+    omittedRoles: [compact_product_mark, browser_tab_favicon, search_result_favicon, apple_touch_icon, maskable_app_icon, social_preview_identity, share_preview_identity, splash_identity, watermark, export_mark, identity_motif, supporting_illustration]
+  implementationLibrary:
+    fullLivingReference: false
+    search: false
+    referenceFixtures: []
+    buttons: pinned_lds_btn_capsule_or_circle
+    icons: self_hosted_material_symbols_rounded_subset_v368
+    iconFontSha256: 42cd00d98dd631ddf6b3d5a47ba34e6eed83d2a6e3fd35ef5f4f8e0e6632ba30
+    motion: scoped_once_only_reading_order_and_button_feedback
+    colorAtlas: product_usage_overlay_not_full_lds_atlas
+    analyticalScale: unavailable_without_owning_registry
+  triggeredPacks: [PUB-01, DELIVERY-01:web]
+  supportedChannels: [github_pages_team_playground]
+  qaEvidence:
+    automatedPath: qa/automated.v0.7.0.json
+    renderedPath: qa/rendered-local.v0.7.0.json
+    renderedProviderCheck: pending_required_pr_check
+    manualPath: qa/manual-gates.v0.7.0.md
+    nativeDeviceStatus: open
+  releaseReceipt:
+    status: pending_provider_deploy
+    targetUrl: https://montri-th.github.io/CityChat/
+  firstValue:
+    target: first viewport shows one place, one honest local meaning, one supported question, and the expected consequence of one preview action
+    maximumEssentialInputs: zero before first value
+    primaryAction: ดูตัวอย่างพื้นที่นี้
+  privacy:
+    visibility: public
+    sensitivity: public
+    personalData: none
+    analytics: false
+    remotePersistence: false
+    localStorage: theme and locale preferences only
+  effects:
+    remoteMutation: false
+    localFixtureState: true
+    clipboardCopy: true
+    receiptPolicy: conceptual saved-and-return examples never claim product persistence
+  disabledCapabilities: [lineIntegration, productionCityScanScoring, productReceiptPersistence, officerOperationsRuntime, remoteShare, telemetry]
+  releaseBoundary:
+    approvedDesignAddOnDoesNotMeanRuntime: true
+    targetDoesNotMeanShipped: true
+    fixturesAreConceptual: true
+    fullLivingReference: false
+    noNamedMunicipalityProof: true
+    identityHeaderFooterApproval: exact_build_and_url_only
+    identityFaviconApproval: unresolved
+    nativeDeviceGate: open
