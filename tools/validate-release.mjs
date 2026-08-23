@@ -26,7 +26,7 @@ function check(ok, name, detail = "") {
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
 const validatorSha256 = sha256(readFileSync(fileURLToPath(import.meta.url)));
 const readJson = relative => JSON.parse(readFileSync(path.join(deployment, relative), "utf8"));
-const implementationRecordRoot = `resources/citychat-ves/v${config.artifactVersion}`;
+const implementationRecordRoot = config.implementationRecordRoot;
 const implementationPath = name => `${implementationRecordRoot}/${name}`;
 const schemaPath = name => `schemas/${name}.v${config.artifactVersion}.json`;
 const generatorPath = path.join(root, "tools/generate-citychat-color-atlas.mjs");
@@ -58,15 +58,20 @@ function elementFragmentById(id) {
 const versionedMachineSources = [
   implementationPath("citychat-color-atlas.fragment.html"),
   implementationPath("citychat-color-role-map.json"),
+  implementationPath("citychat-button-contract.json"),
+  implementationPath("cityscan-hero-specimen.html"),
   implementationPath("citychat-icon-map.json"),
   implementationPath("citychat-icon-resolution.json"),
   implementationPath("font-assets.manifest.json"),
   implementationPath("semantic-motion.citychat.yml"),
+  schemaPath("citychat-button-contract.schema"),
   schemaPath("citychat-color-role-map.schema"),
   schemaPath("citychat-font-assets.schema"),
   schemaPath("citychat-icon-map.schema"),
   schemaPath("citychat-icon-resolution.schema"),
   schemaPath("semantic-motion-citychat.schema"),
+  schemaPath("citychat-asset-library.schema"),
+  config.implementationRecords.assetLibrary,
   `qa/color-atlas-generation.v${config.artifactVersion}.json`,
   "assets/icons/material-symbols-rounded-citychat-v368.ttf",
   "assets/icons/LICENSE.material-symbols.txt"
@@ -80,7 +85,7 @@ const testedSourcePaths = [
   [`deployment/${config.releaseArtifacts.controlInventory}`, path.join(deployment, config.releaseArtifacts.controlInventory)],
   [`deployment/${config.releaseArtifacts.implementationNotes}`, path.join(deployment, config.releaseArtifacts.implementationNotes)],
   [`deployment/${config.identityManifest.path}`, path.join(deployment, config.identityManifest.path)],
-  [`deployment/${config.sourceVisualExperience.path}`, path.join(deployment, config.sourceVisualExperience.path)],
+  [`deployment/${config.sourceDesignAddOn.path}`, path.join(deployment, config.sourceDesignAddOn.path)],
   ...config.approvalRecords.map(record => [`deployment/${record.path}`, path.join(deployment, record.path)]),
   ...versionedMachineSources.map(relative => [`deployment/${relative}`, path.join(deployment, relative)]),
   ["tools/generate-citychat-color-atlas.mjs", generatorPath],
@@ -102,8 +107,8 @@ check(html.includes('id="main"') && html.includes('href="#main"'), "html:skip-li
 check(html.includes('name="robots" content="noindex,nofollow,noarchive"'), "publication:noindex-in-initial-html");
 check(html.includes(`rel="canonical" href="${config.canonicalUrl}"`), "publication:canonical");
 check(!/(property="og:|name="twitter:|application\/ld\+json|rel="manifest"|rel="icon")/.test(html), "identity:no-unapproved-public-discovery-assets");
-check(html.includes("source_limited") && html.includes("not a product runtime"), "truth:visible-source-limited-boundary");
-check(html.includes("CityChat VES v0.6") && html.includes("ตัวอย่างสำหรับทีม"), "ves:visible-version-and-fixture-boundary");
+check(html.includes("source_limited") && html.includes("ไม่ใช่ระบบ CityChat ที่เปิดใช้งานจริง") && html.includes("not a live CityChat product"), "truth:visible-source-limited-boundary");
+check(html.includes("CityChat DS Add-on v0.7") && html.includes("ตัวอย่างสำหรับทีม"), "ds-addon:visible-version-and-fixture-boundary");
 check(html.includes("ยังบอกไม่ได้") && html.includes("ดูที่มา"), "copy:plain-thai-truth-and-disclosure");
 check(html.includes('data-copy-layer="team"'), "copy:team-layer-explicit");
 check(!/\bAI\b|inspector|claim ceiling|truth envelope|source_limited|SIGNAL_READY|NO_SCORE/i.test(frontstageHtml), "copy:no-internal-jargon-in-frontstage");
@@ -183,11 +188,11 @@ for (const file of jsonFiles) {
 }
 check(jsonErrors.length === 0, "json:all-parse", jsonErrors.slice(0, 3).join(" | "));
 
-for (const record of [config.sourceVisualExperience, ...config.approvalRecords, ...config.productDependencies, config.identityManifest]) {
+for (const record of [config.sourceDesignAddOn, ...config.approvalRecords, ...config.productDependencies, config.identityManifest]) {
   check(sha256(readFileSync(path.join(deployment, record.path))) === record.sha256, `source:${path.basename(record.path)}:hash`);
 }
-const sourceVisualExperience = readFileSync(path.join(deployment, config.sourceVisualExperience.path), "utf8");
-check(sourceVisualExperience.includes("not a second DS") && sourceVisualExperience.includes("Thai remains plain, short and human"), "source:ves-authority-and-language-boundary");
+const sourceDesignAddOn = readFileSync(path.join(deployment, config.sourceDesignAddOn.path), "utf8");
+check(sourceDesignAddOn.includes("ไม่สร้าง Design System ซ้ำอีกชุด") && sourceDesignAddOn.includes("หน้าที่คนเห็นต้องพูดเหมือนคนคุยกับคน"), "source:ds-addon-boundary-and-language");
 const experienceContract = readFileSync(path.join(deployment, config.productDependencies[0].path), "utf8");
 check(experienceContract.includes("Canonical CityScan events MUST retain their owning names"), "source:canonical-cityscan-event-map");
 
@@ -351,13 +356,83 @@ check(buildCard.includes("remoteMutation: false") && buildCard.includes("remoteP
 check(buildCard.includes("PUB-01") && buildCard.includes("DELIVERY-01:web") && !buildCard.includes("WEB-DISCOVERY-01"), "build-card:triggered-packs-match-noindex-artifact");
 check(buildCard.includes(config.identityManifest.sha256), "build-card:identity-manifest-bound");
 
+const buttonContractPath = config.implementationRecords.buttonContract;
+const buttonContract = readJson(buttonContractPath);
+const buttonContractSchema = readJson(schemaPath("citychat-button-contract.schema"));
+const buttonSchemaAbsolute = resolveRecordPath(buttonContractPath, buttonContract.$schema);
+const canonicalButtonCss = path.join(deployment, config.upstream.vendorPath, "build-kit/lds-base.css");
+const buttonContractMissing = schemaRequiredFields(buttonContract, buttonContractSchema);
+check(buttonContractMissing.length === 0, "buttons:contract-schema-required-fields", buttonContractMissing.join(", "));
+check(buttonSchemaAbsolute === path.join(deployment, schemaPath("citychat-button-contract.schema")) && existsSync(buttonSchemaAbsolute), "buttons:contract-schema-ref-resolves", buttonSchemaAbsolute);
+check(buttonContract.contractId === "citychat-button-contract-v0.7" && buttonContract.artifactVersion === config.artifactVersion && buttonContract.artifactBuildId === config.artifactBuildId, "buttons:contract-version-and-build-bound");
+check(buttonContract.upstream.ruleId === "BTN-GEOM-01" && buttonContract.upstream.canonicalCssSha256 === sha256(readFileSync(canonicalButtonCss)), "buttons:canonical-lds-css-byte-bound");
+const buttonOutcomePairs = buttonContract.decisionModel.outcomes.flatMap(outcome => outcome.labelModes.map(labelMode => [labelMode, outcome.geometryRole]));
+const buttonOutcomeByLabelMode = new Map(buttonOutcomePairs);
+check(buttonContract.variants.length === 2 && buttonOutcomeByLabelMode.size === 3 && new Set(buttonContract.variants.map(variant => variant.geometryRole)).size === 2, "buttons:exact-two-shape-decision-model");
+check(buttonOutcomeByLabelMode.get("visible_text") === "lds_labelled_capsule" && buttonOutcomeByLabelMode.get("icon_and_visible_text") === "lds_labelled_capsule" && buttonOutcomeByLabelMode.get("icon_only_accessible_name") === "lds_icon_circle", "buttons:label-mode-deterministically-selects-shape");
+
+const assetLibraryPath = config.implementationRecords.assetLibrary;
+const assetLibrary = readJson(assetLibraryPath);
+const assetLibrarySchema = readJson(schemaPath("citychat-asset-library.schema"));
+const assetSchemaAbsolute = resolveRecordPath(assetLibraryPath, assetLibrary.$schema);
+const assetLibraryMissing = schemaRequiredFields(assetLibrary, assetLibrarySchema);
+check(assetLibraryMissing.length === 0, "assets:library-schema-required-fields", assetLibraryMissing.join(", "));
+check(assetSchemaAbsolute === path.join(deployment, schemaPath("citychat-asset-library.schema")) && existsSync(assetSchemaAbsolute), "assets:library-schema-ref-resolves", assetSchemaAbsolute);
+check(assetLibrary.artifactVersion === config.artifactVersion && assetLibrary.artifactBuildId === config.artifactBuildId && assetLibrary.status === "safe_public_download_catalog", "assets:library-version-build-and-boundary");
+const assetIds = assetLibrary.assets.map(asset => asset.assetId);
+const assetPaths = assetLibrary.assets.map(asset => asset.path);
+check(assetLibrary.assets.length === 32 && new Set(assetIds).size === 32 && new Set(assetPaths).size === 32, "assets:complete-unique-32-file-catalog", `${assetLibrary.assets.length}/${new Set(assetPaths).size}`);
+const requiredDownloadPaths = [
+  "assets/identity/citychat-horizontal-lockup.png",
+  "assets/identity/citychat-lockup.source.svg",
+  "assets/identity/citychat-symbol.source.svg",
+  "assets/icons/material-symbols-rounded-citychat-v368.ttf",
+  implementationPath("citychat-button-contract.json"),
+  implementationPath("cityscan-hero-specimen.html"),
+  implementationPath("citychat-color-atlas.fragment.html")
+];
+check(requiredDownloadPaths.every(relative => assetPaths.includes(relative)), "assets:identity-icon-button-hero-and-atlas-downloads-listed", requiredDownloadPaths.filter(relative => !assetPaths.includes(relative)).join(", "));
+const assetFailures = assetLibrary.assets.flatMap(asset => {
+  const failures = [];
+  const normalized = path.posix.normalize(asset.path);
+  if (path.posix.isAbsolute(asset.path) || normalized !== asset.path || normalized.startsWith("../")) failures.push(`${asset.assetId}:unsafe-path`);
+  const absolute = path.join(deployment, asset.path);
+  if (!existsSync(absolute) || !statSync(absolute).isFile()) failures.push(`${asset.assetId}:missing`);
+  else {
+    const bytes = readFileSync(absolute);
+    if (bytes.length !== asset.bytes || sha256(bytes) !== asset.sha256) failures.push(`${asset.assetId}:byte-hash-mismatch`);
+  }
+  if (asset.publicDownload !== true) failures.push(`${asset.assetId}:not-public-download`);
+  if (!asset.usePolicy?.allowedUses?.length || !asset.usePolicy?.blockedUses?.length) failures.push(`${asset.assetId}:empty-use-policy`);
+  if (asset.licence?.noticePath && !existsSync(path.join(deployment, asset.licence.noticePath))) failures.push(`${asset.assetId}:missing-licence-notice`);
+  return failures;
+});
+check(assetFailures.length === 0, "assets:paths-bytes-hashes-rights-and-use-policy", assetFailures.join(" | "));
+check(["personal_photos", "avatars", "screenshots", "user_generated_content", "real_location_media", "uncleared_working_documents", "unclear_rights_assets"].every(item => assetLibrary.privacyBoundary.excluded.includes(item)), "assets:personal-and-uncleared-evidence-excluded");
+
 const controlInventory = readJson(config.releaseArtifacts.controlInventory);
 const missingControls = controlInventory.controls
   .filter(control => !html.includes(`id="${control.id}"`))
   .map(control => control.id);
 check(missingControls.length === 0, "controls:inventory-resolves", missingControls.join(", "));
 check(controlInventory.artifactBuildId === config.artifactBuildId && controlInventory.iconMapRef === iconMapPath, "controls:artifact-and-icon-map-bound");
+check(controlInventory.buttonContractRef?.contractId === buttonContract.contractId && controlInventory.buttonContractRef?.path === buttonContractPath, "buttons:inventory-bound-to-contract");
 check(new Set(controlInventory.controls.map(control => control.id)).size === controlInventory.controls.length, "controls:inventory-ids-unique");
+const staticButtonTags = [...html.matchAll(/<(?:button|a)\b[^>]*class="[^"]*\bbtn\b[^"]*"[^>]*>/gi)].map(match => match[0]);
+const staticButtonIds = staticButtonTags.map(tag => tag.match(/\bid="([^"]+)"/i)?.[1]).filter(Boolean);
+const inventoriedButtonIds = controlInventory.controls.filter(control => control.geometryOwner === "LDS_BTN_GEOM_01").map(control => control.id);
+check(staticButtonTags.length === 17 && staticButtonIds.length === 17 && new Set(staticButtonIds).size === 17, "buttons:all-static-actions-have-stable-unique-ids", `${staticButtonTags.length}/${staticButtonIds.length}`);
+check(controlInventory.coverage?.actionControlCount === 17 && JSON.stringify([...staticButtonIds].sort()) === JSON.stringify([...inventoriedButtonIds].sort()), "buttons:static-dom-and-inventory-reverse-coverage", JSON.stringify({ dom: staticButtonIds, inventory: inventoriedButtonIds }));
+const buttonDecisionFailures = controlInventory.controls.filter(control => control.geometryOwner === "LDS_BTN_GEOM_01").flatMap(control => {
+  const expected = buttonOutcomeByLabelMode.get(control.labelMode);
+  const failures = [];
+  if (expected !== control.geometryRole) failures.push(`${control.id}:${control.labelMode}->${expected || "unresolved"}/${control.geometryRole}`);
+  for (const state of control.contractStates || []) {
+    if (buttonOutcomeByLabelMode.get(state.labelMode) !== state.geometryRole) failures.push(`${control.id}:${state.triggerId}:${state.labelMode}->${state.geometryRole}`);
+  }
+  return failures;
+});
+check(buttonDecisionFailures.length === 0, "buttons:inventory-label-mode-to-shape-parity", buttonDecisionFailures.join(" | "));
 const geometryFailures = controlInventory.controls.flatMap(control => {
   const tag = openingTagById(control.id);
   if (!tag) return [];
@@ -366,6 +441,29 @@ const geometryFailures = controlInventory.controls.flatMap(control => {
   return [];
 });
 check(geometryFailures.length === 0, "controls:geometry-role-resolves", geometryFailures.join(" | "));
+const componentButtonClassFailures = controlInventory.controls
+  .filter(control => control.geometryOwner === "component")
+  .filter(control => /class="[^"]*\bbtn(?:\s|\b)[^"]*"/.test(openingTagById(control.id)))
+  .map(control => control.id);
+check(componentButtonClassFailures.length === 0, "buttons:tabs-segments-and-fields-do-not-borrow-action-shape", componentButtonClassFailures.join(", "));
+const protectedGeometry = new Set([...buttonContract.protectedGeometryProperties, "width"]);
+const productButtonGeometryFailures = [];
+for (const match of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+  const declarations = [...match[2].matchAll(/([a-z-]+)\s*:\s*([^;]+);?/g)].map(item => [item[1].trim(), item[2].trim()]);
+  for (const selector of match[1].split(",").map(value => value.trim())) {
+    const buttonMatch = selector.match(/\.btn(?=[:.\[\s#>+~]|$)/);
+    if (!buttonMatch) continue;
+    const trailing = selector.slice(buttonMatch.index + buttonMatch[0].length);
+    if (/[>+~]/.test(trailing)) continue;
+    for (const [property, value] of declarations) {
+      if (!protectedGeometry.has(property)) continue;
+      const allowedLayoutWidth = property === "width" && value === "100%" && !selector.includes(".btn-icon");
+      const allowedPrintHide = property === "display" && value === "none" && selector.includes(".closing .btn");
+      if (!allowedLayoutWidth && !allowedPrintHide) productButtonGeometryFailures.push(`${selector}:${property}:${value}`);
+    }
+  }
+}
+check(productButtonGeometryFailures.length === 0, "buttons:product-css-does-not-redesign-lds-geometry", productButtonGeometryFailures.join(" | "));
 const resolutionBySelector = iconResolution.bindings;
 const iconControlFailures = controlInventory.controls.filter(control => control.iconRole).flatMap(control => {
   const fragment = elementFragmentById(control.id);
@@ -397,6 +495,8 @@ if (!writeReport) {
     check(JSON.stringify(manifest.triggeredPacks) === JSON.stringify(config.triggeredPacks), "manifest:triggered-packs");
     const criticalPaths = new Set(manifest.criticalAssets.map(record => record.path));
     check(versionedMachineSources.every(relative => criticalPaths.has(relative)), "manifest:implementation-library-machine-records-critical");
+    const priorV061 = manifest.historicalRecords.find(record => record.path === "site-manifest.v0.6.1.json");
+    check(priorV061?.artifactBuildId === "citychat-ui-20260823-01" && priorV061?.rollbackCommit === "b0ca776179ede86b6ec726e0ea5cfa2946c36593" && priorV061?.manifestSha256 === "ba4f3cf0ec47dbf24da34aaccca1afffbe2429e2f7c8d1dfd783a5d86be81436", "manifest:v0.6.1-rollback-record-byte-bound");
     const priorV06 = manifest.historicalRecords.find(record => record.path === "site-manifest.v0.6.json");
     check(priorV06?.artifactBuildId === "citychat-ui-20260822-03" && priorV06?.rollbackCommit === "d610ba86ab2e7d4322b38ae5868cb828220d772d" && priorV06?.manifestSha256 === "0ac4ef511bd24f6d696534d3b8443720cbed612cdc5b6ce4f872553c4b2fc46a", "manifest:v0.6-rollback-record-byte-bound");
   }

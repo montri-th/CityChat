@@ -7,33 +7,19 @@ import path from "node:path";
 
 const TOOL_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(TOOL_DIR, "..");
-const MAP_PATH = path.join(
-  PROJECT_ROOT,
-  "deployment",
-  "resources",
-  "citychat-ves",
-  "v0.6.1",
-  "citychat-color-role-map.json",
-);
+const RELEASE_CONFIG = JSON.parse(await readFile(path.join(PROJECT_ROOT, "release.config.json"), "utf8"));
+const DEPLOYMENT_ROOT = path.join(PROJECT_ROOT, "deployment");
+const IMPLEMENTATION_ROOT = path.join(DEPLOYMENT_ROOT, RELEASE_CONFIG.implementationRecordRoot);
+const MAP_PATH = path.join(IMPLEMENTATION_ROOT, "citychat-color-role-map.json");
 const SCHEMA_PATH = path.join(
-  PROJECT_ROOT,
-  "deployment",
+  DEPLOYMENT_ROOT,
   "schemas",
-  "citychat-color-role-map.schema.v0.6.1.json",
+  `citychat-color-role-map.schema.v${RELEASE_CONFIG.artifactVersion}.json`,
 );
-const FRAGMENT_PATH = path.join(
-  PROJECT_ROOT,
-  "deployment",
-  "resources",
-  "citychat-ves",
-  "v0.6.1",
-  "citychat-color-atlas.fragment.html",
-);
+const FRAGMENT_PATH = path.join(IMPLEMENTATION_ROOT, "citychat-color-atlas.fragment.html");
 const QA_PATH = path.join(
-  PROJECT_ROOT,
-  "deployment",
-  "qa",
-  "color-atlas-generation.v0.6.1.json",
+  DEPLOYMENT_ROOT,
+  RELEASE_CONFIG.implementationRecords.colorAtlasGenerationQa,
 );
 const GENERATOR_PATH = fileURLToPath(import.meta.url);
 const CHECK_MODE = process.argv.includes("--check");
@@ -289,7 +275,7 @@ async function loadInputs() {
 function validateMap(inputs) {
   const { map, mapText, schema, sourceById } = inputs;
   assert(schema.$schema === "https://json-schema.org/draft/2020-12/schema", "Unexpected schema draft");
-  assert(map.schemaVersion === "0.6.1", "Unexpected map schemaVersion");
+  assert(map.schemaVersion === RELEASE_CONFIG.artifactVersion, "Unexpected map schemaVersion");
   assert(map.mapId === "citychat-color-usage-atlas", "Unexpected mapId");
   assert(map.mode === "product_usage_overlay", "Map must be a product usage overlay");
   assert(map.fullLivingReference === false, "CityChat must not claim the full LDS living reference");
@@ -380,7 +366,7 @@ function validateMap(inputs) {
   const delivery = sourceById.get("colorDelivery").json;
   const recipes = sourceById.get("surfaceRecipes").json;
   const identity = sourceById.get("identityManifest").json;
-  const vesText = sourceById.get("approvedVes").text;
+  const designAddOnText = sourceById.get("approvedDesignAddOn").text;
   assert(tokens.meta.colorSetId === "color-srgb-05", "Token Color Set mismatch");
   assert(delivery.meta.id === "color-srgb-05", "Colour delivery Color Set mismatch");
   assert(recipes.colorSetId === "color-srgb-05", "Surface recipe Color Set mismatch");
@@ -407,7 +393,7 @@ function validateMap(inputs) {
   );
   const allAcceptanceIds = new Set(map.roles.flatMap((entry) => entry.acceptanceIds));
   for (const acceptanceId of allAcceptanceIds) {
-    assert(vesText.includes(acceptanceId), "Acceptance ID is absent from approved VES: " + acceptanceId);
+    assert(designAddOnText.includes(acceptanceId), "Acceptance ID is absent from the pinned CityChat guidance: " + acceptanceId);
   }
   const scaleRole = map.roles.find((entry) => entry.roleId === "cc.data.scale");
   assert(scaleRole.status === "reference_fixture", "Analytical scale must remain a reference fixture");
@@ -625,8 +611,8 @@ function buildQa(inputs, fragment) {
   const familyCounts = countBy(inputs.map.roles, "family");
   const statusCounts = { ...EXPECTED_STATUS_COUNTS };
   return {
-    schemaVersion: "0.6.1",
-    qaId: "citychat-color-atlas-generation-v0.6.1",
+    schemaVersion: "1.0",
+    qaId: `citychat-color-atlas-generation-v${RELEASE_CONFIG.artifactVersion}`,
     generator: "tools/generate-citychat-color-atlas.mjs",
     result: "pass",
     artifactBuildId: inputs.map.artifactBuildId,

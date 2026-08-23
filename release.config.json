@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
   "product": "citychat",
-  "artifactName": "CityChat VES Interactive Playground",
-  "artifactVersion": "0.6.1",
-  "artifactBuildId": "citychat-ui-20260823-01",
+  "artifactName": "CityChat DS Add-on Interactive Playground",
+  "artifactVersion": "0.7.0",
+  "artifactBuildId": "citychat-ui-20260823-02",
   "pageKind": "design-identity-playground",
   "profile": "designsystem.adoption",
   "language": "th",
@@ -15,30 +15,30 @@
   "machineValidation": "pending",
   "canonicalUrl": "https://montri-th.github.io/CityChat/",
   "releaseArtifacts": {
-    "manifest": "site-manifest.v0.6.1.json",
-    "buildCard": "build-card.v0.6.1.yml",
-    "controlInventory": "control-inventory.v0.6.1.json",
-    "implementationNotes": "implementation-notes.v0.6.1.md",
-    "automatedQa": "qa/automated.v0.6.1.json",
-    "renderedQa": "qa/rendered-local.v0.6.1.json",
-    "manualQa": "qa/manual-gates.v0.6.1.md",
+    "manifest": "site-manifest.v0.7.0.json",
+    "buildCard": "build-card.v0.7.0.yml",
+    "controlInventory": "control-inventory.v0.7.0.json",
+    "implementationNotes": "implementation-notes.v0.7.0.md",
+    "automatedQa": "qa/automated.v0.7.0.json",
+    "renderedQa": "qa/rendered-local.v0.7.0.json",
+    "manualQa": "qa/manual-gates.v0.7.0.md",
     "checksums": "assets/downloads/SHA256SUMS.txt"
   },
-  "sourceVisualExperience": {
-    "path": "assets/downloads/citychat-visual-experience-specification-v0.6.md",
-    "sha256": "5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21",
-    "status": "approved_normative_authoring_authority"
+  "sourceDesignAddOn": {
+    "path": "assets/downloads/citychat-ds-addon-v0.7.md",
+    "sha256": "b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b",
+    "status": "approved_normative_add_on"
   },
   "approvalRecords": [
     {
-      "path": "assets/downloads/citychat-ves-v0.6-approval.json",
-      "sha256": "9e9caa440f07348a0e2cabb53390e0aaab830e0aa1e3a742c51011a5cb0796cd",
-      "approvalId": "CC-VES-APP-20260822-01"
+      "path": "assets/downloads/citychat-ds-addon-v0.7-approval.json",
+      "sha256": "ac55bab150103da9a2f557345c7f0d99072ed89f433c063b22aabb6b8a4fe2f2",
+      "approvalId": "CC-DSA-APP-20260823-01"
     },
     {
-      "path": "assets/downloads/citychat-ves-playground-release-authorization.v0.6.1.json",
-      "sha256": "5c31044ac030fbcca3335fdbb6c8cef7d943737d6b150956dfcb5bdbf17cc4e3",
-      "approvalId": "CC-VES-PLAYGROUND-REL-20260823-01"
+      "path": "assets/downloads/citychat-ds-addon-playground-release-authorization.v0.7.0.json",
+      "sha256": "9f0194953217d6503af691ba802b627577e2f07b3779ed227ef7539feb905812",
+      "approvalId": "CC-DSA-PLAYGROUND-REL-20260823-01"
     }
   ],
   "productDependencies": [
@@ -71,16 +71,20 @@
     }
   ],
   "identityManifest": {
-    "path": "assets/identity/identity-assets.v0.6.1.json",
-    "sha256": "56a5cc6f4fbecdcb150deea5fc91f81a795cab32d8b746eeb639fd3b8bce6bef"
+    "path": "assets/identity/identity-assets.v0.7.0.json",
+    "sha256": "4b6b6af1861355349ae62fc9a61eb36f77ae403bd17a42f444549c8cbbba7faa"
   },
+  "implementationRecordRoot": "resources/citychat-ds-addon/v0.7.0",
   "implementationRecords": {
-    "iconMap": "resources/citychat-ves/v0.6.1/citychat-icon-map.json",
-    "iconResolution": "resources/citychat-ves/v0.6.1/citychat-icon-resolution.json",
-    "fontAssets": "resources/citychat-ves/v0.6.1/font-assets.manifest.json",
-    "semanticMotion": "resources/citychat-ves/v0.6.1/semantic-motion.citychat.yml",
-    "colorRoleMap": "resources/citychat-ves/v0.6.1/citychat-color-role-map.json",
-    "colorAtlasGenerationQa": "qa/color-atlas-generation.v0.6.1.json"
+    "buttonContract": "resources/citychat-ds-addon/v0.7.0/citychat-button-contract.json",
+    "assetLibrary": "assets/asset-library.v0.7.0.json",
+    "heroSpecimen": "resources/citychat-ds-addon/v0.7.0/cityscan-hero-specimen.html",
+    "iconMap": "resources/citychat-ds-addon/v0.7.0/citychat-icon-map.json",
+    "iconResolution": "resources/citychat-ds-addon/v0.7.0/citychat-icon-resolution.json",
+    "fontAssets": "resources/citychat-ds-addon/v0.7.0/font-assets.manifest.json",
+    "semanticMotion": "resources/citychat-ds-addon/v0.7.0/semantic-motion.citychat.yml",
+    "colorRoleMap": "resources/citychat-ds-addon/v0.7.0/citychat-color-role-map.json",
+    "colorAtlasGenerationQa": "qa/color-atlas-generation.v0.7.0.json"
   },
   "triggeredPacks": ["PUB-01", "DELIVERY-01:web"],
   "supportedChannels": ["github_pages_team_playground"],

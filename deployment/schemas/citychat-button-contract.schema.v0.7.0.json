@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/CityChat/schemas/citychat-button-contract.schema.v0.7.0.json",
+  "title": "CityChat button contract schema v0.7.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "contractId",
+    "artifactVersion",
+    "artifactBuildId",
+    "upstream",
+    "authorInputs",
+    "decisionModel",
+    "variants",
+    "componentOwnedExclusions",
+    "protectedGeometryProperties",
+    "acceptance",
+    "examples"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "schemaVersion": { "const": "1.0" },
+    "contractId": { "const": "citychat-button-contract-v0.7" },
+    "artifactVersion": { "const": "0.7.0" },
+    "artifactBuildId": { "type": "string", "minLength": 1 },
+    "upstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["designSystem", "authoringRevision", "ruleId", "kitVersion", "canonicalCssPath", "canonicalCssSha256"],
+      "properties": {
+        "designSystem": { "const": "Landometer Design System" },
+        "authoringRevision": { "const": "v0.9.0-r7" },
+        "ruleId": { "const": "BTN-GEOM-01" },
+        "kitVersion": { "const": "lds-kit-0.9.0-r4" },
+        "canonicalCssPath": { "type": "string", "minLength": 1 },
+        "canonicalCssSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "authorInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "forbidden"],
+      "properties": {
+        "allowed": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+        "forbidden": { "$ref": "#/$defs/nonEmptyUniqueStrings" }
+      }
+    },
+    "decisionModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "outcomes", "unresolvedOutcome"],
+      "properties": {
+        "question": { "type": "string", "minLength": 1 },
+        "outcomes": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["labelModes", "geometryRole"],
+            "properties": {
+              "labelModes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "$ref": "#/$defs/labelMode" }
+              },
+              "geometryRole": { "$ref": "#/$defs/geometryRole" }
+            }
+          }
+        },
+        "unresolvedOutcome": { "const": "blocked" }
+      }
+    },
+    "variants": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/variant" }
+    },
+    "componentOwnedExclusions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["tab", "segmented_selector", "form_control", "disclosure", "navigation_card", "status", "tag", "field", "card"]
+      }
+    },
+    "protectedGeometryProperties": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "rendered", "behavior"],
+      "properties": {
+        "source": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+        "rendered": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["viewports", "locales", "themes", "zoom", "checks"],
+          "properties": {
+            "viewports": {
+              "type": "array",
+              "minItems": 3,
+              "uniqueItems": true,
+              "items": { "type": "integer", "minimum": 320 }
+            },
+            "locales": { "type": "array", "const": ["th", "en"] },
+            "themes": { "type": "array", "const": ["light", "dark"] },
+            "zoom": {
+              "type": "array",
+              "minItems": 2,
+              "uniqueItems": true,
+              "items": { "type": "number", "minimum": 1, "maximum": 2 }
+            },
+            "checks": { "$ref": "#/$defs/nonEmptyUniqueStrings" }
+          }
+        },
+        "behavior": { "$ref": "#/$defs/nonEmptyUniqueStrings" }
+      }
+    },
+    "examples": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accepted", "rejected"],
+      "properties": {
+        "accepted": { "$ref": "#/$defs/examples" },
+        "rejected": { "$ref": "#/$defs/examples" }
+      }
+    }
+  },
+  "$defs": {
+    "labelMode": {
+      "enum": ["visible_text", "icon_and_visible_text", "icon_only_accessible_name"]
+    },
+    "geometryRole": {
+      "enum": ["lds_labelled_capsule", "lds_icon_circle"]
+    },
+    "nonEmptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "geometryRole",
+        "labelModes",
+        "requiredClasses",
+        "forbiddenClasses",
+        "minimumTargetCssPx",
+        "accessibleName",
+        "visibleText",
+        "iconCount",
+        "geometry"
+      ],
+      "properties": {
+        "geometryRole": { "$ref": "#/$defs/geometryRole" },
+        "labelModes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/labelMode" }
+        },
+        "requiredClasses": { "$ref": "#/$defs/nonEmptyUniqueStrings" },
+        "forbiddenClasses": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "minimumTargetCssPx": { "const": 44 },
+        "accessibleName": { "enum": ["visible_text", "required_attribute_or_equivalent"] },
+        "visibleText": { "enum": ["required", "forbidden"] },
+        "iconCount": { "enum": ["zero_or_one", "exactly_one"] },
+        "geometry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["radius", "inlinePadding", "alignment", "wrapping"],
+          "properties": {
+            "radius": { "enum": ["var(--radius-pill)", "50%"] },
+            "inlinePadding": { "enum": ["at_least_var(--space-5)", "0"] },
+            "alignment": { "const": "center_both_axes" },
+            "wrapping": { "enum": ["wrap_without_clipping_or_truncation", "not_applicable"] },
+            "equalWidthHeight": { "type": "boolean" },
+            "canonicalCssSize": { "enum": ["44px_by_44px", "content_sized"] }
+          }
+        }
+      }
+    },
+    "example": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "labelMode", "markup", "reason"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "labelMode": { "type": "string", "minLength": 1 },
+        "markup": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/example" }
+    }
+  }
+}

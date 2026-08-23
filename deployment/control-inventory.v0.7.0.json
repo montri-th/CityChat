@@ -1,0 +1,413 @@
+{
+  "schemaVersion": "2.0",
+  "artifactBuildId": "citychat-ui-20260823-02",
+  "iconMapRef": "resources/citychat-ds-addon/v0.7.0/citychat-icon-map.json",
+  "buttonContractRef": {
+    "contractId": "citychat-button-contract-v0.7",
+    "path": "resources/citychat-ds-addon/v0.7.0/citychat-button-contract.json",
+    "schemaPath": "schemas/citychat-button-contract.schema.v0.7.0.json",
+    "upstreamRuleId": "BTN-GEOM-01"
+  },
+  "coverage": {
+    "scope": "all action-style .btn controls plus every control that changes the interactive button-builder output",
+    "actionSelector": ".btn",
+    "actionControlCount": 17,
+    "requiresStableElementId": true,
+    "status": "complete"
+  },
+  "controlGroups": [
+    {
+      "id": "clarity-switch",
+      "kind": "segmented_selector",
+      "geometryOwner": "component",
+      "ownerRuleRef": "LDS BTN-GEOM-01 component-owned exclusion",
+      "memberIds": ["clarity-baseline", "clarity-addon"]
+    },
+    {
+      "id": "scan-state-controls",
+      "kind": "segmented_selector",
+      "geometryOwner": "component",
+      "ownerRuleRef": "LDS BTN-GEOM-01 component-owned exclusion",
+      "memberIds": ["scan-no-score", "scan-signal", "scan-locked"]
+    },
+    {
+      "id": "button-builder-form",
+      "kind": "form_control_group",
+      "geometryOwner": "component",
+      "ownerRuleRef": "native form controls",
+      "memberIds": ["button-mode-labelled", "button-mode-icon", "button-label-input", "button-icon-select"]
+    },
+    {
+      "id": "preflight-form",
+      "kind": "checklist",
+      "geometryOwner": "component",
+      "ownerRuleRef": "native form controls",
+      "memberIds": []
+    }
+  ],
+  "controls": [
+    {
+      "id": "theme-cycle",
+      "semanticKind": "action",
+      "kind": "button",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "changes the local theme preference",
+      "recovery": "system theme remains available"
+    },
+    {
+      "id": "locale-cycle",
+      "semanticKind": "action",
+      "kind": "button",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "changes the local language preference",
+      "recovery": "Thai initial HTML remains readable"
+    },
+    {
+      "id": "hero-cityscan-action",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "icon_and_visible_text",
+      "iconRole": "map",
+      "effect": "moves to the CityScan example and selects its no-data-safe state",
+      "recovery": "standard in-page navigation and the direct Story example remain available"
+    },
+    {
+      "id": "clarity-baseline",
+      "semanticKind": "segmented_selector",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_segment",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "shows the local needs-refinement comparison",
+      "recovery": "the add-on comparison remains one selection away"
+    },
+    {
+      "id": "clarity-addon",
+      "semanticKind": "segmented_selector",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_segment",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "shows the local DS Add-on comparison",
+      "recovery": "the needs-refinement comparison remains one selection away"
+    },
+    {
+      "id": "mode-story",
+      "semanticKind": "tab",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_tab",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "opens the local first-value example",
+      "recovery": "no remote effect"
+    },
+    {
+      "id": "mode-return",
+      "semanticKind": "tab",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_tab",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "opens the conceptual saved-and-return example",
+      "recovery": "no persistence or notification is simulated"
+    },
+    {
+      "id": "mode-scan",
+      "semanticKind": "tab",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_tab",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "opens the conceptual place-exploration example",
+      "recovery": "no CityScan runtime"
+    },
+    {
+      "id": "mode-officer",
+      "semanticKind": "tab",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_tab",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "opens the conceptual officer example",
+      "recovery": "no operational effect"
+    },
+    {
+      "id": "story-continue",
+      "semanticKind": "action",
+      "kind": "button",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "updates the local explanatory acknowledgement",
+      "recovery": "nothing is sent or saved"
+    },
+    {
+      "id": "preview-answer-options",
+      "semanticKind": "action",
+      "kind": "button",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "reveals the local answer-choice anatomy",
+      "recovery": "the same control closes it; nothing is sent or saved"
+    },
+    {
+      "id": "view-component-guidance",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "moves to the component guidance",
+      "recovery": "standard in-page navigation"
+    },
+    {
+      "id": "scan-no-score",
+      "semanticKind": "segmented_selector",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_segment",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "shows the fail-closed not-enough-data preview",
+      "recovery": "this remains the default preview state"
+    },
+    {
+      "id": "scan-signal",
+      "semanticKind": "segmented_selector",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_segment",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "shows a hypothetical ready-state layout",
+      "recovery": "no score or runtime state is created"
+    },
+    {
+      "id": "scan-locked",
+      "semanticKind": "segmented_selector",
+      "kind": "button",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_segment",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "shows a hypothetical kept-frame layout",
+      "recovery": "no persistence is created"
+    },
+    {
+      "id": "open-story-from-lock",
+      "semanticKind": "action",
+      "kind": "button",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "opens the local Story example and transfers focus",
+      "recovery": "Direct Story remains independently reachable"
+    },
+    {
+      "id": "view-handoff-checklist",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "moves to the developer handoff checklist",
+      "recovery": "standard in-page navigation"
+    },
+    {
+      "id": "open-button-contract",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "icon_and_visible_text",
+      "iconRole": "evidence",
+      "effect": "opens the versioned CityChat button contract",
+      "recovery": "standard browser back navigation"
+    },
+    {
+      "id": "button-mode-labelled",
+      "semanticKind": "form_control",
+      "kind": "radio",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_form",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "selects the labelled capsule preview",
+      "recovery": "the icon-only option remains available"
+    },
+    {
+      "id": "button-mode-icon",
+      "semanticKind": "form_control",
+      "kind": "radio",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_form",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "selects the icon-only circle preview",
+      "recovery": "the labelled option remains available"
+    },
+    {
+      "id": "button-label-input",
+      "semanticKind": "form_control",
+      "kind": "text_input",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_form",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "updates the preview label or accessible name",
+      "recovery": "a locale-aware fallback label prevents an unnamed action"
+    },
+    {
+      "id": "button-icon-select",
+      "semanticKind": "form_control",
+      "kind": "select",
+      "geometryOwner": "component",
+      "geometryRole": "component_owned_form",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "selects one approved icon role for the preview",
+      "recovery": "the previous selection remains available"
+    },
+    {
+      "id": "button-preview",
+      "semanticKind": "action",
+      "kind": "dynamic_button_specimen",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "icon_and_visible_text",
+      "iconRole": null,
+      "iconRolesAllowed": ["evidence", "map", "reply"],
+      "effect": "updates a local explanatory result",
+      "recovery": "nothing is sent, saved, or navigated",
+      "contractStates": [
+        {
+          "triggerId": "button-mode-labelled",
+          "geometryRole": "lds_labelled_capsule",
+          "labelMode": "icon_and_visible_text"
+        },
+        {
+          "triggerId": "button-mode-icon",
+          "geometryRole": "lds_icon_circle",
+          "labelMode": "icon_only_accessible_name"
+        }
+      ]
+    },
+    {
+      "id": "open-icon-map",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "icon_and_visible_text",
+      "iconRole": "evidence",
+      "effect": "opens the versioned icon map",
+      "recovery": "standard browser back navigation"
+    },
+    {
+      "id": "open-motion-recipe",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "icon_and_visible_text",
+      "iconRole": "evidence",
+      "effect": "opens the scoped semantic motion record",
+      "recovery": "standard browser back navigation"
+    },
+    {
+      "id": "open-color-role-map",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "icon_and_visible_text",
+      "iconRole": "evidence",
+      "effect": "opens the CityChat color role map",
+      "recovery": "standard browser back navigation"
+    },
+    {
+      "id": "open-control-examples",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "icon_and_visible_text",
+      "iconRole": "evidence",
+      "effect": "moves to the working button examples",
+      "recovery": "standard in-page navigation"
+    },
+    {
+      "id": "copy-preflight",
+      "semanticKind": "action",
+      "kind": "button",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "copies the completed checklist after explicit activation",
+      "recovery": "a visible download route remains available"
+    },
+    {
+      "id": "copy-prompt",
+      "semanticKind": "action",
+      "kind": "button",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "copies the starter prompt after explicit activation",
+      "recovery": "the downloadable prompt remains available"
+    },
+    {
+      "id": "closing-try-another",
+      "semanticKind": "navigation_action",
+      "kind": "link",
+      "geometryOwner": "LDS_BTN_GEOM_01",
+      "geometryRole": "lds_labelled_capsule",
+      "labelMode": "visible_text",
+      "iconRole": null,
+      "effect": "returns to the example selector",
+      "recovery": "standard in-page navigation"
+    }
+  ],
+  "presentationEnhancements": [
+    {
+      "id": "reading-order-example",
+      "mechanism": "IntersectionObserver adds inherited .reveal once",
+      "semanticEffect": "none",
+      "replay": false,
+      "telemetry": false
+    }
+  ],
+  "remoteEffects": [],
+  "disabledCapabilities": [
+    "analytics",
+    "authentication",
+    "remotePersistence",
+    "networkShare",
+    "cityScanScoring",
+    "lineIntegration",
+    "officerOperations",
+    "telemetry"
+  ]
+}

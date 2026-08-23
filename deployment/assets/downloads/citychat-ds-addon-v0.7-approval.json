@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "approvalId": "CC-DSA-APP-20260823-01",
+  "recordedAt": "2026-08-23",
+  "approverRef": "user:03-citychat-project-owner",
+  "source": "Explicit owner direction in the current 03 CityChat project task",
+  "sourceExcerptTh": "ขอเปลี่ยนชื่อเรียกจาก VES เป็น DS Add-on ได้มั้ย ... จัดไปครับ ทำให้ครบ republish ใหม่",
+  "document": {
+    "path": "assets/downloads/citychat-ds-addon-v0.7.md",
+    "version": "0.7",
+    "sha256": "b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b",
+    "status": "approved_normative_add_on"
+  },
+  "approvedScope": [
+    "Use CityChat DS Add-on as the current public and team-facing name",
+    "Govern CityChat-specific composition, plain-language presentation, two-shape action controls, downloadable asset guidance, place-first hero composition, and deterministic implementation recipes",
+    "Retain Landometer Design System v0.9.0-r7 as the owner of shared tokens, typography, control geometry, motion primitives, accessibility, and shared QA",
+    "Retain CityChat VES v0.6 as historical inherited guidance where this add-on does not replace a rule"
+  ],
+  "doesNotApprove": [
+    "Any CityChat runtime capability, persistence, receipt, official status, CityScan score, LINE integration, sharing, or officer workflow",
+    "Any unregistered asset, personal screenshot, personal photo, logo transformation, or inferred identity role",
+    "Any local button geometry, raw colour, font, icon, motion timing, or analytical scale outside the pinned owning records"
+  ],
+  "effective": true
+}

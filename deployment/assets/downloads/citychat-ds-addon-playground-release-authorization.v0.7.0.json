@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "1.0",
+  "authorizationId": "CC-DSA-PLAYGROUND-REL-20260823-01",
+  "recordedAt": "2026-08-23",
+  "approverRef": "user:03-citychat-project-owner",
+  "source": "Explicit owner request in the current 03 CityChat project task",
+  "sourceExcerptTh": "จัดไปครับ ทำให้ครบ republish ใหม่",
+  "artifact": {
+    "name": "CityChat DS Add-on Interactive Playground",
+    "version": "0.7.0",
+    "artifactBuildId": "citychat-ui-20260823-02",
+    "canonicalUrl": "https://montri-th.github.io/CityChat/",
+    "delivery": "internal_demo_public_projection",
+    "publicationBoundary": "source_limited_noindex_page_request"
+  },
+  "authorizes": [
+    "Replace the previous playground at the same URL after all source, rendered, provider, and live-byte checks pass",
+    "Publish the approved CityChat DS Add-on v0.7, the interactive two-shape button guide, the place-first CityScan teaching hero, the safe direct-download asset library, and the bounded icon, colour, motion, and starter records",
+    "Use the exact unchanged CityChat horizontal lockup PNG as separate header and footer roles for this exact build and URL",
+    "Use the exact pinned Landometer DS type, controls, tokens, focus, and motion primitives"
+  ],
+  "identityRoleApprovals": [
+    {
+      "approvalId": "CC-ID-ROLE-APP-20260823-HEADER-02",
+      "role": "header_lockup",
+      "assetPath": "assets/identity/citychat-horizontal-lockup.png",
+      "approvedContentHash": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62",
+      "artifactBuildId": "citychat-ui-20260823-02",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/",
+      "surfaceRef": "lds:--brand-beige",
+      "surfaceDecision": "direct_surface",
+      "themes": ["light", "dark", "system"],
+      "outputTypes": ["webpage"],
+      "transformPolicy": "none",
+      "cropPolicy": "none",
+      "maskPolicy": "none",
+      "filterPolicy": "none",
+      "recolorPolicy": "none",
+      "animationPolicy": "none",
+      "qaRequired": ["CC-DA-ASSET-01", "rendered-local.v0.7.0", "provider-required-check"]
+    },
+    {
+      "approvalId": "CC-ID-ROLE-APP-20260823-FOOTER-02",
+      "role": "footer_lockup",
+      "assetPath": "assets/identity/citychat-horizontal-lockup.png",
+      "approvedContentHash": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62",
+      "artifactBuildId": "citychat-ui-20260823-02",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/",
+      "surfaceRef": "lds:--brand-beige",
+      "surfaceDecision": "direct_surface",
+      "themes": ["light", "dark", "system"],
+      "outputTypes": ["webpage"],
+      "transformPolicy": "none",
+      "cropPolicy": "none",
+      "maskPolicy": "none",
+      "filterPolicy": "none",
+      "recolorPolicy": "none",
+      "animationPolicy": "none",
+      "qaRequired": ["CC-DA-ASSET-01", "rendered-local.v0.7.0", "provider-required-check"]
+    }
+  ],
+  "doesNotAuthorize": [
+    "Any product runtime or remote effect",
+    "Any personal screenshot, portrait, private project image, or unsupported asset in the public library",
+    "Use of source-only SVG files as runtime logo, favicon, compact mark, or motif",
+    "A complete LDS reference, analytical scale, search indexing, telemetry, or product conformance claim"
+  ],
+  "publicationAuthorization": true,
+  "runtimeProductReleaseApproved": false,
+  "effectiveWhen": [
+    "Local source and rendered checks pass on frozen bytes",
+    "Protected pull-request checks pass on the exact reviewed commit",
+    "The main-branch Pages deployment succeeds",
+    "Live critical assets match merged source bytes"
+  ]
+}
