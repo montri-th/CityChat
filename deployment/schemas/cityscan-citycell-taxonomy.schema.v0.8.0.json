@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cityscan-citycell-taxonomy.schema.v0.8.0.json",
+  "title": "CityScan CityCell taxonomy",
+  "type": "object",
+  "required": ["schemaVersion", "taxonomyId", "taxonomyVersion", "ruleAuthority", "sourceVersion", "mediaStatus", "runtimeBoundary", "overallScoreEligible", "topics"],
+  "properties": {
+    "schemaVersion": {"const": "0.8.0"},
+    "overallScoreEligible": {"const": false},
+    "topics": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["topicId", "publicPrompt", "promptOnly", "overallScoreEligible", "cityCellGroups"],
+        "properties": {
+          "topicId": {"enum": ["daily_life", "visitor_identity", "local_activity"]},
+          "promptOnly": {"const": true},
+          "overallScoreEligible": {"const": false},
+          "cityCellGroups": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["groupId", "boardLabel", "publicLabel", "mappingStatus", "cells"],
+              "properties": {
+                "mappingStatus": {"enum": ["confirmed", "candidate", "unresolved"]},
+                "cells": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": ["cityCellId", "publicLabel", "presentationKind", "valueState", "claimLevel", "publicMeaning", "forbiddenClaims"],
+                    "properties": {
+                      "presentationKind": {"enum": ["observation", "proxy", "question", "unavailable"]},
+                      "valueState": {"enum": ["observed", "observed_zero", "unknown", "out_of_coverage", "stale", "not_applicable", "suppressed_privacy"]},
+                      "claimLevel": {"enum": ["no_claim", "observe", "compare", "flag", "suggest_question"]}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

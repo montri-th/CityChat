@@ -29,6 +29,10 @@ const readJson = relative => JSON.parse(readFileSync(path.join(deployment, relat
 const implementationRecordRoot = config.implementationRecordRoot;
 const implementationPath = name => `${implementationRecordRoot}/${name}`;
 const schemaPath = name => `schemas/${name}.v${config.artifactVersion}.json`;
+const cityScanTaxonomyPath = config.implementationRecords.cityScanTaxonomy || implementationPath("cityscan-citycell-taxonomy.json");
+const caseLibraryPath = config.implementationRecords.caseLibrary || implementationPath("citychat-case-library.json");
+const configuredImplementationRecords = Object.values(config.implementationRecords || {})
+  .filter(relative => typeof relative === "string" && relative.length > 0);
 const generatorPath = path.join(root, "tools/generate-citychat-color-atlas.mjs");
 const importerPath = path.join(root, "tools/import-material-symbols.mjs");
 const escapeRegex = value => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -55,11 +59,13 @@ function elementFragmentById(id) {
   return closing < 0 ? html.slice(opening, html.indexOf(">", marker) + 1) : html.slice(opening, closing + tag.length + 3);
 }
 
-const versionedMachineSources = [
+const versionedMachineSources = [...new Set([
   implementationPath("citychat-color-atlas.fragment.html"),
   implementationPath("citychat-color-role-map.json"),
   implementationPath("citychat-button-contract.json"),
   implementationPath("cityscan-hero-specimen.html"),
+  cityScanTaxonomyPath,
+  caseLibraryPath,
   implementationPath("citychat-icon-map.json"),
   implementationPath("citychat-icon-resolution.json"),
   implementationPath("font-assets.manifest.json"),
@@ -71,11 +77,13 @@ const versionedMachineSources = [
   schemaPath("citychat-icon-resolution.schema"),
   schemaPath("semantic-motion-citychat.schema"),
   schemaPath("citychat-asset-library.schema"),
-  config.implementationRecords.assetLibrary,
+  schemaPath("cityscan-citycell-taxonomy.schema"),
+  schemaPath("citychat-case-library.schema"),
+  ...configuredImplementationRecords,
   `qa/color-atlas-generation.v${config.artifactVersion}.json`,
   "assets/icons/material-symbols-rounded-citychat-v368.ttf",
   "assets/icons/LICENSE.material-symbols.txt"
-];
+])];
 const testedSourcePaths = [
   ["release.config.json", path.join(root, "release.config.json")],
   ["deployment/index.html", path.join(deployment, "index.html")],
@@ -108,7 +116,7 @@ check(html.includes('name="robots" content="noindex,nofollow,noarchive"'), "publ
 check(html.includes(`rel="canonical" href="${config.canonicalUrl}"`), "publication:canonical");
 check(!/(property="og:|name="twitter:|application\/ld\+json|rel="manifest"|rel="icon")/.test(html), "identity:no-unapproved-public-discovery-assets");
 check(html.includes("source_limited") && html.includes("ไม่ใช่ระบบ CityChat ที่เปิดใช้งานจริง") && html.includes("not a live CityChat product"), "truth:visible-source-limited-boundary");
-check(html.includes("CityChat DS Add-on v0.7") && html.includes("ตัวอย่างสำหรับทีม"), "ds-addon:visible-version-and-fixture-boundary");
+check(html.includes("CityChat DS Add-on v0.8") && html.includes("ตัวอย่างสำหรับทีม"), "ds-addon:visible-version-and-fixture-boundary");
 check(html.includes("ยังบอกไม่ได้") && html.includes("ดูที่มา"), "copy:plain-thai-truth-and-disclosure");
 check(html.includes('data-copy-layer="team"'), "copy:team-layer-explicit");
 check(!/\bAI\b|inspector|claim ceiling|truth envelope|source_limited|SIGNAL_READY|NO_SCORE/i.test(frontstageHtml), "copy:no-internal-jargon-in-frontstage");
@@ -164,6 +172,35 @@ check(app.includes("IntersectionObserver") && app.includes(":scope > [data-revea
 check(app.includes("prefers-reduced-motion: reduce") && app.includes("unobserve"), "motion:reduced-motion-and-unobserve-contract");
 check(!/setInterval\s*\(|requestAnimationFrame\s*\([^)]*requestAnimationFrame|animationiteration/i.test(app), "motion:no-looping-runtime-mechanism");
 
+// Inspect only the active CityChat release surface. The pinned LDS vendor package
+// and superseded release records are immutable evidence and intentionally stay
+// outside this product-identity leak gate.
+const currentScopeLeakCandidates = [
+  ["README.md", path.join(root, "README.md")],
+  ["DESIGN.md", path.join(root, "DESIGN.md")],
+  ["deployment/index.html", path.join(deployment, "index.html")],
+  ["deployment/citychat.css", path.join(deployment, "citychat.css")],
+  ["deployment/app.js", path.join(deployment, "app.js")],
+  ["deployment/llms.txt", path.join(deployment, "llms.txt")],
+  ["deployment/resources/index.json", path.join(deployment, "resources/index.json")],
+  [`deployment/${config.releaseArtifacts.buildCard}`, path.join(deployment, config.releaseArtifacts.buildCard)],
+  [`deployment/${config.releaseArtifacts.controlInventory}`, path.join(deployment, config.releaseArtifacts.controlInventory)],
+  [`deployment/${config.releaseArtifacts.implementationNotes}`, path.join(deployment, config.releaseArtifacts.implementationNotes)],
+  [`deployment/${config.identityManifest.path}`, path.join(deployment, config.identityManifest.path)],
+  [`deployment/${config.sourceDesignAddOn.path}`, path.join(deployment, config.sourceDesignAddOn.path)],
+  ...config.approvalRecords.map(record => [`deployment/${record.path}`, path.join(deployment, record.path)]),
+  ...versionedMachineSources.map(relative => [`deployment/${relative}`, path.join(deployment, relative)])
+];
+const textLikeExtensions = new Set([".css", ".html", ".js", ".json", ".md", ".txt", ".yml", ".yaml"]);
+const seenLeakPaths = new Set();
+const crossProductIdentityLeaks = currentScopeLeakCandidates.flatMap(([label, absolute]) => {
+  if (seenLeakPaths.has(absolute) || !existsSync(absolute) || !textLikeExtensions.has(path.extname(absolute).toLowerCase())) return [];
+  seenLeakPaths.add(absolute);
+  const match = readFileSync(absolute, "utf8").match(/\bijji\b|--(?:ldm-)?product-ijji(?:-[a-z0-9-]+)?/i);
+  return match ? [`${label}:${match[0]}`] : [];
+});
+check(crossProductIdentityLeaks.length === 0, "identity:no-cross-product-identity-in-current-release-scope", crossProductIdentityLeaks.join(" | "));
+
 const localRefs = [...html.matchAll(/(?:href|src)="([^"]+)"/g)]
   .map(match => match[1])
   .filter(ref => !ref.startsWith("#") && !ref.startsWith("http") && !ref.startsWith("mailto:") && !ref.startsWith("data:"));
@@ -192,9 +229,88 @@ for (const record of [config.sourceDesignAddOn, ...config.approvalRecords, ...co
   check(sha256(readFileSync(path.join(deployment, record.path))) === record.sha256, `source:${path.basename(record.path)}:hash`);
 }
 const sourceDesignAddOn = readFileSync(path.join(deployment, config.sourceDesignAddOn.path), "utf8");
-check(sourceDesignAddOn.includes("ไม่สร้าง Design System ซ้ำอีกชุด") && sourceDesignAddOn.includes("หน้าที่คนเห็นต้องพูดเหมือนคนคุยกับคน"), "source:ds-addon-boundary-and-language");
+check(sourceDesignAddOn.includes("ไม่สร้าง Design System ซ้ำอีกชุด") && sourceDesignAddOn.includes("พูดเหมือนคนคุยกับคน") && sourceDesignAddOn.includes("หน้าที่ชาวบ้านหรือเจ้าหน้าที่เห็นต้องสั้น ง่าย และบอกประโยชน์ตรง ๆ"), "source:ds-addon-boundary-and-plain-language");
 const experienceContract = readFileSync(path.join(deployment, config.productDependencies[0].path), "utf8");
 check(experienceContract.includes("Canonical CityScan events MUST retain their owning names"), "source:canonical-cityscan-event-map");
+
+const bilingualTextPresent = value => Boolean(value && typeof value.th === "string" && value.th.trim() && typeof value.en === "string" && value.en.trim());
+const exactSet = (actual, expected) => actual.length === expected.length
+  && [...actual].sort().every((value, index) => value === [...expected].sort()[index]);
+
+const cityScanTaxonomy = readJson(cityScanTaxonomyPath);
+const cityScanTaxonomySchema = readJson(schemaPath("cityscan-citycell-taxonomy.schema"));
+const taxonomySchemaAbsolute = resolveRecordPath(cityScanTaxonomyPath, cityScanTaxonomy.$schema);
+check(schemaRequiredFields(cityScanTaxonomy, cityScanTaxonomySchema).length === 0, "cityscan:taxonomy-schema-required-fields", schemaRequiredFields(cityScanTaxonomy, cityScanTaxonomySchema).join(", "));
+check(taxonomySchemaAbsolute === path.join(deployment, schemaPath("cityscan-citycell-taxonomy.schema")) && existsSync(taxonomySchemaAbsolute), "cityscan:taxonomy-schema-ref-resolves", taxonomySchemaAbsolute);
+check(cityScanTaxonomy.schemaVersion === config.artifactVersion && cityScanTaxonomy.ruleAuthority === "citychat-ds-addon-v0.8" && cityScanTaxonomy.runtimeBoundary === "conceptual_fixture_only", "cityscan:taxonomy-version-authority-and-runtime-boundary");
+const expectedCityScanTopics = [
+  ["daily_life", "แถวนี้น่าอยู่ยังไง"],
+  ["visitor_identity", "น่าเที่ยวตรงไหน"],
+  ["local_activity", "น่าค้าขายอะไรดี"]
+];
+const actualCityScanTopics = (cityScanTaxonomy.topics || []).map(topic => [topic.topicId, topic.publicPrompt?.th]);
+check(JSON.stringify(actualCityScanTopics) === JSON.stringify(expectedCityScanTopics), "cityscan:exact-three-topics-and-thai-prompts", JSON.stringify(actualCityScanTopics));
+check(cityScanTaxonomy.overallScoreEligible === false && cityScanTaxonomy.topics.every(topic => topic.promptOnly === true && topic.overallScoreEligible === false), "cityscan:no-overall-score-at-taxonomy-or-topic-level");
+const taxonomyMetadataFailures = cityScanTaxonomy.topics.flatMap(topic => {
+  const failures = [];
+  if (!bilingualTextPresent(topic.publicPrompt)) failures.push(`${topic.topicId}:prompt`);
+  if (!Array.isArray(topic.cityCellGroups) || topic.cityCellGroups.length === 0) failures.push(`${topic.topicId}:groups`);
+  for (const group of topic.cityCellGroups || []) {
+    const groupRef = `${topic.topicId}.${group.groupId || "missing-group"}`;
+    if (!group.groupId || !group.boardLabel || !bilingualTextPresent(group.publicLabel) || !group.mappingStatus || !bilingualTextPresent(group.groupBoundary)) failures.push(`${groupRef}:metadata`);
+    if (!Array.isArray(group.cells) || group.cells.length === 0) failures.push(`${groupRef}:cells`);
+    for (const cell of group.cells || []) {
+      const cellRef = cell.cityCellId || `${groupRef}.missing-cell`;
+      if (!cell.cityCellId || !bilingualTextPresent(cell.publicLabel) || !cell.presentationKind || !cell.valueState || !cell.claimLevel || !Object.hasOwn(cell, "evidenceRef") || !bilingualTextPresent(cell.publicMeaning) || !Array.isArray(cell.forbiddenClaims) || cell.forbiddenClaims.length === 0) failures.push(`${cellRef}:metadata`);
+    }
+  }
+  return failures;
+});
+check(taxonomyMetadataFailures.length === 0, "cityscan:topic-group-citycell-required-metadata", taxonomyMetadataFailures.join(" | "));
+const allCityCells = cityScanTaxonomy.topics.flatMap(topic => topic.cityCellGroups.flatMap(group => group.cells));
+const cityCellIds = allCityCells.map(cell => cell.cityCellId);
+check(new Set(cityCellIds).size === cityCellIds.length, "cityscan:citycell-ids-unique", cityCellIds.filter((id, index) => cityCellIds.indexOf(id) !== index).join(", "));
+const localActivityTopic = cityScanTaxonomy.topics.find(topic => topic.topicId === "local_activity");
+const visitorsGroup = localActivityTopic?.cityCellGroups.find(group => group.groupId === "visitors");
+const visitorCell = visitorsGroup?.cells.find(cell => cell.cityCellId === "local_activity.visitors_unresolved");
+const visitorNumericZeros = visitorCell
+  ? Object.entries(visitorCell).filter(([key, value]) => /(?:value|count|total|score)/i.test(key) && value === 0).map(([key]) => key)
+  : ["missing-cell"];
+check(visitorsGroup?.mappingStatus === "unresolved" && visitorsGroup.cells.length === 1 && visitorCell?.valueState === "unknown" && visitorCell?.presentationKind === "unavailable" && visitorCell?.claimLevel === "no_claim" && visitorCell?.evidenceRef === null && visitorCell?.forbiddenClaims?.includes("zero_visitors") && visitorNumericZeros.length === 0, "cityscan:visitors-remain-unknown-unresolved-not-zero", visitorNumericZeros.join(", "));
+const hotelMappingCell = localActivityTopic?.cityCellGroups.flatMap(group => group.cells).find(cell => cell.cityCellId === "local_activity.hotel_mapping");
+check(hotelMappingCell?.mappingStatus === "unresolved" && hotelMappingCell?.valueState === "unknown" && hotelMappingCell?.presentationKind === "unavailable" && hotelMappingCell?.claimLevel === "no_claim" && hotelMappingCell?.evidenceRef === null && ["residents", "visitors", "occupancy"].every(claim => hotelMappingCell?.forbiddenClaims?.includes(claim)), "cityscan:hotel-mapping-remains-explicitly-unresolved");
+check(exactSet(cityScanTaxonomy.handoffIdentity?.required || [], ["caseId", "contextRef", "snapshotRef", "topicId", "responseVersion"]) && exactSet(cityScanTaxonomy.handoffIdentity?.surfaces || [], ["cityscan", "citychat_public", "officer_citymeter"]), "cityscan:handoff-identity-required-metadata");
+
+const caseLibrary = readJson(caseLibraryPath);
+const caseLibrarySchema = readJson(schemaPath("citychat-case-library.schema"));
+const caseSchemaAbsolute = resolveRecordPath(caseLibraryPath, caseLibrary.$schema);
+check(schemaRequiredFields(caseLibrary, caseLibrarySchema).length === 0, "cases:library-schema-required-fields", schemaRequiredFields(caseLibrary, caseLibrarySchema).join(", "));
+check(caseSchemaAbsolute === path.join(deployment, schemaPath("citychat-case-library.schema")) && existsSync(caseSchemaAbsolute), "cases:library-schema-ref-resolves", caseSchemaAbsolute);
+check(caseLibrary.schemaVersion === config.artifactVersion && caseLibrary.ruleAuthority === "citychat-ds-addon-v0.8" && caseLibrary.runtimeBoundary === "local_fixture_only", "cases:library-version-authority-and-runtime-boundary");
+const expectedLensIds = ["scan", "citizen", "officer"];
+check(JSON.stringify(caseLibrary.lenses.map(lens => lens.lensId)) === JSON.stringify(expectedLensIds) && exactSet(caseLibrary.lenses.map(lens => lens.surface), ["cityscan", "citychat_public", "officer_citymeter"]) && caseLibrary.lenses.every(lens => bilingualTextPresent(lens.label)), "cases:exact-three-product-lenses");
+check(exactSet(caseLibrary.productScope || [], ["cityscan", "citychat_public", "officer_citymeter"]) && exactSet(Object.keys(caseLibrary.teamLenses || {}), ["product", "design", "development", "sales"]) && Object.values(caseLibrary.teamLenses || {}).every(bilingualTextPresent), "cases:product-scope-and-four-team-lenses");
+const constructiveCases = caseLibrary.cases.filter(caseRecord => caseRecord.caseType === "constructive");
+const rejectedCases = caseLibrary.cases.filter(caseRecord => caseRecord.caseType === "rejected");
+const constructiveTopicMap = new Map(constructiveCases.map(caseRecord => [caseRecord.caseId, caseRecord.topicId]));
+check(caseLibrary.cases.length === 4 && constructiveCases.length === 3 && rejectedCases.length === 1 && constructiveTopicMap.get("LIVE-01") === "daily_life" && constructiveTopicMap.get("VISIT-01") === "visitor_identity" && constructiveTopicMap.get("TRADE-01") === "local_activity", "cases:three-constructive-and-one-rejected-with-topic-map", JSON.stringify([...constructiveTopicMap]));
+const constructiveMetadataFailures = constructiveCases.flatMap(caseRecord => {
+  const failures = [];
+  if (!caseRecord.caseId || !caseRecord.contextRef || !caseRecord.snapshotRef || !caseRecord.topicId || !bilingualTextPresent(caseRecord.title) || !bilingualTextPresent(caseRecord.firstValue)) failures.push(`${caseRecord.caseId || "missing-case"}:metadata`);
+  if (!exactSet(Object.keys(caseRecord.lenses || {}), expectedLensIds)) failures.push(`${caseRecord.caseId}:lenses`);
+  for (const lensId of expectedLensIds) {
+    const lens = caseRecord.lenses?.[lensId];
+    if (!lens || !bilingualTextPresent(lens.firstMeaning) || !Object.hasOwn(lens, "question") || (lens.question !== null && !bilingualTextPresent(lens.question)) || !bilingualTextPresent(lens.primaryAction) || !bilingualTextPresent(lens.immediateConsequence) || !bilingualTextPresent(lens.boundary)) failures.push(`${caseRecord.caseId}.${lensId}:metadata`);
+  }
+  return failures;
+});
+check(constructiveMetadataFailures.length === 0, "cases:constructive-lenses-required-metadata", constructiveMetadataFailures.join(" | "));
+const rejectedCase = rejectedCases[0];
+check(rejectedCase?.caseId === "REJECT-01" && rejectedCase?.topicId === null && !Object.hasOwn(rejectedCase || {}, "lenses") && bilingualTextPresent(rejectedCase?.title) && bilingualTextPresent(rejectedCase?.badExample) && /CityScore\s*87/i.test(rejectedCase?.badExample?.en || "") && Array.isArray(rejectedCase?.reasons) && rejectedCase.reasons.length >= 3 && rejectedCase.reasons.every(bilingualTextPresent) && bilingualTextPresent(rejectedCase?.recovery), "cases:one-aggregate-score-rejection-with-recovery");
+const aggregateScoreCases = caseLibrary.cases.filter(caseRecord => /CityScore\s*\d+|คะแนน(?:รวม)?\s*\d+/i.test(JSON.stringify(caseRecord)));
+check(aggregateScoreCases.length === 1 && aggregateScoreCases[0]?.caseId === "REJECT-01", "cases:aggregate-score-appears-only-in-rejected-case", aggregateScoreCases.map(caseRecord => caseRecord.caseId).join(", "));
+check(expectedCityScanTopics.every(([, prompt]) => html.includes(prompt)) && ["live", "visit", "trade", "reject"].every(caseId => html.includes(`data-ecosystem-case-view="${caseId}"`)) && expectedLensIds.every(lensId => html.includes(`data-ecosystem-lens-view="${lensId}"`)), "cases:playground-covers-three-prompts-four-cases-and-three-lenses");
+check(app.includes('query.get("case")') && app.includes('query.get("lens")') && app.includes('url.searchParams.set("case"') && app.includes('url.searchParams.set("lens"'), "cases:url-restoration-and-sharing-contract");
 
 const colorMapPath = implementationPath("citychat-color-role-map.json");
 const colorSchemaPath = schemaPath("citychat-color-role-map.schema");
@@ -236,10 +352,25 @@ const expectedColorHashes = {
 };
 check(Object.entries(expectedColorHashes).every(([key, value]) => colorQa.hashes?.[key] === value), "color:generation-qa-byte-bound", JSON.stringify({ expected: expectedColorHashes, recorded: colorQa.hashes }));
 check(html.includes('id="color-atlas"') && html.includes(`href="${colorMapPath}"`) && /data-color-role-id=/.test(html), "color:visible-atlas-and-machine-map-linked");
-const renderedColorRoles = [...html.matchAll(/data-color-role-id="([^"]+)"/g)].map(match => match[1]);
-const governedColorBindings = new Set(colorMap.roles.flatMap(role => role.bindings || []).map(binding => binding.implementation));
-const renderedColorTokens = [...html.matchAll(/data-color-token="([^"]+)"/g)].map(match => match[1]);
-check(renderedColorRoles.length === renderedColorTokens.length && renderedColorTokens.every(token => governedColorBindings.has(token)), "color:visible-swatches-resolve-to-governed-bindings", renderedColorTokens.filter(token => !governedColorBindings.has(token)).join(", "));
+const governedColorBindingsByRole = new Map(colorMap.roles.map(role => [
+  role.roleId,
+  new Set((role.bindings || []).map(binding => binding.implementation))
+]));
+const renderedColorSwatches = [...html.matchAll(/<[^>]+\bdata-color-role-id="[^"]+"[^>]*>/g)].map(match => {
+  const tag = match[0];
+  return {
+    roleId: tag.match(/\bdata-color-role-id="([^"]+)"/)?.[1] || "",
+    token: tag.match(/\bdata-color-token="([^"]+)"/)?.[1] || ""
+  };
+});
+const renderedPairFailures = renderedColorSwatches.flatMap(({ roleId, token }) => {
+  const governedTokens = governedColorBindingsByRole.get(roleId);
+  if (!governedTokens) return [`${roleId || "missing-role"}:${token || "missing-token"}:unknown-role`];
+  if (!token) return [`${roleId}:missing-token`];
+  return governedTokens.has(token) ? [] : [`${roleId}:${token}:not-bound-to-role`];
+});
+const renderedColorTokenCount = (html.match(/\bdata-color-token="[^"]+"/g) || []).length;
+check(renderedColorSwatches.length > 0 && renderedColorSwatches.length === renderedColorTokenCount && renderedPairFailures.length === 0, "color:visible-role-token-pairs-resolve-exactly", renderedPairFailures.join(" | "));
 check((colorFragment.match(/data-role-id=/g) || []).length === 45 && colorRoleIds.every(roleId => colorFragment.includes(`data-role-id="${roleId}"`)), "color:generated-fragment-covers-every-role");
 
 const iconMapPath = implementationPath("citychat-icon-map.json");
@@ -364,7 +495,7 @@ const canonicalButtonCss = path.join(deployment, config.upstream.vendorPath, "bu
 const buttonContractMissing = schemaRequiredFields(buttonContract, buttonContractSchema);
 check(buttonContractMissing.length === 0, "buttons:contract-schema-required-fields", buttonContractMissing.join(", "));
 check(buttonSchemaAbsolute === path.join(deployment, schemaPath("citychat-button-contract.schema")) && existsSync(buttonSchemaAbsolute), "buttons:contract-schema-ref-resolves", buttonSchemaAbsolute);
-check(buttonContract.contractId === "citychat-button-contract-v0.7" && buttonContract.artifactVersion === config.artifactVersion && buttonContract.artifactBuildId === config.artifactBuildId, "buttons:contract-version-and-build-bound");
+check(buttonContract.contractId === "citychat-button-contract-v0.8" && buttonContract.artifactVersion === config.artifactVersion && buttonContract.artifactBuildId === config.artifactBuildId, "buttons:contract-version-and-build-bound");
 check(buttonContract.upstream.ruleId === "BTN-GEOM-01" && buttonContract.upstream.canonicalCssSha256 === sha256(readFileSync(canonicalButtonCss)), "buttons:canonical-lds-css-byte-bound");
 const buttonOutcomePairs = buttonContract.decisionModel.outcomes.flatMap(outcome => outcome.labelModes.map(labelMode => [labelMode, outcome.geometryRole]));
 const buttonOutcomeByLabelMode = new Map(buttonOutcomePairs);
@@ -381,7 +512,7 @@ check(assetSchemaAbsolute === path.join(deployment, schemaPath("citychat-asset-l
 check(assetLibrary.artifactVersion === config.artifactVersion && assetLibrary.artifactBuildId === config.artifactBuildId && assetLibrary.status === "safe_public_download_catalog", "assets:library-version-build-and-boundary");
 const assetIds = assetLibrary.assets.map(asset => asset.assetId);
 const assetPaths = assetLibrary.assets.map(asset => asset.path);
-check(assetLibrary.assets.length === 32 && new Set(assetIds).size === 32 && new Set(assetPaths).size === 32, "assets:complete-unique-32-file-catalog", `${assetLibrary.assets.length}/${new Set(assetPaths).size}`);
+check(assetLibrary.assets.length > 0 && new Set(assetIds).size === assetLibrary.assets.length && new Set(assetPaths).size === assetLibrary.assets.length, "assets:complete-unique-file-catalog", `${assetLibrary.assets.length}/${new Set(assetPaths).size}`);
 const requiredDownloadPaths = [
   "assets/identity/citychat-horizontal-lockup.png",
   "assets/identity/citychat-lockup.source.svg",
@@ -389,9 +520,13 @@ const requiredDownloadPaths = [
   "assets/icons/material-symbols-rounded-citychat-v368.ttf",
   implementationPath("citychat-button-contract.json"),
   implementationPath("cityscan-hero-specimen.html"),
-  implementationPath("citychat-color-atlas.fragment.html")
+  implementationPath("citychat-color-atlas.fragment.html"),
+  cityScanTaxonomyPath,
+  caseLibraryPath,
+  schemaPath("cityscan-citycell-taxonomy.schema"),
+  schemaPath("citychat-case-library.schema")
 ];
-check(requiredDownloadPaths.every(relative => assetPaths.includes(relative)), "assets:identity-icon-button-hero-and-atlas-downloads-listed", requiredDownloadPaths.filter(relative => !assetPaths.includes(relative)).join(", "));
+check(requiredDownloadPaths.every(relative => assetPaths.includes(relative)), "assets:identity-icon-button-hero-atlas-taxonomy-and-case-downloads-listed", requiredDownloadPaths.filter(relative => !assetPaths.includes(relative)).join(", "));
 const assetFailures = assetLibrary.assets.flatMap(asset => {
   const failures = [];
   const normalized = path.posix.normalize(asset.path);
@@ -421,8 +556,9 @@ check(new Set(controlInventory.controls.map(control => control.id)).size === con
 const staticButtonTags = [...html.matchAll(/<(?:button|a)\b[^>]*class="[^"]*\bbtn\b[^"]*"[^>]*>/gi)].map(match => match[0]);
 const staticButtonIds = staticButtonTags.map(tag => tag.match(/\bid="([^"]+)"/i)?.[1]).filter(Boolean);
 const inventoriedButtonIds = controlInventory.controls.filter(control => control.geometryOwner === "LDS_BTN_GEOM_01").map(control => control.id);
-check(staticButtonTags.length === 17 && staticButtonIds.length === 17 && new Set(staticButtonIds).size === 17, "buttons:all-static-actions-have-stable-unique-ids", `${staticButtonTags.length}/${staticButtonIds.length}`);
-check(controlInventory.coverage?.actionControlCount === 17 && JSON.stringify([...staticButtonIds].sort()) === JSON.stringify([...inventoriedButtonIds].sort()), "buttons:static-dom-and-inventory-reverse-coverage", JSON.stringify({ dom: staticButtonIds, inventory: inventoriedButtonIds }));
+const declaredActionControlCount = controlInventory.coverage?.actionControlCount;
+check(Number.isInteger(declaredActionControlCount) && staticButtonTags.length === declaredActionControlCount && staticButtonIds.length === declaredActionControlCount && new Set(staticButtonIds).size === declaredActionControlCount, "buttons:all-static-actions-have-stable-unique-ids", `${staticButtonTags.length}/${staticButtonIds.length}/${declaredActionControlCount}`);
+check(inventoriedButtonIds.length === declaredActionControlCount && JSON.stringify([...staticButtonIds].sort()) === JSON.stringify([...inventoriedButtonIds].sort()), "buttons:static-dom-and-inventory-reverse-coverage", JSON.stringify({ dom: staticButtonIds, inventory: inventoriedButtonIds }));
 const buttonDecisionFailures = controlInventory.controls.filter(control => control.geometryOwner === "LDS_BTN_GEOM_01").flatMap(control => {
   const expected = buttonOutcomeByLabelMode.get(control.labelMode);
   const failures = [];
@@ -547,7 +683,7 @@ const report = {
   validator: {
     path: "tools/validate-release.mjs",
     sha256: validatorSha256,
-    contractVersion: "1.1"
+    contractVersion: "1.2"
   },
   scope: "source and contract validation; not native-device or product-runtime certification",
   totals: { checks: checks.length, failures },

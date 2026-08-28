@@ -1,0 +1,81 @@
+{
+  "$schema": "../../../schemas/citychat-case-library.schema.v0.8.0.json",
+  "schemaVersion": "0.8.0",
+  "libraryId": "citychat-ecosystem-cases",
+  "libraryVersion": "2026-08-28.1",
+  "ruleAuthority": "citychat-ds-addon-v0.8",
+  "sourceVersion": "cityscan-viewport-taxonomy-note-2026-08-28",
+  "mediaStatus": "conceptual",
+  "productScope": ["cityscan", "citychat_public", "officer_citymeter"],
+  "runtimeBoundary": "local_fixture_only",
+  "lenses": [
+    {"lensId": "scan", "label": {"th": "ดูพื้นที่", "en": "Explore place"}, "surface": "cityscan"},
+    {"lensId": "citizen", "label": {"th": "ฟังเสียงคน", "en": "Local voices"}, "surface": "citychat_public"},
+    {"lensId": "officer", "label": {"th": "ใช้ทำงาน", "en": "Officer work"}, "surface": "officer_citymeter"}
+  ],
+  "teamLenses": {
+    "product": {"th": "เห็น user intent, first value, ผลที่ต้องเกิด และสิ่งที่ยังไม่ควรสร้าง", "en": "See user intent, first value, intended outcome, and what must remain out of scope."},
+    "design": {"th": "เห็น composition, control, state, disclosure และภาษาที่ควรใช้", "en": "See composition, controls, states, disclosure, and plain-language copy."},
+    "development": {"th": "เห็น ID, context handoff, data boundary, contract และ fallback ที่ทดสอบได้", "en": "See IDs, context handoff, data boundaries, contracts, and testable fallbacks."},
+    "sales": {"th": "เห็นประโยชน์ที่อธิบายได้โดยไม่ขายเกินสิ่งที่ระบบและข้อมูลยืนยัน", "en": "See a benefit story that does not outrun product or data evidence."}
+  },
+  "cases": [
+    {
+      "caseId": "LIVE-01",
+      "caseType": "constructive",
+      "topicId": "daily_life",
+      "title": {"th": "แถวนี้น่าอยู่ยังไง", "en": "What makes this area liveable?"},
+      "contextRef": "PLACE-DEMO-01",
+      "snapshotRef": "FIXTURE-20260828-A",
+      "firstValue": {"th": "เห็นบริการและชีวิตประจำวันเป็นสี่มุม โดยไม่สรุปว่าพื้นที่ปลอดภัยหรือดีทั้งหมด", "en": "See four everyday-life angles without claiming the whole area is safe or good."},
+      "lenses": {
+        "scan": {"firstMeaning": {"th": "บริการจำเป็น ของใช้ประจำวัน พักผ่อน และกิจกรรมต้องอ่านแยกกัน", "en": "Essential services, daily needs, rest, and activities stay separate."}, "question": null, "primaryAction": {"th": "เปิด CityCell", "en": "Open CityCell"}, "immediateConsequence": {"th": "เปิดความหมาย ที่มา และสิ่งที่ยังบอกไม่ได้ในหน้านี้", "en": "Opens meaning, source, and limits locally."}, "boundary": {"th": "ไม่มีคะแนนรวม และระยะถึงบริการไม่เท่ากับความปลอดภัย", "en": "No overall score; service proximity does not equal safety."}},
+        "citizen": {"firstMeaning": {"th": "เห็นเส้นทางไปจุดบริการในกรอบพื้นที่ตัวอย่าง", "en": "See a route to a service point in the sample area."}, "question": {"th": "ทางไปจุดบริการช่วงฝนตกผ่านสะดวกไหม?", "en": "Is the route to the service point passable after rain?"}, "primaryAction": {"th": "ช่วยบอกทางที่ใช้จริง", "en": "Share the route you use"}, "immediateConsequence": {"th": "เปิดตัวเลือกคำตอบในหน้านี้ ยังไม่ส่งหรือบันทึก", "en": "Opens answer choices locally; nothing is sent or saved."}, "boundary": {"th": "ต้องบอกว่าใครเห็นและบันทึกสำเร็จหรือไม่ก่อนใช้คำว่า ส่งแล้ว", "en": "Visibility and persistence must be clear before showing Saved."}},
+        "officer": {"firstMeaning": {"th": "เห็นจุดบริการ ที่มา วันที่ ช่องว่าง และงานตรวจต่อในหน้าเดียว", "en": "See services, source, date, gap, and one review task together."}, "question": null, "primaryAction": {"th": "ดูรายการที่ต้องตรวจ", "en": "View the review checklist"}, "immediateConsequence": {"th": "เปิด checklist ตัวอย่าง ไม่มอบหมายหรือเปลี่ยนสถานะจริง", "en": "Opens a sample checklist; no assignment or status change."}, "boundary": {"th": "priority มาจากผลกระทบและหน้าที่ ไม่ใช่ยอดนิยม", "en": "Priority comes from impact and duty, not popularity."}}
+      }
+    },
+    {
+      "caseId": "VISIT-01",
+      "caseType": "constructive",
+      "topicId": "visitor_identity",
+      "title": {"th": "น่าเที่ยวตรงไหน", "en": "Where should I visit?"},
+      "contextRef": "PLACE-DEMO-01",
+      "snapshotRef": "FIXTURE-20260828-A",
+      "firstValue": {"th": "แยกกิน นอน เที่ยว พร้อมที่มา โดยไม่เรียกเกณฑ์ทดลองว่าผลจริง", "en": "Separate eat, stay, and explore with sources without presenting draft criteria as results."},
+      "lenses": {
+        "scan": {"firstMeaning": {"th": "กิน นอน และเที่ยวมาจากหลักฐานคนละชนิด จึงต้องเปิดดูแยกกัน", "en": "Eat, stay, and explore rely on different evidence and remain separate."}, "question": null, "primaryAction": {"th": "ดูที่มาและเกณฑ์", "en": "View sources and criteria"}, "immediateConsequence": {"th": "เปิดรายการเกณฑ์ที่ยังรออนุมัติ", "en": "Opens the criteria that still need approval."}, "boundary": {"th": "rating, review count และ ADR เป็น working criteria ไม่ใช่ผลพื้นที่", "en": "Ratings, review counts, and ADR are working criteria, not place results."}},
+        "citizen": {"firstMeaning": {"th": "เห็นกลุ่มสถานที่ที่อาจสนใจโดยยังไม่จัดอันดับแทนคน", "en": "See place groups without an algorithm ranking them for people."}, "question": {"th": "ถ้าไปช่วงเย็น คุณเดินทางและใช้เวลาแถวนี้อย่างไร?", "en": "How do you get around and spend time here in the evening?"}, "primaryAction": {"th": "เล่าประสบการณ์ของคุณ", "en": "Share your experience"}, "immediateConsequence": {"th": "เปิดช่องเล่าในหน้านี้ ยังไม่เผยแพร่", "en": "Opens a local story field; nothing is published."}, "boundary": {"th": "เรื่องของคนไม่ใช่รีวิวรับรองสถานที่", "en": "A local story is not an official place endorsement."}},
+        "officer": {"firstMeaning": {"th": "เห็นความสนใจของพื้นที่พร้อม coverage และ source ก่อนใช้วางบริการ", "en": "See place-interest signals with coverage and source before planning services."}, "question": null, "primaryAction": {"th": "ตรวจช่องว่างข้อมูล", "en": "Review evidence gaps"}, "immediateConsequence": {"th": "เปิดช่องว่างและเจ้าของข้อมูลที่ต้องตามต่อ", "en": "Opens gaps and data owners to follow up."}, "boundary": {"th": "ยังใช้จัดงบหรือรับรองแหล่งท่องเที่ยวไม่ได้", "en": "Not sufficient for budgeting or official tourism endorsement."}}
+      }
+    },
+    {
+      "caseId": "TRADE-01",
+      "caseType": "constructive",
+      "topicId": "local_activity",
+      "title": {"th": "น่าค้าขายอะไรดี", "en": "What could work as a business here?"},
+      "contextRef": "PLACE-DEMO-01",
+      "snapshotRef": "FIXTURE-20260828-A",
+      "firstValue": {"th": "แยกคนอยู่ คนมาเยือน และจุดใช้พื้นที่กลางวันก่อนตั้งคำถามเรื่องของที่ยังขาด", "en": "Separate residents, visitors, and daytime anchors before asking what may be missing."},
+      "lenses": {
+        "scan": {"firstMeaning": {"th": "ข้อมูลคนมาเยือนยังไม่ได้กำหนด จึงยังเปรียบเทียบความต้องการไม่ได้", "en": "Visitor evidence is not defined, so demand cannot be compared yet."}, "question": null, "primaryAction": {"th": "เปิด CityCell ที่ยังขาด", "en": "Open the missing CityCell"}, "immediateConsequence": {"th": "เปิดเหตุผลที่ยังไม่แสดงค่าและสิ่งที่ต้องนิยาม", "en": "Shows why no value is displayed and what must be defined."}, "boundary": {"th": "unresolved ไม่ใช่ 0; ไม่มีคำแนะนำลงทุน", "en": "Unresolved is not zero; no investment advice."}},
+        "citizen": {"firstMeaning": {"th": "เห็นว่ายังมีข้อมูลไม่พอจะบอกว่าควรเปิดร้านอะไร", "en": "See that evidence is insufficient to recommend a business."}, "question": {"th": "แถวนี้ยังขาดของหรือบริการอะไร?", "en": "What goods or services are missing here?"}, "primaryAction": {"th": "ช่วยบอกสิ่งที่ยังขาด", "en": "Share what is missing"}, "immediateConsequence": {"th": "เปิดตัวเลือกและช่องเล่าในหน้านี้ ยังไม่ส่ง", "en": "Opens local choices and a story field; nothing is sent."}, "boundary": {"th": "คำตอบของคนเป็นเสียงพื้นที่ ไม่ใช่ market demand ที่ยืนยันแล้ว", "en": "Local answers are community voices, not validated market demand."}},
+        "officer": {"firstMeaning": {"th": "เห็นแหล่งข้อมูล ข้อจำกัด และ mapping ที่ยังตัดสินไม่ได้ก่อนส่งต่อทีมเศรษฐกิจ", "en": "See sources, limits, and unresolved mappings before an economic-team handoff."}, "question": null, "primaryAction": {"th": "เตรียมคำถามเก็บข้อมูลเพิ่ม", "en": "Prepare a follow-up question"}, "immediateConsequence": {"th": "เปิดคำถามตัวอย่าง ไม่สร้างงานจริง", "en": "Opens a sample question; no work item is created."}, "boundary": {"th": "ไม่ใช่ใบอนุญาต การรับรอง หรือคำแนะนำลงทุน", "en": "Not a permit, endorsement, or investment advice."}}
+      }
+    },
+    {
+      "caseId": "REJECT-01",
+      "caseType": "rejected",
+      "topicId": null,
+      "title": {"th": "คะแนนเดียวตัดสินทุกอย่าง", "en": "One score decides everything"},
+      "contextRef": "PLACE-DEMO-01",
+      "snapshotRef": "FIXTURE-20260828-A",
+      "badExample": {"th": "CityScore 87 — ดีทุกด้าน เปิดร้านได้เลย", "en": "CityScore 87 — Great at everything. Open a shop now."},
+      "reasons": [
+        {"th": "รวมคำถาม คน แหล่งข้อมูล ช่วงเวลา และหน่วยที่เข้ากันไม่ได้", "en": "It combines incompatible questions, people, sources, periods, and units."},
+        {"th": "ทำให้ unknown ดูเหมือนข้อมูลพร้อม", "en": "It makes unknown evidence appear complete."},
+        {"th": "เปลี่ยนคำชวนสำรวจเป็นคำตัดสินและคำแนะนำลงทุน", "en": "It turns an exploration prompt into a verdict and investment advice."}
+      ],
+      "recovery": {"th": "เลือกหนึ่งคำถาม แล้วเปิด CityCell และที่มาแยกกัน", "en": "Choose one question, then inspect its CityCells and sources separately."}
+    }
+  ]
+}

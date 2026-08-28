@@ -4,6 +4,8 @@ const allowedLocales = ["th", "en"];
 const allowedModes = ["story", "return", "scan", "officer"];
 const allowedViews = ["baseline", "assisted"];
 const allowedScanStates = ["no-score", "signal", "locked"];
+const allowedEcosystemCases = ["live", "visit", "trade", "reject"];
+const allowedEcosystemLenses = ["scan", "citizen", "officer"];
 
 const query = new URLSearchParams(window.location.search);
 const state = {
@@ -12,6 +14,8 @@ const state = {
   mode: allowedModes.includes(query.get("mode")) ? query.get("mode") : "story",
   view: allowedViews.includes(query.get("view")) ? query.get("view") : "assisted",
   scan: allowedScanStates.includes(query.get("scan")) ? query.get("scan") : "no-score",
+  ecosystemCase: allowedEcosystemCases.includes(query.get("case")) ? query.get("case") : "live",
+  ecosystemLens: allowedEcosystemLenses.includes(query.get("lens")) ? query.get("lens") : "scan",
   storyOrigin: "direct"
 };
 
@@ -44,6 +48,17 @@ const words = {
       "no-score": "ข้อมูลไม่พอ จึงยังคำนวณไม่ได้ และไม่ใช่ศูนย์",
       locked: "กำลังดูหน้าตาสมมติเมื่อเก็บกรอบแล้ว ยังไม่ได้บันทึกเข้าสู่ระบบ"
     },
+    ecosystemCase: {
+      live: "เปิดตัวอย่าง แถวนี้น่าอยู่ยังไง แล้ว",
+      visit: "เปิดตัวอย่าง น่าเที่ยวตรงไหน แล้ว",
+      trade: "เปิดตัวอย่าง น่าค้าขายอะไรดี แล้ว",
+      reject: "เปิดตัวอย่างที่ไม่ควรใช้แล้ว"
+    },
+    ecosystemLens: {
+      scan: "กำลังดูมุม CityScan",
+      citizen: "กำลังดูมุม CityChat สำหรับประชาชน",
+      officer: "กำลังดูมุม Officer CityMETER"
+    },
     genericAck: "ปุ่มตัวอย่างนี้ยังไม่พาไปหน้าอื่น",
     answerOptionsOpen: "เปิดตัวเลือกคำตอบสำหรับดูรูปแบบแล้ว ยังไม่มีการส่งหรือบันทึกข้อมูล",
     answerOptionsClosed: "ปิดตัวเลือกคำตอบแล้ว",
@@ -72,6 +87,17 @@ const words = {
       signal: "Previewing a hypothetical ready state; it is not connected to real data",
       "no-score": "There is not enough data to calculate a result; this is not zero",
       locked: "Previewing a hypothetical kept frame; it has not been saved to a system"
+    },
+    ecosystemCase: {
+      live: "Liveability case opened",
+      visit: "Visit case opened",
+      trade: "Local activity case opened",
+      reject: "Rejected case opened"
+    },
+    ecosystemLens: {
+      scan: "CityScan lens shown",
+      citizen: "Public CityChat lens shown",
+      officer: "Officer CityMETER lens shown"
     },
     genericAck: "This example button does not open another page yet",
     answerOptionsOpen: "Answer choices opened for preview; nothing is sent or saved",
@@ -116,6 +142,8 @@ function syncUrl() {
   url.searchParams.set("theme", state.theme);
   url.searchParams.set("mode", state.mode);
   url.searchParams.set("view", state.view);
+  url.searchParams.set("case", state.ecosystemCase);
+  url.searchParams.set("lens", state.ecosystemLens);
   if (state.mode === "scan") url.searchParams.set("scan", state.scan);
   else url.searchParams.delete("scan");
   history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
@@ -142,7 +170,7 @@ function applyTheme({ persist = false, announceChange = false } = {}) {
 function applyLocale({ persist = false, announceChange = false } = {}) {
   root.dataset.locale = state.locale;
   root.lang = state.locale;
-  document.title = "CityChat DS Add-on Playground v0.7.0";
+  document.title = "CityChat DS Add-on Playground v0.8.0";
   if (persist) localStorage.setItem("citychat-playground-locale", state.locale);
   if (localeButton) {
     localeButton.textContent = t().localeButton;
@@ -150,6 +178,7 @@ function applyLocale({ persist = false, announceChange = false } = {}) {
   }
   applyTheme();
   applyScan();
+  applyEcosystem();
   updateButtonBuilder();
   updatePreflight();
   if (announceChange) announce(state.locale === "th" ? "เปลี่ยนเป็นภาษาไทยแล้ว" : "Language changed to English");
@@ -213,6 +242,46 @@ function applyScan({ announceChange = false } = {}) {
   syncUrl();
 }
 
+function applyEcosystem({ announceChange = false, focusCase = false, focusLens = false } = {}) {
+  const stage = document.querySelector("#ecosystem-stage");
+  if (!stage) return;
+  stage.dataset.case = state.ecosystemCase;
+  stage.dataset.lens = state.ecosystemLens;
+
+  document.querySelectorAll("[data-ecosystem-case]").forEach(button => {
+    const selected = button.dataset.ecosystemCase === state.ecosystemCase;
+    button.setAttribute("aria-selected", String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    if (selected && focusCase) button.focus();
+  });
+
+  document.querySelectorAll("[data-ecosystem-case-view]").forEach(view => {
+    const selected = view.dataset.ecosystemCaseView === state.ecosystemCase;
+    view.hidden = !selected;
+    view.querySelectorAll("[data-ecosystem-lens-view]").forEach(lensView => {
+      lensView.hidden = !selected || lensView.dataset.ecosystemLensView !== state.ecosystemLens;
+    });
+  });
+
+  const rejected = state.ecosystemCase === "reject";
+  const lensFieldset = document.querySelector("#ecosystem-lens-fieldset");
+  if (lensFieldset) lensFieldset.hidden = rejected;
+  document.querySelectorAll("[data-ecosystem-lens]").forEach(button => {
+    const selected = button.dataset.ecosystemLens === state.ecosystemLens;
+    button.setAttribute("aria-selected", String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    if (selected && focusLens && !rejected) button.focus();
+  });
+
+  if (announceChange) {
+    const message = rejected
+      ? t().ecosystemCase[state.ecosystemCase]
+      : `${t().ecosystemCase[state.ecosystemCase]} · ${t().ecosystemLens[state.ecosystemLens]}`;
+    announce(message);
+  }
+  syncUrl();
+}
+
 themeButton?.addEventListener("click", () => {
   const next = (allowedThemes.indexOf(state.theme) + 1) % allowedThemes.length;
   state.theme = allowedThemes[next];
@@ -255,6 +324,44 @@ modeButtons.forEach((button, index) => {
   });
 });
 
+const ecosystemCaseButtons = [...document.querySelectorAll("[data-ecosystem-case]")];
+ecosystemCaseButtons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    state.ecosystemCase = button.dataset.ecosystemCase;
+    applyEcosystem({ announceChange: true });
+  });
+  button.addEventListener("keydown", event => {
+    let nextIndex = null;
+    if (["ArrowRight", "ArrowDown"].includes(event.key)) nextIndex = (index + 1) % ecosystemCaseButtons.length;
+    if (["ArrowLeft", "ArrowUp"].includes(event.key)) nextIndex = (index - 1 + ecosystemCaseButtons.length) % ecosystemCaseButtons.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = ecosystemCaseButtons.length - 1;
+    if (nextIndex === null) return;
+    event.preventDefault();
+    state.ecosystemCase = ecosystemCaseButtons[nextIndex].dataset.ecosystemCase;
+    applyEcosystem({ announceChange: true, focusCase: true });
+  });
+});
+
+const ecosystemLensButtons = [...document.querySelectorAll("[data-ecosystem-lens]")];
+ecosystemLensButtons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    state.ecosystemLens = button.dataset.ecosystemLens;
+    applyEcosystem({ announceChange: true });
+  });
+  button.addEventListener("keydown", event => {
+    let nextIndex = null;
+    if (["ArrowRight", "ArrowDown"].includes(event.key)) nextIndex = (index + 1) % ecosystemLensButtons.length;
+    if (["ArrowLeft", "ArrowUp"].includes(event.key)) nextIndex = (index - 1 + ecosystemLensButtons.length) % ecosystemLensButtons.length;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = ecosystemLensButtons.length - 1;
+    if (nextIndex === null) return;
+    event.preventDefault();
+    state.ecosystemLens = ecosystemLensButtons[nextIndex].dataset.ecosystemLens;
+    applyEcosystem({ announceChange: true, focusLens: true });
+  });
+});
+
 document.querySelectorAll("[data-scan-state]").forEach(button => {
   button.addEventListener("click", () => {
     state.scan = button.dataset.scanState;
@@ -289,10 +396,9 @@ document.querySelector("#open-story-from-lock")?.addEventListener("click", () =>
 });
 
 document.querySelector("#hero-cityscan-action")?.addEventListener("click", () => {
-  state.mode = "scan";
-  state.scan = "no-score";
-  applyMode();
-  applyScan();
+  state.ecosystemCase = "live";
+  state.ecosystemLens = "scan";
+  applyEcosystem();
   announce(t().heroCityScan);
 });
 
@@ -455,7 +561,7 @@ document.querySelector("#copy-preflight")?.addEventListener("click", () => {
 });
 
 document.querySelector("#copy-prompt")?.addEventListener("click", () => {
-  const text = "Build one CityChat [page or flow] for [citizen or officer] doing [one job]. Use CityChat DS Add-on v0.7 on the pinned Landometer DS package. Start with one place or matter and one plain meaning. Ask one question only when the evidence supports it. Show zero or one action and state what happens next. A labelled action is an LDS capsule; an icon-only action is an LDS 44×44 circle with an accessible name; never create a third button shape. Use only role-approved CityChat assets and mapped icons. Remember a contribution only after real persistence; otherwise show recovery or a clear ending. Hide unavailable controls and never invent saved state, official status, liveness, counts, or outcomes. Return the Build Card, source refs, visible states, blocked reasons, tests, and manual checks.";
+  const text = "Build one CityChat [page or flow] for [citizen or officer] doing [one job]. Use CityChat DS Add-on v0.8 on the pinned Landometer DS package. Start with one place or matter and one plain meaning. Ask one question only when the evidence supports it. Show zero or one action and state what happens next. A labelled action is an LDS capsule; an icon-only action is an LDS 44×44 circle with an accessible name; never create a third button shape. Use only role-approved CityChat assets and mapped icons. Remember a contribution only after real persistence; otherwise show recovery or a clear ending. Hide unavailable controls and never invent saved state, official status, liveness, counts, or outcomes. Return the Build Card, source refs, visible states, blocked reasons, tests, and manual checks.";
   copyText(text, document.querySelector("#prompt-copy-status"));
 });
 
@@ -474,6 +580,7 @@ applyLocale();
 applyView();
 applyMode();
 applyScan();
+applyEcosystem();
 updatePreflight();
 updateColorTokenValues();
 updateButtonBuilder();

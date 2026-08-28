@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/CityChat/schemas/citychat-asset-library.schema.v0.8.0.json",
+  "title": "CityChat DS Add-on asset library v0.8.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "libraryVersion",
+    "artifactVersion",
+    "artifactBuildId",
+    "status",
+    "canonicalUrl",
+    "scope",
+    "authorityRefs",
+    "privacyBoundary",
+    "assets"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/citychat-asset-library.schema.v0.8.0.json"
+    },
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "libraryVersion": {
+      "const": "citychat-asset-library-v0.8.0"
+    },
+    "artifactVersion": {
+      "const": "0.8.0"
+    },
+    "artifactBuildId": {
+      "const": "citychat-ui-20260828-01"
+    },
+    "status": {
+      "const": "safe_public_download_catalog"
+    },
+    "canonicalUrl": {
+      "const": "https://montri-th.github.io/CityChat/"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authorityRefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "privacyBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["included", "excluded"],
+      "properties": {
+        "included": {
+          "type": "string",
+          "minLength": 1
+        },
+        "excluded": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "personal_photos",
+              "avatars",
+              "screenshots",
+              "user_generated_content",
+              "real_location_media",
+              "uncleared_working_documents",
+              "unclear_rights_assets"
+            ]
+          }
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    }
+  },
+  "$defs": {
+    "localizedLabel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["th", "en"],
+      "properties": {
+        "th": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assetId",
+        "category",
+        "displayName",
+        "path",
+        "mimeType",
+        "bytes",
+        "sha256",
+        "source",
+        "licence",
+        "publicDownload",
+        "usePolicy"
+      ],
+      "properties": {
+        "assetId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]+$"
+        },
+        "category": {
+          "enum": [
+            "identity",
+            "functional_icon",
+            "typeface",
+            "licence_notice",
+            "implementation_example",
+            "colour_and_motion",
+            "guidance"
+          ]
+        },
+        "displayName": {
+          "$ref": "#/$defs/localizedLabel"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(assets|resources|schemas)/",
+          "not": {
+            "pattern": "(^|/)\\.\\.(/|$)"
+          }
+        },
+        "mimeType": {
+          "type": "string",
+          "pattern": "^[a-z0-9.+-]+/[a-z0-9.+-]+$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["class", "ref"],
+          "properties": {
+            "class": {
+              "enum": [
+                "user_supplied_project_asset",
+                "approved_project_source",
+                "pinned_upstream_open_source",
+                "artifact_generated",
+                "artifact_authored"
+              ]
+            },
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "licence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["spdxId", "noticePath", "rightsRef"],
+          "properties": {
+            "spdxId": {
+              "type": ["string", "null"]
+            },
+            "noticePath": {
+              "type": ["string", "null"],
+              "pattern": "^(assets|resources|schemas)/"
+            },
+            "rightsRef": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "publicDownload": {
+          "const": true
+        },
+        "usePolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "allowedUses", "blockedUses"],
+          "properties": {
+            "status": {
+              "enum": [
+                "role_bound",
+                "source_only",
+                "library_only",
+                "licensed_foundation",
+                "implementation_aid",
+                "evidence_record"
+              ]
+            },
+            "allowedUses": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "blockedUses": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="CityChat DS Add-on Playground v0.7.0 — ดูตัวอย่าง CityScan ทดลองปุ่มสองทรง และดาวน์โหลด asset ที่ทีมใช้ได้จริงบน Landometer DS.">
+  <meta name="description" content="CityChat DS Add-on Playground v0.8.0 — ดูตัวอย่าง CityScan ทดลองปุ่มสองทรง และดาวน์โหลด asset ที่ทีมใช้ได้จริงบน Landometer DS.">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <link rel="canonical" href="https://montri-th.github.io/CityChat/">
-  <title>CityChat DS Add-on Playground v0.7.0</title>
+  <title>CityChat DS Add-on Playground v0.8.0</title>
   <link rel="preload" href="assets/icons/material-symbols-rounded-citychat-v368.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="vendor/landometer/v0.9.0/build-kit/lds-tokens.css">
   <link rel="stylesheet" href="vendor/landometer/v0.9.0/build-kit/lds-base.css">
@@ -31,12 +31,12 @@
 <body>
   <a class="skip-link" href="#main"><span data-th>ข้ามไปเนื้อหาหลัก</span><span data-en>Skip to main content</span></a>
 
-  <header class="site-header" aria-label="CityChat DS Add-on Playground v0.7.0">
+  <header class="site-header" aria-label="CityChat DS Add-on Playground v0.8.0">
     <a class="brand-lockup" data-identity-role="header_lockup" href="#top" aria-label="CityChat — กลับไปจุดเริ่มต้น / return to the start">
       <img src="assets/identity/citychat-horizontal-lockup.png" width="380" height="82" alt="CityChat">
     </a>
     <nav class="header-actions" aria-label="Page preferences">
-      <span class="source-status source-status--approved"><span data-th>DS Add-on v0.7</span><span data-en>DS Add-on v0.7</span></span>
+      <span class="source-status source-status--approved"><span data-th>DS Add-on v0.8</span><span data-en>DS Add-on v0.8</span></span>
       <button class="btn btn--quiet preference-button js-only" id="theme-cycle" type="button"><span data-th>ธีม: ระบบ</span><span data-en>Theme: system</span></button>
       <button class="btn btn--quiet preference-button js-only" id="locale-cycle" type="button" aria-label="เปลี่ยนภาษา / change language">EN</button>
     </nav>
@@ -69,23 +69,27 @@
             <span class="hero-scan-window"><i></i><i></i><i></i><i></i></span>
           </div>
           <article class="hero-story card">
-            <p class="meta"><span class="icon-symbol" aria-hidden="true">location_on</span> <span data-th>ริมคลองกลางเมือง · หลังฝนตก</span><span data-en>Inner-city canal · after rain</span></p>
-            <strong><span data-th>ยังมีข้อมูลไม่พอว่าทางฝั่งตะวันออกผ่านได้สะดวกหรือไม่</span><span data-en>There is not enough information yet to know whether the east side is easy to cross.</span></strong>
-            <p><span data-th>รู้เพียงว่าจุดบริการตัวอย่างอยู่ฝั่งตะวันตกมากกว่า ยังสรุปเรื่องการเข้าถึงไม่ได้</span><span data-en>We only know that more sample service points sit to the west; this cannot establish access.</span></p>
-            <div class="hero-question"><span data-th>ตอนนี้คนฝั่งตะวันออกเดินทางผ่านได้อย่างไร?</span><span data-en>How can people on the east side get through right now?</span></div>
+            <p class="meta"><span class="icon-symbol" aria-hidden="true">location_on</span> <span data-th>พื้นที่ตัวอย่าง · viewport เดียว</span><span data-en>Sample place · one viewport</span></p>
+            <strong><span data-th>เลือกหนึ่งคำถาม แล้วเปิดดู CityCell และที่มา</span><span data-en>Choose one question, then inspect its CityCells and sources.</span></strong>
+            <ul class="hero-topic-list">
+              <li><span data-th>แถวนี้น่าอยู่ยังไง</span><span data-en>What makes this area liveable?</span></li>
+              <li><span data-th>น่าเที่ยวตรงไหน</span><span data-en>Where should I visit?</span></li>
+              <li><span data-th>น่าค้าขายอะไรดี</span><span data-en>What could work as a business here?</span></li>
+            </ul>
+            <div class="hero-question"><span data-th>ไม่มีคะแนนรวม และเรื่องที่ยังไม่รู้จะไม่แสดงเป็น 0</span><span data-en>No overall score, and unknown evidence never appears as zero.</span></div>
           </article>
           <figcaption id="hero-object-caption"><span data-th>ตัวอย่างหน้าจอ CityScan · ข้อมูลจำลอง ไม่ใช่ข้อมูลพื้นที่จริง</span><span data-en>CityScan screen example · synthetic, not real place data</span></figcaption>
         </figure>
 
         <div class="hero-after">
-          <a class="btn hero-action" id="hero-cityscan-action" href="?lang=th&amp;theme=light&amp;mode=scan&amp;scan=no-score#play"><span class="icon-symbol" aria-hidden="true">map</span><span data-th>ดูตัวอย่างพื้นที่นี้</span><span data-en>Explore this sample place</span></a>
+          <a class="btn hero-action" id="hero-cityscan-action" href="?lang=th&amp;theme=light&amp;case=live&amp;lens=scan#ecosystem-cases"><span class="icon-symbol" aria-hidden="true">map</span><span data-th>ดูสามมุมของพื้นที่นี้</span><span data-en>Explore three views of this place</span></a>
           <p class="hero-boundary"><span data-th>ตัวอย่างสำหรับทีม · ไม่มีการคำนวณหรือบันทึกจริง</span><span data-en>Team example · no real calculation or persistence</span></p>
           <details class="team-details release-details" data-copy-layer="team">
             <summary><span data-th>ข้อมูลเอกสารสำหรับทีม</span><span data-en>Team document details</span></summary>
             <dl>
-              <div><dt>Version</dt><dd>Playground v0.7.0 · CityChat DS Add-on v0.7</dd></div>
+              <div><dt>Version</dt><dd>Playground v0.8.0 · CityChat DS Add-on v0.8</dd></div>
               <div><dt>Evidence</dt><dd>source_limited · conceptual fixtures</dd></div>
-              <div><dt>Build</dt><dd>citychat-ui-20260823-02</dd></div>
+              <div><dt>Build</dt><dd>citychat-ui-20260828-01</dd></div>
             </dl>
           </details>
         </div>
@@ -96,9 +100,10 @@
       <div class="container route-list">
         <a href="#identity"><span class="route-index">01</span><span data-th>สิ่งที่คงไว้</span><span data-en>What stays</span></a>
         <a href="#play"><span class="route-index">02</span><span data-th>ดูตัวอย่าง</span><span data-en>Try examples</span></a>
-        <a href="#components"><span class="route-index">03</span><span data-th>ดูองค์ประกอบ</span><span data-en>See the system</span></a>
-        <a href="#implementation-library"><span class="route-index">04</span><span data-th>ลองปุ่ม ไอคอน สี และการเคลื่อนไหว</span><span data-en>Try controls, icons, colour, and motion</span></a>
-        <a href="#asset-library"><span class="route-index">05</span><span data-th>ดาวน์โหลดไฟล์</span><span data-en>Download assets</span></a>
+        <a href="#ecosystem-cases"><span class="route-index">03</span><span data-th>ดูสามหน้าที่ต่อกัน</span><span data-en>See connected cases</span></a>
+        <a href="#components"><span class="route-index">04</span><span data-th>ดูองค์ประกอบ</span><span data-en>See the system</span></a>
+        <a href="#implementation-library"><span class="route-index">05</span><span data-th>ลองปุ่ม ไอคอน สี และการเคลื่อนไหว</span><span data-en>Try controls, icons, colour, and motion</span></a>
+        <a href="#asset-library"><span class="route-index">06</span><span data-th>ดาวน์โหลดไฟล์</span><span data-en>Download assets</span></a>
       </div>
     </section>
 
@@ -310,11 +315,12 @@
                   </div>
                   <div class="scan-readout">
                     <p class="scan-state-label"><span data-th>ข้อมูลไม่พอ · ยังไม่แสดงผลและไม่ถือว่าเป็นศูนย์</span><span data-en>Not enough data · no result is shown and this is not zero</span></p>
-                    <div class="topic-signals">
-                      <div><span data-th>หัวข้อที่จะใช้</span><span data-en>Topics</span><strong><span data-th>ยังไม่กำหนดหัวข้อสำหรับตัวอย่างนี้</span><span data-en>Topics for this example are not set yet</span></strong></div>
-                      <div><span data-th>ความครอบคลุมและวันที่อัปเดต</span><span data-en>Coverage and freshness</span><strong><span data-th>ยังไม่มีข้อมูลสำหรับตัวอย่างนี้</span><span data-en>Not available for this fixture</span></strong></div>
-                      <div><span data-th>ชั้นสีบนแผนที่</span><span data-en>Map colour layer</span><strong><span data-th>ยังไม่แสดง จนกว่าจะระบุชัดว่าจะวัดอะไร ใช้หน่วยไหน ช่วงเวลาใด และอ่านสีอย่างไร</span><span data-en>Hidden until the measure, unit, period, and colour meaning are clear</span></strong></div>
+                    <div class="topic-signals topic-signals--cityscan">
+                      <div><span class="icon-symbol" aria-hidden="true">home</span><span data-th>แถวนี้น่าอยู่ยังไง</span><span data-en>What makes this area liveable?</span><strong><span data-th>บริการใกล้ตัว · ของใช้ประจำวัน · พักผ่อน · กิจกรรม</span><span data-en>Essential services · daily needs · rest · activities</span></strong></div>
+                      <div><span class="icon-symbol" aria-hidden="true">explore</span><span data-th>น่าเที่ยวตรงไหน</span><span data-en>Where should I visit?</span><strong><span data-th>กิน · นอน · เที่ยว</span><span data-en>Eat · stay · explore</span></strong></div>
+                      <div><span class="icon-symbol" aria-hidden="true">storefront</span><span data-th>น่าค้าขายอะไรดี</span><span data-en>What could work as a business here?</span><strong><span data-th>คนอยู่ · คนมาเยือนยังไม่กำหนด · คนมาทำงานหรือเรียน</span><span data-en>Residents · visitors unresolved · daytime anchors</span></strong></div>
                     </div>
+                    <p class="scan-source-note"><span data-th>โครงนี้มาจาก working note ที่เจ้าของผลิตภัณฑ์ให้ไว้ เป็นตัวอย่างการจัดหมวด ไม่ใช่ผลจริง เกณฑ์จริง หรือคำแนะนำลงทุน</span><span data-en>This owner-supplied working taxonomy is a composition example—not observed results, approved criteria, or investment advice.</span></p>
                     <p class="scan-boundary"><span data-th>ถ้าข้อมูลไม่พอ ต้องบอกว่า “ข้อมูลไม่พอ” ไม่แสดงเป็นศูนย์ และไม่ใช้สีแทนคำอธิบาย</span><span data-en>When data is insufficient, say so. Never show it as zero or rely on colour alone.</span></p>
                   </div>
                 </div>
@@ -349,6 +355,112 @@
             </section>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="ecosystem-cases section-pad" id="ecosystem-cases" aria-labelledby="ecosystem-cases-title">
+      <div class="container">
+        <header class="section-heading split-heading">
+          <div>
+            <p class="eyebrow"><span data-th>หนึ่งพื้นที่ สามหน้าที่ต่อกัน</span><span data-en>One place across three connected jobs</span></p>
+            <h2 id="ecosystem-cases-title"><span data-th>CityScan ช่วยดูพื้นที่ CityChat ช่วยฟังคน และ CityMETER ช่วยทำงานต่อ</span><span data-en>CityScan explores place, CityChat hears people, and CityMETER supports follow-through.</span></h2>
+          </div>
+          <p><span data-th>ตัวอย่างทุกชิ้นใช้พื้นที่และเรื่องเดียวกัน แต่จัดสิ่งที่เห็นตามประโยชน์ของคนในแต่ละหน้า</span><span data-en>Every example keeps the same place and matter, while changing what is shown for each person's job.</span></p>
+        </header>
+
+        <ol class="ecosystem-flow" aria-label="CityChat ecosystem handoff">
+          <li><span class="flow-index">01</span><span class="icon-symbol" aria-hidden="true">map</span><strong>CityScan</strong><span><span data-th>ดูว่าแถวนี้มีอะไร</span><span data-en>Explore what is nearby</span></span></li>
+          <li><span class="flow-index">02</span><span class="icon-symbol" aria-hidden="true">forum</span><strong>CityChat</strong><span><span data-th>ถามและฟังเสียงคน</span><span data-en>Ask and hear local voices</span></span></li>
+          <li><span class="flow-index">03</span><span class="icon-symbol" aria-hidden="true">description</span><strong>Officer CityMETER</strong><span><span data-th>เห็นหลักฐานและงานต่อ</span><span data-en>See evidence and next work</span></span></li>
+        </ol>
+
+        <div class="ecosystem-controls card">
+          <fieldset>
+            <legend><span data-th>เลือกคำถามของพื้นที่</span><span data-en>Choose a place question</span></legend>
+            <div class="segmented ecosystem-case-switch" id="ecosystem-case-switch" role="tablist" aria-label="CityScan case">
+              <button id="case-live" type="button" role="tab" aria-selected="true" data-ecosystem-case="live"><span data-th>น่าอยู่</span><span data-en>Live</span></button>
+              <button id="case-visit" type="button" role="tab" aria-selected="false" data-ecosystem-case="visit"><span data-th>น่าเที่ยว</span><span data-en>Visit</span></button>
+              <button id="case-trade" type="button" role="tab" aria-selected="false" data-ecosystem-case="trade"><span data-th>น่าค้าขาย</span><span data-en>Trade</span></button>
+              <button id="case-reject" type="button" role="tab" aria-selected="false" data-ecosystem-case="reject"><span data-th>แบบที่ไม่ใช้</span><span data-en>Rejected</span></button>
+            </div>
+          </fieldset>
+          <fieldset id="ecosystem-lens-fieldset">
+            <legend><span data-th>เลือกคนที่กำลังใช้</span><span data-en>Choose the person's job</span></legend>
+            <div class="segmented ecosystem-lens-switch" id="ecosystem-lens-switch" role="tablist" aria-label="CityChat product lens">
+              <button id="lens-scan" type="button" role="tab" aria-selected="true" data-ecosystem-lens="scan"><span data-th>ดูพื้นที่</span><span data-en>Explore place</span></button>
+              <button id="lens-citizen" type="button" role="tab" aria-selected="false" data-ecosystem-lens="citizen"><span data-th>ฟังเสียงคน</span><span data-en>Local voices</span></button>
+              <button id="lens-officer" type="button" role="tab" aria-selected="false" data-ecosystem-lens="officer"><span data-th>ใช้ทำงาน</span><span data-en>Officer work</span></button>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="ecosystem-stage" id="ecosystem-stage" data-case="live" data-lens="scan" role="tabpanel">
+          <article class="ecosystem-case card" data-ecosystem-case-view="live">
+            <header class="case-heading">
+              <div><p class="meta">LIVE-01 · daily_life</p><h3><span data-th>แถวนี้น่าอยู่ยังไง</span><span data-en>What makes this area liveable?</span></h3></div>
+              <span class="source-status source-status--candidate"><span data-th>พื้นที่ตัวอย่าง</span><span data-en>Sample place</span></span>
+            </header>
+            <section class="case-lens" data-ecosystem-lens-view="scan">
+              <p class="case-benefit"><span data-th>เห็นชีวิตประจำวันเป็นสี่มุม โดยไม่เอามารวมเป็นคะแนนเดียว</span><span data-en>See four everyday-life angles without collapsing them into one score.</span></p>
+              <div class="citycell-groups">
+                <details open><summary><span data-th>บริการจำเป็นใกล้ตัว</span><span data-en>Essential services nearby</span></summary><p><span class="cell-chip">โรงพยาบาล</span><span class="cell-chip">ตำรวจ</span><span class="cell-chip">ดับเพลิง</span></p><small><span data-th>บอกการเข้าถึงบริการ ไม่ได้พิสูจน์ว่าพื้นที่ปลอดภัย</span><span data-en>Shows service access; it does not prove safety.</span></small></details>
+                <details><summary><span data-th>ของใช้และบริการประจำวัน</span><span data-en>Everyday goods and services</span></summary><p><span class="cell-chip">โรงเรียน</span><span class="cell-chip">ตลาด</span><span class="cell-chip">ร้านสะดวกซื้อ</span><span class="cell-chip">ร้านอาหาร</span></p><small><span data-th>จำนวนสถานที่ไม่เท่ากับคุณภาพหรือคนใช้จริง</span><span data-en>Place counts do not establish quality or actual use.</span></small></details>
+                <details><summary><span data-th>พักผ่อนและธรรมชาติ</span><span data-en>Rest and nature</span></summary><p><span class="cell-chip">สวนสุขภาพ</span><span class="cell-chip">แหล่งธรรมชาติ</span></p></details>
+                <details><summary><span data-th>ร้านค้าและกิจกรรม</span><span data-en>Shops and activities</span></summary><p><span class="cell-chip">Shopping</span><span class="cell-chip">Nightlife</span><span class="cell-chip">Café</span></p></details>
+              </div>
+            </section>
+            <section class="case-lens" data-ecosystem-lens-view="citizen" hidden>
+              <div class="citizen-question"><p class="meta"><span data-th>คำถามเดียวที่ช่วยพื้นที่</span><span data-en>One useful local question</span></p><h4><span data-th>ทางไปจุดบริการช่วงฝนตกผ่านสะดวกไหม?</span><span data-en>Is the route to the service point passable after rain?</span></h4><p><span data-th>ตัวอย่างที่ดีบอกความหมายก่อน แล้วจึงชวน “ช่วยบอกทางที่ใช้จริง” พร้อมบอกว่าใครจะเห็นคำตอบ</span><span data-en>A good example explains the meaning first, then asks people to share the route they use and says who can see it.</span></p></div>
+              <div class="action-consequence"><strong><span data-th>กดแล้ว</span><span data-en>On action</span></strong><span><span data-th>เปิดตัวเลือกคำตอบในหน้านี้ ยังไม่ส่งหรือบันทึก</span><span data-en>Answer choices open locally; nothing is sent or saved.</span></span></div>
+            </section>
+            <section class="case-lens" data-ecosystem-lens-view="officer" hidden>
+              <div class="officer-case-grid"><dl><div><dt><span data-th>เรื่องที่ดู</span><span data-en>Matter</span></dt><dd><span data-th>ทางไปจุดบริการหลังฝนตก</span><span data-en>Route to a service after rain</span></dd></div><div><dt><span data-th>ที่มา</span><span data-en>Source</span></dt><dd><span data-th>ยังต้องผูกทะเบียนข้อมูล</span><span data-en>Data registry required</span></dd></div><div><dt><span data-th>ยังขาด</span><span data-en>Missing</span></dt><dd><span data-th>คำยืนยันจากพื้นที่</span><span data-en>Local confirmation</span></dd></div><div><dt><span data-th>งานต่อ</span><span data-en>Next work</span></dt><dd><span data-th>ตรวจเส้นทางและผู้รับผิดชอบ</span><span data-en>Review route and owner</span></dd></div></dl><p><span data-th>มุมเจ้าหน้าที่ไม่ใช้ยอดนิยมตัดสินลำดับ และยังมอบหมายงานจริงไม่ได้</span><span data-en>The officer view does not use popularity for priority and cannot assign real work.</span></p></div>
+            </section>
+          </article>
+
+          <article class="ecosystem-case card" data-ecosystem-case-view="visit" hidden>
+            <header class="case-heading"><div><p class="meta">VISIT-01 · visitor_identity</p><h3><span data-th>น่าเที่ยวตรงไหน</span><span data-en>Where should I visit?</span></h3></div><span class="source-status source-status--candidate"><span data-th>พื้นที่ตัวอย่าง</span><span data-en>Sample place</span></span></header>
+            <section class="case-lens" data-ecosystem-lens-view="scan">
+              <p class="case-benefit"><span data-th>แยกกิน นอน เที่ยว เพราะแต่ละกลุ่มใช้หลักฐานคนละแบบ</span><span data-en>Keep eat, stay, and explore separate because each relies on different evidence.</span></p>
+              <div class="citycell-groups">
+                <details open><summary><span data-th>กิน</span><span data-en>Eat</span></summary><p><span class="cell-chip">ร้านเด่น</span><span class="cell-chip cell-chip--unresolved">Michelin · ยังไม่กำหนด</span><span class="cell-chip">Café</span></p><small><span data-th>rating และ review count เป็นเกณฑ์ทำงานที่ยังไม่อนุมัติ</span><span data-en>Ratings and review counts remain unapproved working criteria.</span></small></details>
+                <details><summary><span data-th>นอน</span><span data-en>Stay</span></summary><p><span class="cell-chip">โรงแรม</span></p><small><span data-th>จำนวนหรือราคาโรงแรมไม่เท่ากับจำนวนผู้มาเยือน occupancy หรือคุณภาพ</span><span data-en>Hotel supply or price does not establish visitors, occupancy, or quality.</span></small></details>
+                <details><summary><span data-th>เที่ยว</span><span data-en>Explore</span></summary><p><span class="cell-chip">ธรรมชาติ</span><span class="cell-chip">วัฒนธรรม</span><span class="cell-chip">Shopping</span></p></details>
+              </div>
+            </section>
+            <section class="case-lens" data-ecosystem-lens-view="citizen" hidden><div class="citizen-question"><p class="meta"><span data-th>คำถามเดียวที่ช่วยพื้นที่</span><span data-en>One useful local question</span></p><h4><span data-th>ถ้าไปช่วงเย็น คุณเดินทางและใช้เวลาแถวนี้อย่างไร?</span><span data-en>How do you get around and spend time here in the evening?</span></h4><p><span data-th>เรื่องของคนช่วยเติมบริบท แต่ไม่ใช่รีวิวรับรองสถานที่</span><span data-en>Local stories add context but are not official place endorsements.</span></p></div><div class="action-consequence"><strong><span data-th>กดแล้ว</span><span data-en>On action</span></strong><span><span data-th>เปิดช่องเล่าในหน้านี้ ยังไม่เผยแพร่</span><span data-en>A story field opens locally; nothing is published.</span></span></div></section>
+            <section class="case-lens" data-ecosystem-lens-view="officer" hidden><div class="officer-case-grid"><dl><div><dt><span data-th>สิ่งที่เห็น</span><span data-en>Signal</span></dt><dd><span data-th>กลุ่มสถานที่และความสนใจ</span><span data-en>Place groups and interest</span></dd></div><div><dt>Coverage</dt><dd><span data-th>ต้องระบุ</span><span data-en>Required</span></dd></div><div><dt><span data-th>ยังขาด</span><span data-en>Missing</span></dt><dd><span data-th>เจ้าของเกณฑ์และช่วงเวลา</span><span data-en>Criteria owner and period</span></dd></div><div><dt><span data-th>งานต่อ</span><span data-en>Next work</span></dt><dd><span data-th>ตรวจช่องว่างข้อมูล</span><span data-en>Review evidence gaps</span></dd></div></dl><p><span data-th>ยังใช้จัดงบหรือรับรองแหล่งท่องเที่ยวไม่ได้</span><span data-en>Not sufficient for budgeting or official tourism endorsement.</span></p></div></section>
+          </article>
+
+          <article class="ecosystem-case card" data-ecosystem-case-view="trade" hidden>
+            <header class="case-heading"><div><p class="meta">TRADE-01 · local_activity</p><h3><span data-th>น่าค้าขายอะไรดี</span><span data-en>What could work as a business here?</span></h3></div><span class="source-status source-status--candidate"><span data-th>ข้อมูลยังไม่ครบ</span><span data-en>Evidence incomplete</span></span></header>
+            <section class="case-lens" data-ecosystem-lens-view="scan">
+              <p class="case-benefit"><span data-th>แยกคนอยู่ คนมาเยือน และจุดใช้พื้นที่กลางวันก่อนตั้งคำถามเรื่องความต้องการ</span><span data-en>Separate residents, visitors, and daytime anchors before asking about demand.</span></p>
+              <div class="citycell-groups">
+                <details open><summary><span data-th>คนอยู่แถวนี้</span><span data-en>People who live here</span></summary><p><span class="cell-chip">Population</span><span class="cell-chip">Household</span><span class="cell-chip cell-chip--unresolved">Hotel · mapping ยังไม่ชัด</span></p><small><span data-th>แบบจำลองประชากรไม่เท่ากับทะเบียนราษฎร ครัวเรือน หรือลูกค้า</span><span data-en>Population models do not equal residents, households, or customers.</span></small></details>
+                <details open><summary><span data-th>คนมาเยือน</span><span data-en>Visitors</span></summary><p><span class="cell-chip cell-chip--unresolved"><span data-th>ยังไม่ได้กำหนด</span><span data-en>Not defined yet</span></span></p><small><span data-th>แสดงว่ายังไม่รู้ ไม่แสดง 0 และไม่เติมข้อมูลเอง</span><span data-en>Show unknown, not zero; do not invent a value.</span></small></details>
+                <details><summary><span data-th>คนมาทำงานหรือเรียน</span><span data-en>People who work or study here</span></summary><p><span class="cell-chip">Company</span><span class="cell-chip">Factory</span><span class="cell-chip">Govt. Office</span><span class="cell-chip">School</span></p><small><span data-th>การมีสถานที่เป็น daytime anchor ไม่ใช่จำนวน workers หรือ demand</span><span data-en>Place presence is a daytime anchor, not worker count or demand.</span></small></details>
+              </div>
+            </section>
+            <section class="case-lens" data-ecosystem-lens-view="citizen" hidden><div class="citizen-question"><p class="meta"><span data-th>คำถามเดียวที่ช่วยพื้นที่</span><span data-en>One useful local question</span></p><h4><span data-th>แถวนี้ยังขาดของหรือบริการอะไร?</span><span data-en>What goods or services are missing here?</span></h4><p><span data-th>คำตอบเป็นเสียงพื้นที่ ไม่ใช่ market demand ที่ยืนยันแล้ว</span><span data-en>Answers are community voices, not validated market demand.</span></p></div><div class="action-consequence"><strong><span data-th>กดแล้ว</span><span data-en>On action</span></strong><span><span data-th>เปิดตัวเลือกและช่องเล่าในหน้านี้ ยังไม่ส่ง</span><span data-en>Local choices and a story field open; nothing is sent.</span></span></div></section>
+            <section class="case-lens" data-ecosystem-lens-view="officer" hidden><div class="officer-case-grid"><dl><div><dt><span data-th>เรื่องที่ดู</span><span data-en>Matter</span></dt><dd><span data-th>กิจกรรมของคนในพื้นที่</span><span data-en>Local activity</span></dd></div><div><dt><span data-th>ยังขาด</span><span data-en>Missing</span></dt><dd><span data-th>นิยามคนมาเยือน</span><span data-en>Visitor definition</span></dd></div><div><dt><span data-th>ขัดกัน</span><span data-en>Conflict</span></dt><dd><span data-th>Hotel อยู่ผิดกลุ่มใน working note</span><span data-en>Hotel mapping in the working note</span></dd></div><div><dt><span data-th>งานต่อ</span><span data-en>Next work</span></dt><dd><span data-th>เตรียมคำถามเก็บข้อมูลเพิ่ม</span><span data-en>Prepare a follow-up question</span></dd></div></dl><p><span data-th>ไม่ใช่ใบอนุญาต การรับรอง หรือคำแนะนำลงทุน</span><span data-en>Not a permit, endorsement, or investment advice.</span></p></div></section>
+          </article>
+
+          <article class="ecosystem-case ecosystem-case--rejected card" data-ecosystem-case-view="reject" hidden>
+            <header class="case-heading"><div><p class="meta">REJECT-01</p><h3><span data-th>คะแนนเดียวตัดสินทุกอย่าง</span><span data-en>One score decides everything</span></h3></div><span class="status status--warning"><span data-th>ไม่ใช้</span><span data-en>Rejected</span></span></header>
+            <div class="bad-score" aria-label="Rejected example"><strong>CityScore 87</strong><span><span data-th>ดีทุกด้าน เปิดร้านได้เลย</span><span data-en>Great at everything. Open a shop now.</span></span></div>
+            <ul><li><span data-th>รวมคำถาม คน แหล่งข้อมูล ช่วงเวลา และหน่วยที่เข้ากันไม่ได้</span><span data-en>Combines incompatible questions, people, sources, periods, and units.</span></li><li><span data-th>ทำให้สิ่งที่ยังไม่รู้ดูเหมือนข้อมูลพร้อม</span><span data-en>Makes unknown evidence appear complete.</span></li><li><span data-th>เปลี่ยนคำชวนสำรวจเป็นคำตัดสินและคำแนะนำลงทุน</span><span data-en>Turns exploration into a verdict and investment advice.</span></li></ul>
+            <p class="recovery-note"><strong><span data-th>แก้แบบนี้:</span><span data-en>Recover like this:</span></strong> <span data-th>เลือก “น่าอยู่”, “น่าเที่ยว” หรือ “น่าค้าขาย” แล้วเปิด CityCell และที่มาแยกกัน</span><span data-en>Choose Live, Visit, or Trade, then inspect CityCells and sources separately.</span></p>
+          </article>
+        </div>
+
+        <div class="role-use-grid" data-copy-layer="team">
+          <article><strong>Product</strong><span><span data-th>เห็น user intent, first value และสิ่งที่ยังไม่ควรสร้าง</span><span data-en>See intent, first value, and what stays out of scope.</span></span></article>
+          <article><strong>Design</strong><span><span data-th>เห็น composition, control, state, disclosure และภาษาที่ควรใช้</span><span data-en>See composition, controls, states, disclosure, and copy.</span></span></article>
+          <article><strong>Development</strong><span><span data-th>เห็น ID, context, contract, fallback และจุดที่ต้อง fail closed</span><span data-en>See IDs, context, contracts, fallbacks, and fail-closed points.</span></span></article>
+          <article><strong>Sales</strong><span><span data-th>อธิบายประโยชน์ได้โดยไม่ขายเกินข้อมูลหรือของที่เปิดใช้จริง</span><span data-en>Explain benefit without outrunning evidence or shipped capability.</span></span></article>
+        </div>
+        <p class="ecosystem-boundary"><span data-th>ทั้งหมดเป็นตัวอย่างสำหรับทีม ไม่ใช่ข้อมูลพื้นที่จริง ไม่คำนวณคะแนน ไม่ส่งเรื่อง และไม่เปลี่ยนสถานะเทศบาล</span><span data-en>All examples are team fixtures: no real place data, scoring, submission, or municipal status change.</span></p>
       </div>
     </section>
 
@@ -397,7 +509,7 @@
       <div class="container">
         <header class="section-heading split-heading">
           <div>
-            <p class="eyebrow"><span data-th>หกเอกลักษณ์ของ CityChat v0.6</span><span data-en>Six CityChat v0.6 signatures</span></p>
+            <p class="eyebrow"><span data-th>สิ่งที่ v0.8 รักษาไว้จาก CityChat เดิม</span><span data-en>What v0.8 preserves from the original CityChat</span></p>
             <h2 id="components-title"><span data-th>หน้าตาเดิมที่ทีมคุ้นเคย แต่จัดลำดับให้ช่วยคนมากขึ้น</span><span data-en>Familiar visual identity, composed around user benefit.</span></h2>
           </div>
           <p><span data-th>LDS ดูแลสี ตัวอักษร ปุ่ม focus และการเข้าถึง ส่วน DS Add-on บอกวิธีนำของเหล่านั้นมาทำให้เป็น CityChat</span><span data-en>LDS owns shared visual foundations. The DS Add-on shows how CityChat composes them around place, people, and the next step.</span></p>
@@ -471,7 +583,7 @@
         <article class="lab-panel button-builder card" id="control-examples" aria-labelledby="control-examples-title">
           <header class="lab-heading">
             <div><p class="meta"><span data-th>กติกาปุ่มจาก Landometer DS</span><span data-en>Landometer DS button rule</span></p><h3 id="control-examples-title"><span data-th>มีคำบนปุ่มไหม?</span><span data-en>Does the button have visible text?</span></h3></div>
-            <a class="btn btn--quiet" id="open-button-contract" href="resources/citychat-ds-addon/v0.7.0/citychat-button-contract.json"><span class="icon-symbol" aria-hidden="true">description</span><span data-th>ดาวน์โหลดกติกาปุ่ม</span><span data-en>Download button contract</span></a>
+            <a class="btn btn--quiet" id="open-button-contract" href="resources/citychat-ds-addon/v0.8.0/citychat-button-contract.json"><span class="icon-symbol" aria-hidden="true">description</span><span data-th>ดาวน์โหลดกติกาปุ่ม</span><span data-en>Download button contract</span></a>
           </header>
           <p class="button-rule-lead"><strong><span data-th>มีข้อความ → แคปซูล</span><span data-en>Visible text → capsule</span></strong><strong><span data-th>มีแต่ไอคอน → วงกลม 44×44</span><span data-en>Icon only → 44×44 circle</span></strong></p>
           <div class="button-builder-layout">
@@ -502,7 +614,7 @@
         <article class="lab-panel card" id="icon-reference" aria-labelledby="icon-reference-title">
           <header class="lab-heading">
             <div><p class="meta">Material Symbols Rounded · self-hosted subset v368</p><h3 id="icon-reference-title"><span data-th>ไอคอนมีแผนที่บทบาท ไม่หยิบรูปใกล้เคียงมาแทนกัน</span><span data-en>Icons follow a closed role map—never a guessed synonym.</span></h3></div>
-            <a class="btn btn--quiet" id="open-icon-map" href="resources/citychat-ds-addon/v0.7.0/citychat-icon-map.json"><span class="icon-symbol" aria-hidden="true">description</span><span data-th>เปิด icon map</span><span data-en>Open icon map</span></a>
+            <a class="btn btn--quiet" id="open-icon-map" href="resources/citychat-ds-addon/v0.8.0/citychat-icon-map.json"><span class="icon-symbol" aria-hidden="true">description</span><span data-th>เปิด icon map</span><span data-en>Open icon map</span></a>
           </header>
           <p class="status status--warning"><span data-th>แถวนี้เป็นคลังอ้างอิงของทีม การนำไปใช้จริงยังต้องผ่าน capability และ privacy ของแต่ละหน้าจอ</span><span data-en>This is a team reference library. Runtime use still depends on each screen's capability and privacy contract.</span></p>
           <div class="icon-gallery" role="list" aria-label="Library-only CityChat icon roles">
@@ -525,7 +637,7 @@
         <article class="lab-panel card" id="motion-examples" aria-labelledby="motion-examples-title">
           <header class="lab-heading">
             <div><p class="meta">LDS [MOTION-01] · scoped implementation example</p><h3 id="motion-examples-title"><span data-th>Motion ช่วยเรียงสายตา ไม่ได้สร้างความคึกคักปลอม</span><span data-en>Motion supports reading order; it never manufactures liveliness.</span></h3></div>
-            <a class="btn btn--quiet" id="open-motion-recipe" href="resources/citychat-ds-addon/v0.7.0/semantic-motion.citychat.yml"><span class="icon-symbol" aria-hidden="true">description</span><span data-th>เปิด motion recipe</span><span data-en>Open motion recipe</span></a>
+            <a class="btn btn--quiet" id="open-motion-recipe" href="resources/citychat-ds-addon/v0.8.0/semantic-motion.citychat.yml"><span class="icon-symbol" aria-hidden="true">description</span><span data-th>เปิด motion recipe</span><span data-en>Open motion recipe</span></a>
           </header>
           <div class="motion-layout">
             <div class="motion-object">
@@ -551,7 +663,7 @@
         <article class="lab-panel card color-lab" id="color-atlas" aria-labelledby="color-atlas-title">
           <header class="lab-heading">
             <div><p class="meta">CityChat Color Usage Overlay · Landometer color-srgb-05</p><h3 id="color-atlas-title"><span data-th>เลือกสีจากงานที่ต้องทำ ไม่เลือกจากความรู้สึกว่าสวย</span><span data-en>Choose colour by the job it performs—not by taste alone.</span></h3></div>
-            <a class="btn btn--quiet" id="open-color-role-map" href="resources/citychat-ds-addon/v0.7.0/citychat-color-role-map.json"><span class="icon-symbol" aria-hidden="true">description</span><span data-th>เปิด role map</span><span data-en>Open role map</span></a>
+            <a class="btn btn--quiet" id="open-color-role-map" href="resources/citychat-ds-addon/v0.8.0/citychat-color-role-map.json"><span class="icon-symbol" aria-hidden="true">description</span><span data-th>เปิด role map</span><span data-en>Open role map</span></a>
           </header>
 
           <nav class="color-router" aria-label="CityChat colour selection route">
@@ -568,20 +680,20 @@
               <section class="atlas-group" id="atlas-identity" aria-labelledby="atlas-identity-title">
                 <h4 id="atlas-identity-title"><span data-th>ตัวตนและความอบอุ่น</span><span data-en>Identity and warmth</span></h4>
                 <div class="swatch-grid">
-                  <article class="swatch-card" style="--swatch-surface:var(--brand-beige);--swatch-ink:var(--fg-on-light-primary)" data-color-role-id="citychat.identity.band" data-color-token="--brand-beige"><span class="swatch-sample">CityChat</span><strong>identity.band</strong><code>--brand-beige</code><small data-token-value></small></article>
-                  <article class="swatch-card swatch-card--product" data-color-role-id="citychat.identity.atmosphere" data-color-token="--product-citychat-gradient"><span class="swatch-sample">CityChat</span><strong>identity.atmosphere</strong><code>--product-citychat-gradient</code><small data-token-value></small></article>
-                  <article class="swatch-card" style="--swatch-surface:var(--energy-mint);--swatch-ink:var(--fg-on-light-primary)" data-color-role-id="citychat.ijji.energy" data-color-token="--energy-mint"><span class="swatch-sample">ijji</span><strong>ijji.energy</strong><code>--energy-mint</code><small data-token-value></small></article>
+                  <article class="swatch-card" style="--swatch-surface:var(--brand-beige);--swatch-ink:var(--fg-on-light-primary)" data-color-role-id="cc.identity.logo-band" data-color-token="--brand-beige"><span class="swatch-sample">CityChat</span><strong>identity.logo-band</strong><code>--brand-beige</code><small data-token-value></small></article>
+                  <article class="swatch-card swatch-card--product" data-color-role-id="cc.identity.product-field" data-color-token="--product-citychat-gradient"><span class="swatch-sample">CityChat</span><strong>identity.product-field</strong><code>--product-citychat-gradient</code><small data-token-value></small></article>
+                  <article class="swatch-card" style="--swatch-surface:var(--energy-mint);--swatch-ink:var(--fg-on-light-primary)" data-color-role-id="cc.energy.participation" data-color-token="--energy-mint"><span class="swatch-sample"><span data-th>ชวนมีส่วนร่วม</span><span data-en>Join in</span></span><strong>energy.participation</strong><code>--energy-mint</code><small data-token-value></small></article>
                 </div>
-                <p class="atlas-rule"><span data-th>สี identity และพลัง ijji ใช้สร้างการจดจำและความอยากลองเท่านั้น ไม่แปลว่าบันทึกแล้ว สำเร็จ ด่วน หรือมีข้อมูลมาก</span><span data-en>Identity and ijji energy create recognition and invitation only; they never mean saved, successful, urgent, or high value.</span></p>
+                <p class="atlas-rule"><span data-th>สีตัวตนและสีชวนมีส่วนร่วมช่วยให้จำ CityChat และอยากลองเท่านั้น ไม่ได้แปลว่าบันทึกแล้ว สำเร็จ ด่วน หรือมีข้อมูลมาก</span><span data-en>Identity and participation colour create recognition and invitation only; they never mean saved, successful, urgent, or high value.</span></p>
               </section>
 
               <section class="atlas-group" id="atlas-reading" aria-labelledby="atlas-reading-title">
                 <h4 id="atlas-reading-title"><span data-th>พื้นอ่านและลำดับข้อมูล</span><span data-en>Reading surfaces and hierarchy</span></h4>
                 <div class="swatch-grid">
-                  <article class="swatch-card" style="--swatch-surface:var(--surface-canvas);--swatch-ink:var(--text-primary)" data-color-role-id="citychat.page.canvas" data-color-token="--surface-canvas"><span class="swatch-sample"><span data-th>พื้นหลัก</span><span data-en>Canvas</span></span><strong>page.canvas</strong><code>--surface-canvas</code><small data-token-value></small></article>
-                  <article class="swatch-card" style="--swatch-surface:var(--surface-alt);--swatch-ink:var(--text-primary)" data-color-role-id="citychat.page.section" data-color-token="--surface-alt"><span class="swatch-sample"><span data-th>แบ่งช่วง</span><span data-en>Section</span></span><strong>page.section</strong><code>--surface-alt</code><small data-token-value></small></article>
-                  <article class="swatch-card" style="--swatch-surface:var(--surface-card);--swatch-ink:var(--text-primary)" data-color-role-id="citychat.content.card" data-color-token="--surface-card"><span class="swatch-sample"><span data-th>เรื่องหลัก</span><span data-en>Matter</span></span><strong>content.card</strong><code>--surface-card</code><small data-token-value></small></article>
-                  <article class="swatch-card" style="--swatch-surface:var(--surface-soft);--swatch-ink:var(--text-secondary)" data-color-role-id="citychat.content.quiet" data-color-token="--surface-soft"><span class="swatch-sample"><span data-th>ข้อมูลรอง</span><span data-en>Secondary</span></span><strong>content.quiet</strong><code>--surface-soft</code><small data-token-value></small></article>
+                  <article class="swatch-card" style="--swatch-surface:var(--surface-canvas);--swatch-ink:var(--text-primary)" data-color-role-id="cc.foundation.surface.canvas" data-color-token="--surface-canvas"><span class="swatch-sample"><span data-th>พื้นหลัก</span><span data-en>Canvas</span></span><strong>foundation.surface.canvas</strong><code>--surface-canvas</code><small data-token-value></small></article>
+                  <article class="swatch-card" style="--swatch-surface:var(--surface-alt);--swatch-ink:var(--text-primary)" data-color-role-id="cc.foundation.surface.alt" data-color-token="--surface-alt"><span class="swatch-sample"><span data-th>แบ่งช่วง</span><span data-en>Section</span></span><strong>foundation.surface.alt</strong><code>--surface-alt</code><small data-token-value></small></article>
+                  <article class="swatch-card" style="--swatch-surface:var(--surface-card);--swatch-ink:var(--text-primary)" data-color-role-id="cc.foundation.surface.card" data-color-token="--surface-card"><span class="swatch-sample"><span data-th>เรื่องหลัก</span><span data-en>Matter</span></span><strong>foundation.surface.card</strong><code>--surface-card</code><small data-token-value></small></article>
+                  <article class="swatch-card" style="--swatch-surface:var(--surface-soft);--swatch-ink:var(--text-secondary)" data-color-role-id="cc.foundation.surface.soft" data-color-token="--surface-soft"><span class="swatch-sample"><span data-th>ข้อมูลรอง</span><span data-en>Secondary</span></span><strong>foundation.surface.soft</strong><code>--surface-soft</code><small data-token-value></small></article>
                 </div>
               </section>
 
@@ -607,7 +719,7 @@
                 <h4 id="atlas-data-title"><span data-th>สีแผนที่และกราฟ</span><span data-en>Map and chart colour</span></h4>
                 <div class="data-color-boundary"><span class="icon-symbol" aria-hidden="true">map</span><div><strong><span data-th>ยังไม่แสดง ramp ใน CityChat playground นี้</span><span data-en>No analytical ramp is rendered in this CityChat playground.</span></strong><p><span data-th>ต้องมีชื่อสิ่งที่วัด หน่วย ช่วงเวลา scaleVersion domain breaks รวมทั้งความหมายของ no-data และ zero จากทะเบียนเจ้าของข้อมูลก่อน</span><span data-en>An owning registry must supply the measure, unit, period, scaleVersion, domain, breaks, no-data, and zero semantics first.</span></p></div></div>
               </section>
-              <p class="atlas-rule"><span data-th>ฉบับเต็มมี 45 บทบาทสี 7 วิธีเลือก พร้อมที่มาและคำอธิบายที่ไม่พึ่งสีอย่างเดียว</span><span data-en>The complete atlas carries 45 roles, seven decision routes, provenance, and non-colour cues.</span> <a href="resources/citychat-ds-addon/v0.7.0/citychat-color-atlas.fragment.html"><span data-th>เปิด atlas ฉบับเต็ม</span><span data-en>Open the full atlas</span></a></p>
+              <p class="atlas-rule"><span data-th>ฉบับเต็มมี 45 บทบาทสี 7 วิธีเลือก พร้อมที่มาและคำอธิบายที่ไม่พึ่งสีอย่างเดียว</span><span data-en>The complete atlas carries 45 roles, seven decision routes, provenance, and non-colour cues.</span> <a href="resources/citychat-ds-addon/v0.8.0/citychat-color-atlas.fragment.html"><span data-th>เปิด atlas ฉบับเต็ม</span><span data-en>Open the full atlas</span></a></p>
             </div>
           </details>
         </article>
@@ -626,25 +738,25 @@
             <p class="meta"><span data-th>ชาวบ้าน · ตัวอย่าง</span><span data-en>Citizen · example</span></p>
             <h3><span data-th>เห็นคุณค่าก่อนขอเข้าสู่ระบบหรือแชร์</span><span data-en>Deliver first value before sign-in or sharing</span></h3>
             <dl><div><dt>Intent</dt><dd><span data-th>เข้าใจสถานที่ ความหมาย และคำถามหนึ่งข้อ</span><span data-en>Understand place, meaning, and one supported question</span></dd></div><div><dt>Design move</dt><dd>CityBand + StoryCell + EvidenceSummary</dd></div><div><dt>AHA</dt><dd><span data-th>รู้ว่าสิ่งใดสำคัญและสิ่งใดยังบอกไม่ได้</span><span data-en>Sees what matters and what remains unknown</span></dd></div><div><dt>Boundary</dt><dd><span data-th>ไม่ขอ engagement ก่อนเห็นคุณค่า</span><span data-en>No engagement request before value</span></dd></div></dl>
-            <p class="case-source">Authority: CityChat DS Add-on v0.7 + inherited CityChat guidance · conceptual</p>
+            <p class="case-source">Authority: CityChat DS Add-on v0.8 + inherited CityChat guidance · conceptual</p>
           </article>
           <article class="case-card card">
             <p class="meta"><span data-th>ส่งแล้วและกลับมา · ตัวอย่าง</span><span data-en>Saved &amp; return · example</span></p>
             <h3><span data-th>รู้ว่าส่งแล้วหรือยัง และกลับมาเพราะมีอะไรเปลี่ยน</span><span data-en>Know what was saved and return for a real change</span></h3>
             <dl><div><dt>Intent</dt><dd><span data-th>เห็นความต่อเนื่องโดยไม่สร้างรางวัลปลอม</span><span data-en>Show continuity without fake rewards</span></dd></div><div><dt>Design move</dt><dd>ContributionMemory + ReturnCueView</dd></div><div><dt>AHA</dt><dd><span data-th>รู้ว่าอะไรถูกบันทึก ใครเห็น และอะไรเปลี่ยน</span><span data-en>Sees what was saved, who can see it, and what changed</span></dd></div><div><dt>Boundary</dt><dd><span data-th>ต้องมีหลักฐานการบันทึกและเหตุการณ์ที่ระบุเวอร์ชันได้จริง</span><span data-en>Requires real persistence and a versioned event</span></dd></div></dl>
-            <p class="case-source">Authority: CityChat DS Add-on v0.7 + inherited CityChat guidance · conceptual</p>
+            <p class="case-source">Authority: CityChat DS Add-on v0.8 + inherited CityChat guidance · conceptual</p>
           </article>
           <article class="case-card card">
             <p class="meta"><span data-th>เจ้าหน้าที่ · ตัวอย่าง</span><span data-en>Officer · example</span></p>
             <h3><span data-th>รู้ว่าใครรับผิดชอบและต้องทำอะไรต่อ</span><span data-en>Know the owner and next step</span></h3>
             <dl><div><dt>Intent</dt><dd><span data-th>รู้ผู้รับผิดชอบ หลักฐาน กำหนดเวลา และสิ่งที่ทำได้</span><span data-en>Know owner, evidence, deadline, and an authorized action</span></dd></div><div><dt>Design move</dt><dd>object-native OperationsObject</dd></div><div><dt>AHA</dt><dd><span data-th>รู้ว่าอะไรต้องทำต่อและใครรับผิดชอบ</span><span data-en>Sees what happens next and who owns it</span></dd></div><div><dt>Boundary</dt><dd><span data-th>เป็นภาพเป้าหมาย ยังไม่เชื่อมระบบงานจริง</span><span data-en>Target only; runtime unresolved</span></dd></div></dl>
-            <p class="case-source">Authority: CityChat DS Add-on v0.7 + owning workflow required · conceptual</p>
+            <p class="case-source">Authority: CityChat DS Add-on v0.8 + owning workflow required · conceptual</p>
           </article>
           <article class="case-card card rejected-case">
             <p class="meta"><span data-th>ไม่ใช้</span><span data-en>Rejected</span></p>
             <h3><span data-th>ทำให้หน้าจอดูคึกคักด้วยแสงกระพริบ อันดับ และข้อความสำเร็จที่ยังไม่เกิด</span><span data-en>Making the screen feel busy with pulses, ranks, and unearned success</span></h3>
             <ul><li><span data-th>ไม่ใช้ motion หรือยอดกดแทนความหมายของเมือง</span><span data-en>Motion and engagement never substitute for local meaning.</span></li><li><span data-th>ไม่บอกว่าส่งแล้วหรือเทศบาลรับเรื่องจนกว่าระบบจริงจะยืนยัน</span><span data-en>Never claim saved or received state without owning-system proof.</span></li><li><span data-th>ไม่แสดง follow และ share ก่อนคนเข้าใจเรื่องหลัก</span><span data-en>Do not promote follow or share before first value.</span></li></ul>
-            <p class="case-source">Rejected by CityChat DS Add-on v0.7</p>
+            <p class="case-source">Rejected by CityChat DS Add-on v0.8</p>
           </article>
         </div>
       </div>
@@ -690,7 +802,7 @@
               <li><a href="assets/identity/citychat-horizontal-lockup.png" download><span data-th>ดาวน์โหลดโลโก้ PNG</span><span data-en>Download logo PNG</span></a></li>
               <li><a href="assets/identity/citychat-lockup.source.svg" download><span data-th>ดาวน์โหลด lockup SVG (source only)</span><span data-en>Download lockup SVG (source only)</span></a></li>
               <li><a href="assets/identity/citychat-symbol.source.svg" download><span data-th>ดาวน์โหลด symbol SVG (source only)</span><span data-en>Download symbol SVG (source only)</span></a></li>
-              <li><a href="assets/identity/identity-assets.v0.7.0.json" download><span data-th>ดูสิทธิ์การใช้ไฟล์</span><span data-en>View identity permissions</span></a></li>
+              <li><a href="assets/identity/identity-assets.v0.8.0.json" download><span data-th>ดูสิทธิ์การใช้ไฟล์</span><span data-en>View identity permissions</span></a></li>
             </ul>
           </article>
 
@@ -701,8 +813,8 @@
             <ul class="asset-link-list">
               <li><a href="assets/icons/material-symbols-rounded-citychat-v368.ttf" download><span data-th>ดาวน์โหลดไฟล์ไอคอน</span><span data-en>Download icon font</span></a></li>
               <li><a href="assets/icons/LICENSE.material-symbols.txt" download><span data-th>ดาวน์โหลดใบอนุญาต</span><span data-en>Download licence</span></a></li>
-              <li><a href="resources/citychat-ds-addon/v0.7.0/citychat-icon-map.json" download><span data-th>ดาวน์โหลด icon map</span><span data-en>Download icon map</span></a></li>
-              <li><a href="resources/citychat-ds-addon/v0.7.0/font-assets.manifest.json" download><span data-th>ดาวน์โหลดรายการไฟล์</span><span data-en>Download asset manifest</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/citychat-icon-map.json" download><span data-th>ดาวน์โหลด icon map</span><span data-en>Download icon map</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/font-assets.manifest.json" download><span data-th>ดาวน์โหลดรายการไฟล์</span><span data-en>Download asset manifest</span></a></li>
             </ul>
           </article>
 
@@ -731,13 +843,15 @@
           <article class="asset-group card">
             <span class="asset-group-icon icon-symbol" aria-hidden="true">map</span>
             <h3><span data-th>ตัวอย่างเริ่มต้น</span><span data-en>Starter examples</span></h3>
-            <p><span data-th>หน้า StoryCell, CSS, Build Card, กติกาปุ่ม และตัวอย่าง CityScan hero ที่เปิดดูหรือดาวน์โหลดได้</span><span data-en>StoryCell page, CSS, Build Card, button contract, and CityScan hero specimen.</span></p>
+            <p><span data-th>หน้า StoryCell, CSS, Build Card, กติกาปุ่ม, CityScan taxonomy, case library และ hero ที่เปิดดูหรือดาวน์โหลดได้</span><span data-en>StoryCell page, CSS, Build Card, button contract, CityScan taxonomy, case library, and hero specimen.</span></p>
             <ul class="asset-link-list">
               <li><a href="resources/starter/index.html" download><span data-th>ดาวน์โหลด starter HTML</span><span data-en>Download starter HTML</span></a></li>
               <li><a href="resources/starter/citychat.css" download><span data-th>ดาวน์โหลด starter CSS</span><span data-en>Download starter CSS</span></a></li>
               <li><a href="resources/starter/build-card.yml" download><span data-th>ดาวน์โหลด Build Card</span><span data-en>Download Build Card</span></a></li>
-              <li><a href="resources/citychat-ds-addon/v0.7.0/citychat-button-contract.json" download><span data-th>ดาวน์โหลดกติกาปุ่ม</span><span data-en>Download button contract</span></a></li>
-              <li><a href="resources/citychat-ds-addon/v0.7.0/cityscan-hero-specimen.html" download><span data-th>ดาวน์โหลดตัวอย่าง CityScan hero</span><span data-en>Download CityScan hero specimen</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/citychat-button-contract.json" download><span data-th>ดาวน์โหลดกติกาปุ่ม</span><span data-en>Download button contract</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/cityscan-hero-specimen.html" download><span data-th>ดาวน์โหลดตัวอย่าง CityScan hero</span><span data-en>Download CityScan hero specimen</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/cityscan-citycell-taxonomy.json" download><span data-th>ดาวน์โหลด CityScan + CityCell taxonomy</span><span data-en>Download CityScan + CityCell taxonomy</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/citychat-case-library.json" download><span data-th>ดาวน์โหลด case library</span><span data-en>Download case library</span></a></li>
             </ul>
           </article>
 
@@ -746,9 +860,9 @@
             <h3><span data-th>สีและการเคลื่อนไหว</span><span data-en>Colour and motion</span></h3>
             <p><span data-th>เลือกสีตามงานที่ทำ และใช้ motion เท่าที่ช่วยอธิบายสิ่งที่เปลี่ยน</span><span data-en>Choose colour by its job and use motion only to explain a change.</span></p>
             <ul class="asset-link-list">
-              <li><a href="resources/citychat-ds-addon/v0.7.0/citychat-color-role-map.json" download><span data-th>ดาวน์โหลด color role map</span><span data-en>Download colour-role map</span></a></li>
-              <li><a href="resources/citychat-ds-addon/v0.7.0/citychat-color-atlas.fragment.html" download><span data-th>ดาวน์โหลด Color Atlas</span><span data-en>Download Colour Atlas</span></a></li>
-              <li><a href="resources/citychat-ds-addon/v0.7.0/semantic-motion.citychat.yml" download><span data-th>ดาวน์โหลด motion map</span><span data-en>Download motion map</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/citychat-color-role-map.json" download><span data-th>ดาวน์โหลด color role map</span><span data-en>Download colour-role map</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/citychat-color-atlas.fragment.html" download><span data-th>ดาวน์โหลด Color Atlas</span><span data-en>Download Colour Atlas</span></a></li>
+              <li><a href="resources/citychat-ds-addon/v0.8.0/semantic-motion.citychat.yml" download><span data-th>ดาวน์โหลด motion map</span><span data-en>Download motion map</span></a></li>
             </ul>
           </article>
 
@@ -757,8 +871,8 @@
             <h3><span data-th>รายการไฟล์ทั้งหมด</span><span data-en>Complete file list</span></h3>
             <p><span data-th>ดู hash สิทธิ์ สิ่งที่ใช้ได้ และสิ่งที่ยังห้ามใช้ของทุกไฟล์ในคลัง</span><span data-en>Inspect hashes, rights, allowed uses, and blocked uses for every library asset.</span></p>
             <ul class="asset-link-list">
-              <li><a href="assets/asset-library.v0.7.0.json" download><span data-th>ดาวน์โหลด Asset Catalog</span><span data-en>Download Asset Catalog</span></a></li>
-              <li><a href="assets/downloads/SHA256SUMS.txt" download><span data-th>ดาวน์โหลด SHA256SUMS</span><span data-en>Download SHA256SUMS</span></a></li>
+              <li><a href="assets/asset-library.v0.8.0.json" download><span data-th>ดาวน์โหลด Asset Catalog</span><span data-en>Download Asset Catalog</span></a></li>
+              <li><a href="assets/ASSET-LIBRARY-SHA256SUMS.v0.8.0.txt" download><span data-th>ดาวน์โหลด checksum เฉพาะ Asset Library</span><span data-en>Download Asset Library checksums</span></a></li>
               <li><a href="resources/index.json" download><span data-th>ดาวน์โหลด Resource Index</span><span data-en>Download Resource Index</span></a></li>
             </ul>
           </article>
@@ -777,17 +891,17 @@
         </header>
 
         <div class="resource-grid">
-          <a class="resource-card card" href="assets/downloads/citychat-ds-addon-v0.7.md" download>
+          <a class="resource-card card" href="assets/downloads/citychat-ds-addon-v0.8.md" download>
             <span class="status status--success">CITYCHAT DS ADD-ON</span>
-            <h3>CityChat DS Add-on v0.7</h3>
+            <h3>CityChat DS Add-on v0.8</h3>
             <p><span data-th>กติกาที่อ่านง่ายสำหรับตัวตน ปุ่ม asset CityScan hero ภาษา และการส่งต่อให้คนกับ AI</span><span data-en>Plain guidance for identity, buttons, assets, the CityScan hero, language, and human/AI handoff.</span></p>
-            <code>v0.7 · approved owner direction</code>
+            <code>v0.8 · approved owner direction</code>
           </a>
-          <a class="resource-card card" href="assets/downloads/citychat-ds-addon-v0.7-approval.json" download>
+          <a class="resource-card card" href="assets/downloads/citychat-ds-addon-v0.8-approval.json" download>
             <span class="status status--success">APPROVAL RECORD</span>
-            <h3>DS Add-on v0.7 approval</h3>
+            <h3>DS Add-on v0.8 approval</h3>
             <p><span data-th>บันทึกชื่อใหม่ ขอบเขตกติกาเสริม และสิ่งที่ยังไม่ใช่ความสามารถของระบบจริง</span><span data-en>The new name, approved add-on scope, and explicit non-runtime boundaries.</span></p>
-            <code>CC-DSA-APP-20260823-01</code>
+            <code>CC-DSA-APP-20260828-01</code>
           </a>
           <a class="resource-card card" href="assets/downloads/citychat-product-experience-profile-v0.4.md" download>
             <span class="status status--warning">DRAFT PROFILE</span>
@@ -813,29 +927,41 @@
             <p><span data-th>คำสั่งเริ่มงานที่เตือนให้ระบุผู้ใช้ เรื่อง ข้อมูล สิ่งที่เปิดใช้ และสิ่งที่ต้องส่งต่อ</span><span data-en>A prompt that captures user, matter, evidence, availability, and handoff.</span></p>
             <code>Markdown</code>
           </a>
-          <a class="resource-card card" href="resources/citychat-ds-addon/v0.7.0/citychat-icon-map.json" download>
+          <a class="resource-card card" href="resources/citychat-ds-addon/v0.8.0/citychat-icon-map.json" download>
             <span class="status status--info">ICON MAP</span>
-            <h3>CityChat icon roles v0.7.0</h3>
+            <h3>CityChat icon roles v0.8.0</h3>
             <p><span data-th>ชุด Material Symbols Rounded แบบ self-hosted พร้อม glyph, label, capability gate และไฟล์ hash</span><span data-en>A self-hosted Material Symbols Rounded subset with glyph, label, capability gate, and file hash.</span></p>
             <code>9 roles · no runtime CDN</code>
           </a>
-          <a class="resource-card card" href="resources/citychat-ds-addon/v0.7.0/semantic-motion.citychat.yml" download>
+          <a class="resource-card card" href="resources/citychat-ds-addon/v0.8.0/semantic-motion.citychat.yml" download>
             <span class="status status--info">MOTION MAP</span>
-            <h3>CityChat semantic motion v0.7.0</h3>
+            <h3>CityChat semantic motion v0.8.0</h3>
             <p><span data-th>ผูกเฉพาะ feedback ของปุ่มและการเรียงสายตาแบบครั้งเดียว ส่วน motion ที่ไม่มี primitive จริงจะปิดไว้</span><span data-en>Only button feedback and one-time reading order are bound; unavailable motion primitives resolve to none.</span></p>
             <code>scoped · once-only · reduced-motion safe</code>
           </a>
-          <a class="resource-card card" href="resources/citychat-ds-addon/v0.7.0/citychat-color-role-map.json" download>
+          <a class="resource-card card" href="resources/citychat-ds-addon/v0.8.0/citychat-color-role-map.json" download>
             <span class="status status--info">COLOR USAGE</span>
-            <h3>CityChat Color Usage Atlas v0.7.0</h3>
+            <h3>CityChat Color Usage Atlas v0.8.0</h3>
             <p><span data-th>45 บทบาทสีที่อ้าง LDS color-srgb-05 โดยไม่สร้าง palette หรือ analytical ramp ใหม่</span><span data-en>45 CityChat usage roles mapped to LDS color-srgb-05 without inventing a palette or analytical ramp.</span></p>
             <code>45 roles · 7 routes · 66 bindings</code>
           </a>
-          <a class="resource-card card" href="assets/downloads/citychat-ds-addon-playground-release-authorization.v0.7.0.json" download>
+          <a class="resource-card card" href="resources/citychat-ds-addon/v0.8.0/cityscan-citycell-taxonomy.json" download>
+            <span class="status status--info">CITYSCAN TAXONOMY</span>
+            <h3>Three prompts + CityCell contract</h3>
+            <p><span data-th>สามคำถามหลัก กลุ่มจาก working note ขอบเขต proxy และกติกา unknown ไม่เท่ากับ 0</span><span data-en>Three main prompts, normalized working groups, proxy boundaries, and unknown-is-not-zero rules.</span></p>
+            <code>3 topics · no overall score</code>
+          </a>
+          <a class="resource-card card" href="resources/citychat-ds-addon/v0.8.0/citychat-case-library.json" download>
+            <span class="status status--info">CASE LIBRARY</span>
+            <h3>CityScan → CityChat → CityMETER</h3>
+            <p><span data-th>สามเคสที่ดีและหนึ่งเคสที่ปฏิเสธ พร้อมมุมของประชาชน CityScan และเจ้าหน้าที่</span><span data-en>Three constructive cases and one rejected case across public, CityScan, and officer lenses.</span></p>
+            <code>3 × 3 views + 1 rejected</code>
+          </a>
+          <a class="resource-card card" href="assets/downloads/citychat-ds-addon-playground-release-authorization.v0.8.0.json" download>
             <span class="status status--success">RELEASE AUTH</span>
-            <h3>Playground v0.7.0 authorization</h3>
+            <h3>Playground v0.8.0 authorization</h3>
             <p><span data-th>ขอบเขตการเปลี่ยนชื่อ ปรับปุ่ม คืน CityScan hero เปิด Asset Library และเผยแพร่ build นี้</span><span data-en>The exact-build authorization for naming, buttons, CityScan hero, Asset Library, and republication.</span></p>
-            <code>CC-DSA-PLAYGROUND-REL-20260823-01</code>
+            <code>CC-DSA-PLAYGROUND-REL-20260828-01</code>
           </a>
           <a class="resource-card card" href="resources/starter/index.html">
             <span class="status status--info">RUNNABLE</span>
@@ -846,7 +972,7 @@
           <a class="resource-card card" href="vendor/landometer/v0.9.0/package.json">
             <span class="status status--success">PINNED UPSTREAM</span>
             <h3>Landometer machine package v0.9.0-mp1</h3>
-            <p><span data-th>build kit, profile, packs, schema และ SHA manifest จาก commit d82ac775…</span><span data-en>Build kit, profiles, packs, schemas, and SHA manifest from commit d82ac775…</span></p>
+            <p><span data-th>build kit, profile, packs, schema และ SHA manifest จาก commit d82ac775… เป็นชุดกลางที่มี profile ของหลายผลิตภัณฑ์ จึงไม่ใช่คลัง asset ของ CityChat</span><span data-en>Build kit, profiles, packs, schemas, and SHA manifest from commit d82ac775… This shared package carries several product profiles and is not the CityChat asset library.</span></p>
             <code>143 checks · 0 package failures</code>
           </a>
         </div>
@@ -866,14 +992,14 @@
           <dl>
             <div><dt>Page kind</dt><dd>design-identity-playground</dd></div>
             <div><dt>LDS profile</dt><dd>designsystem.adoption</dd></div>
-            <div><dt>CityChat DS Add-on</dt><dd>v0.7 · approved naming and normative add-on delta</dd></div>
-            <div><dt>Inherited CityChat base</dt><dd>Visual Experience Specification v0.6 · historical approved base · SHA 5a137425…</dd></div>
+            <div><dt>CityChat DS Add-on</dt><dd>v0.8 · approved naming and normative add-on delta</dd></div>
+            <div><dt>Historical CityChat record</dt><dd>Visual Experience Specification v0.6 · historical evidence only · SHA 5a137425…</dd></div>
             <div><dt>Experience contract</dt><dd>v0.4 · draft_candidate · SHA f1964af7…</dd></div>
             <div><dt>LDS package</dt><dd>v0.9.0-mp1 · color-srgb-05 · lds-kit-0.9.0-r4</dd></div>
             <div><dt>Publication</dt><dd>public projection · page-level noindex request · source_limited; public files may still be indexed</dd></div>
             <div><dt>Runtime effects</dt><dd>none · local fixture state and clipboard only</dd></div>
-            <div><dt>Artifact</dt><dd>v0.7.0 · implements CityChat DS Add-on v0.7</dd></div>
-            <div><dt>Identity roles</dt><dd>exact unchanged PNG · separate header/footer approvals · build citychat-ui-20260823-02 · LDS brand-beige identity band</dd></div>
+            <div><dt>Artifact</dt><dd>v0.8.0 · implements CityChat DS Add-on v0.8</dd></div>
+            <div><dt>Identity roles</dt><dd>exact unchanged PNG · separate header/footer approvals · build citychat-ui-20260828-01 · LDS brand-beige identity band</dd></div>
             <div><dt>Implementation library</dt><dd>deterministic two-shape buttons · direct asset downloads · self-hosted icon subset · scoped motion · 45-role color usage overlay</dd></div>
             <div><dt>Favicon/social/touch</dt><dd>omitted · approval scope unresolved</dd></div>
             <div><dt>Machine validation</dt><dd>pending for this artifact; upstream package consistency does not certify it</dd></div>
@@ -900,10 +1026,10 @@
         <p><span data-th>CityChat DS Add-on playground สำหรับทีม · ไม่ใช่ระบบ CityChat ที่เปิดใช้งานจริง</span><span data-en>A CityChat DS Add-on team playground · not a live CityChat product.</span></p>
       </div>
       <dl>
-        <div><dt>Artifact</dt><dd>v0.7.0 · citychat-ui-20260823-02</dd></div>
+        <div><dt>Artifact</dt><dd>v0.8.0 · citychat-ui-20260828-01</dd></div>
         <div><dt>Evidence</dt><dd>source_limited</dd></div>
         <div><dt>Indexing</dt><dd>HTML entry points request noindex; public downloads and repository files may still be indexed</dd></div>
-        <div><dt>Updated</dt><dd>2026-08-23 · Asia/Bangkok</dd></div>
+        <div><dt>Updated</dt><dd>2026-08-28 · Asia/Bangkok</dd></div>
       </dl>
       <a href="https://github.com/montri-th/CityChat"><span data-th>เปิด source บน GitHub</span><span data-en>Open source on GitHub</span></a>
     </div>

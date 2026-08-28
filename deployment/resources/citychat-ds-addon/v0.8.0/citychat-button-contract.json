@@ -1,0 +1,184 @@
+{
+  "$schema": "../../../schemas/citychat-button-contract.schema.v0.8.0.json",
+  "schemaVersion": "1.0",
+  "contractId": "citychat-button-contract-v0.8",
+  "artifactVersion": "0.8.0",
+  "artifactBuildId": "citychat-ui-20260828-01",
+  "upstream": {
+    "designSystem": "Landometer Design System",
+    "authoringRevision": "v0.9.0-r7",
+    "ruleId": "BTN-GEOM-01",
+    "kitVersion": "lds-kit-0.9.0-r4",
+    "canonicalCssPath": "vendor/landometer/v0.9.0/build-kit/lds-base.css",
+    "canonicalCssSha256": "47eb23f0b2a06bd6882080bcc693384f5d59791b434045e7281b98fa2831903c"
+  },
+  "authorInputs": {
+    "allowed": [
+      "semanticKind",
+      "labelMode",
+      "visibleLabel",
+      "iconRole",
+      "accessibleName",
+      "immediateEffect",
+      "recovery"
+    ],
+    "forbidden": [
+      "shape",
+      "radius",
+      "padding",
+      "height",
+      "width",
+      "size",
+      "motionDuration",
+      "motionEasing"
+    ]
+  },
+  "decisionModel": {
+    "question": "Does the action carry visible text?",
+    "outcomes": [
+      {
+        "labelModes": ["visible_text", "icon_and_visible_text"],
+        "geometryRole": "lds_labelled_capsule"
+      },
+      {
+        "labelModes": ["icon_only_accessible_name"],
+        "geometryRole": "lds_icon_circle"
+      }
+    ],
+    "unresolvedOutcome": "blocked"
+  },
+  "variants": [
+    {
+      "geometryRole": "lds_labelled_capsule",
+      "labelModes": ["visible_text", "icon_and_visible_text"],
+      "requiredClasses": ["btn"],
+      "forbiddenClasses": ["btn-icon"],
+      "minimumTargetCssPx": 44,
+      "accessibleName": "visible_text",
+      "visibleText": "required",
+      "iconCount": "zero_or_one",
+      "geometry": {
+        "radius": "var(--radius-pill)",
+        "inlinePadding": "at_least_var(--space-5)",
+        "alignment": "center_both_axes",
+        "wrapping": "wrap_without_clipping_or_truncation",
+        "equalWidthHeight": false,
+        "canonicalCssSize": "content_sized"
+      }
+    },
+    {
+      "geometryRole": "lds_icon_circle",
+      "labelModes": ["icon_only_accessible_name"],
+      "requiredClasses": ["btn", "btn-icon"],
+      "forbiddenClasses": [],
+      "minimumTargetCssPx": 44,
+      "accessibleName": "required_attribute_or_equivalent",
+      "visibleText": "forbidden",
+      "iconCount": "exactly_one",
+      "geometry": {
+        "radius": "50%",
+        "inlinePadding": "0",
+        "alignment": "center_both_axes",
+        "wrapping": "not_applicable",
+        "equalWidthHeight": true,
+        "canonicalCssSize": "44px_by_44px"
+      }
+    }
+  ],
+  "componentOwnedExclusions": [
+    "tab",
+    "segmented_selector",
+    "form_control",
+    "disclosure",
+    "navigation_card",
+    "status",
+    "tag",
+    "field",
+    "card"
+  ],
+  "protectedGeometryProperties": [
+    "display",
+    "align-items",
+    "justify-content",
+    "gap",
+    "min-height",
+    "height",
+    "min-width",
+    "padding",
+    "padding-inline",
+    "padding-block",
+    "border-radius",
+    "font"
+  ],
+  "acceptance": {
+    "source": [
+      "Every action-style control has a stable id and one control-inventory record.",
+      "Every inventory record resolves labelMode to exactly one geometryRole through this contract.",
+      "Product CSS does not override a protected geometry property on .btn or .btn-icon.",
+      ".btn-icon always appears together with .btn and an accessible name.",
+      "Tabs, segmented selectors, fields, disclosures, status, tags, and cards never use action-button classes merely to appear clickable."
+    ],
+    "rendered": {
+      "viewports": [320, 360, 390, 834],
+      "locales": ["th", "en"],
+      "themes": ["light", "dark"],
+      "zoom": [1, 2],
+      "checks": [
+        "All action targets are at least 44 by 44 CSS px.",
+        "A labelled capsule has at least var(--space-5) inline padding, centres its contents, and wraps without clipping or ellipsis.",
+        "An icon-and-label capsule preserves the var(--space-2) gap and centres icon and label on the same axis.",
+        "An icon-only action renders as a 44 by 44 circle with zero inline padding and a centred approved icon.",
+        "Keyboard focus remains visible in both themes.",
+        "Long Thai remains readable at 200 percent zoom without horizontal page overflow."
+      ]
+    },
+    "behavior": [
+      "The visible label or accessible name describes the immediate effect.",
+      "Every enabled action reaches its declared effect and recovery state in browser testing.",
+      "Disabled and busy specimens remain inert and readable.",
+      "The interactive builder is tested once in labelled mode and once after switching to icon-only mode."
+    ]
+  },
+  "examples": {
+    "accepted": [
+      {
+        "id": "labelled-text",
+        "labelMode": "visible_text",
+        "markup": "<button class=\"btn\" type=\"button\">ดูข้อมูลพื้นที่นี้</button>",
+        "reason": "Visible text resolves to the inherited labelled capsule."
+      },
+      {
+        "id": "labelled-with-icon",
+        "labelMode": "icon_and_visible_text",
+        "markup": "<button class=\"btn\" type=\"button\"><span class=\"icon-symbol\" aria-hidden=\"true\">description</span><span>ดูที่มา</span></button>",
+        "reason": "An icon plus visible text remains a capsule."
+      },
+      {
+        "id": "icon-only",
+        "labelMode": "icon_only_accessible_name",
+        "markup": "<button class=\"btn btn-icon\" type=\"button\" aria-label=\"ดูที่มา\"><span class=\"icon-symbol\" aria-hidden=\"true\">description</span></button>",
+        "reason": "A standard icon-only action uses the inherited circular target and a real accessible name."
+      }
+    ],
+    "rejected": [
+      {
+        "id": "third-shape",
+        "labelMode": "visible_text",
+        "markup": "<button class=\"citychat-button\">ดูข้อมูล</button>",
+        "reason": "A local button class can create a prohibited third geometry."
+      },
+      {
+        "id": "circle-with-visible-text",
+        "labelMode": "visible_text",
+        "markup": "<button class=\"btn btn-icon\">ดูข้อมูล</button>",
+        "reason": "Visible text cannot be forced into the icon-only circle."
+      },
+      {
+        "id": "unnamed-icon-only",
+        "labelMode": "icon_only",
+        "markup": "<button class=\"btn btn-icon\"><span class=\"icon-symbol\">description</span></button>",
+        "reason": "An icon-only action without an accessible name is not usable."
+      }
+    ]
+  }
+}

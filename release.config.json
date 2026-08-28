@@ -2,8 +2,8 @@
   "schemaVersion": "1.0",
   "product": "citychat",
   "artifactName": "CityChat DS Add-on Interactive Playground",
-  "artifactVersion": "0.7.0",
-  "artifactBuildId": "citychat-ui-20260823-02",
+  "artifactVersion": "0.8.0",
+  "artifactBuildId": "citychat-ui-20260828-01",
   "pageKind": "design-identity-playground",
   "profile": "designsystem.adoption",
   "language": "th",
@@ -15,30 +15,30 @@
   "machineValidation": "pending",
   "canonicalUrl": "https://montri-th.github.io/CityChat/",
   "releaseArtifacts": {
-    "manifest": "site-manifest.v0.7.0.json",
-    "buildCard": "build-card.v0.7.0.yml",
-    "controlInventory": "control-inventory.v0.7.0.json",
-    "implementationNotes": "implementation-notes.v0.7.0.md",
-    "automatedQa": "qa/automated.v0.7.0.json",
-    "renderedQa": "qa/rendered-local.v0.7.0.json",
-    "manualQa": "qa/manual-gates.v0.7.0.md",
+    "manifest": "site-manifest.v0.8.0.json",
+    "buildCard": "build-card.v0.8.0.yml",
+    "controlInventory": "control-inventory.v0.8.0.json",
+    "implementationNotes": "implementation-notes.v0.8.0.md",
+    "automatedQa": "qa/automated.v0.8.0.json",
+    "renderedQa": "qa/rendered-local.v0.8.0.json",
+    "manualQa": "qa/manual-gates.v0.8.0.md",
     "checksums": "assets/downloads/SHA256SUMS.txt"
   },
   "sourceDesignAddOn": {
-    "path": "assets/downloads/citychat-ds-addon-v0.7.md",
-    "sha256": "b1ea2b2cae6985b80a0f10082b1dbbb7d43557d5f5361a1de03f917168be861b",
+    "path": "assets/downloads/citychat-ds-addon-v0.8.md",
+    "sha256": "a85aba433d0c17da1ea0d32320bbe557efdc10845903c6167c654ce9480f41fa",
     "status": "approved_normative_add_on"
   },
   "approvalRecords": [
     {
-      "path": "assets/downloads/citychat-ds-addon-v0.7-approval.json",
-      "sha256": "ac55bab150103da9a2f557345c7f0d99072ed89f433c063b22aabb6b8a4fe2f2",
-      "approvalId": "CC-DSA-APP-20260823-01"
+      "path": "assets/downloads/citychat-ds-addon-v0.8-approval.json",
+      "sha256": "33177423a58ff97c6d28f980d2e0ee88a9d59dfb9e754fdf65afc18a9a0ac0f6",
+      "approvalId": "CC-DSA-APP-20260828-01"
     },
     {
-      "path": "assets/downloads/citychat-ds-addon-playground-release-authorization.v0.7.0.json",
-      "sha256": "9f0194953217d6503af691ba802b627577e2f07b3779ed227ef7539feb905812",
-      "approvalId": "CC-DSA-PLAYGROUND-REL-20260823-01"
+      "path": "assets/downloads/citychat-ds-addon-playground-release-authorization.v0.8.0.json",
+      "sha256": "c72d520f8233f16388461d2574bbd9eb40e03441a26df61bd6cde442202efc2f",
+      "approvalId": "CC-DSA-PLAYGROUND-REL-20260828-01"
     }
   ],
   "productDependencies": [
@@ -71,20 +71,25 @@
     }
   ],
   "identityManifest": {
-    "path": "assets/identity/identity-assets.v0.7.0.json",
-    "sha256": "4b6b6af1861355349ae62fc9a61eb36f77ae403bd17a42f444549c8cbbba7faa"
+    "path": "assets/identity/identity-assets.v0.8.0.json",
+    "sha256": "484e4441d92328e7ce76b2b9b1b73299566f7b92c96638aec87b80a8a42df56b"
   },
-  "implementationRecordRoot": "resources/citychat-ds-addon/v0.7.0",
+  "implementationRecordRoot": "resources/citychat-ds-addon/v0.8.0",
   "implementationRecords": {
-    "buttonContract": "resources/citychat-ds-addon/v0.7.0/citychat-button-contract.json",
-    "assetLibrary": "assets/asset-library.v0.7.0.json",
-    "heroSpecimen": "resources/citychat-ds-addon/v0.7.0/cityscan-hero-specimen.html",
-    "iconMap": "resources/citychat-ds-addon/v0.7.0/citychat-icon-map.json",
-    "iconResolution": "resources/citychat-ds-addon/v0.7.0/citychat-icon-resolution.json",
-    "fontAssets": "resources/citychat-ds-addon/v0.7.0/font-assets.manifest.json",
-    "semanticMotion": "resources/citychat-ds-addon/v0.7.0/semantic-motion.citychat.yml",
-    "colorRoleMap": "resources/citychat-ds-addon/v0.7.0/citychat-color-role-map.json",
-    "colorAtlasGenerationQa": "qa/color-atlas-generation.v0.7.0.json"
+    "buttonContract": "resources/citychat-ds-addon/v0.8.0/citychat-button-contract.json",
+    "assetLibrary": "assets/asset-library.v0.8.0.json",
+    "heroSpecimen": "resources/citychat-ds-addon/v0.8.0/cityscan-hero-specimen.html",
+    "iconMap": "resources/citychat-ds-addon/v0.8.0/citychat-icon-map.json",
+    "iconResolution": "resources/citychat-ds-addon/v0.8.0/citychat-icon-resolution.json",
+    "fontAssets": "resources/citychat-ds-addon/v0.8.0/font-assets.manifest.json",
+    "semanticMotion": "resources/citychat-ds-addon/v0.8.0/semantic-motion.citychat.yml",
+    "colorRoleMap": "resources/citychat-ds-addon/v0.8.0/citychat-color-role-map.json",
+    "colorAtlasGenerationQa": "qa/color-atlas-generation.v0.8.0.json",
+    "cityScanTaxonomy": "resources/citychat-ds-addon/v0.8.0/cityscan-citycell-taxonomy.json",
+    "cityChatCaseLibrary": "resources/citychat-ds-addon/v0.8.0/citychat-case-library.json",
+    "cityScanTaxonomySchema": "schemas/cityscan-citycell-taxonomy.schema.v0.8.0.json",
+    "cityChatCaseLibrarySchema": "schemas/citychat-case-library.schema.v0.8.0.json",
+    "assetLibraryChecksums": "assets/ASSET-LIBRARY-SHA256SUMS.v0.8.0.txt"
   },
   "triggeredPacks": ["PUB-01", "DELIVERY-01:web"],
   "supportedChannels": ["github_pages_team_playground"],

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "citychat-case-library.schema.v0.8.0.json",
+  "title": "CityChat ecosystem case library",
+  "type": "object",
+  "required": ["schemaVersion", "libraryId", "libraryVersion", "ruleAuthority", "sourceVersion", "mediaStatus", "productScope", "runtimeBoundary", "lenses", "cases"],
+  "properties": {
+    "schemaVersion": {"const": "0.8.0"},
+    "runtimeBoundary": {"const": "local_fixture_only"},
+    "lenses": {"type": "array", "minItems": 3, "maxItems": 3},
+    "cases": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["caseId", "caseType", "title", "contextRef", "snapshotRef"],
+        "properties": {
+          "caseType": {"enum": ["constructive", "rejected"]},
+          "topicId": {"type": ["string", "null"], "enum": ["daily_life", "visitor_identity", "local_activity", null]},
+          "lenses": {
+            "type": "object",
+            "required": ["scan", "citizen", "officer"],
+            "properties": {
+              "scan": {"$ref": "#/$defs/lens"},
+              "citizen": {"$ref": "#/$defs/lens"},
+              "officer": {"$ref": "#/$defs/lens"}
+            }
+          }
+        },
+        "allOf": [
+          {"if": {"properties": {"caseType": {"const": "constructive"}}}, "then": {"required": ["topicId", "firstValue", "lenses"]}},
+          {"if": {"properties": {"caseType": {"const": "rejected"}}}, "then": {"required": ["badExample", "reasons", "recovery"]}}
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "lens": {
+      "type": "object",
+      "required": ["firstMeaning", "question", "primaryAction", "immediateConsequence", "boundary"]
+    }
+  }
+}

@@ -13,6 +13,74 @@ const sumsRel = config.releaseArtifacts.checksums;
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
 const implementationRecordRoot = config.implementationRecordRoot;
 const versionedSchema = name => `schemas/${name}.v${config.artifactVersion}.json`;
+const assetLibraryRel = config.implementationRecords?.assetLibrary;
+const assetLibraryChecksumsRel = config.implementationRecords?.assetLibraryChecksums;
+
+function safeCatalogPath(relative) {
+  return typeof relative === "string"
+    && /^(assets|resources|schemas)\//.test(relative)
+    && !relative.split("/").includes("..")
+    && !path.isAbsolute(relative);
+}
+
+function prepareAssetLibrary() {
+  if (!assetLibraryRel || !assetLibraryChecksumsRel) {
+    throw new Error("Missing asset library or asset-only checksum implementation record");
+  }
+
+  const catalogPath = path.join(deployment, assetLibraryRel);
+  const checksumPath = path.join(deployment, assetLibraryChecksumsRel);
+  const catalog = JSON.parse(readFileSync(catalogPath, "utf8"));
+  const seenPaths = new Set();
+  let checksumRecordCount = 0;
+
+  const assets = catalog.assets.map(asset => {
+    if (!safeCatalogPath(asset.path)) throw new Error(`Unsafe catalog asset path: ${asset.path}`);
+    if (asset.publicDownload !== true) throw new Error(`Catalog asset is not public-download safe: ${asset.path}`);
+    if (seenPaths.has(asset.path)) throw new Error(`Duplicate catalog asset path: ${asset.path}`);
+    seenPaths.add(asset.path);
+
+    if (asset.path === assetLibraryChecksumsRel) {
+      checksumRecordCount += 1;
+      return { ...asset };
+    }
+
+    const absolute = path.join(deployment, asset.path);
+    if (!existsSync(absolute) || !statSync(absolute).isFile()) {
+      throw new Error(`Missing catalog asset: ${asset.path}`);
+    }
+    const bytes = readFileSync(absolute);
+    return { ...asset, bytes: bytes.length, sha256: sha256(bytes) };
+  });
+
+  if (checksumRecordCount !== 1) {
+    throw new Error(`Asset-only checksum must have exactly one catalog record (${checksumRecordCount})`);
+  }
+
+  const sumsText = assets
+    .filter(asset => asset.path !== assetLibraryChecksumsRel)
+    .sort((a, b) => a.path.localeCompare(b.path))
+    .map(asset => `${asset.sha256}  ${asset.path}`)
+    .join("\n") + "\n";
+  const sumsBytes = Buffer.from(sumsText);
+  const refreshedAssets = assets.map(asset => asset.path === assetLibraryChecksumsRel
+    ? { ...asset, bytes: sumsBytes.length, sha256: sha256(sumsBytes) }
+    : asset);
+  const catalogText = `${JSON.stringify({ ...catalog, assets: refreshedAssets }, null, 2)}\n`;
+
+  if (checkOnly) {
+    const problems = [];
+    if (readFileSync(catalogPath, "utf8") !== catalogText) problems.push(assetLibraryRel);
+    if (!existsSync(checksumPath) || readFileSync(checksumPath, "utf8") !== sumsText) problems.push(assetLibraryChecksumsRel);
+    return { problems };
+  }
+
+  writeFileSync(catalogPath, catalogText);
+  writeFileSync(checksumPath, sumsText);
+  return { problems: [] };
+}
+
+const assetLibraryPreparation = prepareAssetLibrary();
 
 function listFiles(dir, prefix = "") {
   return readdirSync(dir).sort().flatMap(name => {
@@ -66,8 +134,11 @@ const requiredCritical = [...new Set([
   versionedSchema("citychat-icon-resolution.schema"),
   versionedSchema("semantic-motion-citychat.schema"),
   versionedSchema("citychat-button-contract.schema"),
-  "schemas/citychat-asset-library.schema.v0.7.0.json",
-  "assets/asset-library.v0.7.0.json",
+  versionedSchema("cityscan-citycell-taxonomy.schema"),
+  versionedSchema("citychat-case-library.schema"),
+  versionedSchema("citychat-asset-library.schema"),
+  assetLibraryRel,
+  assetLibraryChecksumsRel,
   `qa/color-atlas-generation.v${config.artifactVersion}.json`,
   "resources/starter/index.html",
   "resources/starter/citychat.css",
@@ -188,7 +259,7 @@ if (checkOnly) {
   const currentSums = existsSync(path.join(deployment, sumsRel))
     ? readFileSync(path.join(deployment, sumsRel), "utf8")
     : "";
-  const problems = [];
+  const problems = [...assetLibraryPreparation.problems];
   if (currentManifest !== manifestText) problems.push(manifestRel);
   if (currentSums !== sumsText) problems.push(sumsRel);
   if (problems.length) {

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "approvalId": "CC-DSA-APP-20260828-01",
+  "recordedAt": "2026-08-28",
+  "approverRef": "user:03-citychat-project-owner",
+  "source": "Explicit owner direction in the current 03 CityChat project task",
+  "sourceExcerptTh": "ปรับหน่อยครับ แล้ว publish ใหม่ พร้อม update normative .md ... CityScan ให้ข้อมูล 3 ด้าน ... Playground ควรจะรองรับ มีตัวอย่างเคสสำหรับ ... หลายๆแบบ",
+  "document": {
+    "path": "assets/downloads/citychat-ds-addon-v0.8.md",
+    "version": "0.8",
+    "sha256": "a85aba433d0c17da1ea0d32320bbe557efdc10845903c6167c654ce9480f41fa",
+    "status": "approved_normative_add_on"
+  },
+  "approvedScope": [
+    "Use CityChat DS Add-on v0.8 as the consolidated normative source for new CityChat work",
+    "Govern CityChat-specific composition, plain-language presentation, control taxonomy, downloadable asset guidance, place-first hero composition, Civic continuity, motion, and deterministic implementation recipes",
+    "Define the CityScan viewport taxonomy as exactly three prompts: daily life, visitor identity, and local activity, with CityCell groups normalized from the owner-supplied working note",
+    "Require connected conceptual examples for CityScan, public CityChat, and Officer CityMETER while preserving one caseId and contextRef",
+    "Remove every other-product label and role from current CityChat UI and downloadable implementation resources while retaining immutable upstream and historical evidence",
+    "Retain Landometer Design System v0.9.0-r7 as the owner of shared tokens, typography, control geometry, motion primitives, accessibility, and shared QA",
+    "Treat CityChat v0.6 and v0.7 documents as historical evidence rather than fallback normative sources"
+  ],
+  "doesNotApprove": [
+    "Any CityChat runtime capability, persistence, receipt, official status, CityScan score, LINE integration, sharing, or officer workflow",
+    "Publication of the supplied post-it photograph itself; only its normalized conceptual taxonomy is approved for this release",
+    "Any unregistered asset, personal screenshot, personal photo, logo transformation, or inferred identity role",
+    "Any local button geometry, raw colour, font, icon, motion timing, or analytical scale outside the pinned owning records"
+  ],
+  "effective": true
+}

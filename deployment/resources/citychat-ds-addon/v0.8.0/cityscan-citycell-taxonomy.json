@@ -1,0 +1,163 @@
+{
+  "$schema": "../../../schemas/cityscan-citycell-taxonomy.schema.v0.8.0.json",
+  "schemaVersion": "0.8.0",
+  "taxonomyId": "cityscan-viewport-taxonomy",
+  "taxonomyVersion": "2026-08-28.1",
+  "ruleAuthority": "citychat-ds-addon-v0.8",
+  "sourceVersion": "cityscan-viewport-taxonomy-note-2026-08-28",
+  "mediaStatus": "captured_working_reference",
+  "runtimeBoundary": "conceptual_fixture_only",
+  "overallScoreEligible": false,
+  "sourceBoundary": {
+    "th": "โครงนี้ถอดจากโพสต์อิทที่เจ้าของผลิตภัณฑ์ส่งให้ เป็นทิศทางการจัดหมวด ไม่ใช่ metric, threshold หรือผลพื้นที่ที่อนุมัติแล้ว",
+    "en": "This structure is normalized from an owner-supplied working note. It is taxonomy direction, not an approved metric, threshold, or observed place result."
+  },
+  "handoffIdentity": {
+    "required": ["caseId", "contextRef", "snapshotRef", "topicId", "responseVersion"],
+    "surfaces": ["cityscan", "citychat_public", "officer_citymeter"]
+  },
+  "topics": [
+    {
+      "topicId": "daily_life",
+      "publicPrompt": {"th": "แถวนี้น่าอยู่ยังไง", "en": "What makes this area liveable?"},
+      "promptOnly": true,
+      "overallScoreEligible": false,
+      "cityCellGroups": [
+        {
+          "groupId": "essential_access",
+          "boardLabel": "ปลอดภัย",
+          "publicLabel": {"th": "บริการจำเป็นใกล้ตัว", "en": "Essential services nearby"},
+          "mappingStatus": "confirmed",
+          "groupBoundary": {"th": "บอกการเข้าถึงบริการ ไม่ได้พิสูจน์ว่าพื้นที่ปลอดภัย", "en": "Shows access to services; it does not prove that an area is safe."},
+          "cells": [
+            {"cityCellId": "daily_life.hospital", "publicLabel": {"th": "โรงพยาบาล", "en": "Hospital"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "จุดบริการสุขภาพในกรอบ", "en": "Health-service locations in frame"}, "forbiddenClaims": ["safety", "quality", "response_time"]},
+            {"cityCellId": "daily_life.police", "publicLabel": {"th": "ตำรวจ", "en": "Police"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "จุดบริการตำรวจในกรอบ", "en": "Police-service locations in frame"}, "forbiddenClaims": ["safety", "crime_rate", "response_time"]},
+            {"cityCellId": "daily_life.fire", "publicLabel": {"th": "ดับเพลิง", "en": "Fire service"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "จุดบริการดับเพลิงในกรอบ", "en": "Fire-service locations in frame"}, "forbiddenClaims": ["safety", "coverage_quality", "response_time"]}
+          ]
+        },
+        {
+          "groupId": "everyday_services",
+          "boardLabel": "สะดวก",
+          "publicLabel": {"th": "ของใช้และบริการประจำวัน", "en": "Everyday goods and services"},
+          "mappingStatus": "confirmed",
+          "groupBoundary": {"th": "จำนวนสถานที่ไม่เท่ากับคุณภาพ ความนิยม หรือจำนวนคนใช้", "en": "Place counts do not establish quality, popularity, or actual use."},
+          "cells": [
+            {"cityCellId": "daily_life.school", "publicLabel": {"th": "โรงเรียน", "en": "School"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "สถานศึกษาในกรอบ", "en": "Schools in frame"}, "forbiddenClaims": ["education_quality", "capacity"]},
+            {"cityCellId": "daily_life.market", "publicLabel": {"th": "ตลาด", "en": "Market"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "ตลาดในกรอบ", "en": "Markets in frame"}, "forbiddenClaims": ["popularity", "footfall", "revenue"]},
+            {"cityCellId": "daily_life.convenience_store", "publicLabel": {"th": "ร้านสะดวกซื้อ", "en": "Convenience store"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "ร้านสะดวกซื้อในกรอบ", "en": "Convenience stores in frame"}, "forbiddenClaims": ["demand", "footfall", "revenue"]},
+            {"cityCellId": "daily_life.restaurant", "publicLabel": {"th": "ร้านอาหาร", "en": "Restaurant"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "ร้านอาหารในกรอบ", "en": "Restaurants in frame"}, "forbiddenClaims": ["quality", "popularity", "revenue"]}
+          ]
+        },
+        {
+          "groupId": "rest_nature",
+          "boardLabel": "สบาย (relaxing)",
+          "publicLabel": {"th": "พักผ่อนและธรรมชาติ", "en": "Rest and nature"},
+          "mappingStatus": "confirmed",
+          "groupBoundary": {"th": "ต้องบอกชนิดแหล่งข้อมูลและพื้นที่ที่ครอบคลุม", "en": "Source class and coverage must be visible."},
+          "cells": [
+            {"cityCellId": "daily_life.health_park", "publicLabel": {"th": "สวนสุขภาพ", "en": "Health park"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "สวนหรือพื้นที่ออกกำลังกายในกรอบ", "en": "Parks or exercise spaces in frame"}, "forbiddenClaims": ["wellbeing_outcome", "quality"]},
+            {"cityCellId": "daily_life.nature", "publicLabel": {"th": "แหล่งธรรมชาติ", "en": "Nature"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "แหล่งธรรมชาติในกรอบ", "en": "Natural places in frame"}, "forbiddenClaims": ["conservation_status", "quality"]}
+          ]
+        },
+        {
+          "groupId": "shops_activities",
+          "boardLabel": "มีสีสัน",
+          "publicLabel": {"th": "ร้านค้าและกิจกรรม", "en": "Shops and activities"},
+          "mappingStatus": "confirmed",
+          "groupBoundary": {"th": "จำนวนสถานที่ไม่ใช่หลักฐานของความคึกคักจริง", "en": "Place counts do not establish actual vibrancy."},
+          "cells": [
+            {"cityCellId": "daily_life.shopping", "publicLabel": {"th": "แหล่งช้อปปิ้ง", "en": "Shopping"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "แหล่งซื้อของในกรอบ", "en": "Shopping places in frame"}, "forbiddenClaims": ["footfall", "spending", "quality"]},
+            {"cityCellId": "daily_life.nightlife", "publicLabel": {"th": "กิจกรรมกลางคืน", "en": "Nightlife"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "สถานที่หรือกิจกรรมกลางคืนในกรอบ", "en": "Night-time places or activities in frame"}, "forbiddenClaims": ["safety", "footfall", "quality"]},
+            {"cityCellId": "daily_life.cafe", "publicLabel": {"th": "คาเฟ่", "en": "Café"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "คาเฟ่ในกรอบ", "en": "Cafés in frame"}, "forbiddenClaims": ["popularity", "footfall", "revenue"]}
+          ]
+        }
+      ]
+    },
+    {
+      "topicId": "visitor_identity",
+      "publicPrompt": {"th": "น่าเที่ยวตรงไหน", "en": "Where should I visit?"},
+      "promptOnly": true,
+      "overallScoreEligible": false,
+      "cityCellGroups": [
+        {
+          "groupId": "eat",
+          "boardLabel": "กิน",
+          "publicLabel": {"th": "กิน", "en": "Eat"},
+          "mappingStatus": "candidate",
+          "groupBoundary": {"th": "rating และ review count เป็นเกณฑ์ตัวอย่างจาก working note ไม่ใช่ผลจริงหรือชื่อเสียงสากล", "en": "Ratings and review counts are unapproved working criteria, not observed results or universal reputation."},
+          "cells": [
+            {"cityCellId": "visitor_identity.featured_restaurant", "publicLabel": {"th": "ร้านเด่น", "en": "Featured restaurant"}, "presentationKind": "question", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "candidateCriteria": ["rating > 4.5", "review_count > 500"], "publicMeaning": {"th": "เกณฑ์ยังต้องมีเจ้าของและแหล่งข้อมูล", "en": "Criteria still require an owner and source"}, "forbiddenClaims": ["universal_reputation", "revenue", "quality"]},
+            {"cityCellId": "visitor_identity.michelin", "publicLabel": {"th": "Michelin", "en": "Michelin"}, "presentationKind": "unavailable", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "mappingStatus": "unresolved", "publicMeaning": {"th": "ยังไม่กำหนดชนิดตราหรือเกณฑ์", "en": "Mark type and criteria are not defined"}, "forbiddenClaims": ["star", "bib_gourmand", "selection"]},
+            {"cityCellId": "visitor_identity.cafe", "publicLabel": {"th": "คาเฟ่", "en": "Café"}, "presentationKind": "question", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "candidateCriteria": ["rating > 4.7", "review_count > 100"], "publicMeaning": {"th": "เกณฑ์ยังต้องมีเจ้าของและแหล่งข้อมูล", "en": "Criteria still require an owner and source"}, "forbiddenClaims": ["universal_reputation", "revenue", "quality"]}
+          ]
+        },
+        {
+          "groupId": "stay",
+          "boardLabel": "นอน",
+          "publicLabel": {"th": "นอน", "en": "Stay"},
+          "mappingStatus": "candidate",
+          "groupBoundary": {"th": "จำนวนและราคาโรงแรมไม่เท่ากับจำนวนผู้มาเยือน occupancy หรือคุณภาพ", "en": "Hotel supply and price do not establish visitors, occupancy, or quality."},
+          "cells": [
+            {"cityCellId": "visitor_identity.hotel", "publicLabel": {"th": "โรงแรม", "en": "Hotel"}, "presentationKind": "question", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "candidateCriteria": ["rating > 4.5", "review_count > 100", "ADR > 1500"], "publicMeaning": {"th": "เกณฑ์ยังต้องมีนิยาม ADR แหล่งข้อมูล ช่วงเวลา และเจ้าของ", "en": "Criteria still require an ADR definition, source, period, and owner"}, "forbiddenClaims": ["visitor_count", "occupancy", "quality"]}
+          ]
+        },
+        {
+          "groupId": "explore",
+          "boardLabel": "เที่ยว",
+          "publicLabel": {"th": "เที่ยว", "en": "Explore"},
+          "mappingStatus": "confirmed",
+          "groupBoundary": {"th": "เป็น taxonomy ของสถานที่ ไม่ใช่คะแนนหรือคำรับรอง", "en": "This is a place taxonomy, not a score or endorsement."},
+          "cells": [
+            {"cityCellId": "visitor_identity.nature", "publicLabel": {"th": "ธรรมชาติ", "en": "Nature"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "examples": ["Beach", "Mountain", "Waterfalls", "Scenic Spot", "Harbour/Marina"], "publicMeaning": {"th": "แหล่งธรรมชาติในกรอบ", "en": "Natural places in frame"}, "forbiddenClaims": ["quality", "accessibility", "safety"]},
+            {"cityCellId": "visitor_identity.culture", "publicLabel": {"th": "วัฒนธรรม", "en": "Culture"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "examples": ["โบราณสถาน", "Museum", "Art", "Community"], "publicMeaning": {"th": "แหล่งวัฒนธรรมในกรอบ", "en": "Cultural places in frame"}, "forbiddenClaims": ["official_heritage_status", "quality"]},
+            {"cityCellId": "visitor_identity.shopping", "publicLabel": {"th": "ช้อปปิ้ง", "en": "Shopping"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "examples": ["Shopping Center", "Market"], "publicMeaning": {"th": "แหล่งซื้อของในกรอบ", "en": "Shopping places in frame"}, "forbiddenClaims": ["footfall", "spending", "quality"]}
+          ]
+        }
+      ]
+    },
+    {
+      "topicId": "local_activity",
+      "publicPrompt": {"th": "น่าค้าขายอะไรดี", "en": "What could work as a business here?"},
+      "promptOnly": true,
+      "overallScoreEligible": false,
+      "topicBoundary": {"th": "ไม่ใช่คำแนะนำลงทุน ใบอนุญาต หรือการรับรองจากเทศบาล", "en": "Not investment advice, a permit, or municipal endorsement."},
+      "cityCellGroups": [
+        {
+          "groupId": "residents",
+          "boardLabel": "Residents",
+          "publicLabel": {"th": "คนอยู่แถวนี้", "en": "People who live here"},
+          "mappingStatus": "confirmed",
+          "groupBoundary": {"th": "แบบจำลองประชากรไม่เท่ากับทะเบียนราษฎร ครัวเรือน หรือลูกค้า", "en": "Population models do not equal residents, households, or customers."},
+          "cells": [
+            {"cityCellId": "local_activity.population", "publicLabel": {"th": "ประชากร", "en": "Population"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "ตัวแทนจำนวนคนจากแหล่งที่ต้องระบุ", "en": "A people-count proxy from a declared source"}, "forbiddenClaims": ["registry_population", "households", "customers"]},
+            {"cityCellId": "local_activity.household", "publicLabel": {"th": "ครัวเรือน", "en": "Households"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "candidateSources": ["อปท.", "ทะเบียนบ้าน"], "publicMeaning": {"th": "ข้อมูลครัวเรือนจากเจ้าของข้อมูลที่ระบุ", "en": "Household data from a named owner"}, "forbiddenClaims": ["customers", "spending"]},
+            {"cityCellId": "local_activity.hotel_mapping", "publicLabel": {"th": "โรงแรม", "en": "Hotel"}, "presentationKind": "unavailable", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "mappingStatus": "unresolved", "publicMeaning": {"th": "working note วางไว้ใต้ Residents แต่ความหมายยังขัดกัน", "en": "The working note places this under Residents, but the semantic mapping conflicts"}, "forbiddenClaims": ["residents", "visitors", "occupancy"]}
+          ]
+        },
+        {
+          "groupId": "visitors",
+          "boardLabel": "Visitors",
+          "publicLabel": {"th": "คนมาเยือน", "en": "Visitors"},
+          "mappingStatus": "unresolved",
+          "groupBoundary": {"th": "ไม่มีหัวข้อย่อยใน working note จึงต้องแสดงว่ายังไม่ได้กำหนด ไม่ใช่ 0", "en": "The working note defines no child cells, so this is unresolved rather than zero."},
+          "cells": [
+            {"cityCellId": "local_activity.visitors_unresolved", "publicLabel": {"th": "ยังไม่ได้กำหนด", "en": "Not defined yet"}, "presentationKind": "unavailable", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "ต้องนิยามแหล่งข้อมูลและความหมายก่อน", "en": "Source and meaning must be defined first"}, "forbiddenClaims": ["zero_visitors", "visitor_count", "footfall"]}
+          ]
+        },
+        {
+          "groupId": "daytime_anchors",
+          "boardLabel": "Workers",
+          "publicLabel": {"th": "คนมาทำงานหรือเรียน", "en": "People who work or study here"},
+          "mappingStatus": "candidate",
+          "groupBoundary": {"th": "การมีสถานที่เป็น daytime anchor ไม่ใช่จำนวน workers หรือ demand", "en": "Place presence is a daytime anchor, not worker count or demand."},
+          "cells": [
+            {"cityCellId": "local_activity.company", "publicLabel": {"th": "บริษัท", "en": "Company"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "จุดบริษัทในกรอบ", "en": "Company locations in frame"}, "forbiddenClaims": ["workers", "demand", "revenue"]},
+            {"cityCellId": "local_activity.factory", "publicLabel": {"th": "โรงงาน", "en": "Factory"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "จุดโรงงานในกรอบ", "en": "Factory locations in frame"}, "forbiddenClaims": ["workers", "demand", "production"]},
+            {"cityCellId": "local_activity.government", "publicLabel": {"th": "หน่วยงานรัฐ", "en": "Government office"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "หน่วยงานรัฐในกรอบ", "en": "Government offices in frame"}, "forbiddenClaims": ["workers", "visitors", "demand"]},
+            {"cityCellId": "local_activity.school", "publicLabel": {"th": "โรงเรียน", "en": "School"}, "presentationKind": "proxy", "valueState": "unknown", "claimLevel": "no_claim", "evidenceRef": null, "publicMeaning": {"th": "สถานศึกษาเป็นจุดใช้พื้นที่กลางวัน", "en": "Schools are daytime-use anchors"}, "forbiddenClaims": ["workers", "student_count", "demand"]}
+          ]
+        }
+      ]
+    }
+  ]
+}

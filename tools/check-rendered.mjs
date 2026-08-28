@@ -31,6 +31,10 @@ const validatorSha256 = sha256(readFileSync(validatorPath));
 const implementationRecordRoot = config.implementationRecordRoot;
 const implementationPath = name => `${implementationRecordRoot}/${name}`;
 const schemaPath = name => `schemas/${name}.v${config.artifactVersion}.json`;
+const cityScanTaxonomyPath = config.implementationRecords.cityScanTaxonomy || implementationPath("cityscan-citycell-taxonomy.json");
+const caseLibraryPath = config.implementationRecords.caseLibrary || implementationPath("citychat-case-library.json");
+const configuredImplementationRecords = Object.values(config.implementationRecords || {})
+  .filter(relative => typeof relative === "string" && relative.length > 0);
 
 function check(ok, name, detail = "") {
   checks.push({ name, ok: Boolean(ok), ...(detail ? { detail } : {}) });
@@ -55,14 +59,18 @@ const testedSourcePaths = [
   [`deployment/${implementationPath("citychat-icon-resolution.json")}`, path.join(deployment, implementationPath("citychat-icon-resolution.json"))],
   [`deployment/${implementationPath("font-assets.manifest.json")}`, path.join(deployment, implementationPath("font-assets.manifest.json"))],
   [`deployment/${implementationPath("semantic-motion.citychat.yml")}`, path.join(deployment, implementationPath("semantic-motion.citychat.yml"))],
+  [`deployment/${cityScanTaxonomyPath}`, path.join(deployment, cityScanTaxonomyPath)],
+  [`deployment/${caseLibraryPath}`, path.join(deployment, caseLibraryPath)],
   [`deployment/${schemaPath("citychat-color-role-map.schema")}`, path.join(deployment, schemaPath("citychat-color-role-map.schema"))],
   [`deployment/${schemaPath("citychat-button-contract.schema")}`, path.join(deployment, schemaPath("citychat-button-contract.schema"))],
   [`deployment/${schemaPath("citychat-icon-map.schema")}`, path.join(deployment, schemaPath("citychat-icon-map.schema"))],
   [`deployment/${schemaPath("semantic-motion-citychat.schema")}`, path.join(deployment, schemaPath("semantic-motion-citychat.schema"))],
   [`deployment/${schemaPath("citychat-asset-library.schema")}`, path.join(deployment, schemaPath("citychat-asset-library.schema"))],
-  [`deployment/${config.implementationRecords.assetLibrary}`, path.join(deployment, config.implementationRecords.assetLibrary)],
+  [`deployment/${schemaPath("cityscan-citycell-taxonomy.schema")}`, path.join(deployment, schemaPath("cityscan-citycell-taxonomy.schema"))],
+  [`deployment/${schemaPath("citychat-case-library.schema")}`, path.join(deployment, schemaPath("citychat-case-library.schema"))],
+  ...configuredImplementationRecords.map(relative => [`deployment/${relative}`, path.join(deployment, relative)]),
   ["tools/check-rendered.mjs", validatorPath]
-];
+].filter(([label], index, entries) => entries.findIndex(([candidate]) => candidate === label) === index);
 const sourceHasher = createHash("sha256");
 for (const [label, absolute] of testedSourcePaths) sourceHasher.update(label).update("\0").update(readFileSync(absolute)).update("\0");
 const testedSourceDigest = sourceHasher.digest("hex");
@@ -224,6 +232,14 @@ try {
         fontSynthesis: getComputedStyle(document.body).fontSynthesis,
         fontChecks,
         visibleViews: visibleViews.map(node => node.dataset.storyView),
+        crossProductIdentityLeak: document.body.innerText.match(/\bijji\b|--(?:ldm-)?product-ijji(?:-[a-z0-9-]+)?/i)?.[0] || "",
+        ecosystem: {
+          visible: Boolean(document.querySelector("#ecosystem-cases")?.getClientRects().length),
+          activeCase: document.querySelector("#ecosystem-stage")?.dataset.case || "",
+          activeLens: document.querySelector("#ecosystem-stage")?.dataset.lens || "",
+          visibleCases: [...document.querySelectorAll("[data-ecosystem-case-view]")].filter(node => node.getClientRects().length).map(node => node.dataset.ecosystemCaseView),
+          visibleLenses: [...document.querySelectorAll("[data-ecosystem-lens-view]")].filter(node => node.getClientRects().length).map(node => node.dataset.ecosystemLensView)
+        },
         boundaryVisible: Boolean(document.querySelector(".header-actions .source-status")?.getClientRects().length || document.querySelector(".hero-boundary")?.getClientRects().length),
         identity,
         brandBeige: resolvedBrandBeige,
@@ -270,7 +286,7 @@ try {
         colorTokenValues: [...document.querySelectorAll("[data-color-token] [data-token-value]")]
           .filter(node => node.getClientRects().length)
           .map(node => node.textContent.trim()),
-        criticalOverflow: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .scan-state-preview, .scan-composition, .scan-frame-geometry, .component-index, .implementation-library, .implementation-router, .lab-panel, .control-showcase, .icon-grid, .motion-layout, .color-groups, .case-grid, .preflight-layout, .resource-grid, .footer-grid")]
+        criticalOverflow: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .scan-state-preview, .scan-composition, .scan-frame-geometry, .ecosystem-cases, .ecosystem-flow, .ecosystem-controls, .ecosystem-stage, .citycell-groups, .role-use-grid, .component-index, .implementation-library, .implementation-router, .lab-panel, .control-showcase, .icon-grid, .motion-layout, .color-groups, .case-grid, .preflight-layout, .resource-grid, .footer-grid")]
           .filter(node => node.getClientRects().length)
           .map(node => ({ node, rect: node.getBoundingClientRect() }))
           .filter(({ rect }) => rect.left < -1 || rect.right > document.documentElement.clientWidth + 1)
@@ -299,6 +315,8 @@ try {
     check(metrics.heroCityScan.visible && metrics.heroCityScan.routes >= 2 && metrics.heroCityScan.markers >= 3 && /ข้อมูลจำลอง|synthetic/i.test(metrics.heroCityScan.syntheticLabel), `render:${key}:cityscan-hero-composition-and-truth-label`, JSON.stringify(metrics.heroCityScan));
     check(metrics.heroCityScan.static, `render:${key}:cityscan-hero-has-no-fake-motion`, JSON.stringify(metrics.heroCityScan));
     if (item.width <= 390 && item.height >= 760) check(metrics.firstMeaningInViewport, `render:${key}:first-value-in-initial-viewport`);
+    check(!metrics.crossProductIdentityLeak, `render:${key}:no-cross-product-identity-in-visible-body`, metrics.crossProductIdentityLeak);
+    check(metrics.ecosystem.visible && metrics.ecosystem.activeCase === "live" && metrics.ecosystem.activeLens === "scan" && JSON.stringify(metrics.ecosystem.visibleCases) === JSON.stringify(["live"]) && JSON.stringify(metrics.ecosystem.visibleLenses) === JSON.stringify(["scan"]), `render:${key}:one-default-ecosystem-case-and-lens-visible`, JSON.stringify(metrics.ecosystem));
     check(metrics.boundaryVisible, `render:${key}:fixture-boundary-visible`);
     check(metrics.visibleViews.length === 1 && metrics.visibleViews[0] === item.mode, `render:${key}:exactly-one-journey-view`, JSON.stringify(metrics.visibleViews));
     check(metrics.criticalOverflow.length === 0, `render:${key}:critical-containers-contained`, JSON.stringify(metrics.criticalOverflow));
@@ -437,12 +455,31 @@ try {
     name: node.getAttribute("aria-label")
   }));
   check(!labelledAgain.classes.includes("btn-icon") && labelledAgain.label === specialButtonLabel && labelledAgain.hidden === false && labelledAgain.name === null, "buttons:builder-returns-to-labelled-capsule", JSON.stringify(labelledAgain));
+  await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=scan&case=visit&lens=citizen#ecosystem-cases`, { waitUntil: "networkidle" });
+  const restoredEcosystemCase = await interactionPage.evaluate(() => {
+    const url = new URL(window.location.href);
+    const visibleCases = [...document.querySelectorAll("[data-ecosystem-case-view]")].filter(node => node.getClientRects().length);
+    const visibleLenses = [...document.querySelectorAll("[data-ecosystem-lens-view]")].filter(node => node.getClientRects().length);
+    return {
+      caseParam: url.searchParams.get("case"),
+      lensParam: url.searchParams.get("lens"),
+      stageCase: document.querySelector("#ecosystem-stage")?.dataset.case || "",
+      stageLens: document.querySelector("#ecosystem-stage")?.dataset.lens || "",
+      caseTabSelected: document.querySelector("#case-visit")?.getAttribute("aria-selected") || "",
+      lensTabSelected: document.querySelector("#lens-citizen")?.getAttribute("aria-selected") || "",
+      visibleCases: visibleCases.map(node => node.dataset.ecosystemCaseView),
+      visibleLenses: visibleLenses.map(node => node.dataset.ecosystemLensView),
+      visibleText: visibleCases[0]?.innerText || ""
+    };
+  });
+  check(restoredEcosystemCase.caseParam === "visit" && restoredEcosystemCase.lensParam === "citizen" && restoredEcosystemCase.stageCase === "visit" && restoredEcosystemCase.stageLens === "citizen" && restoredEcosystemCase.caseTabSelected === "true" && restoredEcosystemCase.lensTabSelected === "true", "interaction:case-and-lens-url-restoration", JSON.stringify(restoredEcosystemCase));
+  check(JSON.stringify(restoredEcosystemCase.visibleCases) === JSON.stringify(["visit"]) && JSON.stringify(restoredEcosystemCase.visibleLenses) === JSON.stringify(["citizen"]) && restoredEcosystemCase.visibleText.includes("น่าเที่ยวตรงไหน") && restoredEcosystemCase.visibleText.includes("ถ้าไปช่วงเย็น"), "interaction:one-requested-ecosystem-specimen-visible", JSON.stringify(restoredEcosystemCase));
   await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story`, { waitUntil: "networkidle" });
   await Promise.all([
-    interactionPage.waitForURL(url => url.searchParams.get("mode") === "scan" && url.searchParams.get("scan") === "no-score"),
+    interactionPage.waitForURL(url => url.searchParams.get("case") === "live" && url.searchParams.get("lens") === "scan" && url.hash === "#ecosystem-cases"),
     interactionPage.click("#hero-cityscan-action")
   ]);
-  check(await interactionPage.getAttribute("#mode-scan", "aria-selected") === "true" && await interactionPage.getAttribute(".scan-composition", "data-active-scan-state") === "no-score", "interaction:hero-cityscan-action-opens-safe-no-score-view");
+  check(await interactionPage.getAttribute("#case-live", "aria-selected") === "true" && await interactionPage.getAttribute("#lens-scan", "aria-selected") === "true" && (await interactionPage.locator("[data-ecosystem-case-view]:visible").count()) === 1 && await interactionPage.isVisible('[data-ecosystem-case-view="live"]') && (await interactionPage.locator("[data-ecosystem-lens-view]:visible").count()) === 1 && await interactionPage.isVisible('[data-ecosystem-case-view="live"] [data-ecosystem-lens-view="scan"]'), "interaction:hero-cityscan-action-opens-live-scan-ecosystem-case");
   await interactionPage.goto(`${baseUrl}?lang=th&theme=light&mode=story`, { waitUntil: "networkidle" });
   await interactionPage.focus("#mode-story");
   await interactionPage.keyboard.press("ArrowRight");
@@ -577,7 +614,7 @@ try {
   const thaiStress = await stressPage.evaluate(() => ({
     page: `${document.documentElement.scrollWidth}/${document.documentElement.clientWidth}`,
     overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-    wideNodes: [...document.querySelectorAll("h1, h2, h3, h4, p, li, button, summary, .card, .context-place, .site-header, .route-list, .play-controls, .journey-layout, .scan-composition, .implementation-library, .implementation-router, .control-showcase, .icon-grid, .motion-layout, .color-groups, .resource-grid")]
+    wideNodes: [...document.querySelectorAll("h1, h2, h3, h4, p, li, button, summary, .card, .context-place, .site-header, .route-list, .play-controls, .journey-layout, .scan-composition, .ecosystem-flow, .ecosystem-controls, .ecosystem-stage, .citycell-groups, .role-use-grid, .implementation-library, .implementation-router, .control-showcase, .icon-grid, .motion-layout, .color-groups, .resource-grid")]
       .filter(node => node.getClientRects().length)
       .filter(node => {
         const rect = node.getBoundingClientRect();
@@ -613,7 +650,7 @@ try {
       if (!node) return false;
       return node.scrollHeight <= node.clientHeight + 2 && node.getBoundingClientRect().right <= document.documentElement.clientWidth + 1;
     })(),
-    wideNodes: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .implementation-library, .implementation-router, .lab-panel, .button-builder-layout, #button-preview, .control-showcase, .icon-grid, .motion-layout, .color-groups, .preflight-layout, .resource-grid, .asset-library-grid, .footer-grid")]
+    wideNodes: [...document.querySelectorAll(".site-header, .hero-grid, .route-list, .play-controls, .journey-layout, .ecosystem-flow, .ecosystem-controls, .ecosystem-stage, .citycell-groups, .role-use-grid, .implementation-library, .implementation-router, .lab-panel, .button-builder-layout, #button-preview, .control-showcase, .icon-grid, .motion-layout, .color-groups, .preflight-layout, .resource-grid, .asset-library-grid, .footer-grid")]
       .filter(node => node.getClientRects().length)
       .filter(node => {
         const rect = node.getBoundingClientRect();
@@ -664,7 +701,7 @@ const report = {
   validator: {
     path: "tools/check-rendered.mjs",
     sha256: validatorSha256,
-    contractVersion: "1.1"
+    contractVersion: "1.2"
   },
   browser: "Chromium via Playwright 1.54.1 contract",
   scope: "rendered local HTTP; native-device, screen-reader, and product-runtime gates remain open",

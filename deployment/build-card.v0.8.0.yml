@@ -1,0 +1,122 @@
+citychatBuild:
+  artifact:
+    name: CityChat DS Add-on Interactive Playground
+    product: citychat
+    version: 0.8.0
+    artifactBuildId: citychat-ui-20260828-01
+    pageKind: design-identity-playground
+    profile: designsystem.adoption
+    oneJob: help product, design, development, and sales understand and implement one CityChat place across CityScan, citizen, and officer views
+    delivery: internal_demo_public_projection
+    outputType: webpage
+    language: th
+    additionalLanguages: [en]
+  publication:
+    visibility: public
+    indexable: false
+    evidenceStatus: source_limited
+    canonicalUrl: https://montri-th.github.io/CityChat/
+    machineValidation: pending
+    deliveryConformance: not_claimed
+  landometerFoundation:
+    dsVersion: 0.9.0
+    authoringRevision: v0.9.0-r7
+    machinePackage: v0.9.0-mp1
+    colorSetId: color-srgb-05
+    kitVersion: lds-kit-0.9.0-r4
+    upstreamArtifactBuildId: ui-20260821-05
+    upstreamCommit: d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665
+    vendorPath: vendor/landometer/v0.9.0
+    vendorPolicy: immutable byte-identical snapshot
+  citychatAuthority:
+    designAddOnPath: assets/downloads/citychat-ds-addon-v0.8.md
+    designAddOnSha256: a85aba433d0c17da1ea0d32320bbe557efdc10845903c6167c654ce9480f41fa
+    designAddOnStatus: approved_normative_add_on
+    normativeApprovalPath: assets/downloads/citychat-ds-addon-v0.8-approval.json
+    normativeApprovalSha256: 33177423a58ff97c6d28f980d2e0ee88a9d59dfb9e754fdf65afc18a9a0ac0f6
+    normativeApprovalId: CC-DSA-APP-20260828-01
+    releaseAuthorizationPath: assets/downloads/citychat-ds-addon-playground-release-authorization.v0.8.0.json
+    releaseAuthorizationSha256: c72d520f8233f16388461d2574bbd9eb40e03441a26df61bd6cde442202efc2f
+    releaseAuthorizationId: CC-DSA-PLAYGROUND-REL-20260828-01
+    experienceContractPath: assets/downloads/citychat-product-experience-profile-v0.4.md
+    experienceContractSha256: f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba
+    experienceContractStatus: draft_candidate
+    productAuthority: draft_truth
+    designAddOnAuthorityScope: citychat_only_identity_first_value_civic_loop_three_cityscan_prompts_citycells_plain_language_controls_assets_motion_and_cross_surface_composition
+    capabilityEvidenceStatus: source_limited
+    deliveryAvailability: accepted
+    deliveryAvailabilityScope: this_team_playground_only
+    identityManifestPath: assets/identity/identity-assets.v0.8.0.json
+    identityManifestSha256: 484e4441d92328e7ce76b2b9b1b73299566f7b92c96638aec87b80a8a42df56b
+  identity:
+    headerRoleApproval: CC-ID-ROLE-APP-20260823-HEADER-02
+    footerRoleApproval: CC-ID-ROLE-APP-20260823-FOOTER-02
+    assetSha256: 94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62
+    surfaceRef: lds:--brand-beige
+    transformPolicy: none
+    omittedRoles: [compact_product_mark, browser_tab_favicon, search_result_favicon, apple_touch_icon, maskable_app_icon, social_preview_identity, share_preview_identity, splash_identity, watermark, export_mark, identity_motif, supporting_illustration]
+  implementationLibrary:
+    fullLivingReference: false
+    search: false
+    referenceFixtures: []
+    buttons: pinned_lds_btn_capsule_or_circle
+    icons: self_hosted_material_symbols_rounded_subset_v368
+    iconFontSha256: 42cd00d98dd631ddf6b3d5a47ba34e6eed83d2a6e3fd35ef5f4f8e0e6632ba30
+    motion: scoped_once_only_reading_order_and_button_feedback
+    colorAtlas: product_usage_overlay_not_full_lds_atlas
+    analyticalScale: unavailable_without_owning_registry
+    cityscanPrompts:
+      - topicId: daily_life
+        label: แถวนี้น่าอยู่ยังไง
+      - topicId: visitor_identity
+        label: น่าเที่ยวตรงไหน
+      - topicId: local_activity
+        label: น่าค้าขายอะไรดี
+    citycellTaxonomy: resources/citychat-ds-addon/v0.8.0/cityscan-citycell-taxonomy.json
+    ecosystemCases:
+      constructive: [LIVE-01, VISIT-01, TRADE-01]
+      lensesPerConstructiveCase: [scan, citizen, officer]
+      rejected: [REJECT-01]
+      rejectedPattern: aggregate_city_score
+    identityBoundary: citychat_frontstage_and_public_asset_library_only
+    fixtureBoundary: local_conceptual_fixtures_not_live_place_or_runtime_evidence
+  triggeredPacks: [PUB-01, "DELIVERY-01:web"]
+  supportedChannels: [github_pages_team_playground]
+  qaEvidence:
+    automatedPath: qa/automated.v0.8.0.json
+    renderedPath: qa/rendered-local.v0.8.0.json
+    renderedProviderCheck: pending_required_pr_check
+    manualPath: qa/manual-gates.v0.8.0.md
+    nativeDeviceStatus: open
+  releaseReceipt:
+    status: pending_provider_deploy
+    targetUrl: https://montri-th.github.io/CityChat/
+  firstValue:
+    target: first viewport shows one place and the three CityScan questions, then each selected case shows one honest meaning, one supported question when useful, and the expected consequence of one preview action
+    maximumEssentialInputs: zero before first value
+    primaryAction: ดูตัวอย่างพื้นที่นี้
+  privacy:
+    visibility: public
+    sensitivity: public
+    personalData: none
+    analytics: false
+    remotePersistence: false
+    localStorage: theme and locale preferences only
+  effects:
+    remoteMutation: false
+    localFixtureState: true
+    clipboardCopy: true
+    receiptPolicy: conceptual saved-and-return examples never claim product persistence
+  disabledCapabilities: [lineIntegration, productionCityScanScoring, aggregateCityScore, productReceiptPersistence, crossSurfaceRuntimeHandoff, officerOperationsRuntime, remoteShare, telemetry]
+  releaseBoundary:
+    approvedDesignAddOnDoesNotMeanRuntime: true
+    targetDoesNotMeanShipped: true
+    fixturesAreConceptual: true
+    fixturesAreLocalOnly: true
+    threeCityScanPromptsNeverAggregate: true
+    frontstageIdentityIsCityChatOnly: true
+    fullLivingReference: false
+    noNamedMunicipalityProof: true
+    identityHeaderFooterApproval: exact_build_and_url_only
+    identityFaviconApproval: unresolved
+    nativeDeviceGate: open
