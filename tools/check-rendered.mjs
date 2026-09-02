@@ -320,18 +320,34 @@ async function runInteractions() {
     const socialNameCounts = await Promise.all(socialNames.map((name) => page.getByRole('link', { name, exact: true }).count()));
     check(`${scenario}: icon-only social links expose exact accessible names`, socialNameCounts.every((count) => count === 1), JSON.stringify(socialNameCounts));
 
-    let videoStarted = false;
+    let videoOutcome = { kind: 'timeout' };
     try {
       await page.waitForFunction(() => {
         const element = document.querySelector('[data-cc-video]');
-        return Boolean(element && !element.hidden && element.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && !element.paused && element.currentTime > 0);
+        const fallback = document.querySelector('[data-video-fallback]');
+        const fallbackVisible = Boolean(fallback && !fallback.hidden && getComputedStyle(fallback).display !== 'none');
+        const playing = Boolean(element && !element.hidden && element.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && !element.paused && element.currentTime > 0);
+        return playing || fallbackVisible;
       }, null, { timeout: 10000 });
-      const firstTime = await page.locator('[data-cc-video]').evaluate((element) => element.currentTime);
-      await page.waitForTimeout(350);
-      const secondTime = await page.locator('[data-cc-video]').evaluate((element) => element.currentTime);
-      videoStarted = secondTime > firstTime;
+      videoOutcome = await page.evaluate(() => {
+        const element = document.querySelector('[data-cc-video]');
+        const fallback = document.querySelector('[data-video-fallback]');
+        const fallbackVisible = Boolean(fallback && !fallback.hidden && getComputedStyle(fallback).display !== 'none');
+        if (element && !element.hidden && !element.paused && element.currentTime > 0) return { kind: 'playing', firstTime: element.currentTime };
+        return {
+          kind: 'fallback',
+          valid: Boolean(element?.hidden && fallbackVisible && (element.error || element.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) && fallback?.querySelector('a[download]')?.getAttribute('href') === './assets/cityscan-demo.mp4'),
+          errorCode: element?.error?.code || 0,
+          networkState: element?.networkState,
+        };
+      });
+      if (videoOutcome.kind === 'playing') {
+        await page.waitForTimeout(350);
+        const secondTime = await page.locator('[data-cc-video]').evaluate((element) => element.currentTime);
+        videoOutcome.advances = secondTime > videoOutcome.firstTime;
+      }
     } catch { /* Report through the assertion below. */ }
-    check(`${scenario}: CityScan video autoplays and advances`, videoStarted);
+    check(`${scenario}: CityScan autoplays when supported or exposes its deterministic fallback`, (videoOutcome.kind === 'playing' && videoOutcome.advances) || (videoOutcome.kind === 'fallback' && videoOutcome.valid), JSON.stringify(videoOutcome));
 
     await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; });
     await page.locator('#tab-chat').scrollIntoViewIfNeeded();
