@@ -1,122 +1,174 @@
 {
-  "schemaVersion": "1.0",
-  "product": "citychat",
-  "artifactName": "CityChat DS Add-on Interactive Playground",
-  "artifactVersion": "0.8.0",
-  "artifactBuildId": "citychat-ui-20260828-01",
-  "pageKind": "design-identity-playground",
-  "profile": "designsystem.adoption",
-  "language": "th",
-  "additionalLanguages": ["en"],
-  "delivery": "internal_demo_public_projection",
-  "visibility": "public",
-  "indexable": false,
-  "evidenceStatus": "source_limited",
-  "machineValidation": "pending",
-  "canonicalUrl": "https://montri-th.github.io/CityChat/",
-  "releaseArtifacts": {
-    "manifest": "site-manifest.v0.8.0.json",
-    "buildCard": "build-card.v0.8.0.yml",
-    "controlInventory": "control-inventory.v0.8.0.json",
-    "implementationNotes": "implementation-notes.v0.8.0.md",
-    "automatedQa": "qa/automated.v0.8.0.json",
-    "renderedQa": "qa/rendered-local.v0.8.0.json",
-    "manualQa": "qa/manual-gates.v0.8.0.md",
-    "checksums": "assets/downloads/SHA256SUMS.txt"
+  "schemaVersion": "2.0",
+  "artifact": {
+    "name": "CityChat public landing",
+    "product": "citychat",
+    "buildId": "citychat-landing-20260903-01",
+    "pageKind": "product-landing",
+    "language": "th",
+    "canonicalUrl": "https://montri-th.github.io/CityChat/"
   },
-  "sourceDesignAddOn": {
-    "path": "assets/downloads/citychat-ds-addon-v0.8.md",
-    "sha256": "a85aba433d0c17da1ea0d32320bbe557efdc10845903c6167c654ce9480f41fa",
-    "status": "approved_normative_add_on"
+  "publication": {
+    "visibility": "public",
+    "indexable": false,
+    "robotsMeta": "noindex,nofollow,noarchive"
   },
-  "approvalRecords": [
-    {
-      "path": "assets/downloads/citychat-ds-addon-v0.8-approval.json",
-      "sha256": "33177423a58ff97c6d28f980d2e0ee88a9d59dfb9e754fdf65afc18a9a0ac0f6",
-      "approvalId": "CC-DSA-APP-20260828-01"
+  "deployment": {
+    "root": "deployment",
+    "entry": "index.html",
+    "manifest": "site-manifest.json",
+    "checksums": "SHA256SUMS.txt",
+    "requiredFiles": [
+      ".nojekyll",
+      "index.html",
+      "citychat.css",
+      "app.js",
+      "robots.txt",
+      "assets/fonts/licenses/arvo-OFL.txt",
+      "assets/fonts/licenses/bai-jamjuree-OFL.txt",
+      "assets/fonts/licenses/ibm-plex-sans-thai-OFL.txt",
+      "assets/fonts/licenses/ibm-plex-sans-thai-looped-OFL.txt",
+      "assets/fonts/licenses/jetbrains-mono-OFL.txt",
+      "assets/fonts/licenses/material-symbols-Apache-2.0.txt"
+    ]
+  },
+  "markup": {
+    "requiredIds": [
+      "top",
+      "main-content",
+      "offer",
+      "partners",
+      "product",
+      "loop",
+      "record",
+      "contact"
+    ],
+    "requiredUiIds": [
+      "menu-toggle",
+      "site-menu",
+      "theme-cycle",
+      "tab-data",
+      "tab-chat",
+      "panel-data",
+      "panel-chat"
+    ],
+    "requiredText": [
+      {
+        "text": "จิรศักดิ์ แก้วเจริญ",
+        "count": 1
+      },
+      {
+        "text": "พรสุดา โมคศิริ",
+        "count": 1
+      },
+      {
+        "text": "แพลตฟอร์มข้อมูลเมืองที่เริ่มจากสิ่งที่ อปท. ของคุณต้องการจริง",
+        "count": 1
+      }
+    ],
+    "forbiddenText": [
+      "นายจิรศักดิ์ แก้วเจริญ",
+      "นางสาวพรสุดา โมคศิริ"
+    ]
+  },
+  "footer": {
+    "rootClass": "site-footer",
+    "rootId": "contact",
+    "tabindex": "-1",
+    "labelledBy": "contact-title",
+    "stripeClass": "measure-line",
+    "contact": {
+      "company": "Landometer Co., Ltd.",
+      "address": "23/34-35 Room 4C-4D 4th Fl. The Quarter Bangkok Tower, ถนนตรีมิตร แขวงตลาดน้อย เขตสัมพันธวงศ์ กรุงเทพมหานคร 10100",
+      "map": {
+        "text": "เปิดแผนที่สำนักงาน",
+        "href": "https://maps.app.goo.gl/8DQPVMtPdxWMBoZU9"
+      },
+      "email": {
+        "text": "hello@landometer.com",
+        "href": "mailto:hello@landometer.com"
+      }
     },
-    {
-      "path": "assets/downloads/citychat-ds-addon-playground-release-authorization.v0.8.0.json",
-      "sha256": "c72d520f8233f16388461d2574bbd9eb40e03441a26df61bd6cde442202efc2f",
-      "approvalId": "CC-DSA-PLAYGROUND-REL-20260828-01"
-    }
-  ],
-  "productDependencies": [
-    {
-      "path": "assets/downloads/citychat-product-experience-profile-v0.4.md",
-      "sha256": "f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba",
-      "status": "draft_candidate"
-    },
-    {
-      "path": "assets/downloads/citychat-component-contracts.v0.4.json",
-      "sha256": "10f1fd0e32a0dd5f7ca36ea3270b44bb35be2d651d3bf76990b8b645d0c06bc4",
-      "status": "draft_candidate"
-    }
-  ],
-  "governanceReferences": [
-    {
-      "ref": "Product_brief_CityChat_Landometer_v7_CityStory_First.md",
-      "sha256": "ffba6c6d5adfa29be6ffa791614db108268a5d1c4ff763fb05d7a7147c23c0e8",
-      "status": "current_narrative_baseline_approval_unrecorded"
-    },
-    {
-      "ref": "Product_brief_CityChat_Landometer_v8_CityScan_Ecosystem_Aligned.md",
-      "sha256": "607bd2c42cab7a164274d0b3dbbcfd1e8f3d66f185ce2921123cdd9a0b222098",
-      "status": "draft_candidate"
-    },
-    {
-      "ref": "cityscan_dev_handoff_v1/01_PRODUCT_BRIEF_CITYSCAN.md",
-      "sha256": "b7674f7be7becc87b9c972b05bcb311cb4d62d0b7d1accd83037469f9479713d",
-      "status": "proposed_reference_runtime_unavailable"
-    }
-  ],
-  "identityManifest": {
-    "path": "assets/identity/identity-assets.v0.8.0.json",
-    "sha256": "484e4441d92328e7ce76b2b9b1b73299566f7b92c96638aec87b80a8a42df56b"
+    "socialLinks": [
+      {
+        "text": "Facebook",
+        "href": "https://www.facebook.com/landometer"
+      },
+      {
+        "text": "Instagram",
+        "href": "https://www.instagram.com/landometer"
+      },
+      {
+        "text": "TikTok",
+        "href": "https://www.tiktok.com/@landometer82"
+      },
+      {
+        "text": "LinkedIn",
+        "href": "https://www.linkedin.com/company/landometer"
+      },
+      {
+        "text": "X",
+        "href": "https://x.com/landometer"
+      }
+    ],
+    "links": [
+      {
+        "text": "เรื่องราวของพวกเรา",
+        "href": "https://montri-th.github.io/rebuild02/#dna"
+      },
+      {
+        "text": "Showcases",
+        "href": "https://montri-th.github.io/rebuild02/#showcases"
+      },
+      {
+        "text": "Privacy & Terms",
+        "href": "https://landometer.com/pdpa/showDocVer"
+      }
+    ],
+    "bottomClass": "footer-bottom",
+    "bottomInnerClass": "footer-bottom__inner",
+    "identityClass": "footer-identity",
+    "brandClass": "footer-brand",
+    "brandHref": "#top",
+    "brandImage": "assets/landometer-symbol-color.png",
+    "brandText": "Landometer",
+    "copyright": "© 2017–2026 Landometer Co., Ltd."
   },
-  "implementationRecordRoot": "resources/citychat-ds-addon/v0.8.0",
-  "implementationRecords": {
-    "buttonContract": "resources/citychat-ds-addon/v0.8.0/citychat-button-contract.json",
-    "assetLibrary": "assets/asset-library.v0.8.0.json",
-    "heroSpecimen": "resources/citychat-ds-addon/v0.8.0/cityscan-hero-specimen.html",
-    "iconMap": "resources/citychat-ds-addon/v0.8.0/citychat-icon-map.json",
-    "iconResolution": "resources/citychat-ds-addon/v0.8.0/citychat-icon-resolution.json",
-    "fontAssets": "resources/citychat-ds-addon/v0.8.0/font-assets.manifest.json",
-    "semanticMotion": "resources/citychat-ds-addon/v0.8.0/semantic-motion.citychat.yml",
-    "colorRoleMap": "resources/citychat-ds-addon/v0.8.0/citychat-color-role-map.json",
-    "colorAtlasGenerationQa": "qa/color-atlas-generation.v0.8.0.json",
-    "cityScanTaxonomy": "resources/citychat-ds-addon/v0.8.0/cityscan-citycell-taxonomy.json",
-    "cityChatCaseLibrary": "resources/citychat-ds-addon/v0.8.0/citychat-case-library.json",
-    "cityScanTaxonomySchema": "schemas/cityscan-citycell-taxonomy.schema.v0.8.0.json",
-    "cityChatCaseLibrarySchema": "schemas/citychat-case-library.schema.v0.8.0.json",
-    "assetLibraryChecksums": "assets/ASSET-LIBRARY-SHA256SUMS.v0.8.0.txt"
+  "pinnedInputs": {
+    "assets/citychat-lockup-dark.png": "032bd864e187598f645d5adb1fadb99c15c9cb9cc0beb5af015203d0709bfa44",
+    "assets/citychat-lockup.png": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
+    "assets/cityscan-demo.mp4": "89cd57174c712350b51fd53a92ab6329022d79509e52dd59d0aae104d0d11463",
+    "assets/conversation-motif.svg": "fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4",
+    "assets/depa-dsure-tdc-white.png": "43c9d3dae67c9e212ecc3a4a122977c7215ccdd7423371b265507c4b5af9e253",
+    "assets/depa-dsure-tdc.png": "7e097e8f25da164c622c8176703637563986666afbd12a0cd8107d4e6513818b",
+    "assets/landometer-symbol-color.png": "990c90fa03caf6386a182c9920b68c9e4434847b90942e95f9d5c7b91dbf6393",
+    "assets/logo-bandan.png": "8d9e8aa7aa0376a9e6730bad6e24c110b47a5970896f44c60820e9cf55d58d45",
+    "assets/logo-khunhan.png": "40b87df3c64a5bcc8bdded480c2c846118e7aa2e495672da01121654099aa1ef",
+    "assets/logo-saensuk.png": "d50a7b3864b7ce2358015d5840e531f9081ca434f327818a100c29154c4adac5",
+    "assets/logo-sila.png": "7c81c7536bb52cb99a40641a31ac80aec1915d74cb1f1cf59c088533f862e47b",
+    "assets/people-film.jpg": "45e94b2ce6624421ebec895163cc1411fa37cea71e2dae7b806473dafea5c459",
+    "assets/people-sek.jpg": "6598388246c803679b26c4963f268c5c656e071ed895b3a410fb51a96809ac55",
+    "assets/persona-officer.png": "391762b68c42a5471bf2f2fa244645507c396d1fc1f66dc7ce255355d71ae559",
+    "assets/persona-resident.png": "034a1eac3ec0602ae411db22a035f5741a74b426b2184055867fe7b2559c2594",
+    "assets/screen-cctv.png": "5be40fb800eb672dee67a00cf0e1b16c90bc0e272a3a17512a87df43f13337a5",
+    "assets/screen-hydrants.png": "d98f3db90cad7c19fded39a4fbc510ad39ffb6d20155f7f14d448a53e6a85427",
+    "assets/screen-lighting.png": "ca96ab9ad14551b15f78eac193ef1c31febc5faedfc45a87bbf8fda92a461493",
+    "assets/screen-parcels.png": "a3ab73939d5d98e2dd8db88759204d97fc9bc89e0ddca0a8c80ed13d8c6356b6",
+    "assets/screen-roads.png": "d99c9e2740c8db8245b5bdb7f115a1d9051c47b47b2816bc5c9c63b66210028a",
+    "assets/fonts/arvo-latin-700-normal.woff2": "3d908a2c04ec4c59d26d1454008b2d6744480654663a5f88e439f6483976bd37",
+    "assets/fonts/bai-jamjuree-latin-400-normal.woff2": "5200faf54f32adc1dc47b8522adbd1399e739f4ce5c9236866806c04d6397b19",
+    "assets/fonts/bai-jamjuree-latin-600-normal.woff2": "5ae338ac0db4222226ad96bf1b4b460030c3af1affabb475c67bf218b2eaa83f",
+    "assets/fonts/bai-jamjuree-thai-400-normal.woff2": "357f8fe9fd08973568a061a2fc266a07819cdc33e8c9bb2b39985cc4ec49bfa9",
+    "assets/fonts/bai-jamjuree-thai-600-normal.woff2": "547483c6fbedcc13f4c04489c4ec3f6be4c69877ae7cd4cfbf4a0d289889ba32",
+    "assets/fonts/ibm-plex-sans-thai-looped-latin-700-normal.woff2": "47eb0fe82a8b96cc5f1ac057e2edad4d2550d6b73d4aa030697bf1678047c526",
+    "assets/fonts/ibm-plex-sans-thai-looped-thai-700-normal.woff2": "fa03fc4dda6a69763997e79d50e0437795d06c02e1798bdacf3a2f5e685cea2c",
+    "assets/fonts/ibm-plex-sans-thai-thai-400-normal.woff2": "2d66381c26d32bf2a95bfe559d1a5ed5475fcdac3fa128e45a33301010d42056",
+    "assets/fonts/jetbrains-mono-latin-400-normal.woff2": "14425ba9c695763c1547f48a206b7aa60350a33ae23de09f0407877f3fcd89eb",
+    "assets/fonts/material-symbols-rounded-citychat-landing-v369.ttf": "5609dce4afb79e593fd57d5e9b54c108c496faccce930f1e8d9c9f323031f02e"
   },
-  "triggeredPacks": ["PUB-01", "DELIVERY-01:web"],
-  "supportedChannels": ["github_pages_team_playground"],
-  "upstream": {
-    "repository": "https://github.com/montri-th/Landometer",
-    "commit": "d82ac775ab9d35a84cfb0dc77bc0ae804a7a0665",
-    "dsVersion": "0.9.0",
-    "authoringRevision": "v0.9.0-r7",
-    "machinePackage": "v0.9.0-mp1",
-    "colorSetId": "color-srgb-05",
-    "kitVersion": "lds-kit-0.9.0-r4",
-    "upstreamArtifactBuildId": "ui-20260821-05",
-    "vendorPath": "vendor/landometer/v0.9.0"
-  },
-  "capabilities": {
-    "analytics": false,
-    "authentication": false,
-    "remotePersistence": false,
-    "remoteAction": false,
-    "networkShare": false,
-    "cityScanScoring": false,
-    "lineIntegration": false,
-    "officerOperations": false,
-    "localFixtureState": true,
-    "clipboardCopy": true,
-    "themePreference": true,
-    "localePreference": true,
-    "implementationLibraryLocalInteractions": true
+  "live": {
+    "verify": "runtime-closure",
+    "attempts": 30,
+    "delayMs": 10000
   }
 }

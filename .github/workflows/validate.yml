@@ -1,4 +1,4 @@
-name: Validate CityChat design identity playground
+name: Validate CityChat landing
 
 on:
   pull_request:
@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate deterministic release source
+      - name: Validate deterministic CityChat landing source
         run: npm test
 
       - name: Install browser dependency
@@ -26,7 +26,7 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.54.1
           npx playwright install --with-deps chromium
 
-      - name: Validate rendered states
+      - name: Validate responsive and resilient rendered states
         run: npm run render
 
       - name: Confirm validators did not rewrite release source

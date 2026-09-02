@@ -1,587 +1,234 @@
-const root = document.documentElement;
-const allowedThemes = ["system", "light", "dark"];
-const allowedLocales = ["th", "en"];
-const allowedModes = ["story", "return", "scan", "officer"];
-const allowedViews = ["baseline", "assisted"];
-const allowedScanStates = ["no-score", "signal", "locked"];
-const allowedEcosystemCases = ["live", "visit", "trade", "reject"];
-const allowedEcosystemLenses = ["scan", "citizen", "officer"];
+(() => {
+  'use strict';
 
-const query = new URLSearchParams(window.location.search);
-const state = {
-  theme: allowedThemes.includes(query.get("theme")) ? query.get("theme") : (root.dataset.themePreference || "system"),
-  locale: allowedLocales.includes(query.get("lang")) ? query.get("lang") : (root.dataset.locale || "th"),
-  mode: allowedModes.includes(query.get("mode")) ? query.get("mode") : "story",
-  view: allowedViews.includes(query.get("view")) ? query.get("view") : "assisted",
-  scan: allowedScanStates.includes(query.get("scan")) ? query.get("scan") : "no-score",
-  ecosystemCase: allowedEcosystemCases.includes(query.get("case")) ? query.get("case") : "live",
-  ecosystemLens: allowedEcosystemLenses.includes(query.get("lens")) ? query.get("lens") : "scan",
-  storyOrigin: "direct"
-};
+  const root = document.documentElement;
+  const nav = document.querySelector('[data-cc-nav]');
+  const menuButton = document.querySelector('#menu-toggle');
+  const menu = document.querySelector('#site-menu');
+  const menuOverlay = document.querySelector('#menu-overlay');
+  const themeButton = document.querySelector('#theme-cycle');
+  const themeMetas = [...document.querySelectorAll('meta[name="theme-color"]')];
+  const systemTheme = window.matchMedia?.('(prefers-color-scheme: dark)');
+  const themeOrder = ['system', 'light', 'dark'];
+  const railIds = ['offer', 'partners', 'product', 'loop', 'record', 'contact'];
+  let themePreference = themeOrder.includes(root.dataset.themePreference) ? root.dataset.themePreference : 'system';
+  let menuOpen = false;
 
-const themeButton = document.querySelector("#theme-cycle");
-const localeButton = document.querySelector("#locale-cycle");
-const journeyStage = document.querySelector("#journey-stage");
-const liveRegion = document.createElement("div");
-liveRegion.className = "visually-hidden";
-liveRegion.setAttribute("role", "status");
-liveRegion.setAttribute("aria-live", "polite");
-liveRegion.setAttribute("aria-atomic", "true");
-document.body.append(liveRegion);
+  const resolvedTheme = (preference) => {
+    if (preference === 'system') return systemTheme?.matches ? 'dark' : 'light';
+    return preference;
+  };
 
-const words = {
-  th: {
-    themes: { system: "ธีม: ระบบ", light: "ธีม: สว่าง", dark: "ธีม: มืด" },
-    localeButton: "EN",
-    mode: {
-      story: "เปิดตัวอย่างเห็นคุณค่าก่อนแล้ว",
-      return: "เปิดตัวอย่างส่งแล้วและกลับมาแล้ว",
-      scan: "เปิดตัวอย่างดูพื้นที่แล้ว",
-      officer: "เปิดตัวอย่างสำหรับเจ้าหน้าที่แล้ว"
-    },
-    view: {
-      baseline: "แสดงแบบที่ยังต้องปรับ โดยใช้ข้อมูลเดิม",
-      assisted: "แสดงแนวทาง DS Add-on โดยใช้ข้อมูลเดิม"
-    },
-    scan: {
-      signal: "กำลังดูหน้าตาสมมติเมื่อข้อมูลพร้อม ยังไม่เชื่อมข้อมูลจริง",
-      "no-score": "ข้อมูลไม่พอ จึงยังคำนวณไม่ได้ และไม่ใช่ศูนย์",
-      locked: "กำลังดูหน้าตาสมมติเมื่อเก็บกรอบแล้ว ยังไม่ได้บันทึกเข้าสู่ระบบ"
-    },
-    ecosystemCase: {
-      live: "เปิดตัวอย่าง แถวนี้น่าอยู่ยังไง แล้ว",
-      visit: "เปิดตัวอย่าง น่าเที่ยวตรงไหน แล้ว",
-      trade: "เปิดตัวอย่าง น่าค้าขายอะไรดี แล้ว",
-      reject: "เปิดตัวอย่างที่ไม่ควรใช้แล้ว"
-    },
-    ecosystemLens: {
-      scan: "กำลังดูมุม CityScan",
-      citizen: "กำลังดูมุม CityChat สำหรับประชาชน",
-      officer: "กำลังดูมุม Officer CityMETER"
-    },
-    genericAck: "ปุ่มตัวอย่างนี้ยังไม่พาไปหน้าอื่น",
-    answerOptionsOpen: "เปิดตัวเลือกคำตอบสำหรับดูรูปแบบแล้ว ยังไม่มีการส่งหรือบันทึกข้อมูล",
-    answerOptionsClosed: "ปิดตัวเลือกคำตอบแล้ว",
-    lockStory: "เปิดเรื่องจากกรอบตัวอย่างแล้ว ข้อมูลยังอยู่เฉพาะหน้านี้",
-    buttonPreview: "ปุ่มตัวอย่างทำงานในหน้านี้แล้ว · ไม่มีการส่งหรือบันทึกข้อมูล",
-    heroCityScan: "เปิดตัวอย่างพื้นที่แล้ว · เป็นข้อมูลจำลองและยังไม่มีการคำนวณจริง",
-    copied: "คัดลอกแล้ว",
-    copyFailed: "คัดลอกอัตโนมัติไม่ได้ กรุณาเปิดไฟล์ดาวน์โหลดแล้วคัดลอกข้อความ",
-    preflightReady: "ตอบ preflight ครบ 6 ข้อแล้ว — ยังต้องผ่าน release gates ที่เกี่ยวข้อง",
-    preflightProgress: count => `ตอบ preflight แล้ว ${count} จาก 6 ข้อ`
-  },
-  en: {
-    themes: { system: "Theme: system", light: "Theme: light", dark: "Theme: dark" },
-    localeButton: "TH",
-    mode: {
-      story: "First-value example opened",
-      return: "Saved-and-return example opened",
-      scan: "Place exploration example opened",
-      officer: "Officer example opened"
-    },
-    view: {
-      baseline: "Needs-refinement view shown with the same facts",
-      assisted: "DS Add-on direction shown with the same facts"
-    },
-    scan: {
-      signal: "Previewing a hypothetical ready state; it is not connected to real data",
-      "no-score": "There is not enough data to calculate a result; this is not zero",
-      locked: "Previewing a hypothetical kept frame; it has not been saved to a system"
-    },
-    ecosystemCase: {
-      live: "Liveability case opened",
-      visit: "Visit case opened",
-      trade: "Local activity case opened",
-      reject: "Rejected case opened"
-    },
-    ecosystemLens: {
-      scan: "CityScan lens shown",
-      citizen: "Public CityChat lens shown",
-      officer: "Officer CityMETER lens shown"
-    },
-    genericAck: "This example button does not open another page yet",
-    answerOptionsOpen: "Answer choices opened for preview; nothing is sent or saved",
-    answerOptionsClosed: "Answer choices closed",
-    lockStory: "Story opened from the sample frame; the state remains on this page",
-    buttonPreview: "The sample button worked locally · nothing was sent or persisted",
-    heroCityScan: "The place example is open · it uses synthetic data and performs no real calculation",
-    copied: "Copied",
-    copyFailed: "Automatic copy was unavailable. Open the downloadable file and copy the text.",
-    preflightReady: "All six preflight questions are answered; applicable release gates still remain",
-    preflightProgress: count => `${count} of 6 preflight questions answered`
-  }
-};
+  const updateThemeButton = () => {
+    if (!themeButton) return;
+    const resolved = resolvedTheme(themePreference);
+    const labels = {
+      system: 'ธีม: ตามระบบ — สลับเป็นสว่าง',
+      light: 'ธีม: สว่าง — สลับเป็นมืด',
+      dark: 'ธีม: มืด — สลับเป็นตามระบบ'
+    };
+    const label = labels[themePreference];
+    themeButton.setAttribute('aria-label', label);
+    themeButton.title = label;
+    const icon = themeButton.querySelector('.ls-icon');
+    if (icon) icon.textContent = resolved === 'dark' ? 'light_mode' : 'dark_mode';
+  };
 
-function t() {
-  return words[state.locale];
-}
+  const syncThemeColor = () => {
+    if (!themeMetas.length) return;
+    const canvas = getComputedStyle(root).getPropertyValue('--surface-canvas').trim();
+    if (canvas) themeMetas.forEach((meta) => { meta.content = canvas; });
+  };
 
-function announce(message) {
-  liveRegion.textContent = "";
-  window.requestAnimationFrame(() => {
-    liveRegion.textContent = message;
-  });
-}
+  const applyTheme = (preference, persist = false) => {
+    themePreference = themeOrder.includes(preference) ? preference : 'system';
+    const resolved = resolvedTheme(themePreference);
+    root.dataset.themePreference = themePreference;
+    root.dataset.theme = resolved;
+    root.style.colorScheme = resolved;
+    if (persist) {
+      try { localStorage.setItem('lds-theme', themePreference); } catch (_) { /* Storage may be unavailable. */ }
+    }
+    updateThemeButton();
+    syncThemeColor();
+  };
 
-function setBilingualText(node, th, en) {
-  if (!node) return;
-  const thNode = node.querySelector("[data-th]");
-  const enNode = node.querySelector("[data-en]");
-  if (thNode) thNode.textContent = th;
-  if (enNode) enNode.textContent = en;
-}
-
-function resolvedTheme(preference = state.theme) {
-  if (preference !== "system") return preference;
-  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
-function syncUrl() {
-  const url = new URL(window.location.href);
-  url.searchParams.set("lang", state.locale);
-  url.searchParams.set("theme", state.theme);
-  url.searchParams.set("mode", state.mode);
-  url.searchParams.set("view", state.view);
-  url.searchParams.set("case", state.ecosystemCase);
-  url.searchParams.set("lens", state.ecosystemLens);
-  if (state.mode === "scan") url.searchParams.set("scan", state.scan);
-  else url.searchParams.delete("scan");
-  history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-}
-
-function applyTheme({ persist = false, announceChange = false } = {}) {
-  const resolved = resolvedTheme();
-  root.dataset.themePreference = state.theme;
-  root.dataset.theme = resolved;
-  root.style.colorScheme = resolved;
-  if (persist) localStorage.setItem("citychat-playground-theme", state.theme);
-  if (themeButton) {
-    const label = t().themes[state.theme];
-    themeButton.querySelectorAll("[data-th], [data-en]").forEach(node => {
-      node.textContent = label;
-    });
-    themeButton.setAttribute("aria-label", label);
-  }
-  if (announceChange) announce(t().themes[state.theme]);
-  updateColorTokenValues();
-  syncUrl();
-}
-
-function applyLocale({ persist = false, announceChange = false } = {}) {
-  root.dataset.locale = state.locale;
-  root.lang = state.locale;
-  document.title = "CityChat DS Add-on Playground v0.8.0";
-  if (persist) localStorage.setItem("citychat-playground-locale", state.locale);
-  if (localeButton) {
-    localeButton.textContent = t().localeButton;
-    localeButton.setAttribute("aria-label", state.locale === "th" ? "เปลี่ยนเป็น English" : "Switch to Thai");
-  }
-  applyTheme();
-  applyScan();
-  applyEcosystem();
-  updateButtonBuilder();
-  updatePreflight();
-  if (announceChange) announce(state.locale === "th" ? "เปลี่ยนเป็นภาษาไทยแล้ว" : "Language changed to English");
-  syncUrl();
-}
-
-function applyView({ announceChange = false } = {}) {
-  journeyStage.dataset.clarity = state.view;
-  document.querySelectorAll("[data-clarity-choice]").forEach(button => {
-    button.setAttribute("aria-pressed", String(button.dataset.clarityChoice === state.view));
-  });
-  document.querySelectorAll("[data-specimen]").forEach(specimen => {
-    specimen.hidden = specimen.dataset.specimen !== state.view;
-  });
-  if (announceChange) announce(t().view[state.view]);
-  syncUrl();
-}
-
-function applyMode({ announceChange = false, focusTab = false } = {}) {
-  journeyStage.dataset.mode = state.mode;
-  document.querySelectorAll("[data-mode-choice]").forEach(button => {
-    const selected = button.dataset.modeChoice === state.mode;
-    button.setAttribute("aria-selected", String(selected));
-    button.tabIndex = selected ? 0 : -1;
-    if (selected && focusTab) button.focus();
-  });
-  document.querySelectorAll("[data-story-view]").forEach(view => {
-    view.hidden = view.dataset.storyView !== state.mode;
-  });
-  const lockOrigin = document.querySelector("[data-lock-origin]");
-  if (lockOrigin) lockOrigin.hidden = !(state.mode === "story" && state.storyOrigin === "lock");
-  if (announceChange) announce(t().mode[state.mode]);
-  syncUrl();
-}
-
-function applyScan({ announceChange = false } = {}) {
-  document.querySelectorAll("[data-scan-state]").forEach(button => {
-    button.setAttribute("aria-pressed", String(button.dataset.scanState === state.scan));
-  });
-  const frame = document.querySelector(".scan-composition");
-  if (frame) frame.dataset.activeScanState = state.scan;
-  const label = document.querySelector(".scan-state-label");
-  const labels = {
-    signal: {
-      th: "หน้าตาสมมติเมื่อข้อมูลพร้อม · ยังไม่เชื่อมข้อมูลจริง",
-      en: "Hypothetical ready layout · not connected to real data"
-    },
-    "no-score": {
-      th: "ข้อมูลไม่พอ · ยังไม่แสดงผลและไม่ถือว่าเป็นศูนย์",
-      en: "Not enough data · no result is shown and this is not zero"
-    },
-    locked: {
-      th: "หน้าตาสมมติเมื่อเก็บกรอบแล้ว · ยังไม่ได้บันทึกเข้าสู่ระบบ",
-      en: "Hypothetical kept-frame layout · not saved to a system"
+  const setMenu = (open, returnFocus = false) => {
+    if (!menuButton || !menu || !menuOverlay) return;
+    menuOpen = open;
+    menu.hidden = !open;
+    menuOverlay.hidden = !open;
+    menuButton.setAttribute('aria-expanded', String(open));
+    menuButton.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
+    const icon = menuButton.querySelector('.ls-icon');
+    if (icon) icon.textContent = open ? 'close' : 'menu';
+    if (open) {
+      nav.dataset.calm = 'off';
+      themeButton?.focus();
+    } else if (returnFocus) {
+      menuButton.focus();
     }
   };
-  setBilingualText(label, labels[state.scan].th, labels[state.scan].en);
-  const storyButton = document.querySelector("#open-story-from-lock");
-  if (storyButton) storyButton.hidden = state.scan !== "locked";
-  if (announceChange) announce(t().scan[state.scan]);
-  syncUrl();
-}
 
-function applyEcosystem({ announceChange = false, focusCase = false, focusLens = false } = {}) {
-  const stage = document.querySelector("#ecosystem-stage");
-  if (!stage) return;
-  stage.dataset.case = state.ecosystemCase;
-  stage.dataset.lens = state.ecosystemLens;
-
-  document.querySelectorAll("[data-ecosystem-case]").forEach(button => {
-    const selected = button.dataset.ecosystemCase === state.ecosystemCase;
-    button.setAttribute("aria-selected", String(selected));
-    button.tabIndex = selected ? 0 : -1;
-    if (selected && focusCase) button.focus();
+  menuButton?.addEventListener('click', () => setMenu(!menuOpen));
+  menuOverlay?.addEventListener('click', () => setMenu(false, true));
+  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menuOpen) setMenu(false, true);
   });
 
-  document.querySelectorAll("[data-ecosystem-case-view]").forEach(view => {
-    const selected = view.dataset.ecosystemCaseView === state.ecosystemCase;
-    view.hidden = !selected;
-    view.querySelectorAll("[data-ecosystem-lens-view]").forEach(lensView => {
-      lensView.hidden = !selected || lensView.dataset.ecosystemLensView !== state.ecosystemLens;
+  themeButton?.addEventListener('click', () => {
+    const next = themeOrder[(themeOrder.indexOf(themePreference) + 1) % themeOrder.length];
+    applyTheme(next, true);
+  });
+  systemTheme?.addEventListener?.('change', () => {
+    if (themePreference === 'system') applyTheme('system');
+  });
+  applyTheme(themePreference);
+
+  let lastY = window.scrollY;
+  const updateCalmNav = () => {
+    if (!nav) return;
+    const y = window.scrollY;
+    const delta = y - lastY;
+    lastY = y;
+    if (y < 24 || menuOpen) nav.dataset.calm = 'off';
+    else if (delta > 4) nav.dataset.calm = 'on';
+    else if (delta < -4) nav.dataset.calm = 'off';
+  };
+  window.addEventListener('scroll', updateCalmNav, { passive: true });
+  nav?.addEventListener('mouseenter', () => { nav.dataset.calm = 'off'; });
+  nav?.addEventListener('focusin', () => { nav.dataset.calm = 'off'; });
+
+  const railLinks = [...document.querySelectorAll('[data-cc-rail] [data-part="raillink"]')];
+  const setCurrentRailLink = (id) => {
+    railLinks.forEach((link) => {
+      if (link.getAttribute('href') === `#${id}`) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
     });
-  });
-
-  const rejected = state.ecosystemCase === "reject";
-  const lensFieldset = document.querySelector("#ecosystem-lens-fieldset");
-  if (lensFieldset) lensFieldset.hidden = rejected;
-  document.querySelectorAll("[data-ecosystem-lens]").forEach(button => {
-    const selected = button.dataset.ecosystemLens === state.ecosystemLens;
-    button.setAttribute("aria-selected", String(selected));
-    button.tabIndex = selected ? 0 : -1;
-    if (selected && focusLens && !rejected) button.focus();
-  });
-
-  if (announceChange) {
-    const message = rejected
-      ? t().ecosystemCase[state.ecosystemCase]
-      : `${t().ecosystemCase[state.ecosystemCase]} · ${t().ecosystemLens[state.ecosystemLens]}`;
-    announce(message);
-  }
-  syncUrl();
-}
-
-themeButton?.addEventListener("click", () => {
-  const next = (allowedThemes.indexOf(state.theme) + 1) % allowedThemes.length;
-  state.theme = allowedThemes[next];
-  applyTheme({ persist: true, announceChange: true });
-});
-
-localeButton?.addEventListener("click", () => {
-  state.locale = state.locale === "th" ? "en" : "th";
-  applyLocale({ persist: true, announceChange: true });
-});
-
-window.matchMedia?.("(prefers-color-scheme: dark)").addEventListener?.("change", () => {
-  if (state.theme === "system") applyTheme();
-});
-
-document.querySelectorAll("[data-clarity-choice]").forEach(button => {
-  button.addEventListener("click", () => {
-    state.view = button.dataset.clarityChoice;
-    applyView({ announceChange: true });
-  });
-});
-
-const modeButtons = [...document.querySelectorAll("[data-mode-choice]")];
-modeButtons.forEach((button, index) => {
-  button.addEventListener("click", () => {
-    state.mode = button.dataset.modeChoice;
-    state.storyOrigin = state.mode === "story" ? "direct" : state.storyOrigin;
-    applyMode({ announceChange: true });
-  });
-  button.addEventListener("keydown", event => {
-    let nextIndex = null;
-    if (["ArrowRight", "ArrowDown"].includes(event.key)) nextIndex = (index + 1) % modeButtons.length;
-    if (["ArrowLeft", "ArrowUp"].includes(event.key)) nextIndex = (index - 1 + modeButtons.length) % modeButtons.length;
-    if (event.key === "Home") nextIndex = 0;
-    if (event.key === "End") nextIndex = modeButtons.length - 1;
-    if (nextIndex === null) return;
-    event.preventDefault();
-    state.mode = modeButtons[nextIndex].dataset.modeChoice;
-    applyMode({ announceChange: true, focusTab: true });
-  });
-});
-
-const ecosystemCaseButtons = [...document.querySelectorAll("[data-ecosystem-case]")];
-ecosystemCaseButtons.forEach((button, index) => {
-  button.addEventListener("click", () => {
-    state.ecosystemCase = button.dataset.ecosystemCase;
-    applyEcosystem({ announceChange: true });
-  });
-  button.addEventListener("keydown", event => {
-    let nextIndex = null;
-    if (["ArrowRight", "ArrowDown"].includes(event.key)) nextIndex = (index + 1) % ecosystemCaseButtons.length;
-    if (["ArrowLeft", "ArrowUp"].includes(event.key)) nextIndex = (index - 1 + ecosystemCaseButtons.length) % ecosystemCaseButtons.length;
-    if (event.key === "Home") nextIndex = 0;
-    if (event.key === "End") nextIndex = ecosystemCaseButtons.length - 1;
-    if (nextIndex === null) return;
-    event.preventDefault();
-    state.ecosystemCase = ecosystemCaseButtons[nextIndex].dataset.ecosystemCase;
-    applyEcosystem({ announceChange: true, focusCase: true });
-  });
-});
-
-const ecosystemLensButtons = [...document.querySelectorAll("[data-ecosystem-lens]")];
-ecosystemLensButtons.forEach((button, index) => {
-  button.addEventListener("click", () => {
-    state.ecosystemLens = button.dataset.ecosystemLens;
-    applyEcosystem({ announceChange: true });
-  });
-  button.addEventListener("keydown", event => {
-    let nextIndex = null;
-    if (["ArrowRight", "ArrowDown"].includes(event.key)) nextIndex = (index + 1) % ecosystemLensButtons.length;
-    if (["ArrowLeft", "ArrowUp"].includes(event.key)) nextIndex = (index - 1 + ecosystemLensButtons.length) % ecosystemLensButtons.length;
-    if (event.key === "Home") nextIndex = 0;
-    if (event.key === "End") nextIndex = ecosystemLensButtons.length - 1;
-    if (nextIndex === null) return;
-    event.preventDefault();
-    state.ecosystemLens = ecosystemLensButtons[nextIndex].dataset.ecosystemLens;
-    applyEcosystem({ announceChange: true, focusLens: true });
-  });
-});
-
-document.querySelectorAll("[data-scan-state]").forEach(button => {
-  button.addEventListener("click", () => {
-    state.scan = button.dataset.scanState;
-    applyScan({ announceChange: true });
-  });
-});
-
-document.querySelector("[data-local-ack='generic']")?.addEventListener("click", () => {
-  const output = document.querySelector("[data-local-ack-output='generic']");
-  if (output) output.textContent = t().genericAck;
-  announce(t().genericAck);
-});
-
-document.querySelector("#preview-answer-options")?.addEventListener("click", event => {
-  const panel = document.querySelector("#answer-options");
-  if (!panel) return;
-  const open = panel.hidden;
-  panel.hidden = !open;
-  event.currentTarget.setAttribute("aria-expanded", String(open));
-  announce(open ? t().answerOptionsOpen : t().answerOptionsClosed);
-});
-
-document.querySelector("#open-story-from-lock")?.addEventListener("click", () => {
-  if (state.scan !== "locked") return;
-  state.storyOrigin = "lock";
-  state.mode = "story";
-  applyMode();
-  const heading = document.querySelector("#story-result-heading");
-  heading?.focus({ preventScroll: true });
-  heading?.scrollIntoView({ block: "nearest", behavior: "auto" });
-  announce(t().lockStory);
-});
-
-document.querySelector("#hero-cityscan-action")?.addEventListener("click", () => {
-  state.ecosystemCase = "live";
-  state.ecosystemLens = "scan";
-  applyEcosystem();
-  announce(t().heroCityScan);
-});
-
-const buttonModeInputs = [...document.querySelectorAll("input[name='button-mode']")];
-const buttonLabelInput = document.querySelector("#button-label-input");
-const buttonIconSelect = document.querySelector("#button-icon-select");
-const buttonPreview = document.querySelector("#button-preview");
-const buttonPreviewLabel = buttonPreview?.querySelector(".button-preview-label");
-const buttonPreviewIcon = buttonPreview?.querySelector(".icon-symbol");
-const buttonCodeOutput = document.querySelector("#button-code-output");
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
-function updateButtonBuilder() {
-  if (!buttonPreview || !buttonLabelInput || !buttonIconSelect) return;
-  const mode = buttonModeInputs.find(input => input.checked)?.value || "labelled";
-  const fallback = state.locale === "th" ? "ดูข้อมูลพื้นที่นี้" : "View this place";
-  const label = buttonLabelInput.value.trim() || fallback;
-  const icon = buttonIconSelect.value;
-  if (buttonPreviewIcon) buttonPreviewIcon.textContent = icon;
-  if (mode === "icon-only") {
-    buttonPreview.classList.add("btn-icon");
-    buttonPreview.setAttribute("aria-label", label);
-    if (buttonPreviewLabel) buttonPreviewLabel.hidden = true;
-    if (buttonCodeOutput) buttonCodeOutput.textContent = `<button class="btn btn-icon" type="button" aria-label="${escapeHtml(label)}">\n  <span class="icon-symbol" aria-hidden="true">${icon}</span>\n</button>`;
-  } else {
-    buttonPreview.classList.remove("btn-icon");
-    buttonPreview.removeAttribute("aria-label");
-    if (buttonPreviewLabel) {
-      buttonPreviewLabel.hidden = false;
-      buttonPreviewLabel.textContent = label;
-    }
-    if (buttonCodeOutput) buttonCodeOutput.textContent = `<button class="btn" type="button">\n  <span class="icon-symbol" aria-hidden="true">${icon}</span>\n  ${escapeHtml(label)}\n</button>`;
-  }
-}
-
-buttonModeInputs.forEach(input => input.addEventListener("change", updateButtonBuilder));
-buttonLabelInput?.addEventListener("input", () => {
-  buttonLabelInput.dataset.userEdited = "true";
-  updateButtonBuilder();
-});
-buttonIconSelect?.addEventListener("change", updateButtonBuilder);
-buttonPreview?.addEventListener("click", () => {
-  setBilingualText(document.querySelector("#button-preview-result"), words.th.buttonPreview, words.en.buttonPreview);
-  announce(t().buttonPreview);
-});
-
-function updateColorTokenValues() {
-  const styles = getComputedStyle(root);
-  document.querySelectorAll("[data-color-token]").forEach(card => {
-    const token = card.dataset.colorToken;
-    const output = card.querySelector("[data-token-value]");
-    if (!token || !output) return;
-    output.textContent = styles.getPropertyValue(token).trim() || "unresolved";
-  });
-}
-
-function settleRevealExamples() {
-  document.querySelectorAll("[data-reveal-item].reveal").forEach(item => item.classList.remove("reveal"));
-}
-
-const reducedMotionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-function prepareRevealExamples() {
-  const groups = [...document.querySelectorAll("[data-reveal-group]")];
-  if (!groups.length || reducedMotionQuery?.matches || !("IntersectionObserver" in window)) return;
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const group = entry.target;
-      observer.unobserve(group);
-      if (group.dataset.revealComplete === "true" || reducedMotionQuery?.matches) return;
-      group.dataset.revealComplete = "true";
-      group.querySelectorAll(":scope > [data-reveal-item]").forEach(item => {
-        item.classList.add("reveal");
-        item.addEventListener("animationend", () => item.classList.remove("reveal"), { once: true });
+  };
+  if ('IntersectionObserver' in window) {
+    const seen = new Map();
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => seen.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0));
+      let current = '';
+      let bestRatio = 0;
+      seen.forEach((ratio, id) => {
+        if (ratio > bestRatio) {
+          current = id;
+          bestRatio = ratio;
+        }
       });
+      if (current) setCurrentRailLink(current);
+    }, { rootMargin: '-30% 0px -50% 0px', threshold: [0, 0.1, 0.25, 0.5] });
+    railIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) spy.observe(section);
     });
-  }, { rootMargin: "0px 0px -10% 0px" });
-  groups.forEach(group => observer.observe(group));
-}
-
-reducedMotionQuery?.addEventListener?.("change", event => {
-  if (event.matches) settleRevealExamples();
-});
-
-const preflightInputs = [...document.querySelectorAll("#preflight-form input[type='checkbox']")];
-function updatePreflight() {
-  const count = preflightInputs.filter(input => input.checked).length;
-  const countNode = document.querySelector("#preflight-count");
-  if (countNode) countNode.textContent = `${count}/6`;
-  const progress = count === 6 ? t().preflightReady : t().preflightProgress(count);
-  document.querySelector(".preflight-progress")?.setAttribute("aria-label", progress);
-  return { count, progress };
-}
-
-preflightInputs.forEach(input => {
-  input.addEventListener("change", () => {
-    const { progress } = updatePreflight();
-    announce(progress);
-  });
-});
-
-async function copyText(text, output) {
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-    } else {
-      const area = document.createElement("textarea");
-      area.value = text;
-      area.setAttribute("readonly", "");
-      area.style.position = "fixed";
-      area.style.opacity = "0";
-      document.body.append(area);
-      area.select();
-      const ok = document.execCommand("copy");
-      area.remove();
-      if (!ok) throw new Error("copy unavailable");
-    }
-    output.textContent = t().copied;
-    announce(t().copied);
-  } catch {
-    output.textContent = t().copyFailed;
-    announce(t().copyFailed);
   }
-}
 
-document.querySelector("#copy-preflight")?.addEventListener("click", () => {
-  const questions = state.locale === "th"
-    ? [
-        "คนเห็นคุณค่าอะไรในช่วงแรก?",
-        "ใช้โลโก้ พื้นผิว และฟอนต์ตามบทบาทหรือยัง?",
-        "ข้อมูลมาจากไหน และยังบอกอะไรไม่ได้?",
-        "สิ่งที่เห็นเปิดใช้จริงหรือยัง?",
-        "กดแล้วเกิดอะไร บันทึกจริงไหม และพลาดแล้วกลับอย่างไร?",
-        "คนกลับมาเพราะมีอะไรเปลี่ยนจริงหรือไม่?"
-      ]
-    : [
-        "What first value does the person receive?",
-        "Are identity, surface, and type roles correct?",
-        "Where does the data come from, and what cannot it establish?",
-        "Is the visible capability actually available?",
-        "What happens, is it really saved, and how does it recover?",
-        "Is a return caused by a material change?"
-      ];
-  const checked = preflightInputs.map((input, index) => `${input.checked ? "[x]" : "[ ]"} ${questions[index]}`);
-  const text = [
-    state.locale === "th" ? "CityChat: เช็ก 60 วินาที" : "CityChat 60-second preflight",
-    ...checked,
-    state.locale === "th"
-      ? "ขอบเขต: การตอบครบช่วยเตรียมงาน แต่ยังไม่ใช่หลักฐานว่า release ผ่านทุก gate"
-      : "Boundary: completing this list is preparation, not release certification."
-  ].join("\n");
-  copyText(text, document.querySelector("#copy-status"));
-});
-
-document.querySelector("#copy-prompt")?.addEventListener("click", () => {
-  const text = "Build one CityChat [page or flow] for [citizen or officer] doing [one job]. Use CityChat DS Add-on v0.8 on the pinned Landometer DS package. Start with one place or matter and one plain meaning. Ask one question only when the evidence supports it. Show zero or one action and state what happens next. A labelled action is an LDS capsule; an icon-only action is an LDS 44×44 circle with an accessible name; never create a third button shape. Use only role-approved CityChat assets and mapped icons. Remember a contribution only after real persistence; otherwise show recovery or a clear ending. Hide unavailable controls and never invent saved state, official status, liveness, counts, or outcomes. Return the Build Card, source refs, visible states, blocked reasons, tests, and manual checks.";
-  copyText(text, document.querySelector("#prompt-copy-status"));
-});
-
-document.querySelectorAll("a[href^='#']").forEach(link => {
-  link.addEventListener("click", () => {
-    const target = document.querySelector(link.getAttribute("href"));
-    let ancestor = target?.parentElement;
-    while (ancestor) {
-      if (ancestor instanceof HTMLDetailsElement) ancestor.open = true;
-      ancestor = ancestor.parentElement;
-    }
+  const tabs = [...document.querySelectorAll('[role="tab"][aria-controls]')];
+  const selectTab = (tab, moveFocus = false) => {
+    tabs.forEach((candidate) => {
+      const selected = candidate === tab;
+      candidate.setAttribute('aria-selected', String(selected));
+      candidate.tabIndex = selected ? 0 : -1;
+      const panel = document.getElementById(candidate.getAttribute('aria-controls'));
+      if (panel) panel.hidden = !selected;
+    });
+    if (moveFocus) tab.focus();
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectTab(tab));
+    tab.addEventListener('keydown', (event) => {
+      let nextIndex = null;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+      if (nextIndex === null) return;
+      event.preventDefault();
+      selectTab(tabs[nextIndex], true);
+    });
   });
-});
 
-applyLocale();
-applyView();
-applyMode();
-applyScan();
-applyEcosystem();
-updatePreflight();
-updateColorTokenValues();
-updateButtonBuilder();
-prepareRevealExamples();
+  const video = document.querySelector('[data-cc-video]');
+  const videoFallback = document.querySelector('[data-video-fallback]');
+  if (video && videoFallback) {
+    const showVideoFallback = () => {
+      video.hidden = true;
+      videoFallback.hidden = false;
+    };
+    video.addEventListener('error', showVideoFallback);
+    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) showVideoFallback();
+  }
+
+  const revealTargets = [...document.querySelectorAll('[data-approach]')];
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  let revealObserver = null;
+  const land = (element) => {
+    if (!element) return;
+    element.classList.add('is-lds-revealed');
+    element.classList.remove('is-lds-reveal-armed');
+    revealObserver?.unobserve(element);
+  };
+  const landWrappers = (node) => {
+    let current = node;
+    while (current?.nodeType === Node.ELEMENT_NODE) {
+      if (current.hasAttribute('data-approach')) land(current);
+      current = current.parentElement;
+    }
+  };
+
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach(land);
+  } else {
+    const viewportHeight = window.innerHeight;
+    const effectiveBottom = viewportHeight - window.innerWidth * 0.12;
+    const hashTarget = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
+    const eligible = revealTargets.filter((element) => {
+      const rect = element.getBoundingClientRect();
+      if (element.closest('[data-hero], nav, header')) return false;
+      if (hashTarget && (hashTarget === element || hashTarget.contains(element) || element.contains(hashTarget))) return false;
+      return rect.top >= viewportHeight && rect.top > effectiveBottom;
+    });
+    revealTargets.forEach((element) => { if (!eligible.includes(element)) land(element); });
+    if (eligible.length) {
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const element = entry.target;
+          revealObserver.unobserve(element);
+          element.classList.add('is-lds-revealed');
+          const delay = Number.parseInt(element.style.getPropertyValue('--lds-reveal-delay'), 10) || 0;
+          window.setTimeout(() => element.classList.remove('is-lds-reveal-armed'), delay + 1000);
+        });
+      }, { threshold: 0.14, rootMargin: '0px 0px -12% 0px' });
+      eligible.forEach((element) => {
+        const sequence = element.parentElement?.hasAttribute('data-approach-sequence') ? element.parentElement : null;
+        let delay = 0;
+        if (sequence) {
+          const peers = [...sequence.children].filter((child) => child.hasAttribute('data-approach'));
+          delay = Math.min(peers.indexOf(element) * 150, 450);
+        }
+        element.style.setProperty('--lds-reveal-delay', `${delay}ms`);
+        element.classList.add('is-lds-reveal-armed');
+        revealObserver.observe(element);
+      });
+      root.classList.add('lds-motion-ready');
+      document.addEventListener('focusin', (event) => landWrappers(event.target), true);
+      window.addEventListener('hashchange', () => {
+        const element = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
+        if (!element) return;
+        landWrappers(element);
+        element.querySelectorAll('[data-approach]').forEach(land);
+      });
+      window.setTimeout(() => {
+        eligible.forEach((element) => {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= effectiveBottom && !element.classList.contains('is-lds-revealed')) land(element);
+        });
+      }, 2400);
+    }
+  }
+})();

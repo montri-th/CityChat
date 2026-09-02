@@ -1,54 +1,18 @@
-# CityChat DS Add-on Playground v0.8.0
+# CityChat public landing
 
 Navigation aid only. This file is not access control, permission, a ranking signal, product readiness, design-system conformance, or authority for an agent to act.
 
-Status: source_limited
-Indexing: HTML entry points request page-level noindex; public files may still be indexed independently
-Artifact: conceptual design guidance; not CityChat runtime evidence
-Normative authority: approved CityChat DS Add-on v0.8; artifact v0.8.0 is an implementation release, not DS Add-on v0.8.0 authority
+Status: public information page
+Indexing: the page requests noindex, nofollow, and noarchive; public files may still be discovered independently
+Artifact: CityChat landing page for municipal partners
+Source basis: owner-supplied CityChat landing handoff; this implementation does not turn examples into live runtime evidence
 Canonical route: https://montri-th.github.io/CityChat/
 
-Human guide:
-- ./index.html
-- ./assets/downloads/citychat-ds-addon-v0.8.md
-- ./assets/downloads/citychat-ds-addon-v0.8-approval.json
-- ./assets/downloads/citychat-ds-addon-playground-release-authorization.v0.8.0.json
-- ./assets/downloads/citychat-product-experience-profile-v0.4.md
-- ./assets/downloads/vibe-coding-prompt.md
-- ./implementation-notes.v0.8.0.md
-
-Machine-readable resources:
-- ./assets/downloads/citychat-component-contracts.v0.4.json
-- ./build-card.v0.8.0.yml
-- ./control-inventory.v0.8.0.json
-- ./assets/identity/identity-assets.v0.8.0.json
-- ./resources/citychat-ds-addon/v0.8.0/cityscan-citycell-taxonomy.json
-- ./resources/citychat-ds-addon/v0.8.0/citychat-case-library.json
-- ./resources/citychat-ds-addon/v0.8.0/citychat-color-role-map.json
-- ./resources/citychat-ds-addon/v0.8.0/citychat-color-atlas.fragment.html
-- ./resources/citychat-ds-addon/v0.8.0/citychat-icon-map.json
-- ./resources/citychat-ds-addon/v0.8.0/citychat-icon-resolution.json
-- ./resources/citychat-ds-addon/v0.8.0/font-assets.manifest.json
-- ./resources/citychat-ds-addon/v0.8.0/semantic-motion.citychat.yml
-- ./resources/citychat-ds-addon/v0.8.0/citychat-button-contract.json
-- ./resources/citychat-ds-addon/v0.8.0/cityscan-hero-specimen.html
-- ./schemas/cityscan-citycell-taxonomy.schema.v0.8.0.json
-- ./schemas/citychat-case-library.schema.v0.8.0.json
-- ./assets/asset-library.v0.8.0.json
-- ./assets/ASSET-LIBRARY-SHA256SUMS.v0.8.0.txt
-- ./qa/automated.v0.8.0.json
-- ./qa/rendered-local.v0.8.0.json
-- ./site-manifest.v0.8.0.json
-- ./resources/index.json
-- ./vendor/landometer/v0.9.0/package.json
-- ./vendor/landometer/v0.9.0/SHA256SUMS.txt
+Primary page: ./index.html
+CityChat stylesheet: ./citychat.css
+Page behavior: ./app.js
 
 Boundaries:
-- CityChat DS Add-on v0.8 is approved normative authoring guidance; Product Experience Profile v0.4 and Product Brief v8 remain draft dependencies.
-- Frontstage identity and the public asset library are CityChat-only. Other product profiles in the immutable LDS vendor snapshot are not CityChat assets or rendering authority.
-- CityScan has exactly three prompts: แถวนี้น่าอยู่ยังไง; น่าเที่ยวตรงไหน; น่าค้าขายอะไรดี. Their CityCells remain separate and may not be collapsed into one aggregate CityScore.
-- The case library contains three constructive local fixtures, each with scan/citizen/officer lenses, and one rejected aggregate-score case.
-- The v0.8.0 control, icon, motion, colour, taxonomy, and case records bind this team-learning artifact only; specimens do not enable product capabilities.
-- All example places, values, responses, handoffs, checklists, owners, and statuses are local conceptual fixtures rather than live data or runtime evidence.
-- LINE, persistence, receipts, sharing, cross-surface runtime handoff, officer operations, and telemetry are not enabled in this artifact.
-- Open sources and verify important claims before promoting anything into a governed product object.
+- Details about municipalities and the depa-supported offer are informational statements from the supplied handoff.
+- Screens, examples, and CityScan prompts do not by themselves prove current production capabilities or live data.
+- Verify important claims with the CityChat team before relying on them for procurement or operations.

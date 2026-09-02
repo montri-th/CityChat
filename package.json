@@ -1,13 +1,13 @@
 {
-  "name": "citychat-ds-addon-interactive-playground",
-  "version": "0.8.0",
+  "name": "citychat-public-landing",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "finalize": "node tools/finalize-release.mjs",
     "validate": "node tools/validate-release.mjs",
     "render": "node tools/check-rendered.mjs",
-    "test": "node tools/finalize-release.mjs --check && node tools/validate-release.mjs",
+    "test": "node --check deployment/app.js && node tools/finalize-release.mjs --check && node tools/validate-release.mjs",
     "serve": "python3 -m http.server 8000 --directory deployment"
   },
   "engines": {

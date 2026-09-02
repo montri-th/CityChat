@@ -1,38 +1,54 @@
-# CityChat DS Add-on Playground v0.8.0
+# CityChat public landing
 
-An interactive, source-limited guide for explaining CityChat and carrying its intent into working interfaces. Artifact v0.8.0 implements the approved normative CityChat DS Add-on v0.8; it does not create a new normative version or prove that a product capability is live.
+Static Thai-language landing page prepared for the GitHub Pages route:
 
-Live route after publication: **https://montri-th.github.io/CityChat/**
+**https://montri-th.github.io/CityChat/**
 
-## Start here
+The page introduces CityChat for local-government teams, includes product and municipal evidence, and ends with the rebuild02-aligned Landometer contact/footer system. Team names are published without the honorifics previously attached to Sek and Film.
 
-1. Open the playground and try one local fixture through three connected views: **CityScan → CityChat for citizens → Officer CityMETER**.
-2. Read [`DESIGN.md`](DESIGN.md) for the short human + developer contract.
-3. Use the downloadable [CityChat DS Add-on v0.8](deployment/assets/downloads/citychat-ds-addon-v0.8.md) for first value, CityChat identity, civic continuity, motion application, visual composition, and plain-language frontstage rules.
-4. Start CityScan with exactly three prompts: **แถวนี้น่าอยู่ยังไง**, **น่าเที่ยวตรงไหน**, and **น่าค้าขายอะไรดี**. Open their meaning, source, and limits through [CityCells](deployment/resources/citychat-ds-addon/v0.8.0/cityscan-citycell-taxonomy.json); never collapse them into one overall score.
-5. Try the [case library](deployment/resources/citychat-ds-addon/v0.8.0/citychat-case-library.json): three constructive cases, each shown through scan/citizen/officer lenses, plus one rejected aggregate-score example.
-6. Open the v0.8.0 Implementation Library for the exact [button rule](deployment/resources/citychat-ds-addon/v0.8.0/citychat-button-contract.json), [CityChat colour roles](deployment/resources/citychat-ds-addon/v0.8.0/citychat-color-role-map.json), [functional icons](deployment/resources/citychat-ds-addon/v0.8.0/citychat-icon-map.json), [verified icon bindings](deployment/resources/citychat-ds-addon/v0.8.0/citychat-icon-resolution.json), [scoped motion](deployment/resources/citychat-ds-addon/v0.8.0/semantic-motion.citychat.yml), and [safe asset library](deployment/assets/asset-library.v0.8.0.json).
-7. Copy [`deployment/resources/starter/`](deployment/resources/starter/) into a prototype. Use the inherited LDS `.btn` capsule and `.btn-icon` circle; do not recreate button geometry, tokens, fonts, icons, or motion values.
-8. Run `npm test` before handing work to another person or AI.
+## Publication boundary
 
-## Authority boundary
+The site is publicly reachable but intentionally non-indexable. `index.html` carries `noindex,nofollow,noarchive`, and `robots.txt` disallows crawling under this project artifact. The repository and directly addressed public files can still be discovered independently; `noindex` is a request to compliant search engines, not access control.
 
-- **Landometer Design System v0.9.0-r7** owns shared tokens, typography, colour, geometry, motion primitives, accessibility and QA.
-- **CityChat DS Add-on v0.8** is the approved normative authoring authority for CityChat identity, composition, narrative presentation, CityScan/CityCell use, motion application, and implementation recipes.
-- **Playground artifact v0.8.0** adds implementation bindings for controls, a self-hosted functional-icon subset, scoped motion examples, and a CityChat colour-usage overlay. These records govern this team-learning artifact and do not create DS Add-on v0.8.0 authority.
-- **CityChat Product Experience Profile v0.4** remains the draft interaction, evidence, object, state and release dependency.
-- **CityScan context documents** remain proposed until their owning approvals exist.
-- The examples in this repository are local conceptual fixtures. They are not live place data and are not proof that LINE, persistence, receipts, CityScan scoring, cross-surface handoff, or officer operations are deployed.
+The page has no analytics or background network calls. Runtime images, video, fonts, Material Symbols, JavaScript, CSS, and the vendored Landometer Design System v0.9.0 files are served locally from `deployment/`.
 
-Only CityChat identity may appear in the current frontstage and public asset library. Vendored LDS files remain an immutable upstream dependency; identities from other products inside that vendor snapshot are neither CityChat assets nor permission to render them.
-
-The site is an internal-team learning artifact projected through a public GitHub Pages URL. Its HTML entry point requests page-level `noindex` and the evidence posture is `source_limited`; the public repository and directly linked resource files may still be discovered or indexed independently. Icons shown in the library do not enable reply, share, history, receipt, CityScan, or officer capabilities. Approval of the DS Add-on does not prove any CityChat runtime capability.
-
-## Validate locally
+## Work locally
 
 ```bash
-npm test
-python3 -m http.server 8000 --directory deployment
+npm run serve
 ```
 
-Then open `http://localhost:8000/`.
+Open `http://localhost:8000/`.
+
+After changing any deployable file, regenerate the deterministic manifest and checksum ledger, then validate the source:
+
+```bash
+npm run finalize
+npm test
+```
+
+Rendered validation requires the same pinned browser package used by CI:
+
+```bash
+npm install --no-save --no-package-lock playwright@1.54.1
+npx playwright install chromium
+npm run render
+```
+
+## Release checks
+
+- `npm run finalize` records every regular file in `deployment/` except the two generated release records themselves. It rejects symlinks, unexpected system metadata, missing required files, and changed pinned media/font inputs.
+- `npm test` checks JavaScript syntax, requires release records to be current, and validates static markup, exact names and footer content, noindex/canonical metadata, accessibility basics, local runtime closure, font locality, pinned hashes, no-JS resilience, and reduced-motion rules.
+- `npm run render` exercises desktop, tablet, and mobile layouts plus light, dark, system-dark, reduced-motion, no-JavaScript, storage-denied, menu, theme, tab, and calm-navigation behavior.
+- `tools/verify-live.mjs` re-fetches the live runtime closure and release records with retry-aware cache busting, then requires exact bytes, SHA-256 hashes, expected MIME types, canonical/noindex copy, requested names, and footer contract.
+
+Both GitHub Actions workflows validate without rewriting tracked files. The Pages workflow uploads `deployment/` exactly and performs the live verification only after GitHub Pages reports a successful deployment.
+
+## Key files
+
+- `deployment/index.html` — static landing markup and publication metadata
+- `deployment/citychat.css` — local fonts, responsive layout, footer, theme, motion, and no-JS rules
+- `deployment/app.js` — progressive menu, theme, tabs, rail, video fallback, and reveal behavior
+- `release.config.json` — machine-readable release and content contract
+- `deployment/site-manifest.json` — deterministic whole-tree file inventory
+- `deployment/SHA256SUMS.txt` — deterministic SHA-256 ledger

@@ -1,274 +1,164 @@
-#!/usr/bin/env node
-import { createHash } from "node:crypto";
-import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { createHash } from 'node:crypto';
+import {
+  existsSync,
+  lstatSync,
+  readFileSync,
+  readdirSync,
+  writeFileSync,
+} from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const deployment = path.join(root, "deployment");
-const config = JSON.parse(readFileSync(path.join(root, "release.config.json"), "utf8"));
-const checkOnly = process.argv.includes("--check");
-const manifestRel = config.releaseArtifacts.manifest;
-const sumsRel = config.releaseArtifacts.checksums;
-const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
-const implementationRecordRoot = config.implementationRecordRoot;
-const versionedSchema = name => `schemas/${name}.v${config.artifactVersion}.json`;
-const assetLibraryRel = config.implementationRecords?.assetLibrary;
-const assetLibraryChecksumsRel = config.implementationRecords?.assetLibraryChecksums;
+const toolsRoot = path.dirname(fileURLToPath(import.meta.url));
+const repositoryRoot = path.resolve(toolsRoot, '..');
+const configPath = path.join(repositoryRoot, 'release.config.json');
+const config = JSON.parse(readFileSync(configPath, 'utf8'));
+const deploymentRoot = path.resolve(repositoryRoot, config.deployment.root);
+const manifestRelativePath = normalizeRelativePath(config.deployment.manifest);
+const checksumsRelativePath = normalizeRelativePath(config.deployment.checksums);
+const manifestPath = resolveDeploymentPath(manifestRelativePath);
+const checksumsPath = resolveDeploymentPath(checksumsRelativePath);
+const checkOnly = process.argv.includes('--check');
 
-function safeCatalogPath(relative) {
-  return typeof relative === "string"
-    && /^(assets|resources|schemas)\//.test(relative)
-    && !relative.split("/").includes("..")
-    && !path.isAbsolute(relative);
-}
-
-function prepareAssetLibrary() {
-  if (!assetLibraryRel || !assetLibraryChecksumsRel) {
-    throw new Error("Missing asset library or asset-only checksum implementation record");
+function normalizeRelativePath(value) {
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new Error(`Expected a non-empty deployment-relative path, received ${String(value)}`);
   }
 
-  const catalogPath = path.join(deployment, assetLibraryRel);
-  const checksumPath = path.join(deployment, assetLibraryChecksumsRel);
-  const catalog = JSON.parse(readFileSync(catalogPath, "utf8"));
-  const seenPaths = new Set();
-  let checksumRecordCount = 0;
+  if (
+    path.isAbsolute(value)
+    || value.includes('\\')
+    || value.split('/').some((segment) => segment === '' || segment === '.' || segment === '..')
+  ) {
+    throw new Error(`Unsafe deployment-relative path: ${value}`);
+  }
 
-  const assets = catalog.assets.map(asset => {
-    if (!safeCatalogPath(asset.path)) throw new Error(`Unsafe catalog asset path: ${asset.path}`);
-    if (asset.publicDownload !== true) throw new Error(`Catalog asset is not public-download safe: ${asset.path}`);
-    if (seenPaths.has(asset.path)) throw new Error(`Duplicate catalog asset path: ${asset.path}`);
-    seenPaths.add(asset.path);
+  return value;
+}
 
-    if (asset.path === assetLibraryChecksumsRel) {
-      checksumRecordCount += 1;
-      return { ...asset };
+function resolveDeploymentPath(relativePath) {
+  const absolutePath = path.resolve(deploymentRoot, relativePath);
+  const relation = path.relative(deploymentRoot, absolutePath);
+
+  if (relation.startsWith('..') || path.isAbsolute(relation)) {
+    throw new Error(`Path leaves the deployment root: ${relativePath}`);
+  }
+
+  return absolutePath;
+}
+
+function sha256(buffer) {
+  return createHash('sha256').update(buffer).digest('hex');
+}
+
+function listDeploymentFiles(directory = deploymentRoot) {
+  const files = [];
+
+  for (const entry of readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0)) {
+    const absolutePath = path.join(directory, entry.name);
+    const relativePath = path.relative(deploymentRoot, absolutePath).split(path.sep).join('/');
+    const stat = lstatSync(absolutePath);
+
+    if (stat.isSymbolicLink()) {
+      throw new Error(`Deployment tree must not contain symlinks: ${relativePath}`);
     }
 
-    const absolute = path.join(deployment, asset.path);
-    if (!existsSync(absolute) || !statSync(absolute).isFile()) {
-      throw new Error(`Missing catalog asset: ${asset.path}`);
+    if (entry.isDirectory()) {
+      files.push(...listDeploymentFiles(absolutePath));
+      continue;
     }
-    const bytes = readFileSync(absolute);
-    return { ...asset, bytes: bytes.length, sha256: sha256(bytes) };
-  });
 
-  if (checksumRecordCount !== 1) {
-    throw new Error(`Asset-only checksum must have exactly one catalog record (${checksumRecordCount})`);
+    if (!entry.isFile()) {
+      throw new Error(`Deployment tree contains a non-regular file: ${relativePath}`);
+    }
+
+    if (entry.name === '.DS_Store') {
+      throw new Error(`Deployment tree contains an operating-system metadata file: ${relativePath}`);
+    }
+
+    files.push(relativePath);
   }
 
-  const sumsText = assets
-    .filter(asset => asset.path !== assetLibraryChecksumsRel)
-    .sort((a, b) => a.path.localeCompare(b.path))
-    .map(asset => `${asset.sha256}  ${asset.path}`)
-    .join("\n") + "\n";
-  const sumsBytes = Buffer.from(sumsText);
-  const refreshedAssets = assets.map(asset => asset.path === assetLibraryChecksumsRel
-    ? { ...asset, bytes: sumsBytes.length, sha256: sha256(sumsBytes) }
-    : asset);
-  const catalogText = `${JSON.stringify({ ...catalog, assets: refreshedAssets }, null, 2)}\n`;
+  return files.sort();
+}
 
-  if (checkOnly) {
-    const problems = [];
-    if (readFileSync(catalogPath, "utf8") !== catalogText) problems.push(assetLibraryRel);
-    if (!existsSync(checksumPath) || readFileSync(checksumPath, "utf8") !== sumsText) problems.push(assetLibraryChecksumsRel);
-    return { problems };
+function assertRegularFile(relativePath) {
+  const normalized = normalizeRelativePath(relativePath);
+  const absolutePath = resolveDeploymentPath(normalized);
+
+  if (!existsSync(absolutePath)) {
+    throw new Error(`Required deployment file is missing: ${normalized}`);
   }
 
-  writeFileSync(catalogPath, catalogText);
-  writeFileSync(checksumPath, sumsText);
-  return { problems: [] };
+  const stat = lstatSync(absolutePath);
+  if (stat.isSymbolicLink() || !stat.isFile()) {
+    throw new Error(`Required deployment path must be a regular file: ${normalized}`);
+  }
 }
 
-const assetLibraryPreparation = prepareAssetLibrary();
-
-function listFiles(dir, prefix = "") {
-  return readdirSync(dir).sort().flatMap(name => {
-    const absolute = path.join(dir, name);
-    const relative = path.posix.join(prefix, name);
-    if (relative === manifestRel || relative === sumsRel || name === ".DS_Store") return [];
-    return statSync(absolute).isDirectory() ? listFiles(absolute, relative) : [relative];
-  });
+for (const relativePath of config.deployment.requiredFiles) {
+  assertRegularFile(relativePath);
 }
 
-const files = listFiles(deployment).map(relative => {
-  const bytes = readFileSync(path.join(deployment, relative));
-  return { path: relative, bytes: bytes.length, sha256: sha256(bytes) };
+for (const [relativePath, expectedHash] of Object.entries(config.pinnedInputs)) {
+  assertRegularFile(relativePath);
+  const actualHash = sha256(readFileSync(resolveDeploymentPath(normalizeRelativePath(relativePath))));
+  if (actualHash !== expectedHash) {
+    throw new Error(`Pinned input hash mismatch for ${relativePath}: expected ${expectedHash}, received ${actualHash}`);
+  }
+}
+
+const generatedPaths = new Set([manifestRelativePath, checksumsRelativePath]);
+const sourcePaths = listDeploymentFiles().filter((relativePath) => !generatedPaths.has(relativePath));
+const fileRecords = sourcePaths.map((relativePath) => {
+  const bytes = readFileSync(resolveDeploymentPath(relativePath));
+  return {
+    path: relativePath,
+    bytes: bytes.byteLength,
+    sha256: sha256(bytes),
+  };
 });
-const byPath = Object.fromEntries(files.map(file => [file.path, file]));
-
-const requiredCritical = [...new Set([
-  "index.html",
-  "citychat.css",
-  "app.js",
-  config.releaseArtifacts.buildCard,
-  config.releaseArtifacts.controlInventory,
-  config.releaseArtifacts.implementationNotes,
-  config.releaseArtifacts.automatedQa,
-  config.releaseArtifacts.renderedQa,
-  config.releaseArtifacts.manualQa,
-  config.sourceDesignAddOn.path,
-  ...config.approvalRecords.map(record => record.path),
-  ...config.productDependencies.map(record => record.path),
-  "assets/downloads/citychat-build-card-template.yml",
-  "assets/downloads/vibe-coding-prompt.md",
-  "assets/identity/citychat-horizontal-lockup.png",
-  "assets/identity/citychat-symbol.source.svg",
-  "assets/identity/citychat-lockup.source.svg",
-  config.identityManifest.path,
-  ...Object.values(config.implementationRecords || {}),
-  "assets/icons/material-symbols-rounded-citychat-v368.ttf",
-  "assets/icons/LICENSE.material-symbols.txt",
-  `${implementationRecordRoot}/README.md`,
-  `${implementationRecordRoot}/citychat-button-contract.json`,
-  `${implementationRecordRoot}/cityscan-hero-specimen.html`,
-  `${implementationRecordRoot}/citychat-color-atlas.fragment.html`,
-  `${implementationRecordRoot}/citychat-color-role-map.json`,
-  `${implementationRecordRoot}/citychat-icon-map.json`,
-  `${implementationRecordRoot}/citychat-icon-resolution.json`,
-  `${implementationRecordRoot}/font-assets.manifest.json`,
-  `${implementationRecordRoot}/semantic-motion.citychat.yml`,
-  versionedSchema("citychat-color-role-map.schema"),
-  versionedSchema("citychat-font-assets.schema"),
-  versionedSchema("citychat-icon-map.schema"),
-  versionedSchema("citychat-icon-resolution.schema"),
-  versionedSchema("semantic-motion-citychat.schema"),
-  versionedSchema("citychat-button-contract.schema"),
-  versionedSchema("cityscan-citycell-taxonomy.schema"),
-  versionedSchema("citychat-case-library.schema"),
-  versionedSchema("citychat-asset-library.schema"),
-  assetLibraryRel,
-  assetLibraryChecksumsRel,
-  `qa/color-atlas-generation.v${config.artifactVersion}.json`,
-  "resources/starter/index.html",
-  "resources/starter/citychat.css",
-  "resources/index.json",
-  "vendor/landometer/v0.9.0/package.json",
-  "vendor/landometer/v0.9.0/SHA256SUMS.txt",
-  "vendor/landometer/v0.9.0/build-kit/lds-tokens.css",
-  "vendor/landometer/v0.9.0/build-kit/lds-base.css",
-  "llms.txt",
-  "robots.txt"
-])];
-
-for (const required of requiredCritical) {
-  if (!byPath[required]) throw new Error(`Missing critical release file: ${required}`);
-}
-
-for (const record of [config.sourceDesignAddOn, ...config.approvalRecords, ...config.productDependencies, config.identityManifest]) {
-  const actual = byPath[record.path]?.sha256;
-  if (actual !== record.sha256) throw new Error(`Pinned hash mismatch: ${record.path} (${actual || "missing"}/${record.sha256})`);
-}
 
 const manifest = {
-  schemaVersion: "1.0",
-  artifact: {
-    name: config.artifactName,
-    product: config.product,
-    version: config.artifactVersion,
-    artifactBuildId: config.artifactBuildId,
-    pageKind: config.pageKind,
-    profile: config.profile,
-    delivery: config.delivery,
-    language: config.language,
-    additionalLanguages: config.additionalLanguages
-  },
-  publication: {
-    visibility: config.visibility,
-    indexable: config.indexable,
-    evidenceStatus: config.evidenceStatus,
-    machineValidation: config.machineValidation,
-    canonicalUrl: config.canonicalUrl,
-    deliveryConformance: "not_claimed"
-  },
-  releaseArtifacts: config.releaseArtifacts,
-  sourceDesignAddOn: config.sourceDesignAddOn,
-  approvalRecords: config.approvalRecords,
-  productDependencies: config.productDependencies,
-  governanceReferences: config.governanceReferences,
-  identityManifest: config.identityManifest,
-  implementationRecords: config.implementationRecords,
-  triggeredPacks: config.triggeredPacks,
-  supportedChannels: config.supportedChannels,
-  upstream: config.upstream,
-  capabilities: config.capabilities,
-  historicalRecords: [
-    {
-      path: "site-manifest.v0.6.1.json",
-      artifactBuildId: "citychat-ui-20260823-01",
-      rollbackCommit: "b0ca776179ede86b6ec726e0ea5cfa2946c36593",
-      manifestSha256: "ba4f3cf0ec47dbf24da34aaccca1afffbe2429e2f7c8d1dfd783a5d86be81436",
-      currentBaseParity: false,
-      boundary: "Historical record only; repository history is required to verify its original relative paths."
-    },
-    {
-      path: "site-manifest.v0.6.json",
-      artifactBuildId: "citychat-ui-20260822-03",
-      rollbackCommit: "d610ba86ab2e7d4322b38ae5868cb828220d772d",
-      manifestSha256: "0ac4ef511bd24f6d696534d3b8443720cbed612cdc5b6ce4f872553c4b2fc46a",
-      currentBaseParity: false,
-      boundary: "Historical record only; repository history is required to verify its original relative paths."
-    },
-    {
-      path: "site-manifest.v0.5.json",
-      artifactBuildId: "citychat-ui-20260822-02",
-      rollbackCommit: "77da60b4bc04abe62e5a63dbf0742eabb104769c",
-      manifestSha256: "d5e6141231296e368f0efa64b690dd612869700fbcfb523df5596a5647dae68d",
-      currentBaseParity: false,
-      boundary: "Historical record only; repository history is required to verify its original relative paths."
-    },
-    {
-      path: "site-manifest.v0.4.json",
-      artifactBuildId: "citychat-ui-20260822-01",
-      currentBaseParity: false,
-      boundary: "Historical record only; repository history is required to verify its original relative paths."
-    }
-  ],
-  releaseBoundary: {
-    publicProjectionOfInternalTeamLearning: true,
-    conceptualFixtures: true,
-    productRuntimeEvidence: false,
-    faviconApproval: "unresolved_and_omitted",
-    socialPreviewApproval: "unresolved_and_omitted",
-    manualGates: "open"
-  },
+  schemaVersion: '1.0',
+  artifact: config.artifact,
+  publication: config.publication,
+  generatedBy: 'tools/finalize-release.mjs',
   totals: {
-    files: files.length,
-    bytes: files.reduce((sum, file) => sum + file.bytes, 0)
+    files: fileRecords.length,
+    bytes: fileRecords.reduce((sum, record) => sum + record.bytes, 0),
   },
-  criticalAssets: requiredCritical.map(relative => byPath[relative]),
-  files,
-  boundary: "This manifest records source bytes for a source-limited design-guidance artifact. It does not authorize CityChat capabilities or certify a downstream product."
+  files: fileRecords,
 };
 
 const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;
 const manifestRecord = {
-  path: manifestRel,
-  bytes: Buffer.byteLength(manifestText),
-  sha256: sha256(Buffer.from(manifestText))
+  path: manifestRelativePath,
+  sha256: sha256(Buffer.from(manifestText)),
 };
-const sumsText = [...files, manifestRecord]
-  .sort((a, b) => a.path.localeCompare(b.path))
-  .map(file => `${file.sha256}  ${file.path}`)
-  .join("\n") + "\n";
+const checksumRecords = [
+  ...fileRecords.map(({ path: relativePath, sha256: hash }) => ({ path: relativePath, sha256: hash })),
+  manifestRecord,
+].sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
+const checksumsText = `${checksumRecords.map(({ path: relativePath, sha256: hash }) => `${hash}  ${relativePath}`).join('\n')}\n`;
 
 if (checkOnly) {
-  const currentManifest = existsSync(path.join(deployment, manifestRel))
-    ? readFileSync(path.join(deployment, manifestRel), "utf8")
-    : "";
-  const currentSums = existsSync(path.join(deployment, sumsRel))
-    ? readFileSync(path.join(deployment, sumsRel), "utf8")
-    : "";
-  const problems = [...assetLibraryPreparation.problems];
-  if (currentManifest !== manifestText) problems.push(manifestRel);
-  if (currentSums !== sumsText) problems.push(sumsRel);
-  if (problems.length) {
-    console.error(`Release metadata is stale: ${problems.join(", ")}`);
-    process.exit(1);
+  const stale = [];
+
+  if (!existsSync(manifestPath) || readFileSync(manifestPath, 'utf8') !== manifestText) {
+    stale.push(manifestRelativePath);
   }
-  console.log(`Release metadata matches ${files.length} source files.`);
+  if (!existsSync(checksumsPath) || readFileSync(checksumsPath, 'utf8') !== checksumsText) {
+    stale.push(checksumsRelativePath);
+  }
+
+  if (stale.length > 0) {
+    throw new Error(`Release metadata is stale or missing: ${stale.join(', ')}. Run npm run finalize.`);
+  }
+
+  console.log(`Release metadata is current (${fileRecords.length} deployable files, ${manifest.totals.bytes} bytes).`);
 } else {
-  writeFileSync(path.join(deployment, manifestRel), manifestText);
-  writeFileSync(path.join(deployment, sumsRel), sumsText);
-  console.log(`Finalized ${files.length} source files for ${config.artifactBuildId}.`);
+  writeFileSync(manifestPath, manifestText);
+  writeFileSync(checksumsPath, checksumsText);
+  console.log(`Finalized ${fileRecords.length} deployable files (${manifest.totals.bytes} bytes).`);
 }

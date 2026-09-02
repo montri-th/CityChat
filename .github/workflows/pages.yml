@@ -1,4 +1,4 @@
-name: Deploy CityChat playground to GitHub Pages
+name: Deploy CityChat landing to GitHub Pages
 
 on:
   push:
@@ -13,6 +13,7 @@ on:
       - "DESIGN.md"
       - "AGENTS.md"
       - ".github/workflows/pages.yml"
+      - ".github/workflows/validate.yml"
   workflow_dispatch:
 
 permissions:
@@ -26,7 +27,7 @@ concurrency:
 
 jobs:
   deploy:
-    name: Validate and deploy exact release
+    name: Validate and deploy exact landing release
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -36,7 +37,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate deterministic release source
+      - name: Validate deterministic CityChat landing source
         run: npm test
 
       - name: Install browser dependency
@@ -44,7 +45,7 @@ jobs:
           npm install --no-save --no-package-lock playwright@1.54.1
           npx playwright install --with-deps chromium
 
-      - name: Validate rendered states before deployment
+      - name: Validate responsive and resilient rendered states
         run: npm run render
 
       - name: Confirm validators did not rewrite release source
@@ -53,7 +54,7 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload exact static tree
+      - name: Upload the attested static tree
         uses: actions/upload-pages-artifact@v4
         with:
           path: deployment
@@ -62,7 +63,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify live bytes match deployed source
+      - name: Verify live runtime bytes, hashes, MIME types, and copy
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
           LOCAL_DEPLOYMENT_DIR: deployment
