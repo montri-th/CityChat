@@ -47,6 +47,32 @@ function sha256(buffer) {
   return createHash('sha256').update(buffer).digest('hex');
 }
 
+function inspectTopLevelMp4(buffer) {
+  const boxes = [];
+  let offset = 0;
+  while (offset < buffer.length) {
+    if (offset + 8 > buffer.length) return { valid: false, boxes, detail: `truncated header at byte ${offset}` };
+    let size = buffer.readUInt32BE(offset);
+    const type = buffer.toString('ascii', offset + 4, offset + 8);
+    let headerSize = 8;
+    if (size === 1) {
+      if (offset + 16 > buffer.length) return { valid: false, boxes, detail: `truncated extended header for ${type}` };
+      const extendedSize = buffer.readBigUInt64BE(offset + 8);
+      if (extendedSize > BigInt(Number.MAX_SAFE_INTEGER)) return { valid: false, boxes, detail: `${type} is too large to validate safely` };
+      size = Number(extendedSize);
+      headerSize = 16;
+    } else if (size === 0) {
+      size = buffer.length - offset;
+    }
+    if (size < headerSize || offset + size > buffer.length) {
+      return { valid: false, boxes, detail: `${type} declares ${size} bytes at ${offset}, beyond ${buffer.length}` };
+    }
+    boxes.push({ type, size, offset });
+    offset += size;
+  }
+  return { valid: offset === buffer.length, boxes, detail: '' };
+}
+
 function occurrences(haystack, needle) {
   if (!needle) return 0;
   let count = 0;
@@ -214,6 +240,17 @@ inlineScripts.forEach((match, index) => {
 for (const { attrs, raw } of tags('img')) {
   check(`image has an alt attribute: ${attrs.get('src') || raw.slice(0, 60)}`, attrs.has('alt'));
 }
+const cityscanVideos = tags('video').filter(({ attrs }) => attrs.has('data-cc-video'));
+check('CityScan has exactly one video element', cityscanVideos.length === 1, `found ${cityscanVideos.length}`);
+if (cityscanVideos.length === 1) {
+  const attrs = cityscanVideos[0].attrs;
+  check('CityScan video source is exact', attrs.get('src') === config.media.cityscan.src);
+  for (const attribute of ['autoplay', 'loop', 'muted', 'playsinline', 'controls']) {
+    check(`CityScan video declares ${attribute}`, attrs.has(attribute));
+  }
+}
+const cityscanDownload = tags('a').filter(({ attrs }) => attrs.get('href') === config.media.cityscan.src && attrs.has('download'));
+check('CityScan fallback retains one direct download', cityscanDownload.length === 1, `found ${cityscanDownload.length}`);
 for (const { attrs } of tags('a')) {
   const href = attrs.get('href') || '';
   if (attrs.get('target')?.toLowerCase() === '_blank') {
@@ -295,6 +332,15 @@ for (const [relativePath, expectedHash] of Object.entries(config.pinnedInputs)) 
   }
 }
 
+const cityscanPath = resolveDeploymentPath(safeRelativePath(config.media.cityscan.path, 'CityScan video path'));
+if (existsSync(cityscanPath)) {
+  const cityscanBuffer = readFileSync(cityscanPath);
+  const mediaInspection = inspectTopLevelMp4(cityscanBuffer);
+  const boxTypes = mediaInspection.boxes.map(({ type }) => type);
+  check('CityScan MP4 is structurally complete', mediaInspection.valid, mediaInspection.detail);
+  check('CityScan MP4 includes playable media and metadata boxes', boxTypes.includes('mdat') && boxTypes.includes('moov'), boxTypes.join(', '));
+}
+
 check('all declared fonts are local', !/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|@import\s+url\(\s*["']?https?:)/i.test(css));
 check('CSS disables synthetic font faces', /font-synthesis\s*:\s*none/i.test(css));
 check('CSS includes Thai display, body, technical, Latin display, and icon fonts', [
@@ -333,14 +379,28 @@ if (footerMatch) {
   const footerAnchors = pairedTags('a', footerHtml);
   const mapAnchor = footerAnchors.filter(({ attrs, text }) => attrs.get('href') === config.footer.contact.map.href && text.includes(config.footer.contact.map.text));
   check('footer map link is exact', mapAnchor.length === 1);
+  check('footer map cue is hidden from assistive technology', mapAnchor.length === 1 && /<span\b(?=[^>]*\bclass=["'][^"']*\btext-link__cue\b)(?=[^>]*\baria-hidden=["']true["'])[^>]*>\s*↗\s*<\/span>/i.test(mapAnchor[0].content));
   const emailAnchor = footerAnchors.filter(({ attrs, text }) => hasClass(attrs, 'contact-email') && attrs.get('href') === config.footer.contact.email.href && text.endsWith(config.footer.contact.email.text));
   check('footer contact email is exact', emailAnchor.length === 1);
+  check('footer email underlines only its visible label', emailAnchor.length === 1 && pairedTags('span', emailAnchor[0].content).some(({ attrs, text }) => hasClass(attrs, 'contact-email__label') && text === config.footer.contact.email.text));
 
   const socialNav = footerHtml.match(/<nav\b[^>]*class=["'][^"']*\bsocial-links\b[^"']*["'][^>]*>([\s\S]*?)<\/nav>/i)?.[1] || '';
   const socialAnchors = pairedTags('a', socialNav);
   check('footer has exactly five social links', socialAnchors.length === config.footer.socialLinks.length);
   for (const link of config.footer.socialLinks) {
-    check(`footer social link is exact: ${link.text}`, socialAnchors.filter(({ attrs, text }) => attrs.get('href') === link.href && text === link.text).length === 1);
+    const matches = socialAnchors.filter(({ attrs, text }) => attrs.get('href') === link.href && text === link.text);
+    check(`footer social link is exact: ${link.text}`, matches.length === 1);
+    if (matches.length === 1) {
+      const anchor = matches[0];
+      const rel = (anchor.attrs.get('rel') || '').split(/\s+/);
+      check(`footer social link opens safely: ${link.text}`, anchor.attrs.get('target') === '_blank' && ['me', 'noopener', 'noreferrer'].every((value) => rel.includes(value)));
+      const icon = anchor.content.match(/<svg\b([^>]*)>([\s\S]*?)<\/svg>/i);
+      const iconAttrs = icon ? attributes(icon[1]) : new Map();
+      const use = icon ? tags('use', icon[2])[0] : null;
+      check(`footer social link uses the rebuild02 icon: ${link.text}`, Boolean(icon && hasClass(iconAttrs, 'social-icon') && iconAttrs.get('aria-hidden') === 'true' && use?.attrs.get('href') === `#${link.iconId}`));
+      const labels = pairedTags('span', anchor.content).filter(({ attrs, text }) => hasClass(attrs, 'social-link__label') && hasClass(attrs, 'visually-hidden') && text === link.text);
+      check(`footer social link keeps an accessible label: ${link.text}`, labels.length === 1);
+    }
   }
 
   const brandAnchor = footerAnchors.find(({ attrs }) => hasClass(attrs, config.footer.brandClass));
@@ -363,6 +423,11 @@ if (footerMatch) {
   const bottomPattern = new RegExp(`<div\\b[^>]*class=["'][^"']*\\b${config.footer.bottomClass}\\b[^"']*["'][^>]*>[\\s\\S]*?<div\\b[^>]*class=["'][^"']*\\b${config.footer.bottomInnerClass}\\b[^"']*["'][^>]*>[\\s\\S]*?<div\\b[^>]*class=["'][^"']*\\b${config.footer.identityClass}\\b[^"']*["']`, 'i');
   check('footer bottom contains its inner identity region', bottomPattern.test(footerHtml));
 }
+const socialSymbolIds = pairedTags('symbol').map(({ attrs }) => attrs.get('id')).filter(Boolean);
+const expectedSocialSymbolIds = config.footer.socialLinks.map(({ iconId }) => iconId);
+check('inline sprite contains each rebuild02 social symbol once', expectedSocialSymbolIds.every((id) => socialSymbolIds.filter((candidate) => candidate === id).length === 1) && socialSymbolIds.length === expectedSocialSymbolIds.length, socialSymbolIds.join(', '));
+const externalCues = [...html.matchAll(/<span\b([^>]*)>\s*↗\s*<\/span>/gi)].map((match) => attributes(match[1]));
+check('every external-link cue is undecorated and hidden from assistive technology', externalCues.length === 6 && externalCues.every((attrs) => hasClass(attrs, 'text-link__cue') && attrs.get('aria-hidden') === 'true'), `found ${externalCues.length}`);
 check('footer is the final layout child inside #top', /<\/main>\s*<footer\b[\s\S]*?<\/footer>\s*<\/div>\s*<\/body>\s*<\/html>\s*$/i.test(html));
 check('footer source declares an 8px four-color stripe', /\.measure-line\s*\{[^}]*height\s*:\s*8px[^}]*grid-template-columns\s*:\s*repeat\(4\s*,\s*1fr\)/i.test(css)
   && [1, 2, 3, 4].every((number) => new RegExp(`\\.measure-line\\s+span:nth-child\\(${number}\\)\\{[^}]*background\\s*:\\s*var\\(--energy-`, 'i').test(css)));
@@ -370,6 +435,14 @@ check('footer preserves the reference atmosphere/canvas split', /\.site-footer\s
   && /\.footer-bottom\s*\{[^}]*background\s*:\s*var\(--surface-canvas\)/i.test(css));
 check('footer lockup source matches the reference dimensions and type', /\.footer-brand\s+img\s*\{[^}]*width\s*:\s*54px[^}]*height\s*:\s*54px/i.test(css)
   && /\.footer-brand\s+span\s*\{[^}]*font-family\s*:\s*var\(--font-display-en\)[^}]*font-size\s*:\s*23px[^}]*font-weight\s*:\s*700/i.test(css));
+check('footer social icons match rebuild02 geometry and stroke', /\.social-icon\s*\{[^}]*width\s*:\s*22px[^}]*height\s*:\s*22px[^}]*fill\s*:\s*none[^}]*stroke\s*:\s*currentcolor[^}]*stroke-width\s*:\s*1\.65[^}]*stroke-linecap\s*:\s*round[^}]*stroke-linejoin\s*:\s*round/i.test(css));
+check('footer social links are 44px icon-only pills without underlines', /\.social-links\s+a\s*\{[^}]*width\s*:\s*44px[^}]*min-width\s*:\s*44px[^}]*height\s*:\s*44px[^}]*border-radius\s*:\s*var\(--radius-pill\)[^}]*text-decoration\s*:\s*none/i.test(css));
+check('footer icon-bearing contact links do not paint underlines', /\.contact-link\s*,\s*\.contact-email\s*\{[^}]*text-decoration\s*:\s*none/i.test(css)
+  && /\.contact-email__label\s*\{[^}]*text-decoration\s*:\s*underline\s+1px/i.test(css));
+check('compact footer keeps social icons in a flex row', !/@media\s*\(max-width\s*:\s*700px\)[\s\S]*?\.social-links\s*,\s*\.footer-links\s*\{[^}]*display\s*:\s*grid/i.test(css));
+check('video behavior loops normally and pauses for reduced motion', /video\.loop\s*=\s*true/.test(app)
+  && /video\.play\(\)\.catch/.test(app)
+  && /motionPreference\?\.matches[\s\S]{0,240}video\.autoplay\s*=\s*false[\s\S]{0,240}video\.pause\(\)/.test(app));
 
 if (failures.length > 0) {
   console.error(`CityChat release validation failed (${failures.length}/${checks.length} checks):`);

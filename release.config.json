@@ -3,7 +3,7 @@
   "artifact": {
     "name": "CityChat public landing",
     "product": "citychat",
-    "buildId": "citychat-landing-20260903-01",
+    "buildId": "citychat-landing-20260903-02",
     "pageKind": "product-landing",
     "language": "th",
     "canonicalUrl": "https://montri-th.github.io/CityChat/"
@@ -92,23 +92,28 @@
     "socialLinks": [
       {
         "text": "Facebook",
-        "href": "https://www.facebook.com/landometer"
+        "href": "https://www.facebook.com/landometer",
+        "iconId": "social-facebook"
       },
       {
         "text": "Instagram",
-        "href": "https://www.instagram.com/landometer"
+        "href": "https://www.instagram.com/landometer",
+        "iconId": "social-instagram"
       },
       {
         "text": "TikTok",
-        "href": "https://www.tiktok.com/@landometer82"
+        "href": "https://www.tiktok.com/@landometer82",
+        "iconId": "social-tiktok"
       },
       {
         "text": "LinkedIn",
-        "href": "https://www.linkedin.com/company/landometer"
+        "href": "https://www.linkedin.com/company/landometer",
+        "iconId": "social-linkedin"
       },
       {
         "text": "X",
-        "href": "https://x.com/landometer"
+        "href": "https://x.com/landometer",
+        "iconId": "social-x"
       }
     ],
     "links": [
@@ -134,10 +139,21 @@
     "brandText": "Landometer",
     "copyright": "© 2017–2026 Landometer Co., Ltd."
   },
+  "media": {
+    "cityscan": {
+      "path": "assets/cityscan-demo.mp4",
+      "src": "./assets/cityscan-demo.mp4",
+      "autoplay": true,
+      "loop": true,
+      "muted": true,
+      "playsInline": true,
+      "controls": true
+    }
+  },
   "pinnedInputs": {
     "assets/citychat-lockup-dark.png": "032bd864e187598f645d5adb1fadb99c15c9cb9cc0beb5af015203d0709bfa44",
     "assets/citychat-lockup.png": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
-    "assets/cityscan-demo.mp4": "89cd57174c712350b51fd53a92ab6329022d79509e52dd59d0aae104d0d11463",
+    "assets/cityscan-demo.mp4": "9a818a3d24934ae6ff6db4b600952413631db49d40673281499cb6d5c6e22760",
     "assets/conversation-motif.svg": "fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4",
     "assets/depa-dsure-tdc-white.png": "43c9d3dae67c9e212ecc3a4a122977c7215ccdd7423371b265507c4b5af9e253",
     "assets/depa-dsure-tdc.png": "7e097e8f25da164c622c8176703637563986666afbd12a0cd8107d4e6513818b",

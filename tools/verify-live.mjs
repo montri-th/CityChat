@@ -165,12 +165,18 @@ function assertLandingText(source, label) {
     config.footer.contact.address,
     config.footer.contact.email.href,
     config.footer.contact.map.href,
-    ...config.footer.socialLinks.flatMap((link) => [link.text, link.href]),
+    ...config.footer.socialLinks.flatMap((link) => [link.text, link.href, `id="${link.iconId}"`, `href="#${link.iconId}"`]),
     ...config.footer.links.flatMap((link) => [link.text === 'Privacy & Terms' ? 'Privacy &amp; Terms' : link.text, link.href]),
     `class="${config.footer.brandClass}" href="${config.footer.brandHref}"`,
     config.footer.copyright,
   ]) {
     if (!source.includes(required)) throw new Error(`${label} footer contract is missing: ${required}`);
+  }
+  if (!/<video\b(?=[^>]*\bdata-cc-video(?:\s*=|\s|>))(?=[^>]*\bsrc=["']\.\/assets\/cityscan-demo\.mp4["'])(?=[^>]*\bcontrols(?:\s|>))(?=[^>]*\bautoplay(?:\s|>))(?=[^>]*\bloop(?:\s|>))(?=[^>]*\bmuted(?:\s|>))(?=[^>]*\bplaysinline(?:\s|>))[^>]*>/i.test(source)) {
+    throw new Error(`${label} CityScan video is not configured for muted inline autoplay and looping.`);
+  }
+  if (!/<nav\b[^>]*class=["'][^"']*\bsocial-links\b[^"']*["'][^>]*>[\s\S]*?<svg\b[^>]*class=["'][^"']*\bsocial-icon\b[^"']*["'][^>]*aria-hidden=["']true["'][^>]*>[\s\S]*?<span\b[^>]*class=["'][^"']*\bsocial-link__label\b[^"']*\bvisually-hidden\b[^"']*["'][^>]*>/i.test(source)) {
+    throw new Error(`${label} social profile links are not icon-only with accessible labels.`);
   }
   if (!/<\/main>\s*<footer\b[\s\S]*?<\/footer>\s*<\/div>\s*<\/body>\s*<\/html>\s*$/i.test(source)) {
     throw new Error(`${label} footer is not the final layout child.`);

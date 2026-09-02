@@ -81,7 +81,12 @@ function attachDiagnostics(page, scenario) {
       diagnostics.push(`console.error: ${message.text()}${source}`);
     }
   });
-  page.on('requestfailed', (request) => diagnostics.push(`requestfailed: ${request.url()} (${request.failure()?.errorText || 'unknown'})`));
+  page.on('requestfailed', (request) => {
+    const errorText = request.failure()?.errorText || 'unknown';
+    const pathname = new URL(request.url()).pathname;
+    if (pathname === '/assets/cityscan-demo.mp4' && errorText === 'net::ERR_ABORTED') return;
+    diagnostics.push(`requestfailed: ${request.url()} (${errorText})`);
+  });
   page.on('request', (request) => {
     const url = request.url();
     if (/^(?:data|blob|about):/i.test(url)) return;
@@ -147,6 +152,36 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
     const stripeColors = stripe ? [...stripe.children].map((element) => getComputedStyle(element).backgroundColor) : [];
     const brandImage = footer?.querySelector('.footer-brand img');
     const brandWord = footer?.querySelector('.footer-brand span');
+    const socialLinks = [...(footer?.querySelectorAll('.social-links a') || [])].map((anchor) => {
+      const rect = anchor.getBoundingClientRect();
+      const icon = anchor.querySelector('.social-icon');
+      const iconRect = icon?.getBoundingClientRect();
+      const iconStyle = icon ? getComputedStyle(icon) : null;
+      const label = anchor.querySelector('.social-link__label.visually-hidden');
+      const labelStyle = label ? getComputedStyle(label) : null;
+      return {
+        name: anchor.textContent.trim(),
+        width: rect.width,
+        height: rect.height,
+        decoration: getComputedStyle(anchor).textDecorationLine,
+        icon: iconRect && iconStyle ? {
+          width: iconRect.width,
+          height: iconRect.height,
+          fill: iconStyle.fill,
+          stroke: iconStyle.stroke,
+          strokeWidth: iconStyle.strokeWidth,
+          lineCap: iconStyle.strokeLinecap,
+          lineJoin: iconStyle.strokeLinejoin,
+        } : null,
+        labelHiddenVisually: Boolean(labelStyle && labelStyle.position === 'absolute' && label.getBoundingClientRect().width <= 1 && label.getBoundingClientRect().height <= 1),
+      };
+    });
+    const iconBearingLinks = [...document.querySelectorAll('a')]
+      .filter((anchor) => anchor.querySelector('.ls-icon,.social-icon,.text-link__cue'))
+      .map((anchor) => ({ label: anchor.textContent.trim().slice(0, 48), decoration: getComputedStyle(anchor).textDecorationLine }));
+    const emailLabel = footer?.querySelector('.contact-email__label');
+    const policyDecorations = [...(footer?.querySelectorAll('.footer-links a') || [])].map((anchor) => getComputedStyle(anchor).textDecorationLine);
+    const video = document.querySelector('[data-cc-video]');
     const controls = [...document.querySelectorAll('#menu-toggle,[role="tab"],[data-cc-rail] [data-part="raillink"],.contact-link,.contact-email,.social-links a,.footer-links a,.footer-brand')]
       .filter(visible)
       .map((element) => ({ label: element.id || element.textContent.trim().slice(0, 32), height: element.getBoundingClientRect().height }));
@@ -189,6 +224,11 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
         expectedStripeColors: ['--energy-coral', '--energy-yellow', '--energy-mint', '--energy-sky'].map(color),
         contactDetails: visible(footer?.querySelector('.contact-details')),
         socialCount: footer?.querySelectorAll('.social-links a').length,
+        socialDisplay: footer?.querySelector('.social-links') ? getComputedStyle(footer.querySelector('.social-links')).display : '',
+        socialLinks,
+        iconBearingLinks,
+        emailLabelDecoration: emailLabel ? getComputedStyle(emailLabel).textDecorationLine : '',
+        policyDecorations,
         policyCount: footer?.querySelectorAll('.footer-links a').length,
         brandImage: brandImage ? { width: brandImage.getBoundingClientRect().width, height: brandImage.getBoundingClientRect().height } : null,
         brandWord: brandWord ? { family: getComputedStyle(brandWord).fontFamily, size: getComputedStyle(brandWord).fontSize, weight: getComputedStyle(brandWord).fontWeight } : null,
@@ -199,6 +239,15 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
       },
       controls,
       icons,
+      video: video ? {
+        autoplay: video.autoplay,
+        autoplayAttribute: video.hasAttribute('autoplay'),
+        loop: video.loop,
+        muted: video.muted,
+        defaultMuted: video.defaultMuted,
+        playsInline: video.playsInline,
+        controls: video.controls,
+      } : null,
       rail: railRect ? { visible: visible(rail), center: railRect.top + railRect.height / 2, viewportCenter: innerHeight / 2 } : null,
       nonLazyImages,
     };
@@ -219,7 +268,11 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
   check(`${scenario}: footer has the exact 8px four-part measure stripe`, state.footer.stripeHeight === 8 && stripeWidthsAligned && state.footer.stripeColors.every((colorValue, index) => colorValue === state.footer.expectedStripeColors[index]), JSON.stringify(state.footer));
   check(`${scenario}: footer preserves atmosphere and canvas regions`, state.footer.atmosphere === state.footer.expectedAtmosphere && state.footer.bottom === state.footer.expectedCanvas);
   check(`${scenario}: footer contact, five social, and three policy links render`, state.footer.contactDetails && state.footer.socialCount === 5 && state.footer.policyCount === 3);
+  check(`${scenario}: social profiles are accessible 44px icon-only pills`, state.footer.socialDisplay === 'flex' && state.footer.socialLinks.length === 5 && state.footer.socialLinks.every((link) => Math.abs(link.width - 44) <= 1 && Math.abs(link.height - 44) <= 1 && link.decoration === 'none' && link.icon && Math.abs(link.icon.width - 22) <= 1 && Math.abs(link.icon.height - 22) <= 1 && link.icon.fill === 'none' && link.icon.stroke !== 'none' && link.icon.strokeWidth === '1.65px' && link.icon.lineCap === 'round' && link.icon.lineJoin === 'round' && link.labelHiddenVisually), JSON.stringify(state.footer.socialLinks));
+  check(`${scenario}: icon-bearing links never paint an underline`, state.footer.iconBearingLinks.length > 0 && state.footer.iconBearingLinks.every((link) => link.decoration === 'none'), JSON.stringify(state.footer.iconBearingLinks.filter((link) => link.decoration !== 'none')));
+  check(`${scenario}: only intended footer text remains underlined`, state.footer.emailLabelDecoration.includes('underline') && state.footer.policyDecorations.every((value) => value.includes('underline')), JSON.stringify({ email: state.footer.emailLabelDecoration, policy: state.footer.policyDecorations }));
   check(`${scenario}: footer lockup matches reference size and typography`, state.footer.brandImage && Math.abs(state.footer.brandImage.width - 54) <= 1 && Math.abs(state.footer.brandImage.height - 54) <= 1 && state.footer.brandWord?.family.includes('Arvo') && state.footer.brandWord.size === '23px' && state.footer.brandWord.weight === '700', JSON.stringify(state.footer));
+  check(`${scenario}: CityScan video is configured to autoplay muted and loop inline`, state.video?.autoplay && state.video.autoplayAttribute && state.video.loop && state.video.muted && state.video.defaultMuted && state.video.playsInline && state.video.controls, JSON.stringify(state.video));
   check(`${scenario}: tested interactive targets are at least 44px tall`, state.controls.every((control) => control.height >= 43.5), JSON.stringify(state.controls.filter((control) => control.height < 43.5)));
   check(`${scenario}: visible icon ligatures use the local icon face without text-width leakage`, state.icons.length > 0 && state.icons.every((icon) => icon.family.includes('Material Symbols Rounded') && icon.width <= 48), JSON.stringify(state.icons.filter((icon) => !icon.family.includes('Material Symbols Rounded') || icon.width > 48)));
 
@@ -262,6 +315,23 @@ async function runInteractions() {
     await page.reload({ waitUntil: 'load' });
     await page.evaluate(() => document.fonts?.ready);
     check(`${scenario}: persisted theme survives reload`, await page.locator('html').getAttribute('data-theme') === 'light' && await page.locator('html').getAttribute('data-theme-preference') === 'light');
+
+    const socialNames = ['Facebook', 'Instagram', 'TikTok', 'LinkedIn', 'X'];
+    const socialNameCounts = await Promise.all(socialNames.map((name) => page.getByRole('link', { name, exact: true }).count()));
+    check(`${scenario}: icon-only social links expose exact accessible names`, socialNameCounts.every((count) => count === 1), JSON.stringify(socialNameCounts));
+
+    let videoStarted = false;
+    try {
+      await page.waitForFunction(() => {
+        const element = document.querySelector('[data-cc-video]');
+        return Boolean(element && !element.hidden && element.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && !element.paused && element.currentTime > 0);
+      }, null, { timeout: 10000 });
+      const firstTime = await page.locator('[data-cc-video]').evaluate((element) => element.currentTime);
+      await page.waitForTimeout(350);
+      const secondTime = await page.locator('[data-cc-video]').evaluate((element) => element.currentTime);
+      videoStarted = secondTime > firstTime;
+    } catch { /* Report through the assertion below. */ }
+    check(`${scenario}: CityScan video autoplays and advances`, videoStarted);
 
     await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; });
     await page.locator('#tab-chat').scrollIntoViewIfNeeded();
@@ -324,11 +394,16 @@ async function runReducedMotion() {
         approaches,
         sweepAnimation: sweep ? getComputedStyle(sweep).animationName : '',
         scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
+        video: (() => {
+          const element = document.querySelector('[data-cc-video]');
+          return element ? { autoplay: element.autoplay, autoplayAttribute: element.hasAttribute('autoplay'), loop: element.loop, paused: element.paused } : null;
+        })(),
       };
     });
     check(`${scenario}: approach targets remain fully landed`, state.approaches.every((item) => item.opacity === '1' && item.transform === 'none' && item.transition.split(',').every((value) => value.trim() === '0s')), JSON.stringify(state.approaches.filter((item) => item.opacity !== '1' || item.transform !== 'none' || !item.transition.split(',').every((value) => value.trim() === '0s')).slice(0, 4)));
     check(`${scenario}: decorative sweep animation is disabled`, state.sweepAnimation === 'none', state.sweepAnimation);
     check(`${scenario}: smooth scrolling is disabled`, state.scrollBehavior === 'auto', state.scrollBehavior);
+    check(`${scenario}: CityScan loop is paused and autoplay is removed`, state.video && !state.video.autoplay && !state.video.autoplayAttribute && state.video.loop && state.video.paused, JSON.stringify(state.video));
   } finally {
     finishDiagnostics();
     await context.close();
@@ -431,5 +506,5 @@ if (failures.length > 0) {
   failures.forEach((failure) => console.error(`- ${failure}`));
   process.exitCode = 1;
 } else {
-  console.log(`CityChat rendered validation passed (${checks} assertions across 8 browser scenarios).`);
+  console.log(`CityChat rendered validation passed (${checks} assertions across 9 browser scenarios).`);
 }

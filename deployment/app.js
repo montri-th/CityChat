@@ -9,6 +9,7 @@
   const themeButton = document.querySelector('#theme-cycle');
   const themeMetas = [...document.querySelectorAll('meta[name="theme-color"]')];
   const systemTheme = window.matchMedia?.('(prefers-color-scheme: dark)');
+  const motionPreference = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   const themeOrder = ['system', 'light', 'dark'];
   const railIds = ['offer', 'partners', 'product', 'loop', 'record', 'contact'];
   let themePreference = themeOrder.includes(root.dataset.themePreference) ? root.dataset.themePreference : 'system';
@@ -155,16 +156,37 @@
   const video = document.querySelector('[data-cc-video]');
   const videoFallback = document.querySelector('[data-video-fallback]');
   if (video && videoFallback) {
+    let mediaUnavailable = false;
     const showVideoFallback = () => {
+      mediaUnavailable = true;
+      video.pause();
       video.hidden = true;
       videoFallback.hidden = false;
     };
+    const syncVideoMotion = () => {
+      if (mediaUnavailable) return;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.loop = true;
+      video.playsInline = true;
+      if (motionPreference?.matches) {
+        video.autoplay = false;
+        video.removeAttribute('autoplay');
+        video.pause();
+        return;
+      }
+      video.autoplay = true;
+      video.setAttribute('autoplay', '');
+      video.play().catch(() => { /* Controls remain available if autoplay is blocked. */ });
+    };
     video.addEventListener('error', showVideoFallback);
+    motionPreference?.addEventListener?.('change', syncVideoMotion);
     if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) showVideoFallback();
+    else syncVideoMotion();
   }
 
   const revealTargets = [...document.querySelectorAll('[data-approach]')];
-  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotion = motionPreference?.matches;
   let revealObserver = null;
   const land = (element) => {
     if (!element) return;

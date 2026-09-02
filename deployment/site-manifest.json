@@ -3,7 +3,7 @@
   "artifact": {
     "name": "CityChat public landing",
     "product": "citychat",
-    "buildId": "citychat-landing-20260903-01",
+    "buildId": "citychat-landing-20260903-02",
     "pageKind": "product-landing",
     "language": "th",
     "canonicalUrl": "https://montri-th.github.io/CityChat/"
@@ -16,7 +16,7 @@
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
     "files": 234,
-    "bytes": 22346581
+    "bytes": 45318410
   },
   "files": [
     {
@@ -26,8 +26,8 @@
     },
     {
       "path": "app.js",
-      "bytes": 10036,
-      "sha256": "7811e18413de6430f5a412c49a62eb5c3ee2e6ad47e8e868c3ed216d0b2959b2"
+      "bytes": 10785,
+      "sha256": "ac32a015b412070f288cd6559b97511260055c7ff2e6ebb97f1d323a349ee9d6"
     },
     {
       "path": "assets/ASSET-LIBRARY-SHA256SUMS.v0.8.0.txt",
@@ -56,8 +56,8 @@
     },
     {
       "path": "assets/cityscan-demo.mp4",
-      "bytes": 202483,
-      "sha256": "89cd57174c712350b51fd53a92ab6329022d79509e52dd59d0aae104d0d11463"
+      "bytes": 23170738,
+      "sha256": "9a818a3d24934ae6ff6db4b600952413631db49d40673281499cb6d5c6e22760"
     },
     {
       "path": "assets/conversation-motif.svg",
@@ -391,8 +391,8 @@
     },
     {
       "path": "citychat.css",
-      "bytes": 17823,
-      "sha256": "59a99ba38baed2f20263c26df88589851d091134c6614929a1e6865499c7809b"
+      "bytes": 18916,
+      "sha256": "b753730d7b87a17367c53d8c8cdf22ce7f1f404ab7633ac83c62bc54c84ed4d5"
     },
     {
       "path": "control-inventory.v0.4.json",
@@ -456,8 +456,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 72593,
-      "sha256": "b9de34e4597c0ec36849726a2258e2a073cedc4fea63a2f2d9f1b3e65f7b6114"
+      "bytes": 74325,
+      "sha256": "259ec9adf90f7b84ca154aa6cbb6b666c73275cbdb4c7d15eba5c49d04920f23"
     },
     {
       "path": "llms.txt",
