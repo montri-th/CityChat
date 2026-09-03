@@ -6,7 +6,7 @@ Static Thai-language landing page prepared for the GitHub Pages route:
 
 The page introduces CityChat for local-government teams, includes product and municipal evidence, and ends with the rebuild02-aligned Landometer contact/footer system. Social profiles use the same accessible icon-only controls as rebuild02, while link decoration stays off icons and external-link cues. Team names are published without the honorifics previously attached to Sek and Film.
 
-The CityScan demonstration autoplays muted, inline, and in a continuous loop while keeping native controls available. It pauses and removes autoplay when the visitor requests reduced motion, and retains a download fallback if the browser cannot play the local MP4.
+The CityScan demonstration keeps its original portrait framing: it sits beside the explanation on wider screens, moves below the explanation on compact screens, and shrinks further in short landscape viewports. It autoplays muted, inline, and in a continuous loop while keeping native controls available, pauses and removes autoplay when the visitor requests reduced motion, and retains a download fallback if the browser cannot play the local MP4. A build-bound CityChat pin favicon and a mid-page CityChat gradient highlight are included as local, attested assets.
 
 ## Publication boundary
 
@@ -41,7 +41,7 @@ npm run render
 
 - `npm run finalize` records every regular file in `deployment/` except the two generated release records themselves. It rejects symlinks, unexpected system metadata, missing required files, and changed pinned media/font inputs.
 - `npm test` checks JavaScript syntax, requires release records to be current, and validates static markup, complete MP4 structure, exact names and footer content, social icon semantics, underline boundaries, noindex/canonical metadata, accessibility basics, local runtime closure, font locality, pinned hashes, no-JS resilience, and reduced-motion rules.
-- `npm run render` exercises desktop, tablet, and mobile layouts plus light, dark, system-dark, reduced-motion, no-JavaScript, storage-denied, menu, theme, tab, calm-navigation, icon-only footer, and CityScan autoplay behavior.
+- `npm run render` exercises 320–1440px layouts, short landscape, light, dark, system-dark, reduced-motion, no-JavaScript, storage-denied, menu, theme, tab, calm-navigation, icon-only footer, the approved favicon, the CityChat gradient highlight, and portrait CityScan behavior.
 - `tools/verify-live.mjs` re-fetches the live runtime closure and release records with retry-aware cache busting, then requires exact bytes, SHA-256 hashes, expected MIME types, canonical/noindex copy, requested names, and footer contract.
 
 Both GitHub Actions workflows validate without rewriting tracked files. The Pages workflow uploads `deployment/` exactly and performs the live verification only after GitHub Pages reports a successful deployment.

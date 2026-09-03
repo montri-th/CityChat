@@ -3,7 +3,7 @@
   "artifact": {
     "name": "CityChat public landing",
     "product": "citychat",
-    "buildId": "citychat-landing-20260903-02",
+    "buildId": "citychat-landing-20260903-03",
     "pageKind": "product-landing",
     "language": "th",
     "canonicalUrl": "https://montri-th.github.io/CityChat/"
@@ -15,8 +15,8 @@
   },
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
-    "files": 234,
-    "bytes": 45318410
+    "files": 237,
+    "bytes": 45332904
   },
   "files": [
     {
@@ -245,6 +245,16 @@
       "sha256": "42cd00d98dd631ddf6b3d5a47ba34e6eed83d2a6e3fd35ef5f4f8e0e6632ba30"
     },
     {
+      "path": "assets/identity/citychat-favicon-3b7439f6.png",
+      "bytes": 7315,
+      "sha256": "3b7439f689fa6172660375e073ce3cbcd967ee2766c9d962522f712468e3b58a"
+    },
+    {
+      "path": "assets/identity/citychat-favicon-3b7439f6.receipt.json",
+      "bytes": 1205,
+      "sha256": "2ad25a4e8c2558a9d25f1c7004ae7cf62e4651bd21822a028d83b5beb97b71ac"
+    },
+    {
       "path": "assets/identity/citychat-horizontal-lockup.png",
       "bytes": 8371,
       "sha256": "94055c9b084eebaa585b3d31bef750abe87a1162fc1ec3be077f7fbcb2465e62"
@@ -258,6 +268,11 @@
       "path": "assets/identity/citychat-symbol.source.svg",
       "bytes": 3714,
       "sha256": "4d8dfd72be8a666a80040291b8b75411854b9a0c90d6693111f79c721bbf1e74"
+    },
+    {
+      "path": "assets/identity/identity-assets.citychat-landing-20260903-03.json",
+      "bytes": 3068,
+      "sha256": "11454d84a61ae81f76dfa7f4aa6ab0ef97786eedc2f9f9659cad9d1c9bdab954"
     },
     {
       "path": "assets/identity/identity-assets.v0.4.json",
@@ -391,8 +406,8 @@
     },
     {
       "path": "citychat.css",
-      "bytes": 18916,
-      "sha256": "b753730d7b87a17367c53d8c8cdf22ce7f1f404ab7633ac83c62bc54c84ed4d5"
+      "bytes": 21192,
+      "sha256": "0421380ce02578ece75f1e6a5eafe51860f0b07cfb943f785201e83e18266980"
     },
     {
       "path": "control-inventory.v0.4.json",
@@ -456,8 +471,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 74325,
-      "sha256": "259ec9adf90f7b84ca154aa6cbb6b666c73275cbdb4c7d15eba5c49d04920f23"
+      "bytes": 74955,
+      "sha256": "d2be159ec228655a61fbf48124e9ab071f23b3b1b1a82dfa2537e2021945e4b3"
     },
     {
       "path": "llms.txt",

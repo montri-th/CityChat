@@ -1,4 +1,4 @@
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 const toolsRoot = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(toolsRoot, '..');
 const deploymentRoot = path.join(repositoryRoot, 'deployment');
+const config = JSON.parse(readFileSync(path.join(repositoryRoot, 'release.config.json'), 'utf8'));
 const requiredSections = ['main-content', 'offer', 'partners', 'product', 'loop', 'record', 'contact'];
 const failures = [];
 let checks = 0;
@@ -122,7 +123,7 @@ async function openPage(context, scenario) {
 }
 
 async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
-  const state = await page.evaluate(({ ids, expectedTheme: theme }) => {
+  const state = await page.evaluate(async ({ ids, expectedTheme: theme, faviconConfig, mediaConfig }) => {
     const visible = (element) => {
       if (!element) return false;
       const style = getComputedStyle(element);
@@ -182,6 +183,31 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
     const emailLabel = footer?.querySelector('.contact-email__label');
     const policyDecorations = [...(footer?.querySelectorAll('.footer-links a') || [])].map((anchor) => getComputedStyle(anchor).textDecorationLine);
     const video = document.querySelector('[data-cc-video]');
+    const videoFallback = document.querySelector('[data-video-fallback]');
+    const videoFrame = document.querySelector('.cityscan-demo__frame');
+    const videoCopy = document.querySelector('.cityscan-demo__copy');
+    const videoMedia = document.querySelector('.cityscan-demo__media');
+    const videoSurface = visible(video) ? video : videoFallback;
+    const videoFrameRect = videoFrame?.getBoundingClientRect();
+    const videoSurfaceRect = videoSurface?.getBoundingClientRect();
+    const videoCopyRect = videoCopy?.getBoundingClientRect();
+    const videoMediaRect = videoMedia?.getBoundingClientRect();
+    const banner = document.querySelector('.city-loop-banner');
+    const bannerRect = banner?.getBoundingClientRect();
+    const productRect = document.querySelector('#product')?.getBoundingClientRect();
+    const loopRect = document.querySelector('#loop')?.getBoundingClientRect();
+    const favicon = document.querySelector('link[rel~="icon"]');
+    let faviconImage = null;
+    if (favicon) {
+      const probe = new Image();
+      probe.src = favicon.href;
+      try {
+        await probe.decode();
+        faviconImage = { naturalWidth: probe.naturalWidth, naturalHeight: probe.naturalHeight };
+      } catch {
+        faviconImage = { naturalWidth: 0, naturalHeight: 0 };
+      }
+    }
     const controls = [...document.querySelectorAll('#menu-toggle,[role="tab"],[data-cc-rail] [data-part="raillink"],.contact-link,.contact-email,.social-links a,.footer-links a,.footer-brand')]
       .filter(visible)
       .map((element) => ({ label: element.id || element.textContent.trim().slice(0, 32), height: element.getBoundingClientRect().height }));
@@ -214,6 +240,24 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
       },
       themeOnlyWrong: [...document.querySelectorAll(theme === 'light' ? '.theme-only-dark' : '.theme-only-light')].filter(visible).length,
       themeOnlyRight: [...document.querySelectorAll(theme === 'light' ? '.theme-only-light' : '.theme-only-dark')].filter(visible).length,
+      favicon: favicon ? {
+        href: favicon.getAttribute('href'),
+        type: favicon.getAttribute('type'),
+        naturalWidth: faviconImage?.naturalWidth || 0,
+        naturalHeight: faviconImage?.naturalHeight || 0,
+        expected: faviconConfig,
+      } : null,
+      highlight: banner && bannerRect && productRect && loopRect ? {
+        visible: visible(banner),
+        afterProduct: bannerRect.top >= productRect.bottom - 1,
+        beforeLoop: bannerRect.bottom <= loopRect.top + 1,
+        background: getComputedStyle(banner).backgroundImage,
+        expectedBackground: backgroundImage('--product-citychat-gradient'),
+        eyebrowColor: getComputedStyle(banner.querySelector('.city-loop-banner__eyebrow')).color,
+        headingColor: getComputedStyle(banner.querySelector('h2')).color,
+        storyColor: getComputedStyle(banner.querySelector('.city-loop-banner__story')).color,
+        expectedForeground: color('--on-product-citychat'),
+      } : null,
       footer: {
         finalChild: Boolean(footer && top?.lastElementChild === footer && footer.parentElement === top),
         tabindex: footer?.getAttribute('tabindex'),
@@ -247,11 +291,27 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
         defaultMuted: video.defaultMuted,
         playsInline: video.playsInline,
         controls: video.controls,
+        widthAttribute: Number(video.getAttribute('width')),
+        heightAttribute: Number(video.getAttribute('height')),
+        intrinsicWidth: video.videoWidth,
+        intrinsicHeight: video.videoHeight,
+        expectedIntrinsicWidth: mediaConfig.intrinsicWidth,
+        expectedIntrinsicHeight: mediaConfig.intrinsicHeight,
+        frameWidth: videoFrameRect?.width || 0,
+        frameHeight: videoFrameRect?.height || 0,
+        surfaceWidth: videoSurfaceRect?.width || 0,
+        surfaceHeight: videoSurfaceRect?.height || 0,
+        copyTop: videoCopyRect?.top || 0,
+        copyBottom: videoCopyRect?.bottom || 0,
+        copyLeft: videoCopyRect?.left || 0,
+        copyRight: videoCopyRect?.right || 0,
+        mediaTop: videoMediaRect?.top || 0,
+        mediaLeft: videoMediaRect?.left || 0,
       } : null,
       rail: railRect ? { visible: visible(rail), center: railRect.top + railRect.height / 2, viewportCenter: innerHeight / 2 } : null,
       nonLazyImages,
     };
-  }, { ids: requiredSections, expectedTheme });
+  }, { ids: requiredSections, expectedTheme, faviconConfig: config.identity.favicon, mediaConfig: config.media.cityscan });
 
   check(`${scenario}: Thai document and one H1 render`, state.lang === 'th' && state.h1Count === 1);
   check(`${scenario}: expected theme resolves`, state.theme === expectedTheme, `received ${state.theme}`);
@@ -261,6 +321,20 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
   check(`${scenario}: computed body and H1 use intended local families`, state.fonts.body.includes('Bai Jamjuree') && state.fonts.h1.includes('IBM Plex Sans Thai Looped'), `${state.fonts.body} / ${state.fonts.h1}`);
   check(`${scenario}: theme-specific artwork is correct`, state.themeOnlyWrong === 0 && state.themeOnlyRight > 0, `wrong ${state.themeOnlyWrong}, right ${state.themeOnlyRight}`);
   check(`${scenario}: non-lazy images decode`, state.nonLazyImages.every((image) => image.complete && image.naturalWidth > 0), JSON.stringify(state.nonLazyImages.filter((image) => !image.complete || image.naturalWidth <= 0)));
+  check(`${scenario}: approved CityChat favicon loads at its exact dimensions`, state.favicon
+    && state.favicon.href === state.favicon.expected.href
+    && state.favicon.type === state.favicon.expected.mimeType
+    && state.favicon.naturalWidth === state.favicon.expected.intrinsicWidth
+    && state.favicon.naturalHeight === state.favicon.expected.intrinsicHeight,
+  JSON.stringify(state.favicon));
+  check(`${scenario}: gradient highlight renders between CityScan and the civic loop`, state.highlight?.visible
+    && state.highlight.afterProduct
+    && state.highlight.beforeLoop
+    && state.highlight.background === state.highlight.expectedBackground
+    && state.highlight.eyebrowColor === state.highlight.expectedForeground
+    && state.highlight.headingColor === state.highlight.expectedForeground
+    && state.highlight.storyColor === state.highlight.expectedForeground,
+  JSON.stringify(state.highlight));
 
   const stripeWidthsAligned = state.footer.stripeWidths.length === 4
     && Math.max(...state.footer.stripeWidths) - Math.min(...state.footer.stripeWidths) <= 1;
@@ -273,6 +347,24 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
   check(`${scenario}: only intended footer text remains underlined`, state.footer.emailLabelDecoration.includes('underline') && state.footer.policyDecorations.every((value) => value.includes('underline')), JSON.stringify({ email: state.footer.emailLabelDecoration, policy: state.footer.policyDecorations }));
   check(`${scenario}: footer lockup matches reference size and typography`, state.footer.brandImage && Math.abs(state.footer.brandImage.width - 54) <= 1 && Math.abs(state.footer.brandImage.height - 54) <= 1 && state.footer.brandWord?.family.includes('Arvo') && state.footer.brandWord.size === '23px' && state.footer.brandWord.weight === '700', JSON.stringify(state.footer));
   check(`${scenario}: CityScan video is configured to autoplay muted and loop inline`, state.video?.autoplay && state.video.autoplayAttribute && state.video.loop && state.video.muted && state.video.defaultMuted && state.video.playsInline && state.video.controls, JSON.stringify(state.video));
+  const portraitRatio = state.video ? state.video.expectedIntrinsicWidth / state.video.expectedIntrinsicHeight : 0;
+  const renderedRatio = state.video?.surfaceHeight ? state.video.surfaceWidth / state.video.surfaceHeight : 0;
+  check(`${scenario}: CityScan uses its declared portrait dimensions`, state.video
+    && state.video.widthAttribute === state.video.expectedIntrinsicWidth
+    && state.video.heightAttribute === state.video.expectedIntrinsicHeight
+    && (!state.video.intrinsicWidth || (state.video.intrinsicWidth === state.video.expectedIntrinsicWidth && state.video.intrinsicHeight === state.video.expectedIntrinsicHeight)),
+  JSON.stringify(state.video));
+  check(`${scenario}: portrait media stays practical without cropping`, state.video
+    && state.video.frameWidth > 0
+    && state.video.frameWidth <= 405
+    && state.video.surfaceWidth > 0
+    && state.video.surfaceHeight > state.video.surfaceWidth
+    && Math.abs(renderedRatio - portraitRatio) <= 0.012,
+  JSON.stringify({ portraitRatio, renderedRatio, video: state.video }));
+  check(`${scenario}: CityScan copy and media follow the responsive reading order`, desktop
+    ? state.video.mediaLeft < state.video.copyLeft && state.video.copyLeft >= state.video.mediaLeft + state.video.surfaceWidth - 1
+    : state.video.mediaTop >= state.video.copyBottom - 1,
+  JSON.stringify(state.video));
   check(`${scenario}: tested interactive targets are at least 44px tall`, state.controls.every((control) => control.height >= 43.5), JSON.stringify(state.controls.filter((control) => control.height < 43.5)));
   check(`${scenario}: visible icon ligatures use the local icon face without text-width leakage`, state.icons.length > 0 && state.icons.every((icon) => icon.family.includes('Material Symbols Rounded') && icon.width <= 48), JSON.stringify(state.icons.filter((icon) => !icon.family.includes('Material Symbols Rounded') || icon.width > 48)));
 
@@ -501,8 +593,14 @@ try {
   const matrix = [
     { name: 'desktop light', viewport: { width: 1440, height: 1000 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: true },
     { name: 'desktop dark', viewport: { width: 1440, height: 1000 }, preference: 'dark', expectedTheme: 'dark', colorScheme: 'light', desktop: true },
+    { name: 'desktop 1280', viewport: { width: 1280, height: 800 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: true },
+    { name: 'desktop 1080', viewport: { width: 1080, height: 800 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: true },
+    { name: 'breakpoint 900', viewport: { width: 900, height: 900 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: false },
     { name: 'tablet light', viewport: { width: 768, height: 1024 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: false },
+    { name: 'compact 600', viewport: { width: 600, height: 900 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: false },
     { name: 'mobile light', viewport: { width: 390, height: 844 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: false },
+    { name: 'mobile 320', viewport: { width: 320, height: 700 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: false },
+    { name: 'short landscape', viewport: { width: 900, height: 600 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: false },
   ];
   for (const scenario of matrix) await runMatrixScenario(scenario);
   await runInteractions();
@@ -522,5 +620,5 @@ if (failures.length > 0) {
   failures.forEach((failure) => console.error(`- ${failure}`));
   process.exitCode = 1;
 } else {
-  console.log(`CityChat rendered validation passed (${checks} assertions across 9 browser scenarios).`);
+  console.log(`CityChat rendered validation passed (${checks} assertions across 15 browser scenarios).`);
 }

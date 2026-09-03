@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#F6F7F3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#11191D" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://montri-th.github.io/CityChat/">
+<link rel="icon" type="image/png" href="./assets/identity/citychat-favicon-3b7439f6.png">
 <title>CityChat — แพลตฟอร์มข้อมูลเมืองสำหรับ อปท.</title>
 <script>
 (() => {
@@ -164,13 +165,24 @@
 <figure data-approach="peer_group" style="margin:0;background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);overflow:hidden"><img src="./assets/screen-hydrants.png" alt="หน้าจอชั้นข้อมูลหัวดับเพลิง ชุมชนบางเป้ง เทศบาลเมืองแสนสุข" loading="lazy" style="aspect-ratio:1900/895;object-fit:cover;width:100%"><figcaption style="padding:var(--space-4) var(--space-5);display:grid;gap:4px"><span style="font-size:1rem;font-weight:600;display:flex;align-items:center;gap:8px"><span class="ls-icon" aria-hidden="true" style="font-size:22px;color:var(--interaction-accent)">fire_hydrant</span>หัวดับเพลิง</span><span style="font-size:.9375rem;line-height:1.5;color:var(--text-secondary)">69 จุดจากทะเบียนงานป้องกันฯ — ระบบบอกชัดว่าเป็นตำแหน่งที่ตั้ง ไม่ใช่สถานะการใช้งานจริง</span></figcaption></figure>
 <figure data-approach="peer_group" style="margin:0;background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);overflow:hidden"><img src="./assets/screen-lighting.png" alt="หน้าจอชั้นข้อมูลไฟส่องสว่าง ชุมชนวัดแสนสุข เทศบาลเมืองแสนสุข" loading="lazy" style="aspect-ratio:1900/895;object-fit:cover;width:100%"><figcaption style="padding:var(--space-4) var(--space-5);display:grid;gap:4px"><span style="font-size:1rem;font-weight:600;display:flex;align-items:center;gap:8px"><span class="ls-icon" aria-hidden="true" style="font-size:22px;color:var(--interaction-accent)">light</span>ไฟส่องสว่าง</span><span style="font-size:.9375rem;line-height:1.5;color:var(--text-secondary)">เสาไฟ 398 ต้น โคมไฟ 450 ดวงในชุมชนวัดแสนสุข — หนึ่งต้นคือหนึ่งจุดที่ต้องเข้าบำรุงรักษา</span></figcaption></figure>
 </div>
-<div data-approach-sequence="" style="display:grid;grid-template-columns:1.1fr .9fr;gap:var(--space-6);align-items:center;margin-top:var(--space-7)">
-<div data-approach="paired_inline" data-approach-from="inline-start" style="background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);overflow:hidden"><video data-cc-video="" src="./assets/cityscan-demo.mp4" controls autoplay loop muted playsinline preload="metadata" style="width:100%;aspect-ratio:16/9;background:var(--surface-soft)"></video><div data-video-fallback hidden style="aspect-ratio:16/9;place-content:center;gap:var(--space-2);text-align:center;padding:var(--space-5);background:var(--surface-soft)"><span class="ls-icon" aria-hidden="true" style="font-size:36px;color:var(--text-metadata);justify-self:center">videocam_off</span><p style="margin:0;font-size:.9375rem;color:var(--text-secondary)">เบราว์เซอร์นี้เล่นไฟล์วิดีโอตัวอย่างไม่ได้</p><a href="./assets/cityscan-demo.mp4" download style="font-size:.9375rem;font-weight:600">ดาวน์โหลดวิดีโอ CityScan (MP4)</a></div></div>
-<div data-approach="paired_inline" data-approach-from="inline-end">
+<div class="cityscan-demo" data-approach-sequence="">
+<div class="cityscan-demo__copy" data-approach="paired_inline" data-approach-from="inline-end">
 <p style="margin:0 0 var(--space-3);font-family:var(--font-technical-th);font-size:.8125rem;color:var(--text-metadata);display:flex;align-items:center;gap:6px"><span class="ls-icon" aria-hidden="true" style="font-size:18px">directions_car</span>CityScan · ตัวอย่างวิดีโอ</p>
 <h3 style="margin:0;font-family:var(--font-display-th);font-size:1.5rem;font-weight:700;line-height:1.25;color:var(--citychat-heading)">เก็บข้อมูลจากถนนจริง ให้ทะเบียนของเมืองทันปัจจุบัน</h3>
 <p style="margin:var(--space-3) 0 0;font-size:1.0625rem;line-height:1.62;color:var(--text-secondary);text-wrap:pretty">CityScan คือขั้นสำรวจภาคสนามของ CityMETER — บันทึกตำแหน่งและสภาพทรัพย์สินของเมืองระหว่างเดินทางในพื้นที่ แล้วส่งเข้าทะเบียนเดียวกับที่เจ้าหน้าที่เห็นบนหน้าจอด้านบน ทำให้ข้อมูลที่ อปท. ใช้ตัดสินใจไม่หยุดอยู่ที่วันที่ส่งออกครั้งล่าสุด</p>
 </div>
+<div class="cityscan-demo__media" data-approach="paired_inline" data-approach-from="inline-start">
+<div class="cityscan-demo__frame"><video class="cityscan-demo__video" data-cc-video="" src="./assets/cityscan-demo.mp4" width="1280" height="2276" controls autoplay loop muted playsinline preload="metadata"></video><div class="cityscan-demo__fallback" data-video-fallback hidden><span class="ls-icon" aria-hidden="true" style="font-size:36px;color:var(--text-metadata);justify-self:center">videocam_off</span><p style="margin:0;font-size:.9375rem;color:var(--text-secondary)">เบราว์เซอร์นี้เล่นไฟล์วิดีโอตัวอย่างไม่ได้</p><a href="./assets/cityscan-demo.mp4" download style="font-size:.9375rem;font-weight:600">ดาวน์โหลดวิดีโอ CityScan (MP4)</a></div></div>
+</div>
+</div>
+</section>
+<section class="city-loop-banner" aria-labelledby="city-loop-banner-title">
+<div class="city-loop-banner__inner" data-approach="section_opener">
+<div>
+<p class="city-loop-banner__eyebrow">จากถนน กลับไปช่วยคนในพื้นที่</p>
+<h2 id="city-loop-banner-title">ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ</h2>
+</div>
+<p class="city-loop-banner__story"><strong>CityScan</strong> เก็บสิ่งที่พบ · <strong>CityMETER</strong> รวมให้เจ้าหน้าที่เห็นภาพเดียวกัน · <strong>CityChat</strong> พาเรื่องไปต่อกับคนในพื้นที่</p>
 </div>
 </section>
 <section id="loop" style="max-width:var(--container-default);margin:0 auto;padding:var(--space-9) var(--gutter-desktop);border-top:1px solid var(--border-hairline)">

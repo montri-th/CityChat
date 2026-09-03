@@ -147,6 +147,9 @@ function assertLandingText(source, label) {
   if (!source.includes(`<link rel="canonical" href="${config.artifact.canonicalUrl}">`)) {
     throw new Error(`${label} canonical URL does not match the release config.`);
   }
+  if (!source.includes(`<link rel="icon" type="${config.identity.favicon.mimeType}" href="${config.identity.favicon.href}">`)) {
+    throw new Error(`${label} does not declare the approved CityChat favicon.`);
+  }
   for (const { text, count } of config.markup.requiredText) {
     const actual = occurrences(source, text);
     if (actual !== count) throw new Error(`${label} required text count mismatch for “${text}”: expected ${count}, received ${actual}.`);
@@ -174,6 +177,13 @@ function assertLandingText(source, label) {
   }
   if (!/<video\b(?=[^>]*\bdata-cc-video(?:\s*=|\s|>))(?=[^>]*\bsrc=["']\.\/assets\/cityscan-demo\.mp4["'])(?=[^>]*\bcontrols(?:\s|>))(?=[^>]*\bautoplay(?:\s|>))(?=[^>]*\bloop(?:\s|>))(?=[^>]*\bmuted(?:\s|>))(?=[^>]*\bplaysinline(?:\s|>))[^>]*>/i.test(source)) {
     throw new Error(`${label} CityScan video is not configured for muted inline autoplay and looping.`);
+  }
+  const video = tags('video', source).find((attrs) => attrs.has('data-cc-video'));
+  if (!video || Number(video.get('width')) !== config.media.cityscan.intrinsicWidth || Number(video.get('height')) !== config.media.cityscan.intrinsicHeight) {
+    throw new Error(`${label} CityScan video does not preserve its exact portrait dimensions.`);
+  }
+  if (!source.includes('class="city-loop-banner"') || !source.includes('ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ')) {
+    throw new Error(`${label} is missing the approved mid-page CityChat highlight.`);
   }
   if (!/<nav\b[^>]*class=["'][^"']*\bsocial-links\b[^"']*["'][^>]*>[\s\S]*?<svg\b[^>]*class=["'][^"']*\bsocial-icon\b[^"']*["'][^>]*aria-hidden=["']true["'][^>]*>[\s\S]*?<span\b[^>]*class=["'][^"']*\bsocial-link__label\b[^"']*\bvisually-hidden\b[^"']*["'][^>]*>/i.test(source)) {
     throw new Error(`${label} social profile links are not icon-only with accessible labels.`);

@@ -47,6 +47,14 @@ function sha256(buffer) {
   return createHash('sha256').update(buffer).digest('hex');
 }
 
+function inspectPng(buffer) {
+  const signature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
+  if (buffer.length < 24 || !buffer.subarray(0, 8).equals(signature) || buffer.toString('ascii', 12, 16) !== 'IHDR') {
+    return { valid: false, width: 0, height: 0 };
+  }
+  return { valid: true, width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+}
+
 function inspectTopLevelMp4(buffer) {
   const boxes = [];
   let offset = 0;
@@ -182,6 +190,54 @@ check('title identifies CityChat', /<title>[^<]*CityChat[^<]*<\/title>/i.test(ht
 const escapedCanonical = config.artifact.canonicalUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 check('canonical tag is exact', new RegExp(`<link\\b(?=[^>]*\\brel=["']canonical["'])(?=[^>]*\\bhref=["']${escapedCanonical}["'])[^>]*>`, 'i').test(html));
 
+const faviconLinks = tags('link').filter(({ attrs }) => (attrs.get('rel') || '').toLowerCase().split(/\s+/).includes('icon'));
+check('page declares exactly one favicon', faviconLinks.length === 1, `found ${faviconLinks.length}`);
+if (faviconLinks.length === 1) {
+  check('favicon URL is exact', faviconLinks[0].attrs.get('href') === config.identity.favicon.href);
+  check('favicon MIME type is exact', faviconLinks[0].attrs.get('type') === config.identity.favicon.mimeType);
+}
+
+const faviconPath = resolveDeploymentPath(safeRelativePath(config.identity.favicon.path, 'favicon path'));
+check('favicon file exists', existsSync(faviconPath));
+if (existsSync(faviconPath)) {
+  const faviconBytes = readFileSync(faviconPath);
+  const png = inspectPng(faviconBytes);
+  check('favicon is a valid PNG with exact intrinsic dimensions', png.valid
+    && png.width === config.identity.favicon.intrinsicWidth
+    && png.height === config.identity.favicon.intrinsicHeight,
+  JSON.stringify(png));
+  check('favicon byte count is exact', faviconBytes.byteLength === config.identity.favicon.bytes, `received ${faviconBytes.byteLength}`);
+  check('favicon content hash is exact', sha256(faviconBytes) === config.identity.favicon.sha256);
+}
+
+const identityManifestPath = resolveDeploymentPath(safeRelativePath(config.identity.manifest, 'identity manifest path'));
+check('current identity manifest exists', existsSync(identityManifestPath));
+if (existsSync(identityManifestPath)) {
+  const identityManifest = JSON.parse(readFileSync(identityManifestPath, 'utf8'));
+  const asset = identityManifest.assets?.find(({ path: assetPath }) => assetPath === config.identity.favicon.path);
+  const approval = identityManifest.roleApprovals?.find(({ assetId, role }) => assetId === asset?.assetId && role === config.identity.favicon.approvedRole);
+  check('identity manifest is bound to this exact release', identityManifest.artifactBuildId === config.artifact.buildId
+    && identityManifest.canonicalUrl === config.artifact.canonicalUrl);
+  check('identity manifest attests the exact favicon bytes', Boolean(asset)
+    && asset.mimeType === config.identity.favicon.mimeType
+    && asset.intrinsicWidth === config.identity.favicon.intrinsicWidth
+    && asset.intrinsicHeight === config.identity.favicon.intrinsicHeight
+    && asset.bytes === config.identity.favicon.bytes
+    && asset.sha256 === config.identity.favicon.sha256
+    && asset.transparentCanvas === true);
+  check('favicon approval is browser-tab only and build-bound', Boolean(approval)
+    && approval.approvalState === 'approved'
+    && approval.approvedContentHash === config.identity.favicon.sha256
+    && approval.artifactBinding?.mode === 'exact_build'
+    && approval.artifactBinding.refs.includes(config.artifact.buildId)
+    && approval.artifactBinding.refs.includes(config.artifact.canonicalUrl)
+    && approval.transformPolicy === 'exact_embedded_bytes'
+    && approval.cropPolicy === 'none'
+    && approval.recolorPolicy === 'none');
+  const approvedRoles = (identityManifest.roleApprovals || []).filter(({ approvalState }) => approvalState === 'approved').map(({ role }) => role);
+  check('current identity manifest grants no broader role', approvedRoles.length === 1 && approvedRoles[0] === 'browser_tab_favicon', approvedRoles.join(', '));
+}
+
 const robotsMeta = tags('meta').find(({ attrs }) => attrs.get('name')?.toLowerCase() === 'robots');
 check('page-level robots meta preserves noindex', robotsMeta?.attrs.get('content') === config.publication.robotsMeta);
 const robotsPath = resolveDeploymentPath('robots.txt');
@@ -245,6 +301,9 @@ check('CityScan has exactly one video element', cityscanVideos.length === 1, `fo
 if (cityscanVideos.length === 1) {
   const attrs = cityscanVideos[0].attrs;
   check('CityScan video source is exact', attrs.get('src') === config.media.cityscan.src);
+  check('CityScan video declares its portrait dimensions', Number(attrs.get('width')) === config.media.cityscan.intrinsicWidth
+    && Number(attrs.get('height')) === config.media.cityscan.intrinsicHeight,
+  `${attrs.get('width')}×${attrs.get('height')}`);
   for (const attribute of ['autoplay', 'loop', 'muted', 'playsinline', 'controls']) {
     check(`CityScan video declares ${attribute}`, attrs.has(attribute));
   }
@@ -357,6 +416,15 @@ check('reduced-motion rules remove approach motion', /prefers-reduced-motion\s*:
 check('reduced-motion rules disable smooth scrolling', /prefers-reduced-motion\s*:\s*reduce[\s\S]{0,1200}scroll-behavior\s*:\s*auto/i.test(css));
 check('no-JS mode hides the menu control', /html:not\(\.has-js\)\s+#menu-toggle\s*\{[^}]*display\s*:\s*none/i.test(css));
 check('no-JS mode provides a visible video outcome', /html:not\(\.has-js\)[^{]*(?:\[data-video-fallback\]|video)[^{]*\{[^}]*(?:display\s*:\s*(?:grid|block)\s*!important|display\s*:\s*none)/i.test(css));
+check('CityScan layout uses the source portrait ratio', new RegExp(`aspect-ratio\\s*:\\s*${config.media.cityscan.intrinsicWidth}\\s*\\/\\s*${config.media.cityscan.intrinsicHeight}`, 'i').test(css)
+  && !/cityscan-demo[^}]*aspect-ratio\s*:\s*16\s*\/\s*9/i.test(css));
+check('CityScan layout reflows at the compact breakpoint', /@media\s*\(max-width\s*:\s*900px\)[\s\S]{0,2400}\.cityscan-demo\s*\{[^}]*grid-template-areas\s*:\s*["']copy["']\s+["']media["']/i.test(css));
+check('short landscape viewports cap the portrait video', /@media\s*\(max-height\s*:\s*640px\)\s*and\s*\(orientation\s*:\s*landscape\)[\s\S]{0,800}\.cityscan-demo__frame\s*\{[^}]*44svh/i.test(css));
+check('mid-page highlight uses the CityChat product gradient token', occurrences(html, 'class="city-loop-banner"') === 1
+  && html.includes('ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ')
+  && /\.city-loop-banner\s*\{[^}]*background\s*:\s*var\(--product-citychat-gradient\)/i.test(css)
+  && /\.city-loop-banner__eyebrow\s*\{[^}]*color\s*:\s*var\(--on-product-citychat\)/i.test(css)
+  && /\.city-loop-banner__story\s*\{[^}]*color\s*:\s*var\(--on-product-citychat\)/i.test(css));
 
 const footerMatch = html.match(/<footer\b([^>]*)>([\s\S]*?)<\/footer>/i);
 const footerAttributes = footerMatch ? attributes(footerMatch[1]) : new Map();

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "2.0",
+  "manifestId": "citychat-identity-citychat-landing-20260903-03",
+  "artifactBuildId": "citychat-landing-20260903-03",
+  "canonicalUrl": "https://montri-th.github.io/CityChat/",
+  "authorityRefs": [
+    "owner-request-2026-09-03",
+    "citychat-favicon-extraction-20260903-01"
+  ],
+  "assets": [
+    {
+      "assetId": "citychat-favicon-png-3b7439f6",
+      "assetFamily": "official_citychat",
+      "path": "assets/identity/citychat-favicon-3b7439f6.png",
+      "mimeType": "image/png",
+      "intrinsicWidth": 250,
+      "intrinsicHeight": 265,
+      "bytes": 7315,
+      "sha256": "3b7439f689fa6172660375e073ce3cbcd967ee2766c9d962522f712468e3b58a",
+      "transparentCanvas": true,
+      "sourceClass": "exact_embedded_brand_asset",
+      "sourceVersion": "citychat-lockup.source.svg#image0_553_8896",
+      "rightsRef": "owner-request-2026-09-03",
+      "receiptRef": "assets/identity/citychat-favicon-3b7439f6.receipt.json"
+    }
+  ],
+  "roleApprovals": [
+    {
+      "approvalId": "CC-ID-ROLE-APP-20260903-FAVICON-01",
+      "assetId": "citychat-favicon-png-3b7439f6",
+      "role": "browser_tab_favicon",
+      "approvalState": "approved",
+      "authorityRef": "owner-request-2026-09-03",
+      "approvalVersion": "1.0",
+      "effectiveAt": "2026-09-03",
+      "expiresAt": null,
+      "approvedContentHash": "3b7439f689fa6172660375e073ce3cbcd967ee2766c9d962522f712468e3b58a",
+      "artifactBinding": {
+        "mode": "exact_build",
+        "refs": [
+          "citychat-landing-20260903-03",
+          "https://montri-th.github.io/CityChat/"
+        ]
+      },
+      "contexts": ["browser_tab"],
+      "themes": ["light", "dark", "system"],
+      "backdrops": ["browser_chrome"],
+      "outputTypes": ["webpage"],
+      "surfaceDecision": "transparent_asset",
+      "themeStrategy": "single_multicolor_asset",
+      "transformPolicy": "exact_embedded_bytes",
+      "cropPolicy": "none",
+      "maskPolicy": "none",
+      "filterPolicy": "none",
+      "recolorPolicy": "none",
+      "animationPolicy": "none",
+      "evidenceRefs": [
+        "assets/identity/citychat-favicon-3b7439f6.receipt.json",
+        "assets/identity/citychat-favicon-3b7439f6.png"
+      ]
+    }
+  ],
+  "omittedRoles": [
+    {"role": "compact_product_mark", "reason": "not approved by this build-scoped request"},
+    {"role": "search_result_favicon", "reason": "page requests noindex and this approval is browser-tab only"},
+    {"role": "apple_touch_icon", "reason": "not approved by this build-scoped request"},
+    {"role": "maskable_app_icon", "reason": "not approved by this build-scoped request"},
+    {"role": "social_preview_identity", "reason": "not approved by this build-scoped request"},
+    {"role": "share_preview_identity", "reason": "not approved by this build-scoped request"},
+    {"role": "splash_identity", "reason": "not approved by this build-scoped request"},
+    {"role": "watermark", "reason": "not approved by this build-scoped request"},
+    {"role": "export_mark", "reason": "not approved by this build-scoped request"}
+  ]
+}

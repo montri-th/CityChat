@@ -3,7 +3,7 @@
   "artifact": {
     "name": "CityChat public landing",
     "product": "citychat",
-    "buildId": "citychat-landing-20260903-02",
+    "buildId": "citychat-landing-20260903-03",
     "pageKind": "product-landing",
     "language": "th",
     "canonicalUrl": "https://montri-th.github.io/CityChat/"
@@ -24,6 +24,9 @@
       "citychat.css",
       "app.js",
       "robots.txt",
+      "assets/identity/citychat-favicon-3b7439f6.png",
+      "assets/identity/citychat-favicon-3b7439f6.receipt.json",
+      "assets/identity/identity-assets.citychat-landing-20260903-03.json",
       "assets/fonts/licenses/arvo-OFL.txt",
       "assets/fonts/licenses/bai-jamjuree-OFL.txt",
       "assets/fonts/licenses/ibm-plex-sans-thai-OFL.txt",
@@ -143,6 +146,8 @@
     "cityscan": {
       "path": "assets/cityscan-demo.mp4",
       "src": "./assets/cityscan-demo.mp4",
+      "intrinsicWidth": 1280,
+      "intrinsicHeight": 2276,
       "autoplay": true,
       "loop": true,
       "muted": true,
@@ -150,7 +155,23 @@
       "controls": true
     }
   },
+  "identity": {
+    "manifest": "assets/identity/identity-assets.citychat-landing-20260903-03.json",
+    "favicon": {
+      "path": "assets/identity/citychat-favicon-3b7439f6.png",
+      "href": "./assets/identity/citychat-favicon-3b7439f6.png",
+      "mimeType": "image/png",
+      "intrinsicWidth": 250,
+      "intrinsicHeight": 265,
+      "bytes": 7315,
+      "sha256": "3b7439f689fa6172660375e073ce3cbcd967ee2766c9d962522f712468e3b58a",
+      "approvedRole": "browser_tab_favicon"
+    }
+  },
   "pinnedInputs": {
+    "assets/identity/citychat-favicon-3b7439f6.png": "3b7439f689fa6172660375e073ce3cbcd967ee2766c9d962522f712468e3b58a",
+    "assets/identity/citychat-favicon-3b7439f6.receipt.json": "2ad25a4e8c2558a9d25f1c7004ae7cf62e4651bd21822a028d83b5beb97b71ac",
+    "assets/identity/identity-assets.citychat-landing-20260903-03.json": "11454d84a61ae81f76dfa7f4aa6ab0ef97786eedc2f9f9659cad9d1c9bdab954",
     "assets/citychat-lockup-dark.png": "032bd864e187598f645d5adb1fadb99c15c9cb9cc0beb5af015203d0709bfa44",
     "assets/citychat-lockup.png": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
     "assets/cityscan-demo.mp4": "9a818a3d24934ae6ff6db4b600952413631db49d40673281499cb6d5c6e22760",
