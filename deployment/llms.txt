@@ -9,6 +9,7 @@ Source basis: owner-supplied CityChat landing handoff; this implementation does 
 Canonical route: https://montri-th.github.io/CityChat/
 
 Primary page: ./index.html
+English page: ./en/index.html
 CityChat stylesheet: ./citychat.css
 Page behavior: ./app.js
 

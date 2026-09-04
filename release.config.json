@@ -13,6 +13,109 @@
     "indexable": false,
     "robotsMeta": "noindex,nofollow,noarchive"
   },
+  "locales": [
+    {
+      "id": "th",
+      "language": "th",
+      "entry": "index.html",
+      "publicPath": "./",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/",
+      "assetPrefix": "./",
+      "highlightText": "ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ",
+      "requiredText": [
+        {
+          "text": "จิรศักดิ์ แก้วเจริญ",
+          "count": 1
+        },
+        {
+          "text": "พรสุดา โมคศิริ",
+          "count": 1
+        },
+        {
+          "text": "แพลตฟอร์มข้อมูลเมืองที่เริ่มจากสิ่งที่ อปท. ของคุณต้องการจริง",
+          "count": 1
+        }
+      ],
+      "forbiddenText": [
+        "นายจิรศักดิ์ แก้วเจริญ",
+        "นางสาวพรสุดา โมคศิริ"
+      ],
+      "languageSwitch": {
+        "target": "en",
+        "href": "./en/",
+        "hreflang": "en",
+        "lang": "en",
+        "text": "EN",
+        "ariaLabel": "Switch to English",
+        "title": "Switch to English",
+        "count": 2
+      },
+      "runtimeLabels": {
+        "themeSystem": "ธีม: ตามระบบ — สลับเป็นสว่าง",
+        "themeLight": "ธีม: สว่าง — สลับเป็นมืด",
+        "themeDark": "ธีม: มืด — สลับเป็นตามระบบ",
+        "menuOpen": "เปิดเมนู",
+        "menuClose": "ปิดเมนู"
+      }
+    },
+    {
+      "id": "en",
+      "language": "en",
+      "entry": "en/index.html",
+      "publicPath": "en/",
+      "canonicalUrl": "https://montri-th.github.io/CityChat/en/",
+      "assetPrefix": "../",
+      "highlightText": "City data should keep moving after it is collected.",
+      "requiredText": [
+        {
+          "text": "Jirasak Kaewjaroen",
+          "count": 1
+        },
+        {
+          "text": "Phonsuda Moksiri",
+          "count": 1
+        },
+        {
+          "text": "A city data platform built around what your local authority actually needs.",
+          "count": 1
+        }
+      ],
+      "forbiddenText": [
+        "Mr. Jirasak Kaewjaroen",
+        "Mr Jirasak Kaewjaroen",
+        "Ms. Phonsuda Moksiri",
+        "Ms Phonsuda Moksiri",
+        "Jirasak Kaewcharoen",
+        "Pornsuda Moksiri",
+        "จิรศักดิ์ แก้วเจริญ",
+        "พรสุดา โมคศิริ",
+        "นายจิรศักดิ์ แก้วเจริญ",
+        "นางสาวพรสุดา โมคศิริ",
+        "แพลตฟอร์มข้อมูลเมืองที่เริ่มจากสิ่งที่ อปท. ของคุณต้องการจริง",
+        "ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ",
+        "เหลือที่สำหรับ อปท. อีก 6 แห่งในรอบแรก",
+        "เปิดแผนที่สำนักงาน",
+        "เรื่องราวของพวกเรา"
+      ],
+      "languageSwitch": {
+        "target": "th",
+        "href": "../",
+        "hreflang": "th",
+        "lang": "th",
+        "text": "TH",
+        "ariaLabel": "เปลี่ยนเป็นภาษาไทย",
+        "title": "เปลี่ยนเป็นภาษาไทย",
+        "count": 2
+      },
+      "runtimeLabels": {
+        "themeSystem": "Theme: System — switch to light",
+        "themeLight": "Theme: Light — switch to dark",
+        "themeDark": "Theme: Dark — switch to system",
+        "menuOpen": "Open menu",
+        "menuClose": "Close menu"
+      }
+    }
+  ],
   "deployment": {
     "root": "deployment",
     "entry": "index.html",
@@ -21,6 +124,7 @@
     "requiredFiles": [
       ".nojekyll",
       "index.html",
+      "en/index.html",
       "citychat.css",
       "app.js",
       "robots.txt",
@@ -133,6 +237,74 @@
         "href": "https://landometer.com/pdpa/showDocVer"
       }
     ],
+    "locales": {
+      "th": {
+        "contact": {
+          "company": "Landometer Co., Ltd.",
+          "address": "23/34-35 Room 4C-4D 4th Fl. The Quarter Bangkok Tower, ถนนตรีมิตร แขวงตลาดน้อย เขตสัมพันธวงศ์ กรุงเทพมหานคร 10100",
+          "map": {
+            "text": "เปิดแผนที่สำนักงาน",
+            "href": "https://maps.app.goo.gl/8DQPVMtPdxWMBoZU9"
+          },
+          "email": {
+            "text": "hello@landometer.com",
+            "href": "mailto:hello@landometer.com"
+          }
+        },
+        "links": [
+          {
+            "text": "เรื่องราวของพวกเรา",
+            "href": "https://montri-th.github.io/rebuild02/#dna"
+          },
+          {
+            "text": "Showcases",
+            "href": "https://montri-th.github.io/rebuild02/#showcases"
+          },
+          {
+            "text": "Privacy & Terms",
+            "href": "https://landometer.com/pdpa/showDocVer"
+          }
+        ],
+        "labels": {
+          "socialNav": "ช่องทางสังคมของ Landometer",
+          "footerNav": "ลิงก์ท้ายหน้า",
+          "brand": "Landometer — กลับไปด้านบน"
+        }
+      },
+      "en": {
+        "contact": {
+          "company": "Landometer Co., Ltd.",
+          "address": "23/34-35 Room 4C-4D, 4th Floor, The Quarter Bangkok Tower, Tri Mit Road, Talat Noi, Samphanthawong, Bangkok 10100, Thailand",
+          "map": {
+            "text": "Open office map",
+            "href": "https://maps.app.goo.gl/8DQPVMtPdxWMBoZU9"
+          },
+          "email": {
+            "text": "hello@landometer.com",
+            "href": "mailto:hello@landometer.com"
+          }
+        },
+        "links": [
+          {
+            "text": "Our story",
+            "href": "https://montri-th.github.io/rebuild02/Landometer-Home-EN.dc.html#dna"
+          },
+          {
+            "text": "Showcases",
+            "href": "https://montri-th.github.io/rebuild02/Landometer-Home-EN.dc.html#showcases"
+          },
+          {
+            "text": "Privacy & Terms",
+            "href": "https://landometer.com/pdpa/showDocVer"
+          }
+        ],
+        "labels": {
+          "socialNav": "Landometer social profiles",
+          "footerNav": "Footer links",
+          "brand": "Landometer — back to top"
+        }
+      }
+    },
     "bottomClass": "footer-bottom",
     "bottomInnerClass": "footer-bottom__inner",
     "identityClass": "footer-identity",

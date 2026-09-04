@@ -12,6 +12,22 @@
   const motionPreference = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   const themeOrder = ['system', 'light', 'dark'];
   const railIds = ['offer', 'partners', 'product', 'loop', 'record', 'contact'];
+  const isEnglish = root.lang.toLowerCase().startsWith('en');
+  const interfaceLabels = isEnglish ? {
+    theme: {
+      system: 'Theme: System — switch to light',
+      light: 'Theme: Light — switch to dark',
+      dark: 'Theme: Dark — switch to system'
+    },
+    menu: { open: 'Open menu', close: 'Close menu' }
+  } : {
+    theme: {
+      system: 'ธีม: ตามระบบ — สลับเป็นสว่าง',
+      light: 'ธีม: สว่าง — สลับเป็นมืด',
+      dark: 'ธีม: มืด — สลับเป็นตามระบบ'
+    },
+    menu: { open: 'เปิดเมนู', close: 'ปิดเมนู' }
+  };
   let themePreference = themeOrder.includes(root.dataset.themePreference) ? root.dataset.themePreference : 'system';
   let menuOpen = false;
 
@@ -23,12 +39,7 @@
   const updateThemeButton = () => {
     if (!themeButton) return;
     const resolved = resolvedTheme(themePreference);
-    const labels = {
-      system: 'ธีม: ตามระบบ — สลับเป็นสว่าง',
-      light: 'ธีม: สว่าง — สลับเป็นมืด',
-      dark: 'ธีม: มืด — สลับเป็นตามระบบ'
-    };
-    const label = labels[themePreference];
+    const label = interfaceLabels.theme[themePreference];
     themeButton.setAttribute('aria-label', label);
     themeButton.title = label;
     const icon = themeButton.querySelector('.ls-icon');
@@ -60,7 +71,7 @@
     menu.hidden = !open;
     menuOverlay.hidden = !open;
     menuButton.setAttribute('aria-expanded', String(open));
-    menuButton.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
+    menuButton.setAttribute('aria-label', open ? interfaceLabels.menu.close : interfaceLabels.menu.open);
     const icon = menuButton.querySelector('.ls-icon');
     if (icon) icon.textContent = open ? 'close' : 'menu';
     if (open) {
@@ -93,7 +104,7 @@
     const y = window.scrollY;
     const delta = y - lastY;
     lastY = y;
-    if (y < 24 || menuOpen) nav.dataset.calm = 'off';
+    if (y < 24 || menuOpen || nav.matches(':hover') || nav.matches(':focus-within')) nav.dataset.calm = 'off';
     else if (delta > 4) nav.dataset.calm = 'on';
     else if (delta < -4) nav.dataset.calm = 'off';
   };

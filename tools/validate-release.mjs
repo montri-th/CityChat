@@ -173,14 +173,163 @@ function addRuntimeResource(rawValue, fromRelativePath, context) {
   if (!relativePath) return;
   if (!runtimeResources.has(relativePath)) {
     runtimeResources.add(relativePath);
-    if (/\.css$/i.test(relativePath)) stylesheetQueue.push(relativePath);
+    if (/\.(?:css|svg)$/i.test(relativePath)) stylesheetQueue.push(relativePath);
   }
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function localeRouteEntry(publicPath) {
+  if (publicPath === './') return 'index.html';
+  return `${publicPath}index.html`;
+}
+
+function navigationTarget(rawValue, fromRelativePath) {
+  const value = rawValue.trim();
+  if (!value || value.startsWith('#') || /^(?:https?:|mailto:|tel:|data:|blob:)/i.test(value)) return null;
+  let decoded;
+  try {
+    decoded = decodeURIComponent(value.split(/[?#]/, 1)[0]);
+  } catch {
+    return null;
+  }
+  if (!decoded || decoded.includes('\\') || decoded.startsWith('/')) return null;
+  let target = path.posix.normalize(path.posix.join(path.posix.dirname(fromRelativePath), decoded));
+  if (decoded.endsWith('/')) target = path.posix.join(target, 'index.html');
+  if (target === '..' || target.startsWith('../') || path.posix.isAbsolute(target)) return null;
+  return target.replace(/^\.\//, '');
+}
+
+function footerForLocale(locale) {
+  const localized = config.footer.locales?.[locale.id] || {};
+  return {
+    contact: {
+      ...config.footer.contact,
+      ...(localized.contact || {}),
+      map: { ...config.footer.contact.map, ...(localized.contact?.map || {}) },
+      email: { ...config.footer.contact.email, ...(localized.contact?.email || {}) },
+    },
+    links: localized.links || config.footer.links,
+    labels: localized.labels || {},
+  };
+}
+
+function idSequence(source) {
+  return [...source.matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)].map((match) => match[1]);
+}
+
+function idElementSignatures(source) {
+  const signatures = [];
+  for (const match of source.matchAll(/<([a-z][\w:-]*)\b([^>]*)>/gi)) {
+    const attrs = attributes(match[2]);
+    if (!attrs.has('id')) continue;
+    signatures.push({
+      id: attrs.get('id'),
+      tag: match[1].toLowerCase(),
+      role: attrs.get('role') || '',
+      ariaControls: attrs.get('aria-controls') || '',
+      ariaLabelledBy: attrs.get('aria-labelledby') || '',
+    });
+  }
+  return signatures;
+}
+
+const localePages = (Array.isArray(config.locales) ? config.locales : []).map((locale) => {
+  const entry = safeRelativePath(locale.entry, `locale ${locale.id} entry`);
+  return { ...locale, entry, html: readFileSync(resolveDeploymentPath(entry), 'utf8') };
+});
+const localeById = new Map(localePages.map((locale) => [locale.id, locale]));
+const localeEntryPaths = new Set(localePages.map((locale) => locale.entry));
+const primaryLocale = localePages.find((locale) => locale.entry === entryRelativePath);
+const englishLocale = localeById.get('en');
+const englishHtml = englishLocale?.html || '';
+
+function isLocaleNavigation(locale, href) {
+  if (!locale?.languageSwitch || href !== locale.languageSwitch.href) return false;
+  const targetLocale = localeById.get(locale.languageSwitch.target);
+  return Boolean(targetLocale && navigationTarget(href, locale.entry) === targetLocale.entry);
 }
 
 check('release config schema is CityChat landing v2', config.schemaVersion === '2.0' && config.artifact?.product === 'citychat' && config.artifact?.pageKind === 'product-landing');
 check('publication remains public but non-indexable', config.publication?.visibility === 'public' && config.publication?.indexable === false);
 check('configured robots policy is exact', config.publication?.robotsMeta === 'noindex,nofollow,noarchive');
 check('canonical URL is the GitHub Pages project route', config.artifact?.canonicalUrl === 'https://montri-th.github.io/CityChat/');
+check('approved release build identity remains unchanged', config.artifact?.buildId === 'citychat-landing-20260903-03');
+check('release declares exactly the Thai and English locales', localePages.length === 2
+  && localePages.map(({ id }) => id).sort().join(',') === 'en,th');
+check('locale IDs are unique', localeById.size === localePages.length);
+check('locale entries are unique', localeEntryPaths.size === localePages.length);
+check('primary locale matches the existing artifact contract', primaryLocale?.id === 'th'
+  && primaryLocale.language === config.artifact.language
+  && primaryLocale.canonicalUrl === config.artifact.canonicalUrl);
+check('Thai locale preserves every existing copy gate', JSON.stringify(primaryLocale?.requiredText) === JSON.stringify(config.markup.requiredText)
+  && JSON.stringify(primaryLocale?.forbiddenText) === JSON.stringify(config.markup.forbiddenText));
+for (const locale of localePages) {
+  check(`${locale.id} locale has a safe clean public route`, typeof locale.publicPath === 'string'
+    && /^(?:\.\/|[a-z0-9][a-z0-9/-]*\/)$/.test(locale.publicPath)
+    && localeRouteEntry(locale.publicPath) === locale.entry,
+  `${locale.publicPath} -> ${locale.entry}`);
+  check(`${locale.id} locale entry is required for deployment`, config.deployment.requiredFiles.includes(locale.entry));
+  check(`${locale.id} locale declares a project-relative asset prefix`, typeof locale.assetPrefix === 'string'
+    && /^(?:\.\/|(?:\.\.\/)+)$/.test(locale.assetPrefix));
+  check(`${locale.id} locale has required and forbidden copy contracts`, Array.isArray(locale.requiredText)
+    && locale.requiredText.length > 0
+    && locale.requiredText.every(({ text, count }) => typeof text === 'string' && text.length > 0 && Number.isSafeInteger(count) && count > 0)
+    && Array.isArray(locale.forbiddenText)
+    && locale.forbiddenText.length > 0
+    && locale.forbiddenText.every((text) => typeof text === 'string' && text.length > 0)
+    && typeof locale.highlightText === 'string'
+    && locale.highlightText.length > 0
+    && locale.runtimeLabels
+    && ['themeSystem', 'themeLight', 'themeDark', 'menuOpen', 'menuClose'].every((key) => typeof locale.runtimeLabels[key] === 'string' && locale.runtimeLabels[key].length > 0));
+  const targetLocale = localeById.get(locale.languageSwitch?.target);
+  check(`${locale.id} locale switch targets the reciprocal locale`, Boolean(targetLocale)
+    && locale.languageSwitch.hreflang === targetLocale.language
+    && locale.languageSwitch.lang === targetLocale.language
+    && navigationTarget(locale.languageSwitch.href, locale.entry) === targetLocale.entry
+    && locale.languageSwitch.count === 2);
+  const localizedFooter = config.footer.locales?.[locale.id];
+  check(`${locale.id} locale has a complete footer value contract`, Boolean(localizedFooter?.contact?.company
+    && localizedFooter.contact.address
+    && localizedFooter.contact.map?.text
+    && localizedFooter.contact.map?.href
+    && localizedFooter.contact.email?.text
+    && localizedFooter.contact.email?.href
+    && localizedFooter.labels?.socialNav
+    && localizedFooter.labels?.footerNav
+    && localizedFooter.labels?.brand
+    && localizedFooter.links?.length === config.footer.links.length));
+}
+if (primaryLocale) {
+  for (const locale of localePages) {
+    let expectedCanonical = '';
+    try {
+      expectedCanonical = new URL(locale.publicPath, primaryLocale.canonicalUrl).href;
+    } catch {
+      // The route check above records malformed values without obscuring the rest of the report.
+    }
+    check(`${locale.id} canonical URL matches its clean public route`, locale.canonicalUrl === expectedCanonical,
+      `expected ${expectedCanonical || '(invalid route)'}, received ${locale.canonicalUrl}`);
+  }
+}
+for (const requiredFile of config.deployment.requiredFiles) {
+  let requiredPath;
+  try {
+    requiredPath = safeRelativePath(requiredFile, 'required deployment file');
+  } catch (error) {
+    check(`required deployment path is safe: ${requiredFile}`, false, error.message);
+    continue;
+  }
+  const absolutePath = resolveDeploymentPath(requiredPath);
+  const exists = existsSync(absolutePath);
+  check(`required deployment file exists: ${requiredPath}`, exists);
+  if (exists) {
+    const stat = lstatSync(absolutePath);
+    check(`required deployment file is a regular non-symlink: ${requiredPath}`, stat.isFile() && !stat.isSymbolicLink());
+  }
+}
 
 check('HTML has a doctype', /^<!doctype html>/i.test(html.trimStart()));
 check('document language is Thai', /<html\b[^>]*\blang=["']th["']/i.test(html));
@@ -195,6 +344,42 @@ check('page declares exactly one favicon', faviconLinks.length === 1, `found ${f
 if (faviconLinks.length === 1) {
   check('favicon URL is exact', faviconLinks[0].attrs.get('href') === config.identity.favicon.href);
   check('favicon MIME type is exact', faviconLinks[0].attrs.get('type') === config.identity.favicon.mimeType);
+}
+
+for (const locale of localePages) {
+  const label = `${locale.id} page`;
+  const pageLinks = tags('link', locale.html);
+  const canonicalLinks = pageLinks.filter(({ attrs }) => (attrs.get('rel') || '').toLowerCase().split(/\s+/).includes('canonical'));
+  check(`${label} declares exactly one canonical URL`, canonicalLinks.length === 1
+    && canonicalLinks[0].attrs.get('href') === locale.canonicalUrl,
+  `found ${canonicalLinks.length}`);
+
+  const alternateLinks = pageLinks.filter(({ attrs }) => (attrs.get('rel') || '').toLowerCase().split(/\s+/).includes('alternate'));
+  const expectedAlternates = [
+    ...localePages.map((alternate) => ({ language: alternate.language, href: alternate.canonicalUrl })),
+    { language: 'x-default', href: primaryLocale?.canonicalUrl },
+  ];
+  check(`${label} declares only the reciprocal hreflang set`, alternateLinks.length === expectedAlternates.length
+    && expectedAlternates.every(({ language, href }) => alternateLinks.filter(({ attrs }) => attrs.get('hreflang') === language && attrs.get('href') === href).length === 1),
+  alternateLinks.map(({ attrs }) => `${attrs.get('hreflang')}:${attrs.get('href')}`).join(', '));
+  check(`${label} has no base URL that can break nested assets`, tags('base', locale.html).length === 0);
+
+  const expectedFaviconHref = `${locale.assetPrefix}${config.identity.favicon.path}`;
+  const localeFavicons = pageLinks.filter(({ attrs }) => (attrs.get('rel') || '').toLowerCase().split(/\s+/).includes('icon'));
+  check(`${label} uses the approved favicon through its locale asset prefix`, localeFavicons.length === 1
+    && localeFavicons[0].attrs.get('href') === expectedFaviconHref
+    && localeFavicons[0].attrs.get('type') === config.identity.favicon.mimeType);
+
+  const languageSwitch = locale.languageSwitch;
+  const switchAnchors = pairedTags('a', locale.html).filter(({ attrs, text }) => attrs.get('href') === languageSwitch.href
+    && attrs.get('hreflang') === languageSwitch.hreflang
+    && attrs.get('lang') === languageSwitch.lang
+    && attrs.get('aria-label') === languageSwitch.ariaLabel
+    && attrs.get('title') === languageSwitch.title
+    && text === languageSwitch.text);
+  check(`${label} exposes an exact language switch in JS and no-JS navigation`, switchAnchors.length === languageSwitch.count,
+    `found ${switchAnchors.length}`);
+  check(`${label} language switch resolves to the configured locale entry`, isLocaleNavigation(locale, languageSwitch.href));
 }
 
 const faviconPath = resolveDeploymentPath(safeRelativePath(config.identity.favicon.path, 'favicon path'));
@@ -269,11 +454,151 @@ for (const text of config.markup.forbiddenText) {
   check(`removed honorific remains absent: ${text}`, !html.includes(text));
 }
 
+function validateAriaReferences(locale, source, ids) {
+  for (const match of source.matchAll(/<([a-z][\w:-]*)\b([^>]*)>/gi)) {
+    const attrs = attributes(match[2]);
+    for (const attribute of ['aria-controls', 'aria-labelledby']) {
+      if (!attrs.has(attribute)) continue;
+      for (const target of attrs.get(attribute).trim().split(/\s+/).filter(Boolean)) {
+        check(`${locale.id} ${attribute} resolves: #${target}`, ids.includes(target), `<${match[1].toLowerCase()}>`);
+      }
+    }
+  }
+}
+
+function validateAndCollectSecondaryLocale(locale) {
+  const source = locale.html;
+  const label = `${locale.id} page`;
+  const ids = idSequence(source);
+  const duplicateLocaleIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
+
+  check(`${label} has a doctype`, /^<!doctype html>/i.test(source.trimStart()));
+  check(`${label} declares its document language`, new RegExp(`<html\\b[^>]*\\blang=["']${escapeRegExp(locale.language)}["']`, 'i').test(source));
+  check(`${label} declares UTF-8`, /<meta\b[^>]*charset=["']?utf-8["']?/i.test(source));
+  check(`${label} has a responsive viewport`, /<meta\b[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*initial-scale=1/i.test(source));
+  check(`${label} title identifies CityChat`, /<title>[^<]*CityChat[^<]*<\/title>/i.test(source));
+  const robots = tags('meta', source).find(({ attrs }) => attrs.get('name')?.toLowerCase() === 'robots');
+  check(`${label} preserves the page-level robots policy`, robots?.attrs.get('content') === config.publication.robotsMeta);
+  check(`${label} has exactly one main element`, tags('main', source).length === 1, `found ${tags('main', source).length}`);
+  check(`${label} has exactly one H1`, tags('h1', source).length === 1, `found ${tags('h1', source).length}`);
+  check(`${label} has exactly one footer`, tags('footer', source).length === 1, `found ${tags('footer', source).length}`);
+  check(`${label} skip link targets main content`, /<a\b[^>]*class=["'][^"']*\bskip-link\b[^"']*["'][^>]*href=["']#main-content["']/i.test(source));
+  check(`${label} IDs are unique`, duplicateLocaleIds.length === 0, duplicateLocaleIds.join(', '));
+  for (const id of [...config.markup.requiredIds, ...config.markup.requiredUiIds]) {
+    check(`${label} required ID #${id} exists exactly once`, ids.filter((candidate) => candidate === id).length === 1);
+  }
+  const requiredLocalePositions = config.markup.requiredIds.map((id) => source.search(new RegExp(`\\bid=["']${escapeRegExp(id)}["']`, 'i')));
+  check(`${label} landing sections appear in configured order`, requiredLocalePositions.every((position, index) => position >= 0 && (index === 0 || position > requiredLocalePositions[index - 1])));
+  for (const { text, count } of locale.requiredText) {
+    const actual = occurrences(source, text);
+    check(`${label} required copy appears ${count}×: ${text}`, actual === count, `found ${actual}`);
+  }
+  for (const text of locale.forbiddenText) {
+    check(`${label} forbidden copy remains absent: ${text}`, !source.includes(text));
+  }
+  check(`${label} contains its localized CityChat highlight exactly once`, occurrences(source, 'class="city-loop-banner"') === 1
+    && occurrences(source, locale.highlightText) === 1);
+  validateAriaReferences(locale, source, ids);
+
+  const inlineLocaleScripts = [...source.matchAll(/<script\b(?![^>]*\bsrc\s*=)([^>]*)>([\s\S]*?)<\/script>/gi)];
+  inlineLocaleScripts.forEach((match, index) => {
+    const type = attributes(match[1]).get('type') || 'text/javascript';
+    if (!/^(?:text\/javascript|application\/javascript|module)$/i.test(type)) return;
+    try {
+      new Script(match[2], { filename: `deployment/${locale.entry}:inline-script-${index + 1}` });
+      check(`${label} inline script ${index + 1} parses`, true);
+    } catch (error) {
+      check(`${label} inline script ${index + 1} parses`, false, error.message);
+    }
+  });
+
+  for (const { attrs, raw } of tags('img', source)) {
+    check(`${label} image has an alt attribute: ${attrs.get('src') || raw.slice(0, 60)}`, attrs.has('alt'));
+  }
+  const expectedVideoSrc = `${locale.assetPrefix}${config.media.cityscan.path}`;
+  const videos = tags('video', source).filter(({ attrs }) => attrs.has('data-cc-video'));
+  check(`${label} has exactly one CityScan video`, videos.length === 1, `found ${videos.length}`);
+  if (videos.length === 1) {
+    const attrs = videos[0].attrs;
+    check(`${label} CityScan video source is exact`, attrs.get('src') === expectedVideoSrc);
+    check(`${label} CityScan video declares its portrait dimensions`, Number(attrs.get('width')) === config.media.cityscan.intrinsicWidth
+      && Number(attrs.get('height')) === config.media.cityscan.intrinsicHeight,
+    `${attrs.get('width')}×${attrs.get('height')}`);
+    for (const attribute of ['autoplay', 'loop', 'muted', 'playsinline', 'controls']) {
+      check(`${label} CityScan video declares ${attribute}`, attrs.has(attribute));
+    }
+  }
+  const downloads = tags('a', source).filter(({ attrs }) => attrs.get('href') === expectedVideoSrc && attrs.has('download'));
+  check(`${label} CityScan fallback retains one direct download`, downloads.length === 1, `found ${downloads.length}`);
+
+  for (const { attrs } of tags('a', source)) {
+    const href = attrs.get('href') || '';
+    if (attrs.get('target')?.toLowerCase() === '_blank') {
+      check(`${label} new-tab link protects opener: ${href}`, (attrs.get('rel') || '').split(/\s+/).map((value) => value.toLowerCase()).includes('noopener'));
+    }
+    if (/^javascript:/i.test(href)) {
+      check(`${label} link does not use a javascript URL: ${href}`, false);
+    } else if (href.startsWith('#')) {
+      check(`${label} same-page link resolves: ${href}`, href.length > 1 && ids.includes(href.slice(1)));
+    } else if (href && !/^(?:https?:|mailto:|tel:)/i.test(href) && !isLocaleNavigation(locale, href)) {
+      addRuntimeResource(href, locale.entry, `anchor href in ${locale.entry}`);
+    }
+  }
+  for (const { attrs } of tags('button', source)) {
+    check(`${label} button declares type: #${attrs.get('id') || '(unnamed)'}`, attrs.has('type'));
+  }
+  for (const { attrs } of tags('script', source)) {
+    if (attrs.has('src')) addRuntimeResource(attrs.get('src'), locale.entry, `script src in ${locale.entry}`);
+  }
+  for (const { attrs } of tags('link', source)) {
+    const rel = (attrs.get('rel') || '').toLowerCase().split(/\s+/);
+    if (rel.some((value) => ['stylesheet', 'preload', 'modulepreload', 'icon', 'manifest'].includes(value)) && attrs.has('href')) {
+      addRuntimeResource(attrs.get('href'), locale.entry, `link href in ${locale.entry}`);
+    }
+  }
+  for (const tagName of ['img', 'video', 'audio', 'source', 'track', 'iframe', 'embed']) {
+    for (const { attrs } of tags(tagName, source)) {
+      if (attrs.has('src')) addRuntimeResource(attrs.get('src'), locale.entry, `${tagName} src in ${locale.entry}`);
+      if (attrs.has('poster')) addRuntimeResource(attrs.get('poster'), locale.entry, `${tagName} poster in ${locale.entry}`);
+      if (attrs.has('srcset')) {
+        for (const candidate of attrs.get('srcset').split(',').map((part) => part.trim().split(/\s+/, 1)[0])) {
+          addRuntimeResource(candidate, locale.entry, `${tagName} srcset in ${locale.entry}`);
+        }
+      }
+    }
+  }
+  for (const match of source.matchAll(/style\s*=\s*["'][^"']*url\(\s*([^)]+?)\s*\)[^"']*["']/gi)) {
+    addRuntimeResource(match[1], locale.entry, `inline style URL in ${locale.entry}`);
+  }
+}
+
+if (englishLocale) validateAndCollectSecondaryLocale(englishLocale);
+validateAriaReferences(primaryLocale || { id: 'th' }, html, idSequence(html));
+
+if (englishLocale) {
+  const thaiIds = idSequence(html);
+  const englishIds = idSequence(englishHtml);
+  check('Thai and English pages preserve the exact ID topology', JSON.stringify(englishIds) === JSON.stringify(thaiIds));
+  check('Thai and English pages preserve ID element roles and relationships', JSON.stringify(idElementSignatures(englishHtml)) === JSON.stringify(idElementSignatures(html)));
+  const structuralTags = ['main', 'footer', 'nav', 'section', 'article', 'aside', 'h1', 'h2', 'h3', 'figure', 'figcaption', 'dl', 'dt', 'dd', 'ul', 'ol', 'li', 'a', 'button', 'img', 'video'];
+  const structuralMismatches = structuralTags.filter((tagName) => tags(tagName, englishHtml).length !== tags(tagName, html).length);
+  check('Thai and English pages preserve semantic element counts', structuralMismatches.length === 0,
+    structuralMismatches.map((tagName) => `${tagName}:${tags(tagName, html).length}/${tags(tagName, englishHtml).length}`).join(', '));
+  const thaiApproaches = [...html.matchAll(/\bdata-approach\s*=\s*["']([^"']+)["']/gi)].map((match) => match[1]);
+  const englishApproaches = [...englishHtml.matchAll(/\bdata-approach\s*=\s*["']([^"']+)["']/gi)].map((match) => match[1]);
+  check('Thai and English pages preserve the design-approach sequence', JSON.stringify(englishApproaches) === JSON.stringify(thaiApproaches));
+}
+
 const forbiddenResidue = /<\/?(?:x-dc|x-import|sc-if|sc-for)\b|\{\{[^}]+\}\}|type=["']text\/x-dc|data-dc-script|(?:support|ds-base)\.js|style-(?:hover|focus|active)=/i;
 check('DreamCanvas/template residue is absent', !forbiddenResidue.test(html));
+check('English page has no DreamCanvas/template residue', !forbiddenResidue.test(englishHtml));
 check('application JavaScript has no obsolete framework residue', !/(?:\bDCLogic\b|React\.createElement|componentDidMount|this\.setState)/.test(app));
 check('application JavaScript has no analytics or background network calls', !/(?:\bfetch\s*\(|\bXMLHttpRequest\b|\bWebSocket\s*\(|sendBeacon\s*\(|\bgtag\s*\(|\banalytics\b)/i.test(app));
-check('source files do not leak a personal filesystem path', !/(?:\/Users\/|\/home\/|[A-Za-z]:\\Users\\)/.test(`${html}\n${css}\n${app}`));
+check('application localizes runtime menu and theme accessibility labels from document language', /root\.lang[^\n;]*startsWith\(["']en["']\)/.test(app)
+  && localePages.every((locale) => Object.values(locale.runtimeLabels).every((label) => app.includes(label)))
+  && /setAttribute\(["']aria-label["']\s*,\s*label\)/.test(app)
+  && /setAttribute\(["']aria-label["']\s*,\s*open\s*\?\s*interfaceLabels\.menu\.close\s*:\s*interfaceLabels\.menu\.open\)/.test(app));
+check('source files do not leak a personal filesystem path', !/(?:\/Users\/|\/home\/|[A-Za-z]:\\Users\\)/.test(`${html}\n${englishHtml}\n${css}\n${app}`));
 
 try {
   new Script(app, { filename: 'deployment/app.js' });
@@ -319,7 +644,7 @@ for (const { attrs } of tags('a')) {
     check(`link does not use a javascript URL: ${href}`, false);
   } else if (href.startsWith('#')) {
     check(`same-page link resolves: ${href}`, href.length > 1 && idMatches.includes(href.slice(1)));
-  } else if (href && !/^(?:https?:|mailto:|tel:)/i.test(href)) {
+  } else if (href && !/^(?:https?:|mailto:|tel:)/i.test(href) && !isLocaleNavigation(primaryLocale, href)) {
     addRuntimeResource(href, entryRelativePath, `anchor href in ${entryRelativePath}`);
   }
 }
@@ -356,11 +681,18 @@ while (stylesheetQueue.length > 0) {
   const stylesheetPath = resolveDeploymentPath(stylesheet);
   if (!existsSync(stylesheetPath)) continue;
   const stylesheetSource = readFileSync(stylesheetPath, 'utf8');
-  for (const match of stylesheetSource.matchAll(/url\(\s*([^)]+?)\s*\)/gi)) {
-    addRuntimeResource(match[1], stylesheet, `CSS url() in ${stylesheet}`);
-  }
-  for (const match of stylesheetSource.matchAll(/@import\s+(?:url\(\s*)?["']([^"']+)["']/gi)) {
-    addRuntimeResource(match[1], stylesheet, `CSS @import in ${stylesheet}`);
+  if (/\.css$/i.test(stylesheet)) {
+    for (const match of stylesheetSource.matchAll(/url\(\s*([^)]+?)\s*\)/gi)) {
+      addRuntimeResource(match[1], stylesheet, `CSS url() in ${stylesheet}`);
+    }
+    for (const match of stylesheetSource.matchAll(/@import\s+(?:url\(\s*)?["']([^"']+)["']/gi)) {
+      addRuntimeResource(match[1], stylesheet, `CSS @import in ${stylesheet}`);
+    }
+  } else if (/\.svg$/i.test(stylesheet)) {
+    for (const { attrs } of [...tags('image', stylesheetSource), ...tags('use', stylesheetSource)]) {
+      const href = attrs.get('href') || attrs.get('xlink:href');
+      if (href && !href.startsWith('#')) addRuntimeResource(href, stylesheet, `embedded SVG resource in ${stylesheet}`);
+    }
   }
 }
 
@@ -373,6 +705,12 @@ for (const relativePath of [...runtimeResources].sort()) {
     check(`runtime resource is a regular non-symlink file: ${relativePath}`, stat.isFile() && !stat.isSymbolicLink());
   }
 }
+check('locale directory links are navigation rather than runtime files', localePages.every((locale) => isLocaleNavigation(locale, locale.languageSwitch.href))
+  && [...localeEntryPaths].every((entry) => !runtimeResources.has(entry))
+  && !runtimeResources.has('en'));
+check('nested English references close over the shared deployment assets', ['app.js', 'citychat.css', config.identity.favicon.path, config.media.cityscan.path].every((assetPath) => runtimeResources.has(assetPath))
+  && ![...runtimeResources].some((assetPath) => /^(?:en\/(?:assets|vendor)\/|en\/(?:app\.js|citychat\.css)$)/i.test(assetPath)),
+[...runtimeResources].filter((assetPath) => assetPath.startsWith('en/')).join(', '));
 
 for (const [relativePath, expectedHash] of Object.entries(config.pinnedInputs)) {
   let safePath;
@@ -491,6 +829,99 @@ if (footerMatch) {
   const bottomPattern = new RegExp(`<div\\b[^>]*class=["'][^"']*\\b${config.footer.bottomClass}\\b[^"']*["'][^>]*>[\\s\\S]*?<div\\b[^>]*class=["'][^"']*\\b${config.footer.bottomInnerClass}\\b[^"']*["'][^>]*>[\\s\\S]*?<div\\b[^>]*class=["'][^"']*\\b${config.footer.identityClass}\\b[^"']*["']`, 'i');
   check('footer bottom contains its inner identity region', bottomPattern.test(footerHtml));
 }
+
+function validateLocalizedFooter(locale) {
+  const source = locale.html;
+  const label = `${locale.id} footer`;
+  const localized = footerForLocale(locale);
+  const localeIds = idSequence(source);
+  const match = source.match(/<footer\b([^>]*)>([\s\S]*?)<\/footer>/i);
+  const attrs = match ? attributes(match[1]) : new Map();
+  check(`${label} root uses the configured class and ID`, Boolean(match
+    && hasClass(attrs, config.footer.rootClass)
+    && attrs.get('id') === config.footer.rootId));
+  check(`${label} is a labelled programmatic hash target`, attrs.get('tabindex') === config.footer.tabindex
+    && attrs.get('aria-labelledby') === config.footer.labelledBy
+    && localeIds.includes(config.footer.labelledBy));
+  if (!match) return;
+
+  const footerSource = match[0];
+  const stripeMatch = footerSource.match(new RegExp(`<div\\b[^>]*class=["'][^"']*\\b${config.footer.stripeClass}\\b[^"']*["'][^>]*>([\\s\\S]*?)<\\/div>`, 'i'));
+  check(`${label} has the four-color measure stripe`, Boolean(stripeMatch) && tags('span', stripeMatch?.[1] || '').length === 4);
+  check(`${label} contains the contact-details region`, /<div\b[^>]*class=["'][^"']*\bcontact-details\b[^"']*["']/i.test(footerSource));
+  const companyParagraphs = pairedTags('p', footerSource).filter(({ attrs: paragraphAttrs, text }) => hasClass(paragraphAttrs, 'contact-company') && text === localized.contact.company);
+  check(`${label} company is exact`, companyParagraphs.length === 1);
+  check(`${label} address is exact`, occurrences(footerSource, localized.contact.address) === 1);
+
+  const anchors = pairedTags('a', footerSource);
+  const mapAnchors = anchors.filter(({ attrs: anchorAttrs, text }) => anchorAttrs.get('href') === localized.contact.map.href && text.includes(localized.contact.map.text));
+  check(`${label} map link is exact`, mapAnchors.length === 1);
+  check(`${label} map cue is hidden from assistive technology`, mapAnchors.length === 1
+    && /<span\b(?=[^>]*\bclass=["'][^"']*\btext-link__cue\b)(?=[^>]*\baria-hidden=["']true["'])[^>]*>\s*↗\s*<\/span>/i.test(mapAnchors[0].content));
+  const emailAnchors = anchors.filter(({ attrs: anchorAttrs, text }) => hasClass(anchorAttrs, 'contact-email')
+    && anchorAttrs.get('href') === localized.contact.email.href
+    && text.endsWith(localized.contact.email.text));
+  check(`${label} contact email is exact`, emailAnchors.length === 1);
+  check(`${label} email underlines only its visible label`, emailAnchors.length === 1
+    && pairedTags('span', emailAnchors[0].content).some(({ attrs: spanAttrs, text }) => hasClass(spanAttrs, 'contact-email__label') && text === localized.contact.email.text));
+
+  const socialNavMatch = footerSource.match(/<nav\b([^>]*)class=["']([^"']*\bsocial-links\b[^"']*)["']([^>]*)>([\s\S]*?)<\/nav>/i);
+  const socialNavAttrs = socialNavMatch ? attributes(`${socialNavMatch[1]} class="${socialNavMatch[2]}" ${socialNavMatch[3]}`) : new Map();
+  const socialAnchors = pairedTags('a', socialNavMatch?.[4] || '');
+  check(`${label} social navigation label is localized`, socialNavAttrs.get('aria-label') === localized.labels.socialNav);
+  check(`${label} has exactly five social profile links`, socialAnchors.length === config.footer.socialLinks.length);
+  for (const link of config.footer.socialLinks) {
+    const matches = socialAnchors.filter(({ attrs: anchorAttrs, text }) => anchorAttrs.get('href') === link.href && text === link.text);
+    check(`${label} social profile is exact: ${link.text}`, matches.length === 1);
+    if (matches.length !== 1) continue;
+    const anchor = matches[0];
+    const rel = (anchor.attrs.get('rel') || '').split(/\s+/);
+    check(`${label} social profile opens safely: ${link.text}`, anchor.attrs.get('target') === '_blank'
+      && ['me', 'noopener', 'noreferrer'].every((value) => rel.includes(value)));
+    const icon = anchor.content.match(/<svg\b([^>]*)>([\s\S]*?)<\/svg>/i);
+    const iconAttrs = icon ? attributes(icon[1]) : new Map();
+    const use = icon ? tags('use', icon[2])[0] : null;
+    check(`${label} social profile uses its icon: ${link.text}`, Boolean(icon
+      && hasClass(iconAttrs, 'social-icon')
+      && iconAttrs.get('aria-hidden') === 'true'
+      && use?.attrs.get('href') === `#${link.iconId}`));
+    check(`${label} social profile keeps an accessible label: ${link.text}`, pairedTags('span', anchor.content).filter(({ attrs: spanAttrs, text }) => hasClass(spanAttrs, 'social-link__label')
+      && hasClass(spanAttrs, 'visually-hidden')
+      && text === link.text).length === 1);
+  }
+
+  const linksNavMatch = footerSource.match(/<nav\b([^>]*)class=["']([^"']*\bfooter-links\b[^"']*)["']([^>]*)>([\s\S]*?)<\/nav>/i);
+  const linksNavAttrs = linksNavMatch ? attributes(`${linksNavMatch[1]} class="${linksNavMatch[2]}" ${linksNavMatch[3]}`) : new Map();
+  const ecosystemAnchors = pairedTags('a', linksNavMatch?.[4] || '');
+  check(`${label} link navigation label is localized`, linksNavAttrs.get('aria-label') === localized.labels.footerNav);
+  check(`${label} has exactly the configured policy and rebuild02 links`, ecosystemAnchors.length === localized.links.length);
+  for (const link of localized.links) {
+    check(`${label} ecosystem link is exact: ${link.text}`, ecosystemAnchors.filter(({ attrs: anchorAttrs, text }) => anchorAttrs.get('href') === link.href && text === link.text).length === 1);
+  }
+
+  const brandAnchor = anchors.find(({ attrs: anchorAttrs }) => hasClass(anchorAttrs, config.footer.brandClass));
+  check(`${label} brand lockup returns to the page top`, brandAnchor?.attrs.get('href') === config.footer.brandHref);
+  check(`${label} brand lockup label is localized`, brandAnchor?.attrs.get('aria-label') === localized.labels.brand);
+  if (brandAnchor) {
+    check(`${label} uses the configured local Landometer symbol`, tags('img', brandAnchor.content)[0]?.attrs.get('src') === `${locale.assetPrefix}${config.footer.brandImage}`);
+    check(`${label} wordmark is exact`, brandAnchor.text === config.footer.brandText);
+  }
+  check(`${label} copyright is exact`, occurrences(footerSource, config.footer.copyright) === 1);
+
+  const symbolIds = pairedTags('symbol', source).map(({ attrs: symbolAttrs }) => symbolAttrs.get('id')).filter(Boolean);
+  const expectedSymbolIds = config.footer.socialLinks.map(({ iconId }) => iconId);
+  check(`${label} page contains each social icon symbol once`, expectedSymbolIds.every((id) => symbolIds.filter((candidate) => candidate === id).length === 1)
+    && symbolIds.length === expectedSymbolIds.length,
+  symbolIds.join(', '));
+  const cues = [...source.matchAll(/<span\b([^>]*)>\s*↗\s*<\/span>/gi)].map((cue) => attributes(cue[1]));
+  check(`${label} page keeps every external cue undecorated and hidden`, cues.length === 6
+    && cues.every((cueAttrs) => hasClass(cueAttrs, 'text-link__cue') && cueAttrs.get('aria-hidden') === 'true'),
+  `found ${cues.length}`);
+  check(`${label} is the final layout child`, /<\/main>\s*<footer\b[\s\S]*?<\/footer>\s*<\/div>\s*<\/body>\s*<\/html>\s*$/i.test(source));
+}
+
+for (const locale of localePages) validateLocalizedFooter(locale);
+
 const socialSymbolIds = pairedTags('symbol').map(({ attrs }) => attrs.get('id')).filter(Boolean);
 const expectedSocialSymbolIds = config.footer.socialLinks.map(({ iconId }) => iconId);
 check('inline sprite contains each rebuild02 social symbol once', expectedSocialSymbolIds.every((id) => socialSymbolIds.filter((candidate) => candidate === id).length === 1) && socialSymbolIds.length === expectedSocialSymbolIds.length, socialSymbolIds.join(', '));

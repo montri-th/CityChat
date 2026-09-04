@@ -12,8 +12,6 @@ const manifestPath = resolveDeploymentPath(config.deployment.manifest);
 const checksumsPath = resolveDeploymentPath(config.deployment.checksums);
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 const entryRelativePath = safeRelativePath(config.deployment.entry);
-const localIndexBytes = readFileSync(resolveDeploymentPath(entryRelativePath));
-const localIndexText = localIndexBytes.toString('utf8');
 const attempts = positiveInteger(process.env.VERIFY_ATTEMPTS || config.live.attempts, 'VERIFY_ATTEMPTS');
 const delayMs = nonNegativeInteger(process.env.VERIFY_DELAY_MS || config.live.delayMs, 'VERIFY_DELAY_MS');
 const releaseKey = [config.artifact.buildId, process.env.GITHUB_SHA || 'local'].join('.');
@@ -50,6 +48,42 @@ function resolveDeploymentPath(relativePath) {
   if (relation.startsWith('..') || path.isAbsolute(relation)) throw new Error(`Path leaves deployment root: ${relativePath}`);
   return absolutePath;
 }
+
+const localePages = (Array.isArray(config.locales) && config.locales.length > 0
+  ? config.locales
+  : [{
+      id: config.artifact.language,
+      language: config.artifact.language,
+      entry: config.deployment.entry,
+      publicPath: './',
+      canonicalUrl: config.artifact.canonicalUrl,
+      assetPrefix: './',
+      requiredText: config.markup.requiredText,
+      forbiddenText: config.markup.forbiddenText,
+    }]
+).map((locale) => {
+  const entry = safeRelativePath(locale.entry);
+  const publicPath = locale.publicPath;
+  if (typeof publicPath !== 'string' || !/^(?:\.\/|[a-z0-9][a-z0-9/-]*\/)$/.test(publicPath)) {
+    throw new Error(`Unsafe public locale path for ${locale.id}: ${String(publicPath)}`);
+  }
+  const bytes = readFileSync(resolveDeploymentPath(entry));
+  return {
+    ...locale,
+    entry,
+    bytes,
+    text: bytes.toString('utf8'),
+    assetPrefix: locale.assetPrefix || (entry === entryRelativePath ? './' : '../'),
+    requiredText: locale.requiredText || (entry === entryRelativePath ? config.markup.requiredText : []),
+    forbiddenText: locale.forbiddenText || config.markup.forbiddenText,
+  };
+});
+
+const primaryLocale = localePages.find((locale) => locale.entry === entryRelativePath);
+if (!primaryLocale) throw new Error(`No locale is configured for the primary entry: ${entryRelativePath}`);
+if (new Set(localePages.map((locale) => locale.id)).size !== localePages.length) throw new Error('Locale IDs must be unique.');
+if (new Set(localePages.map((locale) => locale.entry)).size !== localePages.length) throw new Error('Locale entries must be unique.');
+const localeByEntry = new Map(localePages.map((locale) => [locale.entry, locale]));
 
 function sha256(bytes) {
   return createHash('sha256').update(bytes).digest('hex');
@@ -140,22 +174,63 @@ function assertLocalReleaseMetadata() {
   if (readFileSync(checksumsPath, 'utf8') !== expectedChecksums) throw new Error('Local checksum ledger is stale or incomplete.');
 }
 
-function assertLandingText(source, label) {
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function localeAssetHref(locale, relativePath) {
+  return `${locale.assetPrefix}${relativePath}`;
+}
+
+function footerForLocale(locale) {
+  const localized = config.footer.locales?.[locale.id] || {};
+  return {
+    contact: {
+      ...config.footer.contact,
+      ...(localized.contact || {}),
+      map: { ...config.footer.contact.map, ...(localized.contact?.map || {}) },
+      email: { ...config.footer.contact.email, ...(localized.contact?.email || {}) },
+    },
+    links: localized.links || config.footer.links,
+    labels: localized.labels || {},
+  };
+}
+
+function assertLandingText(source, locale, label) {
   if (!source.includes(`<meta name="robots" content="${config.publication.robotsMeta}">`)) {
     throw new Error(`${label} does not preserve the exact noindex meta request.`);
   }
-  if (!source.includes(`<link rel="canonical" href="${config.artifact.canonicalUrl}">`)) {
+  if (!new RegExp(`<html\\b[^>]*\\blang=["']${escapeRegExp(locale.language)}["']`, 'i').test(source)) {
+    throw new Error(`${label} does not declare the configured document language: ${locale.language}`);
+  }
+  if (!source.includes(`<link rel="canonical" href="${locale.canonicalUrl}">`)) {
     throw new Error(`${label} canonical URL does not match the release config.`);
   }
-  if (!source.includes(`<link rel="icon" type="${config.identity.favicon.mimeType}" href="${config.identity.favicon.href}">`)) {
+  for (const alternate of localePages) {
+    if (!source.includes(`<link rel="alternate" hreflang="${alternate.language}" href="${alternate.canonicalUrl}">`)) {
+      throw new Error(`${label} is missing the reciprocal ${alternate.language} alternate URL.`);
+    }
+  }
+  if (!source.includes(`<link rel="alternate" hreflang="x-default" href="${primaryLocale.canonicalUrl}">`)) {
+    throw new Error(`${label} is missing the primary x-default alternate URL.`);
+  }
+  const expectedFaviconHref = localeAssetHref(locale, config.identity.favicon.path);
+  if (!source.includes(`<link rel="icon" type="${config.identity.favicon.mimeType}" href="${expectedFaviconHref}">`)) {
     throw new Error(`${label} does not declare the approved CityChat favicon.`);
   }
-  for (const { text, count } of config.markup.requiredText) {
+  for (const { text, count } of locale.requiredText) {
     const actual = occurrences(source, text);
     if (actual !== count) throw new Error(`${label} required text count mismatch for “${text}”: expected ${count}, received ${actual}.`);
   }
-  for (const text of config.markup.forbiddenText) {
-    if (source.includes(text)) throw new Error(`${label} contains removed honorific copy: ${text}`);
+  for (const text of locale.forbiddenText) {
+    if (source.includes(text)) throw new Error(`${label} contains forbidden locale copy: ${text}`);
+  }
+  if (locale.languageSwitch) {
+    const switchPattern = new RegExp(`<a\\b(?=[^>]*\\bhref=["']${escapeRegExp(locale.languageSwitch.href)}["'])(?=[^>]*\\bhreflang=["']${escapeRegExp(locale.languageSwitch.hreflang)}["'])[^>]*>\\s*${escapeRegExp(locale.languageSwitch.text)}\\s*<\\/a>`, 'gi');
+    const switchCount = [...source.matchAll(switchPattern)].length;
+    if (switchCount !== locale.languageSwitch.count) {
+      throw new Error(`${label} locale switch count mismatch: expected ${locale.languageSwitch.count}, received ${switchCount}.`);
+    }
   }
   if (!/<footer\b(?=[^>]*\bid=["']contact["'])(?=[^>]*\bclass=["'][^"']*\bsite-footer\b)(?=[^>]*\btabindex=["']-1["'])(?=[^>]*\baria-labelledby=["']contact-title["'])[^>]*>/i.test(source)) {
     throw new Error(`${label} footer root does not match the approved contract.`);
@@ -163,26 +238,38 @@ function assertLandingText(source, label) {
   if (!/<div\b[^>]*class=["'][^"']*\bmeasure-line\b[^"']*["'][^>]*>\s*<span><\/span>\s*<span><\/span>\s*<span><\/span>\s*<span><\/span>\s*<\/div>/i.test(source)) {
     throw new Error(`${label} footer measure stripe does not have four parts.`);
   }
+  const localizedFooter = footerForLocale(locale);
   for (const required of [
-    config.footer.contact.company,
-    config.footer.contact.address,
-    config.footer.contact.email.href,
-    config.footer.contact.map.href,
+    localizedFooter.contact.company,
+    localizedFooter.contact.address,
+    localizedFooter.contact.email.text,
+    localizedFooter.contact.email.href,
+    localizedFooter.contact.map.text,
+    localizedFooter.contact.map.href,
     ...config.footer.socialLinks.flatMap((link) => [link.text, link.href, `id="${link.iconId}"`, `href="#${link.iconId}"`]),
-    ...config.footer.links.flatMap((link) => [link.text === 'Privacy & Terms' ? 'Privacy &amp; Terms' : link.text, link.href]),
+    ...localizedFooter.links.flatMap((link) => [link.text === 'Privacy & Terms' ? 'Privacy &amp; Terms' : link.text, link.href]),
+    localizedFooter.labels.socialNav ? `aria-label="${localizedFooter.labels.socialNav}"` : null,
+    localizedFooter.labels.footerNav ? `aria-label="${localizedFooter.labels.footerNav}"` : null,
+    localizedFooter.labels.brand ? `aria-label="${localizedFooter.labels.brand}"` : null,
     `class="${config.footer.brandClass}" href="${config.footer.brandHref}"`,
     config.footer.copyright,
-  ]) {
+  ].filter(Boolean)) {
     if (!source.includes(required)) throw new Error(`${label} footer contract is missing: ${required}`);
   }
-  if (!/<video\b(?=[^>]*\bdata-cc-video(?:\s*=|\s|>))(?=[^>]*\bsrc=["']\.\/assets\/cityscan-demo\.mp4["'])(?=[^>]*\bcontrols(?:\s|>))(?=[^>]*\bautoplay(?:\s|>))(?=[^>]*\bloop(?:\s|>))(?=[^>]*\bmuted(?:\s|>))(?=[^>]*\bplaysinline(?:\s|>))[^>]*>/i.test(source)) {
+  const expectedVideoSrc = localeAssetHref(locale, config.media.cityscan.path);
+  const video = tags('video', source).find((attrs) => attrs.has('data-cc-video'));
+  if (!video
+      || video.get('src') !== expectedVideoSrc
+      || !['controls', 'autoplay', 'loop', 'muted', 'playsinline'].every((attribute) => video.has(attribute))) {
     throw new Error(`${label} CityScan video is not configured for muted inline autoplay and looping.`);
   }
-  const video = tags('video', source).find((attrs) => attrs.has('data-cc-video'));
   if (!video || Number(video.get('width')) !== config.media.cityscan.intrinsicWidth || Number(video.get('height')) !== config.media.cityscan.intrinsicHeight) {
     throw new Error(`${label} CityScan video does not preserve its exact portrait dimensions.`);
   }
-  if (!source.includes('class="city-loop-banner"') || !source.includes('ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ')) {
+  const highlightText = locale.highlightText || (locale.language === 'en'
+    ? 'City data should keep moving after it is collected.'
+    : 'ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ');
+  if (!source.includes('class="city-loop-banner"') || !source.includes(highlightText)) {
     throw new Error(`${label} is missing the approved mid-page CityChat highlight.`);
   }
   if (!/<nav\b[^>]*class=["'][^"']*\bsocial-links\b[^"']*["'][^>]*>[\s\S]*?<svg\b[^>]*class=["'][^"']*\bsocial-icon\b[^"']*["'][^>]*aria-hidden=["']true["'][^>]*>[\s\S]*?<span\b[^>]*class=["'][^"']*\bsocial-link__label\b[^"']*\bvisually-hidden\b[^"']*["'][^>]*>/i.test(source)) {
@@ -197,20 +284,36 @@ function assertLandingText(source, label) {
 }
 
 assertLocalReleaseMetadata();
-assertLandingText(localIndexText, 'Local index.html');
+for (const locale of localePages) assertLandingText(locale.text, locale, `Local ${locale.entry}`);
 const robotsRelativePath = 'robots.txt';
 const localRobotsText = readFileSync(resolveDeploymentPath(robotsRelativePath), 'utf8');
 if (!/^\s*Disallow:\s*\/\s*$/im.test(localRobotsText)) throw new Error('Local robots.txt does not disallow this project artifact.');
 
 const manifestByPath = new Map(manifest.files.map((record) => [record.path, record]));
-const closure = new Set([entryRelativePath]);
-const pending = [entryRelativePath];
+const localeEntryPaths = new Set(localePages.map((locale) => locale.entry));
+const closure = new Set(localeEntryPaths);
+const pending = [...localeEntryPaths];
 
 function addResource(rawValue, fromRelativePath, context) {
   const relativePath = normalizeResource(rawValue, fromRelativePath, context);
   if (!relativePath || closure.has(relativePath)) return;
   closure.add(relativePath);
   pending.push(relativePath);
+}
+
+function localeNavigationTarget(rawValue, fromRelativePath) {
+  const value = rawValue.trim();
+  if (!value || value.startsWith('#') || /^(?:https?:|mailto:|tel:|data:|blob:)/i.test(value)) return null;
+  let decoded;
+  try {
+    decoded = decodeURIComponent(value.split(/[?#]/, 1)[0]);
+  } catch {
+    return null;
+  }
+  if (!decoded || decoded.includes('\\') || decoded.startsWith('/')) return null;
+  let target = path.posix.normalize(path.posix.join(path.posix.dirname(fromRelativePath), decoded));
+  if (decoded.endsWith('/')) target = path.posix.join(target, 'index.html');
+  return target.replace(/^\.\//, '');
 }
 
 while (pending.length > 0) {
@@ -244,6 +347,8 @@ while (pending.length > 0) {
     for (const attrs of tags('a', source)) {
       const href = attrs.get('href') || '';
       if (href && !href.startsWith('#') && !/^(?:https?:|mailto:|tel:)/i.test(href)) {
+        const navigationTarget = localeNavigationTarget(href, relativePath);
+        if (navigationTarget && localeEntryPaths.has(navigationTarget)) continue;
         addResource(href, relativePath, `${relativePath} local anchor`);
       }
     }
@@ -307,7 +412,8 @@ async function fetchExact(relativePath) {
   const expectedBytes = readFileSync(resolveDeploymentPath(relativePath));
   const expectedHash = sha256(expectedBytes);
   const expectedTypes = expectedMimes(relativePath);
-  const expectedUrl = relativePath === entryRelativePath ? new URL('./', siteRoot) : new URL(relativePath, siteRoot);
+  const locale = localeByEntry.get(relativePath);
+  const expectedUrl = locale ? new URL(locale.publicPath, siteRoot) : new URL(relativePath, siteRoot);
   let lastError;
 
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
@@ -363,13 +469,18 @@ const verifiedPaths = [
 const results = [];
 for (const relativePath of verifiedPaths) results.push(await fetchExact(relativePath));
 
-const liveIndexResult = results.find((result) => result.path === entryRelativePath);
-const liveIndexUrl = new URL(liveIndexResult.requestedUrl);
-const liveIndexResponse = await fetch(liveIndexUrl, { headers: { 'cache-control': 'no-cache' } });
-if (!liveIndexResponse.ok) throw new Error(`Unable to repeat live HTML text assertion: HTTP ${liveIndexResponse.status}`);
-const liveIndexText = await liveIndexResponse.text();
-if (sha256(Buffer.from(liveIndexText)) !== sha256(localIndexBytes)) throw new Error('Repeated live HTML text fetch differs from the attested entry bytes.');
-assertLandingText(liveIndexText, 'Live index.html');
+for (const locale of localePages) {
+  const livePageResult = results.find((result) => result.path === locale.entry);
+  if (!livePageResult) throw new Error(`No live byte result was recorded for locale entry: ${locale.entry}`);
+  const livePageUrl = new URL(livePageResult.requestedUrl);
+  const livePageResponse = await fetch(livePageUrl, { headers: { 'cache-control': 'no-cache' } });
+  if (!livePageResponse.ok) throw new Error(`Unable to repeat live ${locale.id} HTML text assertion: HTTP ${livePageResponse.status}`);
+  const livePageText = await livePageResponse.text();
+  if (sha256(Buffer.from(livePageText)) !== sha256(locale.bytes)) {
+    throw new Error(`Repeated live ${locale.entry} text fetch differs from the attested entry bytes.`);
+  }
+  assertLandingText(livePageText, locale, `Live ${locale.entry}`);
+}
 
 console.log(JSON.stringify({
   schemaVersion: '2.0',
@@ -384,6 +495,12 @@ console.log(JSON.stringify({
     canonicalVerified: true,
     liveTextVerified: true,
     robotsFileVerified: true,
+    localesVerified: localePages.map((locale) => ({
+      id: locale.id,
+      language: locale.language,
+      route: locale.publicPath,
+      canonicalUrl: locale.canonicalUrl,
+    })),
   },
   closure: {
     policy: config.live.verify,

@@ -8,8 +8,43 @@ const repositoryRoot = path.resolve(toolsRoot, '..');
 const deploymentRoot = path.join(repositoryRoot, 'deployment');
 const config = JSON.parse(readFileSync(path.join(repositoryRoot, 'release.config.json'), 'utf8'));
 const requiredSections = ['main-content', 'offer', 'partners', 'product', 'loop', 'record', 'contact'];
+const routes = {
+  th: {
+    id: 'th',
+    label: 'Thai',
+    pathname: '/',
+    lang: 'th',
+    faviconHref: config.identity.favicon.href,
+    videoHref: config.media.cityscan.src,
+    bodyFont: { family: 'Bai Jamjuree', declaration: '16px "Bai Jamjuree"', sample: 'ทดสอบ' },
+    displayFont: { family: 'IBM Plex Sans Thai Looped', declaration: '700 32px "IBM Plex Sans Thai Looped"', sample: 'เมือง' },
+    aria: {
+      menuClosed: 'เปิดเมนู',
+      menuOpen: 'ปิดเมนู',
+      themeSystem: 'ธีม: ตามระบบ — สลับเป็นสว่าง',
+      themeLight: 'ธีม: สว่าง — สลับเป็นมืด',
+    },
+  },
+  en: {
+    id: 'en',
+    label: 'English',
+    pathname: '/en/',
+    lang: 'en',
+    faviconHref: `../${config.identity.favicon.path}`,
+    videoHref: `../${config.media.cityscan.path}`,
+    bodyFont: { family: 'Bai Jamjuree', declaration: '16px "Bai Jamjuree"', sample: 'CityChat' },
+    displayFont: { family: 'Arvo', declaration: '700 32px Arvo', sample: 'CityChat' },
+    aria: {
+      menuClosed: 'Open menu',
+      menuOpen: 'Close menu',
+      themeSystem: 'Theme: System — switch to light',
+      themeLight: 'Theme: Light — switch to dark',
+    },
+  },
+};
 const failures = [];
 let checks = 0;
+let browserScenarios = 0;
 
 function check(label, condition, details = '') {
   checks += 1;
@@ -39,7 +74,8 @@ function requestPathToFile(urlPath) {
   } catch {
     return null;
   }
-  const relativePath = decoded === '/' ? 'index.html' : decoded.replace(/^\/+/, '');
+  let relativePath = decoded.replace(/^\/+/, '');
+  if (!relativePath || relativePath.endsWith('/')) relativePath += 'index.html';
   const absolutePath = path.resolve(deploymentRoot, relativePath);
   const relation = path.relative(deploymentRoot, absolutePath);
   if (relation.startsWith('..') || path.isAbsolute(relation)) return null;
@@ -85,6 +121,7 @@ function attachDiagnostics(page, scenario) {
   page.on('requestfailed', (request) => {
     const errorText = request.failure()?.errorText || 'unknown';
     const pathname = new URL(request.url()).pathname;
+    if (request.method() === 'HEAD' && errorText === 'net::ERR_ABORTED') return;
     if (pathname === '/assets/cityscan-demo.mp4' && errorText === 'net::ERR_ABORTED') return;
     diagnostics.push(`requestfailed: ${request.url()} (${errorText})`);
   });
@@ -112,18 +149,20 @@ async function seedTheme(context, preference) {
   }, preference);
 }
 
-async function openPage(context, scenario) {
+async function openPage(context, scenario, route = routes.th) {
+  browserScenarios += 1;
   const page = await context.newPage();
   const finishDiagnostics = attachDiagnostics(page, scenario);
-  const response = await page.goto(`${origin}/`, { waitUntil: 'load' });
+  const response = await page.goto(new URL(route.pathname, origin).href, { waitUntil: 'load' });
   check(`${scenario}: entry returns HTTP 200`, response?.status() === 200, `status ${response?.status()}`);
+  check(`${scenario}: clean route stays canonical locally`, new URL(page.url()).pathname === route.pathname, page.url());
   await page.evaluate(() => document.fonts?.ready);
   await page.waitForTimeout(120);
   return { page, finishDiagnostics };
 }
 
-async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
-  const state = await page.evaluate(async ({ ids, expectedTheme: theme, faviconConfig, mediaConfig }) => {
+async function assertCommonLayout(page, scenario, expectedTheme, desktop, route = routes.th) {
+  const state = await page.evaluate(async ({ ids, expectedTheme: theme, faviconConfig, mediaConfig, routeConfig }) => {
     const visible = (element) => {
       if (!element) return false;
       const style = getComputedStyle(element);
@@ -219,6 +258,23 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
     const rail = document.querySelector('[data-cc-rail]');
     const railRect = rail?.getBoundingClientRect();
     const top = document.querySelector('#top');
+    const localResources = [...document.querySelectorAll('script[src],link[rel~="stylesheet"][href],link[rel~="preload"][href],link[rel~="icon"][href],img[src],video[src],source[src]')]
+      .map((element) => {
+        const attribute = element.hasAttribute('src') ? 'src' : 'href';
+        const raw = element.getAttribute(attribute);
+        try {
+          const resolved = new URL(raw, location.href);
+          return { tag: element.localName, raw, href: resolved.href, pathname: resolved.pathname, local: resolved.origin === location.origin };
+        } catch {
+          return { tag: element.localName, raw, href: '', pathname: '', local: false };
+        }
+      });
+    const ariaLabels = [...document.querySelectorAll('[aria-label]')]
+      .filter((element) => !element.matches('a[hreflang="th"]'))
+      .map((element) => ({
+        element: element.id ? `#${element.id}` : element.className ? `${element.localName}.${String(element.className).trim().replace(/\s+/g, '.')}` : element.localName,
+        label: element.getAttribute('aria-label'),
+      }));
     const nonLazyImages = [...document.images].filter((image) => image.loading !== 'lazy').map((image) => ({
       src: image.getAttribute('src'),
       complete: image.complete,
@@ -233,8 +289,8 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
       fonts: {
         body: getComputedStyle(document.body).fontFamily,
         h1: getComputedStyle(document.querySelector('h1')).fontFamily,
-        thaiBody: document.fonts.check('16px "Bai Jamjuree"', 'ทดสอบ'),
-        thaiDisplay: document.fonts.check('32px "IBM Plex Sans Thai Looped"', 'เมือง'),
+        localeBody: document.fonts.check(routeConfig.bodyFont.declaration, routeConfig.bodyFont.sample),
+        localeDisplay: document.fonts.check(routeConfig.displayFont.declaration, routeConfig.displayFont.sample),
         latinDisplay: document.fonts.check('23px Arvo', 'Landometer'),
         icons: document.fonts.check('22px "Material Symbols Rounded"', 'menu'),
       },
@@ -242,6 +298,7 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
       themeOnlyRight: [...document.querySelectorAll(theme === 'light' ? '.theme-only-light' : '.theme-only-dark')].filter(visible).length,
       favicon: favicon ? {
         href: favicon.getAttribute('href'),
+        pathname: new URL(favicon.href).pathname,
         type: favicon.getAttribute('type'),
         naturalWidth: faviconImage?.naturalWidth || 0,
         naturalHeight: faviconImage?.naturalHeight || 0,
@@ -283,7 +340,13 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
       },
       controls,
       icons,
+      localResources,
+      ariaLabels,
       video: video ? {
+        src: video.getAttribute('src'),
+        pathname: new URL(video.src).pathname,
+        fallbackHref: videoFallback?.querySelector('a[download]')?.getAttribute('href') || '',
+        fallbackPathname: videoFallback?.querySelector('a[download]') ? new URL(videoFallback.querySelector('a[download]').href).pathname : '',
         autoplay: video.autoplay,
         autoplayAttribute: video.hasAttribute('autoplay'),
         loop: video.loop,
@@ -311,22 +374,41 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
       rail: railRect ? { visible: visible(rail), center: railRect.top + railRect.height / 2, viewportCenter: innerHeight / 2 } : null,
       nonLazyImages,
     };
-  }, { ids: requiredSections, expectedTheme, faviconConfig: config.identity.favicon, mediaConfig: config.media.cityscan });
+  }, {
+    ids: requiredSections,
+    expectedTheme,
+    faviconConfig: config.identity.favicon,
+    mediaConfig: config.media.cityscan,
+    routeConfig: route,
+  });
 
-  check(`${scenario}: Thai document and one H1 render`, state.lang === 'th' && state.h1Count === 1);
+  check(`${scenario}: ${route.label} document and one H1 render`, state.lang === route.lang && state.h1Count === 1, `lang=${state.lang}, h1=${state.h1Count}`);
   check(`${scenario}: expected theme resolves`, state.theme === expectedTheme, `received ${state.theme}`);
   check(`${scenario}: required landing regions have layout boxes`, state.sections.every((item) => item.visible), state.sections.filter((item) => !item.visible).map((item) => item.id).join(', '));
   check(`${scenario}: no horizontal page overflow`, state.overflow <= 1, `${state.overflow}px`);
-  check(`${scenario}: local body/display/icon fonts load`, state.fonts.thaiBody && state.fonts.thaiDisplay && state.fonts.latinDisplay && state.fonts.icons, JSON.stringify(state.fonts));
-  check(`${scenario}: computed body and H1 use intended local families`, state.fonts.body.includes('Bai Jamjuree') && state.fonts.h1.includes('IBM Plex Sans Thai Looped'), `${state.fonts.body} / ${state.fonts.h1}`);
+  check(`${scenario}: locale body/display and shared icon fonts load`, state.fonts.localeBody && state.fonts.localeDisplay && state.fonts.latinDisplay && state.fonts.icons, JSON.stringify(state.fonts));
+  check(`${scenario}: computed body and H1 use intended ${route.label} families`, state.fonts.body.includes(route.bodyFont.family) && state.fonts.h1.includes(route.displayFont.family), `${state.fonts.body} / ${state.fonts.h1}`);
   check(`${scenario}: theme-specific artwork is correct`, state.themeOnlyWrong === 0 && state.themeOnlyRight > 0, `wrong ${state.themeOnlyWrong}, right ${state.themeOnlyRight}`);
   check(`${scenario}: non-lazy images decode`, state.nonLazyImages.every((image) => image.complete && image.naturalWidth > 0), JSON.stringify(state.nonLazyImages.filter((image) => !image.complete || image.naturalWidth <= 0)));
   check(`${scenario}: approved CityChat favicon loads at its exact dimensions`, state.favicon
-    && state.favicon.href === state.favicon.expected.href
+    && state.favicon.href === route.faviconHref
+    && state.favicon.pathname === `/${state.favicon.expected.path}`
     && state.favicon.type === state.favicon.expected.mimeType
     && state.favicon.naturalWidth === state.favicon.expected.intrinsicWidth
     && state.favicon.naturalHeight === state.favicon.expected.intrinsicHeight,
   JSON.stringify(state.favicon));
+  check(`${scenario}: route-relative CityScan references resolve to the shared root asset`, state.video
+    && state.video.src === route.videoHref
+    && state.video.fallbackHref === route.videoHref
+    && state.video.pathname === `/${config.media.cityscan.path}`
+    && state.video.fallbackPathname === `/${config.media.cityscan.path}`,
+  JSON.stringify(state.video));
+  if (route.id === 'en') {
+    const thaiAriaLabels = state.ariaLabels.filter(({ label }) => /[฀-๿]/u.test(label));
+    check(`${scenario}: English runtime ARIA labels are localized`, state.ariaLabels.length > 0 && thaiAriaLabels.length === 0, JSON.stringify(thaiAriaLabels));
+    const misplacedNestedAssets = state.localResources.filter(({ local, pathname }) => local && pathname.startsWith('/en/'));
+    check(`${scenario}: nested English asset URLs resolve outside /en/`, state.localResources.length > 0 && misplacedNestedAssets.length === 0, JSON.stringify(misplacedNestedAssets));
+  }
   check(`${scenario}: gradient highlight renders between CityScan and the civic loop`, state.highlight?.visible
     && state.highlight.afterProduct
     && state.highlight.beforeLoop
@@ -375,35 +457,85 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop) {
   }
 }
 
-async function runMatrixScenario({ name, viewport, preference, expectedTheme, colorScheme, desktop }) {
+async function assertRouteAssets(page, scenario, route) {
+  const results = await page.evaluate(async () => {
+    const urls = [...document.querySelectorAll('script[src],link[rel~="stylesheet"][href],link[rel~="preload"][href],link[rel~="icon"][href],img[src],video[src],source[src]')]
+      .map((element) => element.src || element.href)
+      .filter((value) => value && new URL(value, location.href).origin === location.origin);
+    return Promise.all([...new Set(urls)].map(async (url) => {
+      try {
+        const response = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+        return { pathname: new URL(url).pathname, status: response.status, ok: response.ok };
+      } catch (error) {
+        return { pathname: new URL(url).pathname, status: 0, ok: false, error: error.message };
+      }
+    }));
+  });
+  const expectedPaths = [
+    '/citychat.css',
+    '/app.js',
+    `/${config.identity.favicon.path}`,
+    `/${config.media.cityscan.path}`,
+  ];
+  check(`${scenario}: every declared local asset answers successfully`, results.length > 0 && results.every(({ ok }) => ok), JSON.stringify(results.filter(({ ok }) => !ok)));
+  check(`${scenario}: shared CSS, script, favicon, and CityScan bytes load from root`, expectedPaths.every((expected) => results.some(({ pathname }) => pathname === expected)), JSON.stringify(results));
+  if (route.id === 'en') {
+    check(`${scenario}: English asset probe makes no /en/ resource requests`, results.every(({ pathname }) => !pathname.startsWith('/en/')), JSON.stringify(results.filter(({ pathname }) => pathname.startsWith('/en/'))));
+  }
+}
+
+async function runMatrixScenario({ name, viewport, preference, expectedTheme, colorScheme, desktop, route = routes.th, probeAssets = false }) {
   const context = await browser.newContext({ viewport, colorScheme });
   await seedTheme(context, preference);
-  const { page, finishDiagnostics } = await openPage(context, name);
+  const { page, finishDiagnostics } = await openPage(context, name, route);
   try {
-    await assertCommonLayout(page, name, expectedTheme, desktop);
+    await assertCommonLayout(page, name, expectedTheme, desktop, route);
+    if (probeAssets) await assertRouteAssets(page, name, route);
   } finally {
     finishDiagnostics();
     await context.close();
   }
 }
 
-async function runInteractions() {
-  const scenario = 'desktop interactions';
+async function runInteractions(route = routes.th) {
+  const scenario = route.id === 'th' ? 'desktop interactions' : `${route.label} desktop interactions`;
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: 'light' });
-  const { page, finishDiagnostics } = await openPage(context, scenario);
+  const { page, finishDiagnostics } = await openPage(context, scenario, route);
   try {
     const menuButton = page.locator('#menu-toggle');
+    const initialUi = await page.evaluate(() => ({
+      lang: document.documentElement.lang,
+      menu: document.querySelector('#menu-toggle')?.getAttribute('aria-label'),
+      theme: document.querySelector('#theme-cycle')?.getAttribute('aria-label'),
+      ariaLabels: [...document.querySelectorAll('[aria-label]')]
+        .filter((element) => !element.matches('a[hreflang="th"]'))
+        .map((element) => element.getAttribute('aria-label')),
+    }));
+    check(`${scenario}: interaction document language is exact`, initialUi.lang === route.lang, initialUi.lang);
+    check(`${scenario}: initial menu and theme ARIA match the locale`, initialUi.menu === route.aria.menuClosed && initialUi.theme === route.aria.themeSystem, JSON.stringify(initialUi));
+    if (route.id === 'en') {
+      check(`${scenario}: initial English controls expose no Thai ARIA`, initialUi.ariaLabels.every((label) => !/[฀-๿]/u.test(label)), JSON.stringify(initialUi.ariaLabels.filter((label) => /[฀-๿]/u.test(label))));
+    }
     await menuButton.click();
-    check(`${scenario}: menu opens with overlay and moves focus inside`, await page.locator('#site-menu').isVisible() && await page.locator('#menu-overlay').isVisible() && await menuButton.getAttribute('aria-expanded') === 'true' && await page.locator('#theme-cycle').evaluate((element) => document.activeElement === element));
+    check(`${scenario}: menu opens with localized ARIA, overlay, and focus`, await page.locator('#site-menu').isVisible()
+      && await page.locator('#menu-overlay').isVisible()
+      && await menuButton.getAttribute('aria-expanded') === 'true'
+      && await menuButton.getAttribute('aria-label') === route.aria.menuOpen
+      && await page.locator('#theme-cycle').evaluate((element) => document.activeElement === element));
     await page.keyboard.press('Escape');
-    check(`${scenario}: Escape closes menu and returns focus`, !(await page.locator('#site-menu').isVisible()) && await menuButton.getAttribute('aria-expanded') === 'false' && await menuButton.evaluate((element) => document.activeElement === element));
+    check(`${scenario}: Escape closes menu, restores localized ARIA, and returns focus`, !(await page.locator('#site-menu').isVisible())
+      && await menuButton.getAttribute('aria-expanded') === 'false'
+      && await menuButton.getAttribute('aria-label') === route.aria.menuClosed
+      && await menuButton.evaluate((element) => document.activeElement === element));
     await menuButton.click();
     await page.locator('#menu-overlay').click({ position: { x: 2, y: 2 } });
     check(`${scenario}: overlay closes menu`, !(await page.locator('#site-menu').isVisible()));
 
     await menuButton.click();
     await page.locator('#theme-cycle').click();
-    check(`${scenario}: theme cycle selects and persists light`, await page.locator('html').getAttribute('data-theme-preference') === 'light' && await page.evaluate(() => localStorage.getItem('lds-theme')) === 'light');
+    check(`${scenario}: theme cycle selects, labels, and persists light`, await page.locator('html').getAttribute('data-theme-preference') === 'light'
+      && await page.locator('#theme-cycle').getAttribute('aria-label') === route.aria.themeLight
+      && await page.evaluate(() => localStorage.getItem('lds-theme')) === 'light');
     await page.reload({ waitUntil: 'load' });
     await page.evaluate(() => document.fonts?.ready);
     check(`${scenario}: persisted theme survives reload`, await page.locator('html').getAttribute('data-theme') === 'light' && await page.locator('html').getAttribute('data-theme-preference') === 'light');
@@ -421,18 +553,18 @@ async function runInteractions() {
         const playing = Boolean(element && !element.hidden && element.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && !element.paused && element.currentTime > 0);
         return playing || fallbackVisible;
       }, null, { timeout: 10000 });
-      videoOutcome = await page.evaluate(() => {
+      videoOutcome = await page.evaluate((expectedVideoHref) => {
         const element = document.querySelector('[data-cc-video]');
         const fallback = document.querySelector('[data-video-fallback]');
         const fallbackVisible = Boolean(fallback && !fallback.hidden && getComputedStyle(fallback).display !== 'none');
         if (element && !element.hidden && !element.paused && element.currentTime > 0) return { kind: 'playing', firstTime: element.currentTime };
         return {
           kind: 'fallback',
-          valid: Boolean(element?.hidden && fallbackVisible && (element.error || element.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) && fallback?.querySelector('a[download]')?.getAttribute('href') === './assets/cityscan-demo.mp4'),
+          valid: Boolean(element?.hidden && fallbackVisible && (element.error || element.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) && fallback?.querySelector('a[download]')?.getAttribute('href') === expectedVideoHref),
           errorCode: element?.error?.code || 0,
           networkState: element?.networkState,
         };
-      });
+      }, route.videoHref);
       if (videoOutcome.kind === 'playing') {
         await page.waitForTimeout(350);
         const secondTime = await page.locator('[data-cc-video]').evaluate((element) => element.currentTime);
@@ -440,6 +572,7 @@ async function runInteractions() {
       }
     } catch { /* Report through the assertion below. */ }
     check(`${scenario}: CityScan autoplays when supported or exposes its deterministic fallback`, (videoOutcome.kind === 'playing' && videoOutcome.advances) || (videoOutcome.kind === 'fallback' && videoOutcome.valid), JSON.stringify(videoOutcome));
+    await page.evaluate(() => document.querySelector('[data-cc-video]')?.pause());
 
     await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; });
     await page.locator('#tab-chat').scrollIntoViewIfNeeded();
@@ -455,17 +588,41 @@ async function runInteractions() {
     await page.locator('#tab-chat').press('ArrowLeft');
     check(`${scenario}: tab keyboard navigation wraps focus and state`, await page.locator('#tab-data').evaluate((element) => document.activeElement === element) && await page.locator('#tab-data').getAttribute('aria-selected') === 'true' && await page.locator('#panel-data').isVisible());
 
+    await page.evaluate(() => document.activeElement instanceof HTMLElement && document.activeElement.blur());
+    const viewport = page.viewportSize();
+    await page.mouse.move(8, Math.max(8, (viewport?.height || 800) - 8));
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForFunction(() => document.querySelector('[data-cc-nav]')?.dataset.calm === 'off');
-    await page.waitForTimeout(650);
+    await page.waitForFunction(() => document.querySelector('[data-cc-nav] [data-part="bar"]')?.getBoundingClientRect().height >= 75, null, { timeout: 3000 });
     const expandedHeight = await page.locator('[data-cc-nav] [data-part="bar"]').evaluate((element) => element.getBoundingClientRect().height);
-    await page.evaluate(() => window.scrollTo(0, 1400));
-    await page.waitForFunction(() => document.querySelector('[data-cc-nav]')?.dataset.calm === 'on');
-    await page.waitForTimeout(650);
-    const calmHeight = await page.locator('[data-cc-nav] [data-part="bar"]').evaluate((element) => element.getBoundingClientRect().height);
+    const readNavState = () => page.evaluate(() => {
+        const nav = document.querySelector('[data-cc-nav]');
+        const bar = nav?.querySelector('[data-part="bar"]');
+        return {
+          calm: nav?.dataset.calm,
+          hovered: nav?.matches(':hover'),
+          height: bar?.getBoundingClientRect().height,
+          computedHeight: bar ? getComputedStyle(bar).height : '',
+          transitionDuration: bar ? getComputedStyle(bar).transitionDuration : '',
+          scrollY,
+        };
+      });
+
+    let calmState = await readNavState();
+    const calmDeadline = Date.now() + 3000;
+    while ((calmState.calm !== 'on' || calmState.height > 30) && Date.now() < calmDeadline) {
+      await page.mouse.wheel(0, 120);
+      await page.waitForTimeout(80);
+      calmState = await readNavState();
+    }
+    const calmHeight = calmState.height;
+    check(`${scenario}: sustained downward scrolling reaches the compact nav state`, calmState.calm === 'on' && calmHeight <= 30, JSON.stringify(calmState));
+    await page.waitForTimeout(240);
+    const settledCalmState = await readNavState();
+    check(`${scenario}: compact nav remains stable after scrolling stops`, settledCalmState.calm === 'on' && settledCalmState.height <= 30, JSON.stringify(settledCalmState));
     await page.locator('[data-cc-nav]').hover();
     await page.waitForFunction(() => document.querySelector('[data-cc-nav]')?.dataset.calm === 'off');
-    await page.waitForTimeout(650);
+    await page.waitForFunction(() => document.querySelector('[data-cc-nav] [data-part="bar"]')?.getBoundingClientRect().height >= 75, null, { timeout: 3000 });
     const restoredHeight = await page.locator('[data-cc-nav] [data-part="bar"]').evaluate((element) => element.getBoundingClientRect().height);
     check(`${scenario}: calm nav compresses and hover restores it`, expandedHeight >= 75 && calmHeight <= 30 && restoredHeight >= 75, `${expandedHeight}/${calmHeight}/${restoredHeight}`);
   } finally {
@@ -474,23 +631,23 @@ async function runInteractions() {
   }
 }
 
-async function runSystemDark() {
-  const scenario = 'system dark';
+async function runSystemDark(route = routes.th) {
+  const scenario = route.id === 'th' ? 'system dark' : `${route.label} system dark`;
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'dark' });
-  const { page, finishDiagnostics } = await openPage(context, scenario);
+  const { page, finishDiagnostics } = await openPage(context, scenario, route);
   try {
     check(`${scenario}: system preference resolves dark without saved state`, await page.locator('html').getAttribute('data-theme-preference') === 'system' && await page.locator('html').getAttribute('data-theme') === 'dark');
-    await assertCommonLayout(page, scenario, 'dark', false);
+    await assertCommonLayout(page, scenario, 'dark', false, route);
   } finally {
     finishDiagnostics();
     await context.close();
   }
 }
 
-async function runReducedMotion() {
-  const scenario = 'reduced motion';
+async function runReducedMotion(route = routes.th) {
+  const scenario = route.id === 'th' ? 'reduced motion' : `${route.label} reduced motion`;
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'light', reducedMotion: 'reduce' });
-  const { page, finishDiagnostics } = await openPage(context, scenario);
+  const { page, finishDiagnostics } = await openPage(context, scenario, route);
   try {
     const state = await page.evaluate(() => {
       const approaches = [...document.querySelectorAll('[data-approach]')].map((element) => {
@@ -499,6 +656,10 @@ async function runReducedMotion() {
       });
       const sweep = document.querySelector('[data-cc-nav] [data-part="sweep"]');
       return {
+        lang: document.documentElement.lang,
+        ariaLabels: [...document.querySelectorAll('[aria-label]')]
+          .filter((element) => !element.matches('a[hreflang="th"]'))
+          .map((element) => element.getAttribute('aria-label')),
         approaches,
         sweepAnimation: sweep ? getComputedStyle(sweep).animationName : '',
         scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
@@ -508,6 +669,10 @@ async function runReducedMotion() {
         })(),
       };
     });
+    check(`${scenario}: document language remains exact`, state.lang === route.lang, state.lang);
+    if (route.id === 'en') {
+      check(`${scenario}: reduced-motion English UI keeps localized ARIA`, state.ariaLabels.every((label) => !/[฀-๿]/u.test(label)), JSON.stringify(state.ariaLabels.filter((label) => /[฀-๿]/u.test(label))));
+    }
     check(`${scenario}: approach targets remain fully landed`, state.approaches.every((item) => item.opacity === '1' && item.transform === 'none' && item.transition.split(',').every((value) => value.trim() === '0s')), JSON.stringify(state.approaches.filter((item) => item.opacity !== '1' || item.transform !== 'none' || !item.transition.split(',').every((value) => value.trim() === '0s')).slice(0, 4)));
     check(`${scenario}: decorative sweep animation is disabled`, state.sweepAnimation === 'none', state.sweepAnimation);
     check(`${scenario}: smooth scrolling is disabled`, state.scrollBehavior === 'auto', state.scrollBehavior);
@@ -518,10 +683,10 @@ async function runReducedMotion() {
   }
 }
 
-async function runNoJavaScript() {
-  const scenario = 'no JavaScript';
+async function runNoJavaScript(route = routes.th) {
+  const scenario = route.id === 'th' ? 'no JavaScript' : `${route.label} no JavaScript`;
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'light', javaScriptEnabled: false });
-  const { page, finishDiagnostics } = await openPage(context, scenario);
+  const { page, finishDiagnostics } = await openPage(context, scenario, route);
   try {
     const state = await page.evaluate(() => {
       const visible = (element) => {
@@ -534,7 +699,12 @@ async function runNoJavaScript() {
         const style = getComputedStyle(element);
         return { opacity: style.opacity, transform: style.transform };
       });
+      const fallbackDownload = document.querySelector('[data-video-fallback] a[download]');
       return {
+        lang: document.documentElement.lang,
+        ariaLabels: [...document.querySelectorAll('[aria-label]')]
+          .filter((element) => !element.matches('a[hreflang="th"]'))
+          .map((element) => element.getAttribute('aria-label')),
         hasJs: document.documentElement.classList.contains('has-js'),
         regions: ['main-content', 'offer', 'partners', 'product', 'loop', 'record', 'contact'].every((id) => visible(document.getElementById(id))),
         approaches,
@@ -542,13 +712,23 @@ async function runNoJavaScript() {
         tablistVisible: visible(document.querySelector('[role="tablist"]')),
         defaultPanelVisible: visible(document.querySelector('#panel-data')),
         fallbackVisible: visible(document.querySelector('[data-video-fallback]')),
+        fallbackHref: fallbackDownload?.getAttribute('href') || '',
+        fallbackPathname: fallbackDownload ? new URL(fallbackDownload.href).pathname : '',
         videoVisible: visible(document.querySelector('[data-cc-video]')),
         overflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - innerWidth,
       };
     });
+    check(`${scenario}: static document language is exact`, state.lang === route.lang, state.lang);
     check(`${scenario}: initial markup stays readable`, !state.hasJs && state.regions && state.approaches.every((item) => item.opacity === '1' && item.transform === 'none'));
     check(`${scenario}: inert menu and tab controls are hidden while default content remains available`, !state.menuVisible && !state.tablistVisible && state.defaultPanelVisible, JSON.stringify(state));
-    check(`${scenario}: video area has a deterministic fallback`, state.fallbackVisible && !state.videoVisible, JSON.stringify(state));
+    check(`${scenario}: video area has a deterministic route-correct fallback`, state.fallbackVisible
+      && !state.videoVisible
+      && state.fallbackHref === route.videoHref
+      && state.fallbackPathname === `/${config.media.cityscan.path}`,
+    JSON.stringify(state));
+    if (route.id === 'en') {
+      check(`${scenario}: static English UI exposes localized ARIA`, state.ariaLabels.every((label) => !/[฀-๿]/u.test(label)), JSON.stringify(state.ariaLabels.filter((label) => /[฀-๿]/u.test(label))));
+    }
     check(`${scenario}: page has no horizontal overflow`, state.overflow <= 1, `${state.overflow}px`);
   } finally {
     finishDiagnostics();
@@ -556,14 +736,14 @@ async function runNoJavaScript() {
   }
 }
 
-async function runStorageDenied() {
+async function runStorageDenied(route = routes.th) {
   const scenario = 'storage denied';
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'dark' });
   await context.addInitScript(() => {
     Object.defineProperty(Storage.prototype, 'getItem', { configurable: true, value() { throw new DOMException('Denied', 'SecurityError'); } });
     Object.defineProperty(Storage.prototype, 'setItem', { configurable: true, value() { throw new DOMException('Denied', 'SecurityError'); } });
   });
-  const { page, finishDiagnostics } = await openPage(context, scenario);
+  const { page, finishDiagnostics } = await openPage(context, scenario, route);
   try {
     check(`${scenario}: initial theme still follows the dark system`, await page.locator('html').getAttribute('data-theme') === 'dark' && await page.locator('html').getAttribute('data-theme-preference') === 'system');
     await page.locator('#menu-toggle').click();
@@ -590,6 +770,9 @@ try {
     ...(executablePath ? { executablePath } : {}),
   });
 
+  await runInteractions();
+  await runInteractions(routes.en);
+
   const matrix = [
     { name: 'desktop light', viewport: { width: 1440, height: 1000 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: true },
     { name: 'desktop dark', viewport: { width: 1440, height: 1000 }, preference: 'dark', expectedTheme: 'dark', colorScheme: 'light', desktop: true },
@@ -603,10 +786,23 @@ try {
     { name: 'short landscape', viewport: { width: 900, height: 600 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: false },
   ];
   for (const scenario of matrix) await runMatrixScenario(scenario);
-  await runInteractions();
   await runSystemDark();
   await runReducedMotion();
   await runNoJavaScript();
+
+  await runMatrixScenario({
+    name: 'English desktop light',
+    viewport: { width: 1440, height: 1000 },
+    preference: 'light',
+    expectedTheme: 'light',
+    colorScheme: 'light',
+    desktop: true,
+    route: routes.en,
+    probeAssets: true,
+  });
+  await runSystemDark(routes.en);
+  await runReducedMotion(routes.en);
+  await runNoJavaScript(routes.en);
   await runStorageDenied();
 } catch (error) {
   failures.push(`rendered test harness — ${error.stack || error.message}`);
@@ -620,5 +816,5 @@ if (failures.length > 0) {
   failures.forEach((failure) => console.error(`- ${failure}`));
   process.exitCode = 1;
 } else {
-  console.log(`CityChat rendered validation passed (${checks} assertions across 15 browser scenarios).`);
+  console.log(`CityChat rendered validation passed (${checks} assertions across ${browserScenarios} browser scenarios).`);
 }

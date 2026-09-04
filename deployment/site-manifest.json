@@ -15,8 +15,8 @@
   },
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
-    "files": 237,
-    "bytes": 45332904
+    "files": 238,
+    "bytes": 45396790
   },
   "files": [
     {
@@ -26,8 +26,8 @@
     },
     {
       "path": "app.js",
-      "bytes": 10785,
-      "sha256": "ac32a015b412070f288cd6559b97511260055c7ff2e6ebb97f1d323a349ee9d6"
+      "bytes": 11264,
+      "sha256": "1a04db1ccc9ccf307ed185b75eff3b09e6c2298d3902d941ff0865f622db6879"
     },
     {
       "path": "assets/ASSET-LIBRARY-SHA256SUMS.v0.8.0.txt",
@@ -406,8 +406,8 @@
     },
     {
       "path": "citychat.css",
-      "bytes": 21192,
-      "sha256": "0421380ce02578ece75f1e6a5eafe51860f0b07cfb943f785201e83e18266980"
+      "bytes": 21322,
+      "sha256": "9cacdc131b52be9b488db9546915d826b97dc37e847e4f53cfc3308fd5401deb"
     },
     {
       "path": "control-inventory.v0.4.json",
@@ -438,6 +438,11 @@
       "path": "control-inventory.v0.8.0.json",
       "bytes": 16942,
       "sha256": "bfea4f492095a21368e0d22f60c2e12d6d7de61c2482db3d359cd80b1417588a"
+    },
+    {
+      "path": "en/index.html",
+      "bytes": 62718,
+      "sha256": "83301e5eb1482a3fa4957336cf7292fdbb5e9d95c8780dd6b26e0a2b637ee75a"
     },
     {
       "path": "implementation-notes.v0.4.md",
@@ -471,13 +476,13 @@
     },
     {
       "path": "index.html",
-      "bytes": 74955,
-      "sha256": "d2be159ec228655a61fbf48124e9ab071f23b3b1b1a82dfa2537e2021945e4b3"
+      "bytes": 75484,
+      "sha256": "a76c774ad6d0f416717ac825cb90d9632c6534b033daef82dc74af1320599c11"
     },
     {
       "path": "llms.txt",
-      "bytes": 1007,
-      "sha256": "2a8e0d340dafb52f9dcec2d438053ae47457eabaebdbc8f29752659a431966b0"
+      "bytes": 1037,
+      "sha256": "b638016e5a265d03941f9da738c7c3cbe6602d9200d5dcadab8a8e5c7b32880c"
     },
     {
       "path": "qa/automated.v0.4.json",
