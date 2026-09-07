@@ -12,6 +12,7 @@ const entryRelativePath = safeRelativePath(config.deployment.entry, 'deployment 
 const html = readFileSync(resolveDeploymentPath(entryRelativePath), 'utf8');
 const css = readFileSync(resolveDeploymentPath('citychat.css'), 'utf8');
 const app = readFileSync(resolveDeploymentPath('app.js'), 'utf8');
+const liveVerifier = readFileSync(path.join(repositoryRoot, 'tools/verify-live.mjs'), 'utf8');
 const failures = [];
 const checks = [];
 
@@ -958,6 +959,11 @@ check('registered motion stylesheet is finite and reduced-motion safe', motifMot
   && !/\binfinite\b/i.test(motifMotionCss)
   && /prefers-reduced-motion\s*:\s*reduce/.test(motifMotionCss)
   && /animation\s*:\s*none\s*!important/i.test(motifMotionCss));
+check('live verifier pins every registered motif byte record exactly', motifRegisteredFiles.every((expected) => new RegExp(
+  `file:\\s*["']${escapeRegExp(expected.file)}["'][^}\\n]*bytes:\\s*${expected.bytes}\\b[^}\\n]*sha256:\\s*["']${expected.sha256}["']`
+).test(liveVerifier)));
+check('live verifier separates active runtime closure from all-file provenance verification', /activeMotifFiles\s*=\s*motifRegisteredFiles\.filter/.test(liveVerifier)
+  && /\.\.\.motifRegisteredFiles\.map\(\(\{\s*deploymentPath\s*\}\)\s*=>\s*deploymentPath\)/.test(liveVerifier));
 
 try {
   new Script(app, { filename: 'deployment/app.js' });
