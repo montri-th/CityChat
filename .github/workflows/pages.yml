@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "deployment/**"
+      - "handoff/citychat-motif-set/**"
+      - "citychat-build-card.json"
       - "tools/**"
       - "package.json"
       - "release.config.json"

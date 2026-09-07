@@ -14,7 +14,24 @@ const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 const entryRelativePath = safeRelativePath(config.deployment.entry);
 const attempts = positiveInteger(process.env.VERIFY_ATTEMPTS || config.live.attempts, 'VERIFY_ATTEMPTS');
 const delayMs = nonNegativeInteger(process.env.VERIFY_DELAY_MS || config.live.delayMs, 'VERIFY_DELAY_MS');
-const releaseKey = [config.artifact.buildId, process.env.GITHUB_SHA || 'local'].join('.');
+const releaseKey = [config.artifact.releaseRevision || config.artifact.buildId, process.env.GITHUB_SHA || 'local'].join('.');
+const motifPackageRoot = 'assets/citychat-motif-set';
+const motifRuntimeHostPath = 'motif-runtime.js';
+const motifRegisteredFiles = [
+  { file: 'assets/3a-voice-home-light.svg', bytes: 11143, sha256: 'c175caf8dd9fb0b045af720693aa45aef588b026e4eeaa5b88754cfffa8a06eb' },
+  { file: 'assets/3a-voice-home-dark.svg', bytes: 11143, sha256: '9717b6f70a9442e437e2ee069c335db44c8820aba6653d0aac385d1338f315d8' },
+  { file: 'assets/3b-live-visit-trade-light.svg', bytes: 10504, sha256: '3727a85d22e666c26ee6b0e150c6faa9200de2eca049947ee95a94f400c9d157' },
+  { file: 'assets/3b-live-visit-trade-dark.svg', bytes: 10504, sha256: '6f3a43b046b8c4a24b6f1c52b7d6a0e091ec08eb959f3cfecbe4e4140fc271a5' },
+  { file: 'assets/3c-our-voice-here-light.svg', bytes: 12662, sha256: '4d13de02f25e82f0d919f5a51f18b72e5424798cfd83cdb2ff67e65e5458f1cd' },
+  { file: 'assets/3c-our-voice-here-dark.svg', bytes: 12662, sha256: '350fadd34a5472ebac6effe2118e9fc4f3922b7dfd6e0d0faa9c6793bdaeba3d' },
+  { file: 'assets/logo-bubbles-proposal-light.svg', bytes: 9249, sha256: '388f82731025fe82c446f4f40d611fc2a242997a47b0e82faeb1090f55b00760' },
+  { file: 'assets/logo-bubbles-proposal-dark.svg', bytes: 9249, sha256: '2bb77c85b0885526b299899b6705d79b17383144f77fd563009f56f5143b76c6' },
+  { file: 'assets/lockup-without-bubbles-light.png', bytes: 17608, sha256: 'df00f1c02f2c453dbd6a21746d015fff8079880de863b2643c9fc7c2449583' },
+  { file: 'assets/lockup-without-bubbles-dark.png', bytes: 17483, sha256: '37af6d9675ee4c1eac934e60c6e481727c0ddb0aff0ad0db87000a6b1923990a' },
+  { file: 'assets/conversation-motif-original.svg', bytes: 11610, sha256: 'fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4' },
+  { file: 'motion/citychat-motif-motion.css', bytes: 6779, sha256: '67c4f2638ef76b7ecf355edd53a7c4f2c55cc51cafe7291f28dbf9cd4e00e91d' },
+  { file: 'motion/citychat-motif-motion.js', bytes: 43005, sha256: 'fc60ace74fa51fb4eb0f18e0398f4efe4032fcc18d38c4db7a350151c6e8064d' },
+].map((record) => ({ ...record, deploymentPath: `${motifPackageRoot}/${record.file}` }));
 
 function positiveInteger(value, name) {
   const number = Number(value);
@@ -278,6 +295,23 @@ function assertLandingText(source, locale, label) {
   if (!/<\/main>\s*<footer\b[\s\S]*?<\/footer>\s*<\/div>\s*<\/body>\s*<\/html>\s*$/i.test(source)) {
     throw new Error(`${label} footer is not the final layout child.`);
   }
+  const motifIds = [...source.matchAll(/\bdata-citychat-motif\s*=\s*["']([^"']+)["']/gi)].map((match) => match[1]);
+  if (motifIds.length !== 4 || new Set(motifIds).size !== 4 || [...motifIds].sort().join(',') !== 'a,b,c,motif') {
+    throw new Error(`${label} does not contain the exact semantic motif set.`);
+  }
+  if ([...source.matchAll(/\bdata-citychat-logo(?:\s|=|>)/gi)].length !== 1) {
+    throw new Error(`${label} does not contain exactly one governed opening logo stage.`);
+  }
+  const motifCssHref = localeAssetHref(locale, `${motifPackageRoot}/motion/citychat-motif-motion.css`);
+  const runtimeHostHref = localeAssetHref(locale, motifRuntimeHostPath);
+  const motifCssLinks = tags('link', source).filter((attrs) => (attrs.get('rel') || '').split(/\s+/).includes('stylesheet') && attrs.get('href') === motifCssHref);
+  const motifRuntimeScripts = tags('script', source).filter((attrs) => attrs.get('type') === 'module' && attrs.get('src') === runtimeHostHref);
+  if (motifCssLinks.length !== 1 || motifRuntimeScripts.length !== 1) {
+    throw new Error(`${label} does not wire the exact motif stylesheet and runtime host.`);
+  }
+  if (/\bCC-EX-0[12]\b|\bCC-MOTION-02\b|asset-register\.json|AMENDMENT\.md/.test(source)) {
+    throw new Error(`${label} leaks motif governance language into the public page.`);
+  }
   if (/<\/?(?:x-dc|x-import|sc-if|sc-for)\b|\{\{[^}]+\}\}|type=["']text\/x-dc|data-dc-script|(?:support|ds-base)\.js|style-(?:hover|focus|active)=/i.test(source)) {
     throw new Error(`${label} contains DreamCanvas/template residue.`);
   }
@@ -320,7 +354,7 @@ while (pending.length > 0) {
   const relativePath = pending.shift();
   const absolutePath = resolveDeploymentPath(relativePath);
   if (!existsSync(absolutePath)) throw new Error(`Runtime closure file is missing locally: ${relativePath}`);
-  if (!/\.(?:html?|css|svg)$/i.test(relativePath)) continue;
+  if (!/\.(?:html?|css|js|svg)$/i.test(relativePath)) continue;
   const source = readFileSync(absolutePath, 'utf8');
 
   if (/\.html?$/i.test(relativePath)) {
@@ -359,11 +393,32 @@ while (pending.length > 0) {
     for (const match of source.matchAll(/@import\s+(?:url\(\s*)?["']([^"']+)["']/gi)) addResource(match[1], relativePath, `${relativePath} CSS @import`);
   }
 
+  if (/\.js$/i.test(relativePath)) {
+    for (const match of source.matchAll(/(?:import|export)\s+(?:[^;"']*?\s+from\s*)?["']([^"']+)["']/g)) {
+      addResource(match[1], relativePath, `${relativePath} module import`);
+    }
+    for (const match of source.matchAll(/\bimport\s*\(\s*["']([^"']+)["']\s*\)/g)) {
+      addResource(match[1], relativePath, `${relativePath} dynamic module import`);
+    }
+  }
+
   if (/\.svg$/i.test(relativePath)) {
     for (const attrs of [...tags('image', source), ...tags('use', source)]) {
       const href = attrs.get('href') || attrs.get('xlink:href');
       if (href && !href.startsWith('#')) addResource(href, relativePath, `${relativePath} embedded SVG resource`);
     }
+  }
+}
+
+if (!closure.has(motifRuntimeHostPath)) throw new Error(`Runtime closure is missing ${motifRuntimeHostPath}.`);
+const activeMotifFiles = motifRegisteredFiles.filter(({ file }) => file !== 'assets/conversation-motif-original.svg');
+for (const expected of motifRegisteredFiles) {
+  if (activeMotifFiles.includes(expected) && !closure.has(expected.deploymentPath)) {
+    throw new Error(`Runtime closure is missing active registered motif asset: ${expected.deploymentPath}`);
+  }
+  const bytes = readFileSync(resolveDeploymentPath(expected.deploymentPath));
+  if (bytes.byteLength !== expected.bytes || sha256(bytes) !== expected.sha256) {
+    throw new Error(`Registered motif asset differs from the pinned handoff bytes: ${expected.deploymentPath}`);
   }
 }
 
@@ -462,6 +517,7 @@ async function fetchExact(relativePath) {
 
 const verifiedPaths = [
   ...closure,
+  ...motifRegisteredFiles.map(({ deploymentPath }) => deploymentPath),
   robotsRelativePath,
   config.deployment.manifest,
   config.deployment.checksums,
@@ -484,7 +540,7 @@ for (const locale of localePages) {
 
 console.log(JSON.stringify({
   schemaVersion: '2.0',
-  receiptId: `citychat-live-${config.artifact.buildId}`,
+  receiptId: `citychat-live-${config.artifact.releaseRevision || config.artifact.buildId}`,
   artifact: config.artifact,
   siteUrl: siteRoot.href,
   deployedSourceSha: process.env.GITHUB_SHA || 'unresolved_local',
@@ -505,6 +561,9 @@ console.log(JSON.stringify({
   closure: {
     policy: config.live.verify,
     runtimeFiles: closure.size,
+    motifRuntimeHost: motifRuntimeHostPath,
+    registeredMotifFiles: motifRegisteredFiles.length,
+    motifHashesVerified: true,
     policyFiles: 1,
     releaseMetadataFiles: 2,
   },

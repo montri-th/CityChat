@@ -1,0 +1,205 @@
+{
+  "schemaVersion": "1.0",
+  "artifact": {
+    "id": "citychat-public-landing",
+    "buildId": "citychat-landing-20260903-03",
+    "releaseRevision": "citychat-motif-20260907-01",
+    "canonicalUrls": [
+      "https://montri-th.github.io/CityChat/",
+      "https://montri-th.github.io/CityChat/en/"
+    ]
+  },
+  "authorization": {
+    "scope": "this CityChat landing release",
+    "recordedAt": "2026-09-08",
+    "source": "Explicit project-owner approval in the current CityChat task",
+    "directApprovalText": "อนุมัติ animated motif + logo ทุกชิ้น",
+    "publicationIntent": "Republish the approved motif and logo treatment to the public CityChat GitHub Pages routes named in this task.",
+    "approved": [
+      "all registered CityChat motif stills and one-shot motion",
+      "the hash-bound proposed logo components and one-shot animated bubbles under CC-EX-02"
+    ],
+    "artifactSpecificDecisions": [
+      "use the registered proposed logo components in the production opening hero for this landing release",
+      "treat that hero as the single opening scene authorized for the one-shot CC-EX-02 logo gesture"
+    ],
+    "canonicalDesignSystemPromotion": false
+  },
+  "lds": {
+    "release": "0.9.1",
+    "authoring": "0.9.1-r8",
+    "ruleset": "lds-rules-0.9.1",
+    "machine": "v0.9.1-mp7",
+    "colorSet": "color-srgb-05"
+  },
+  "addon": {
+    "name": "CityChat DS Add-on",
+    "version": "0.9.1",
+    "amendment": "handoff/citychat-motif-set/AMENDMENT.md",
+    "assetRegister": "handoff/citychat-motif-set/asset-register.json"
+  },
+  "sourcePackage": {
+    "archive": "CityChat มอทีฟชุมชน.zip",
+    "archiveSha256": "72d5840a39d28db4f370c9a36e9bb328a197e5faaa55f0e3e9a94d493cfa02db"
+  },
+  "assets": [
+    {
+      "file": "assets/3a-voice-home-light.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/3a-voice-home-light.svg",
+      "bytes": 11143,
+      "sha256": "c175caf8dd9fb0b045af720693aa45aef588b026e4eeaa5b88754cfffa8a06eb"
+    },
+    {
+      "file": "assets/3a-voice-home-dark.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/3a-voice-home-dark.svg",
+      "bytes": 11143,
+      "sha256": "9717b6f70a9442e437e2ee069c335db44c8820aba6653d0aac385d1338f315d8"
+    },
+    {
+      "file": "assets/3b-live-visit-trade-light.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/3b-live-visit-trade-light.svg",
+      "bytes": 10504,
+      "sha256": "3727a85d22e666c26ee6b0e150c6faa9200de2eca049947ee95a94f400c9d157"
+    },
+    {
+      "file": "assets/3b-live-visit-trade-dark.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/3b-live-visit-trade-dark.svg",
+      "bytes": 10504,
+      "sha256": "6f3a43b046b8c4a24b6f1c52b7d6a0e091ec08eb959f3cfecbe4e4140fc271a5"
+    },
+    {
+      "file": "assets/3c-our-voice-here-light.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/3c-our-voice-here-light.svg",
+      "bytes": 12662,
+      "sha256": "4d13de02f25e82f0d919f5a51f18b72e5424798cfd83cdb2ff67e65e5458f1cd"
+    },
+    {
+      "file": "assets/3c-our-voice-here-dark.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/3c-our-voice-here-dark.svg",
+      "bytes": 12662,
+      "sha256": "350fadd34a5472ebac6effe2118e9fc4f3922b7dfd6e0d0faa9c6793bdaeba3d"
+    },
+    {
+      "file": "assets/logo-bubbles-proposal-light.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/logo-bubbles-proposal-light.svg",
+      "bytes": 9249,
+      "sha256": "388f82731025fe82c446f4f40d611fc2a242997a47b0e82faeb1090f55b00760"
+    },
+    {
+      "file": "assets/logo-bubbles-proposal-dark.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/logo-bubbles-proposal-dark.svg",
+      "bytes": 9249,
+      "sha256": "2bb77c85b0885526b299899b6705d79b17383144f77fd563009f56f5143b76c6"
+    },
+    {
+      "file": "assets/lockup-without-bubbles-light.png",
+      "deploymentPath": "assets/citychat-motif-set/assets/lockup-without-bubbles-light.png",
+      "bytes": 17608,
+      "sha256": "df00f1c02f2c2c453dbd6a21746d015fff8079880de863b2643c9fc7c2449583"
+    },
+    {
+      "file": "assets/lockup-without-bubbles-dark.png",
+      "deploymentPath": "assets/citychat-motif-set/assets/lockup-without-bubbles-dark.png",
+      "bytes": 17483,
+      "sha256": "37af6d9675ee4c1eac934e60c6e481727c0ddb0aff0ad0db87000a6b1923990a"
+    },
+    {
+      "file": "assets/conversation-motif-original.svg",
+      "deploymentPath": "assets/citychat-motif-set/assets/conversation-motif-original.svg",
+      "bytes": 11610,
+      "sha256": "fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4"
+    },
+    {
+      "file": "motion/citychat-motif-motion.css",
+      "deploymentPath": "assets/citychat-motif-set/motion/citychat-motif-motion.css",
+      "bytes": 6779,
+      "sha256": "67c4f2638ef76b7ecf355edd53a7c4f2c55cc51cafe7291f28dbf9cd4e00e91d"
+    },
+    {
+      "file": "motion/citychat-motif-motion.js",
+      "deploymentPath": "assets/citychat-motif-set/motion/citychat-motif-motion.js",
+      "bytes": 43005,
+      "sha256": "fc60ace74fa51fb4eb0f18e0398f4efe4032fcc18d38c4db7a350151c6e8064d"
+    }
+  ],
+  "placements": [
+    {
+      "scene": "opening hero",
+      "asset": "animated CityChat logo bubbles",
+      "meaning": "opening identity",
+      "surface": "CityChat theme gradient",
+      "motion": "once on first intersection"
+    },
+    {
+      "scene": "CityScan neighbourhood questions",
+      "asset": "3b-live-visit-trade",
+      "meaning": "live, visit, and local trade",
+      "surface": "page canvas",
+      "motion": "once on first intersection"
+    },
+    {
+      "scene": "resident view",
+      "asset": "3a-voice-home",
+      "meaning": "pride in home and a welcome for newcomers",
+      "surface": "card",
+      "motion": "once on first intersection"
+    },
+    {
+      "scene": "data and community voice",
+      "asset": "3c-our-voice-here",
+      "meaning": "a community voice pinned to a real place",
+      "surface": "alternate canvas",
+      "motion": "once on first intersection"
+    },
+    {
+      "scene": "contact invitation",
+      "asset": "ConversationMotif",
+      "meaning": "a calm invitation to begin a conversation",
+      "surface": "Landometer atmosphere gradient",
+      "motion": "once on first intersection"
+    }
+  ],
+  "implementation": {
+    "authoringGovernance": "Landometer Design System v0.9.1 (0.9.1-r8 / v0.9.1-mp7)",
+    "visualRuntimeFoundation": {
+      "version": "0.9.0",
+      "reason": "The verified v0.9.1 governance package does not ship a replacement browser build-kit; this artifact retains the existing immutable visual foundation.",
+      "stylesheets": [
+        "vendor/landometer/v0.9.0/build-kit/lds-tokens.css",
+        "vendor/landometer/v0.9.0/build-kit/lds-base.css"
+      ]
+    },
+    "ctaDiscoveryCue": {
+      "recipeId": "motion.cta.discovery-cue.01",
+      "target": "primary navigational trial CTA",
+      "userBenefit": "discoverability",
+      "trigger": "first visible entry",
+      "durationMs": 540,
+      "repeatCountPerPageLoad": 1,
+      "reentryBehavior": "do not repeat",
+      "staticEquivalent": "the fully visible underlying CTA"
+    },
+    "runtimeHost": "motif-runtime.js",
+    "registeredModule": "assets/citychat-motif-set/motion/citychat-motif-motion.js",
+    "registeredStylesheet": "assets/citychat-motif-set/motion/citychat-motif-motion.css",
+    "conversationStaticFallback": {
+      "source": "registeredModule.svg.motif",
+      "embeddedVerbatim": true,
+      "originalAssetRetainedForProvenance": "assets/citychat-motif-set/assets/conversation-motif-original.svg"
+    },
+    "intersectionThreshold": 0.14,
+    "staticFallbacks": [
+      "no JavaScript",
+      "prefers-reduced-motion",
+      "print"
+    ]
+  },
+  "qa": {
+    "exceptionIds": [
+      "CC-EX-02"
+    ],
+    "perpetualMotifMotion": false,
+    "perpetualLogoMotion": false,
+    "frontstageGovernanceCopy": false
+  }
+}

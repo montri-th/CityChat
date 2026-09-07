@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, lstatSync, readFileSync } from 'node:fs';
+import { existsSync, lstatSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { Script } from 'node:vm';
 import { fileURLToPath } from 'node:url';
@@ -14,6 +14,34 @@ const css = readFileSync(resolveDeploymentPath('citychat.css'), 'utf8');
 const app = readFileSync(resolveDeploymentPath('app.js'), 'utf8');
 const failures = [];
 const checks = [];
+
+const motifPackageRoot = 'assets/citychat-motif-set';
+const motifAmendmentPath = 'handoff/citychat-motif-set/AMENDMENT.md';
+const motifRegisterPath = 'handoff/citychat-motif-set/asset-register.json';
+const motifBuildCardPath = 'citychat-build-card.json';
+const motifRuntimeHostPath = 'motif-runtime.js';
+const motifGovernanceFiles = new Map([
+  [motifAmendmentPath, { bytes: 10670, sha256: '5b95e07973b7441d5c42b7a2a769eb5bec309e86f733a43c1b46ce16756bc005' }],
+  [motifRegisterPath, { bytes: 4353, sha256: '35bd51aaa001ed7874a5bb4428cc61a374f7f073bdeda6a8016741561acdca44' }],
+]);
+const motifRegisteredFiles = [
+  { file: 'assets/3a-voice-home-light.svg', bytes: 11143, sha256: 'c175caf8dd9fb0b045af720693aa45aef588b026e4eeaa5b88754cfffa8a06eb' },
+  { file: 'assets/3a-voice-home-dark.svg', bytes: 11143, sha256: '9717b6f70a9442e437e2ee069c335db44c8820aba6653d0aac385d1338f315d8' },
+  { file: 'assets/3b-live-visit-trade-light.svg', bytes: 10504, sha256: '3727a85d22e666c26ee6b0e150c6faa9200de2eca049947ee95a94f400c9d157' },
+  { file: 'assets/3b-live-visit-trade-dark.svg', bytes: 10504, sha256: '6f3a43b046b8c4a24b6f1c52b7d6a0e091ec08eb959f3cfecbe4e4140fc271a5' },
+  { file: 'assets/3c-our-voice-here-light.svg', bytes: 12662, sha256: '4d13de02f25e82f0d919f5a51f18b72e5424798cfd83cdb2ff67e65e5458f1cd' },
+  { file: 'assets/3c-our-voice-here-dark.svg', bytes: 12662, sha256: '350fadd34a5472ebac6effe2118e9fc4f3922b7dfd6e0d0faa9c6793bdaeba3d' },
+  { file: 'assets/logo-bubbles-proposal-light.svg', bytes: 9249, sha256: '388f82731025fe82c446f4f40d611fc2a242997a47b0e82faeb1090f55b00760' },
+  { file: 'assets/logo-bubbles-proposal-dark.svg', bytes: 9249, sha256: '2bb77c85b0885526b299899b6705d79b17383144f77fd563009f56f5143b76c6' },
+  { file: 'assets/lockup-without-bubbles-light.png', bytes: 17608, sha256: 'df00f1c02f2c2c453dbd6a21746d015fff8079880de863b2643c9fc7c2449583' },
+  { file: 'assets/lockup-without-bubbles-dark.png', bytes: 17483, sha256: '37af6d9675ee4c1eac934e60c6e481727c0ddb0aff0ad0db87000a6b1923990a' },
+  { file: 'assets/conversation-motif-original.svg', bytes: 11610, sha256: 'fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4' },
+  { file: 'motion/citychat-motif-motion.css', bytes: 6779, sha256: '67c4f2638ef76b7ecf355edd53a7c4f2c55cc51cafe7291f28dbf9cd4e00e91d' },
+  { file: 'motion/citychat-motif-motion.js', bytes: 43005, sha256: 'fc60ace74fa51fb4eb0f18e0398f4efe4032fcc18d38c4db7a350151c6e8064d' },
+].map((record) => ({ ...record, deploymentPath: `${motifPackageRoot}/${record.file}` }));
+const motifByFile = new Map(motifRegisteredFiles.map((record) => [record.file, record]));
+const motifStaticIds = ['motif', 'a', 'b', 'c'];
+let registeredMotionSvg = null;
 
 function check(label, condition, details = '') {
   checks.push(label);
@@ -41,6 +69,20 @@ function resolveDeploymentPath(relativePath) {
     throw new Error(`Path leaves deployment root: ${relativePath}`);
   }
   return absolutePath;
+}
+
+function parseRegisteredMotionSvg(source) {
+  const marker = 'export const svg = ';
+  const start = source.indexOf(marker);
+  if (start === -1) return null;
+  const valueStart = start + marker.length;
+  const end = source.indexOf(';\nexport const ids', valueStart);
+  if (end === -1) return null;
+  try {
+    return JSON.parse(source.slice(valueStart, end));
+  } catch {
+    return null;
+  }
 }
 
 function sha256(buffer) {
@@ -173,7 +215,7 @@ function addRuntimeResource(rawValue, fromRelativePath, context) {
   if (!relativePath) return;
   if (!runtimeResources.has(relativePath)) {
     runtimeResources.add(relativePath);
-    if (/\.(?:css|svg)$/i.test(relativePath)) stylesheetQueue.push(relativePath);
+    if (/\.(?:css|js|svg)$/i.test(relativePath)) stylesheetQueue.push(relativePath);
   }
 }
 
@@ -250,6 +292,156 @@ function isLocaleNavigation(locale, href) {
   if (!locale?.languageSwitch || href !== locale.languageSwitch.href) return false;
   const targetLocale = localeById.get(locale.languageSwitch.target);
   return Boolean(targetLocale && navigationTarget(href, locale.entry) === targetLocale.entry);
+}
+
+function citychatStageMarkers(source) {
+  return [...source.matchAll(/<([a-z][\w:-]*)\b([^>]*)>/gi)]
+    .map((match) => ({ index: match.index, tag: match[1].toLowerCase(), attrs: attributes(match[2]) }))
+    .filter(({ attrs }) => attrs.has('data-citychat-motif') || attrs.has('data-citychat-logo'));
+}
+
+function balancedElementSlice(source, openingIndex) {
+  const opening = source.slice(openingIndex).match(/^<([a-z][\w:-]*)\b[^>]*>/i);
+  if (!opening) return '';
+  const tagName = opening[1];
+  const matcher = new RegExp(`<\\/?${escapeRegExp(tagName)}\\b[^>]*>`, 'gi');
+  matcher.lastIndex = openingIndex;
+  let depth = 0;
+  for (let match = matcher.exec(source); match; match = matcher.exec(source)) {
+    const closing = /^<\//.test(match[0]);
+    const selfClosing = /\/\s*>$/.test(match[0]);
+    if (closing) depth -= 1;
+    else if (!selfClosing) depth += 1;
+    if (depth === 0) return source.slice(openingIndex, matcher.lastIndex);
+  }
+  return '';
+}
+
+function elementSlicesWithAttribute(source, attributeName) {
+  return [...source.matchAll(/<([a-z][\w:-]*)\b([^>]*)>/gi)]
+    .filter((match) => attributes(match[2]).has(attributeName))
+    .map((match) => balancedElementSlice(source, match.index))
+    .filter(Boolean);
+}
+
+function citychatStageSlices(source) {
+  const markers = citychatStageMarkers(source);
+  return markers.map((marker) => ({
+    ...marker,
+    source: balancedElementSlice(source, marker.index),
+  }));
+}
+
+function assetHref(locale, deploymentPath) {
+  return `${locale.assetPrefix}${deploymentPath}`;
+}
+
+function validateMotifMarkup(locale) {
+  const label = `${locale.id} motif markup`;
+  const stages = citychatStageSlices(locale.html);
+  const motifStages = stages.filter(({ attrs }) => attrs.has('data-citychat-motif'));
+  const logoStages = stages.filter(({ attrs }) => attrs.has('data-citychat-logo'));
+  const motifIds = motifStages.map(({ attrs }) => attrs.get('data-citychat-motif'));
+  check(`${label} contains exactly one of each semantic motif`, motifStages.length === motifStaticIds.length
+    && [...motifIds].sort().join(',') === [...motifStaticIds].sort().join(',')
+    && new Set(motifIds).size === motifStaticIds.length,
+  motifIds.join(', '));
+  check(`${label} contains exactly one hero logo assembly`, logoStages.length === 1);
+
+  const expectedSurface = new Map([['motif', 'gradient'], ['a', 'regular'], ['b', 'regular'], ['c', 'regular']]);
+  const expectedFallbacks = new Map([
+    ['motif', []],
+    ['a', ['assets/3a-voice-home-light.svg', 'assets/3a-voice-home-dark.svg']],
+    ['b', ['assets/3b-live-visit-trade-light.svg', 'assets/3b-live-visit-trade-dark.svg']],
+    ['c', ['assets/3c-our-voice-here-light.svg', 'assets/3c-our-voice-here-dark.svg']],
+  ]);
+
+  for (const id of motifStaticIds) {
+    const matches = motifStages.filter(({ attrs }) => attrs.get('data-citychat-motif') === id);
+    if (matches.length !== 1) continue;
+    const stage = matches[0];
+    const fallbackSources = elementSlicesWithAttribute(stage.source, 'data-citychat-motif-fallback');
+    const fallbackSource = fallbackSources[0] || '';
+    check(`${label} ${id} declares the correct surface`, stage.attrs.get('data-motif-surface') === expectedSurface.get(id), stage.attrs.get('data-motif-surface'));
+    check(`${label} ${id} has one static fallback wrapper`, fallbackSources.length === 1);
+
+    const expectedFiles = expectedFallbacks.get(id) || [];
+    const allMotifHrefs = motifRegisteredFiles
+      .filter(({ file }) => /^(?:assets\/(?:3[abc]-|conversation-motif))/i.test(file))
+      .map(({ deploymentPath }) => assetHref(locale, deploymentPath));
+    const presentHrefs = allMotifHrefs.filter((href) => fallbackSource.includes(href));
+    const expectedHrefs = expectedFiles.map((file) => assetHref(locale, motifByFile.get(file).deploymentPath));
+    check(`${label} ${id} fallback uses only its exact registered asset paths`, presentHrefs.length === expectedHrefs.length
+      && expectedHrefs.every((href) => occurrences(fallbackSource, href) === 1),
+    presentHrefs.join(', '));
+    const fallbackImages = tags('img', fallbackSource).filter(({ attrs }) => attrs.has('alt'));
+    check(`${label} ${id} fallback is decorative`, fallbackImages.length === expectedHrefs.length
+      && fallbackImages.every(({ attrs }) => attrs.get('alt') === ''));
+
+    if (id === 'motif') {
+      const renditionLayers = elementSlicesWithAttribute(fallbackSource, 'data-motif-rendition');
+      const layerByRendition = new Map(renditionLayers.map((source) => {
+        const opening = source.match(/^<[a-z][\w:-]*\b([^>]*)>/i);
+        const attrs = opening ? attributes(opening[1]) : new Map();
+        return [attrs.get('data-motif-rendition'), { attrs, source }];
+      }));
+      const svgSource = (source) => source.match(/<svg\b[\s\S]*<\/svg>/i)?.[0] || '';
+      check(`${label} ConversationMotif fallback carries both registered module renditions`, renditionLayers.length === 2
+        && layerByRendition.has('light')
+        && layerByRendition.has('dark'));
+      check(`${label} ConversationMotif fallback embeds the registered SVG strings verbatim`, Boolean(registeredMotionSvg?.motif)
+        && svgSource(layerByRendition.get('light')?.source || '') === registeredMotionSvg.motif.light
+        && svgSource(layerByRendition.get('dark')?.source || '') === registeredMotionSvg.motif.dark);
+      check(`${label} ConversationMotif maps the gradient surface to inverse page-theme renditions`, hasClass(layerByRendition.get('dark')?.attrs || new Map(), 'motif-stage__theme--light')
+        && hasClass(layerByRendition.get('light')?.attrs || new Map(), 'motif-stage__theme--dark'));
+    } else {
+      const themeLightFile = expectedSurface.get(id) === 'gradient' ? expectedFiles[1] : expectedFiles[0];
+      const themeDarkFile = expectedSurface.get(id) === 'gradient' ? expectedFiles[0] : expectedFiles[1];
+      const themeLightHref = assetHref(locale, motifByFile.get(themeLightFile).deploymentPath);
+      const themeDarkHref = assetHref(locale, motifByFile.get(themeDarkFile).deploymentPath);
+      check(`${label} ${id} chooses rendition from actual surface luminance`, new RegExp(`motif-stage__theme--light[\\s\\S]{0,1600}${escapeRegExp(themeLightHref)}`, 'i').test(fallbackSource)
+        && new RegExp(`motif-stage__theme--dark[\\s\\S]{0,1600}${escapeRegExp(themeDarkHref)}`, 'i').test(fallbackSource));
+      check(`${label} ${id} labels fallback rendition independently from page theme`, new RegExp(`motif-stage__theme--light[^>]*data-motif-rendition=["']light["']`, 'i').test(fallbackSource)
+        && new RegExp(`motif-stage__theme--dark[^>]*data-motif-rendition=["']dark["']`, 'i').test(fallbackSource));
+    }
+  }
+
+  if (logoStages.length === 1) {
+    const stage = logoStages[0];
+    const fallbackSources = elementSlicesWithAttribute(stage.source, 'data-citychat-logo-fallback');
+    const fallbackSource = fallbackSources[0] || '';
+    const proposalFiles = [
+      'assets/logo-bubbles-proposal-light.svg',
+      'assets/logo-bubbles-proposal-dark.svg',
+      'assets/lockup-without-bubbles-light.png',
+      'assets/lockup-without-bubbles-dark.png',
+    ];
+    const proposalHrefs = proposalFiles.map((file) => assetHref(locale, motifByFile.get(file).deploymentPath));
+    check(`${label} logo is restricted to the gradient opening scene`, stage.attrs.get('data-motif-surface') === 'gradient');
+    check(`${label} logo has one static fallback wrapper`, fallbackSources.length === 1);
+    check(`${label} logo fallback uses each exact registered component once`, proposalHrefs.every((href) => occurrences(fallbackSource, href) === 1));
+    const logoImages = tags('img', fallbackSource);
+    check(`${label} logo fallback components are decorative`, logoImages.length === proposalHrefs.length
+      && logoImages.every(({ attrs }) => attrs.has('alt') && attrs.get('alt') === ''));
+    check(`${label} logo uses inverted renditions on the CityChat gradient`, [
+      'assets/logo-bubbles-proposal-dark.svg',
+      'assets/lockup-without-bubbles-dark.png',
+    ].every((file) => new RegExp(`motif-stage__theme--light[\\s\\S]{0,2400}${escapeRegExp(assetHref(locale, motifByFile.get(file).deploymentPath))}`, 'i').test(fallbackSource))
+      && [
+        'assets/logo-bubbles-proposal-light.svg',
+        'assets/lockup-without-bubbles-light.png',
+      ].every((file) => new RegExp(`motif-stage__theme--dark[\\s\\S]{0,2400}${escapeRegExp(assetHref(locale, motifByFile.get(file).deploymentPath))}`, 'i').test(fallbackSource)));
+    check(`${label} logo labels its inverse gradient renditions explicitly`, /motif-stage__theme--light[^>]*data-motif-rendition=["']dark["']/i.test(fallbackSource)
+      && /motif-stage__theme--dark[^>]*data-motif-rendition=["']light["']/i.test(fallbackSource));
+    check(`${label} proposal logo components occur only inside the opening assembly`, proposalHrefs.every((href) => occurrences(locale.html, href) === occurrences(fallbackSource, href)));
+  }
+
+  const motifCssHref = assetHref(locale, motifByFile.get('motion/citychat-motif-motion.css').deploymentPath);
+  const runtimeHostHref = assetHref(locale, motifRuntimeHostPath);
+  const motifStylesheets = tags('link', locale.html).filter(({ attrs }) => (attrs.get('rel') || '').split(/\s+/).includes('stylesheet') && attrs.get('href') === motifCssHref);
+  const runtimeScripts = tags('script', locale.html).filter(({ attrs }) => attrs.get('src') === runtimeHostHref && attrs.get('type') === 'module');
+  check(`${label} wires the exact registered motion stylesheet once`, motifStylesheets.length === 1);
+  check(`${label} wires the local module runtime host once`, runtimeScripts.length === 1);
 }
 
 check('release config schema is CityChat landing v2', config.schemaVersion === '2.0' && config.artifact?.product === 'citychat' && config.artifact?.pageKind === 'product-landing');
@@ -329,6 +521,126 @@ for (const requiredFile of config.deployment.requiredFiles) {
     const stat = lstatSync(absolutePath);
     check(`required deployment file is a regular non-symlink: ${requiredPath}`, stat.isFile() && !stat.isSymbolicLink());
   }
+}
+
+const motifAmendmentAbsolutePath = path.join(repositoryRoot, motifAmendmentPath);
+const motifRegisterAbsolutePath = path.join(repositoryRoot, motifRegisterPath);
+const motifBuildCardAbsolutePath = path.join(repositoryRoot, motifBuildCardPath);
+check('CityChat motif amendment is retained outside the deployment tree', existsSync(motifAmendmentAbsolutePath)
+  && !path.relative(deploymentRoot, motifAmendmentAbsolutePath).split(path.sep).every((part) => part !== '..'));
+check('CityChat motif asset register is retained outside the deployment tree', existsSync(motifRegisterAbsolutePath)
+  && !path.relative(deploymentRoot, motifRegisterAbsolutePath).split(path.sep).every((part) => part !== '..'));
+check('CityChat Build Card exists at repository root', existsSync(motifBuildCardAbsolutePath));
+for (const [relativePath, expected] of motifGovernanceFiles) {
+  const absolutePath = path.join(repositoryRoot, relativePath);
+  if (!existsSync(absolutePath)) continue;
+  const bytes = readFileSync(absolutePath);
+  check(`CityChat motif governance bytes are exact: ${relativePath}`, bytes.byteLength === expected.bytes && sha256(bytes) === expected.sha256);
+}
+
+let motifRegister = null;
+let motifBuildCard = null;
+try {
+  motifRegister = JSON.parse(readFileSync(motifRegisterAbsolutePath, 'utf8'));
+  check('CityChat motif asset register parses', true);
+} catch (error) {
+  check('CityChat motif asset register parses', false, error.message);
+}
+try {
+  motifBuildCard = JSON.parse(readFileSync(motifBuildCardAbsolutePath, 'utf8'));
+  check('CityChat Build Card parses', true);
+} catch (error) {
+  check('CityChat Build Card parses', false, error.message);
+}
+
+if (motifRegister) {
+  check('motif register is bound to LDS and CityChat Add-on v0.9.1', motifRegister.package === 'citychat-motif-set'
+    && motifRegister.version === '1.0.0-proposal'
+    && motifRegister.lds?.release === '0.9.1'
+    && motifRegister.lds?.authoring === '0.9.1-r8'
+    && motifRegister.lds?.machine === 'v0.9.1-mp7'
+    && motifRegister.lds?.colorSet === 'color-srgb-05');
+  const registerRecords = Array.isArray(motifRegister.files) ? motifRegister.files : [];
+  check('motif register contains exactly the 13 pinned records', registerRecords.length === motifRegisteredFiles.length
+    && new Set(registerRecords.map(({ file }) => file)).size === motifRegisteredFiles.length
+    && motifRegisteredFiles.every((expected) => registerRecords.some((actual) => actual.file === expected.file
+      && actual.bytes === expected.bytes
+      && actual.sha256 === expected.sha256)));
+}
+
+if (motifBuildCard) {
+  const records = Array.isArray(motifBuildCard.assets) ? motifBuildCard.assets : [];
+  check('Build Card motif revision matches the deployed release identity', motifBuildCard.artifact?.buildId === config.artifact.buildId
+    && motifBuildCard.artifact?.releaseRevision === config.artifact.releaseRevision);
+  check('Build Card records the exact governing amendment path', motifBuildCard.addon?.amendment === motifAmendmentPath);
+  check('Build Card records exactly the 13 registered source files', records.length === motifRegisteredFiles.length
+    && new Set(records.map(({ file }) => file)).size === motifRegisteredFiles.length
+    && motifRegisteredFiles.every((expected) => records.some((actual) => actual.file === expected.file
+      && actual.deploymentPath === expected.deploymentPath
+      && actual.bytes === expected.bytes
+      && actual.sha256 === expected.sha256)));
+  check('Build Card scopes the animated proposal logo to CC-EX-02 only', JSON.stringify(motifBuildCard.qa?.exceptionIds) === JSON.stringify(['CC-EX-02'])
+    && !JSON.stringify(motifBuildCard).includes('CC-EX-01'));
+  check('Build Card preserves the owner\'s direct artifact approval and public release intent', motifBuildCard.authorization?.directApprovalText === 'อนุมัติ animated motif + logo ทุกชิ้น'
+    && motifBuildCard.authorization?.scope === 'this CityChat landing release'
+    && /public CityChat GitHub Pages routes/i.test(motifBuildCard.authorization?.publicationIntent || '')
+    && motifBuildCard.authorization?.canonicalDesignSystemPromotion === false);
+  check('Build Card resolves the standard navigational CTA discovery cue without an exception', motifBuildCard.implementation?.ctaDiscoveryCue?.recipeId === 'motion.cta.discovery-cue.01'
+    && motifBuildCard.implementation.ctaDiscoveryCue.userBenefit === 'discoverability'
+    && motifBuildCard.implementation.ctaDiscoveryCue.durationMs === 540
+    && motifBuildCard.implementation.ctaDiscoveryCue.repeatCountPerPageLoad === 1
+    && motifBuildCard.implementation.ctaDiscoveryCue.reentryBehavior === 'do not repeat');
+  check('Build Card identifies the local animation host separately', motifBuildCard.implementation?.runtimeHost === motifRuntimeHostPath);
+  check('Build Card records the verbatim module-backed ConversationMotif fallback', motifBuildCard.implementation?.conversationStaticFallback?.source === 'registeredModule.svg.motif'
+    && motifBuildCard.implementation.conversationStaticFallback.embeddedVerbatim === true
+    && motifBuildCard.implementation.conversationStaticFallback.originalAssetRetainedForProvenance === `${motifPackageRoot}/assets/conversation-motif-original.svg`);
+}
+
+for (const expected of motifRegisteredFiles) {
+  const deployedPath = resolveDeploymentPath(expected.deploymentPath);
+  const handoffPath = path.join(repositoryRoot, 'handoff/citychat-motif-set', expected.file);
+  const deployedExists = existsSync(deployedPath);
+  const handoffExists = existsSync(handoffPath);
+  check(`registered motif asset is deployed: ${expected.file}`, deployedExists);
+  check(`registered motif source is retained: ${expected.file}`, handoffExists);
+  if (!deployedExists || !handoffExists) continue;
+  const deployedBytes = readFileSync(deployedPath);
+  const handoffBytes = readFileSync(handoffPath);
+  check(`registered motif bytes are exact: ${expected.file}`, deployedBytes.byteLength === expected.bytes
+    && handoffBytes.byteLength === expected.bytes
+    && sha256(deployedBytes) === expected.sha256
+    && sha256(handoffBytes) === expected.sha256
+    && deployedBytes.equals(handoffBytes));
+  if (!expected.file.endsWith('.svg')) continue;
+  const source = deployedBytes.toString('utf8');
+  check(`registered motif SVG is inert and text-free: ${expected.file}`, !/<(?:script|text|foreignObject)\b|\bon[a-z]+\s*=|javascript:/i.test(source));
+  check(`registered motif SVG has no gradient paint: ${expected.file}`, !/<(?:linearGradient|radialGradient)\b/i.test(source));
+  check(`registered motif SVG never pairs #007A58 with #007E79: ${expected.file}`, !(source.includes('#007A58') && source.includes('#007E79')));
+  if (/-light\.svg$/i.test(expected.file) && expected.file !== 'assets/conversation-motif-original.svg') {
+    check(`light motif SVG stays in the light palette: ${expected.file}`, source.includes('#007A58')
+      && source.includes('#0AD69C')
+      && !source.includes('#3BD19B')
+      && !source.includes('#007E79'));
+  }
+  if (/-dark\.svg$/i.test(expected.file)) {
+    check(`dark motif SVG stays in the dark palette: ${expected.file}`, source.includes('#3BD19B')
+      && source.includes('#007E79')
+      && !source.includes('#007A58')
+      && !source.includes('#0AD69C'));
+  }
+}
+
+const motifAssetsDirectory = resolveDeploymentPath(`${motifPackageRoot}/assets`);
+const motifMotionDirectory = resolveDeploymentPath(`${motifPackageRoot}/motion`);
+if (existsSync(motifAssetsDirectory)) {
+  const actualFiles = readdirSync(motifAssetsDirectory).sort();
+  const expectedFiles = motifRegisteredFiles.filter(({ file }) => file.startsWith('assets/')).map(({ file }) => path.posix.basename(file)).sort();
+  check('deployment contains no unregistered or stray proposal assets', JSON.stringify(actualFiles) === JSON.stringify(expectedFiles), actualFiles.join(', '));
+}
+if (existsSync(motifMotionDirectory)) {
+  const actualFiles = readdirSync(motifMotionDirectory).sort();
+  const expectedFiles = motifRegisteredFiles.filter(({ file }) => file.startsWith('motion/')).map(({ file }) => path.posix.basename(file)).sort();
+  check('deployment contains only the two registered motion files', JSON.stringify(actualFiles) === JSON.stringify(expectedFiles), actualFiles.join(', '));
 }
 
 check('HTML has a doctype', /^<!doctype html>/i.test(html.trimStart()));
@@ -600,6 +912,53 @@ check('application localizes runtime menu and theme accessibility labels from do
   && /setAttribute\(["']aria-label["']\s*,\s*open\s*\?\s*interfaceLabels\.menu\.close\s*:\s*interfaceLabels\.menu\.open\)/.test(app));
 check('source files do not leak a personal filesystem path', !/(?:\/Users\/|\/home\/|[A-Za-z]:\\Users\\)/.test(`${html}\n${englishHtml}\n${css}\n${app}`));
 
+const motifRuntimeAbsolutePath = resolveDeploymentPath(motifRuntimeHostPath);
+const motifMotionCssPath = resolveDeploymentPath(motifByFile.get('motion/citychat-motif-motion.css').deploymentPath);
+const motifMotionModulePath = resolveDeploymentPath(motifByFile.get('motion/citychat-motif-motion.js').deploymentPath);
+const motifRuntime = existsSync(motifRuntimeAbsolutePath) ? readFileSync(motifRuntimeAbsolutePath, 'utf8') : '';
+const motifMotionCss = existsSync(motifMotionCssPath) ? readFileSync(motifMotionCssPath, 'utf8') : '';
+const motifMotionModule = existsSync(motifMotionModulePath) ? readFileSync(motifMotionModulePath, 'utf8') : '';
+registeredMotionSvg = parseRegisteredMotionSvg(motifMotionModule);
+check('registered motion module SVG payload parses as pinned JSON', Boolean(registeredMotionSvg));
+for (const locale of localePages) validateMotifMarkup(locale);
+check('motif runtime host exists as a local module', Boolean(motifRuntime));
+check('motif runtime imports the exact registered inline SVG module', new RegExp(`from\\s*["']\\./${escapeRegExp(motifByFile.get('motion/citychat-motif-motion.js').deploymentPath)}["']`).test(motifRuntime)
+  && /import\s*\{[^}]*\bsvg\b[^}]*\}/.test(motifRuntime));
+check('motif runtime mounts only declared motif and logo stages', motifRuntime.includes('[data-citychat-motif]')
+  && motifRuntime.includes('[data-citychat-logo]')
+  && /svg\s*\[\s*(?:motifId|id|key)\s*\]/.test(motifRuntime)
+  && /svg\.logo|svg\[['"]logo['"]\]/.test(motifRuntime));
+check('motif runtime uses the mandated one-shot viewport threshold', /new\s+IntersectionObserver\b/.test(motifRuntime)
+  && /threshold\s*:\s*(?:0?\.14|14\s*\/\s*100)\b/.test(motifRuntime)
+  && /\.unobserve\s*\(/.test(motifRuntime));
+check('motif runtime fails open for reduced motion', /prefers-reduced-motion\s*:\s*reduce/.test(motifRuntime)
+  && /is-motif-ready/.test(motifRuntime));
+check('motif runtime applies the amendment duration ceilings without editing registered bytes', /motifId\s*===\s*["']motif["'][\s\S]{0,240}520ms, 750ms/.test(motifRuntime)
+  && /motifId\s*===\s*["']a["'][\s\S]{0,420}1580ms/.test(motifRuntime)
+  && /motifId\s*===\s*["']b["'][\s\S]{0,520}1980ms[\s\S]{0,220}420ms/.test(motifRuntime)
+  && /motifId\s*===\s*["']c["'][\s\S]{0,420}920ms, 450ms[\s\S]{0,240}1580ms/.test(motifRuntime));
+check('motif runtime fixes the proposal-logo dot starts to the approved choreography', motifRuntime.includes('[380, 500, 620]')
+  && motifRuntime.includes('[530, 650, 770]')
+  && /dataset\.motifStartMs/.test(motifRuntime));
+check('motif runtime waits for both replacement logo bases before hiding the complete fallback', /const\s+decodeImage\s*=\s*async/.test(motifRuntime)
+  && motifRuntime.indexOf('await Promise.all(layers.map') !== -1
+  && motifRuntime.indexOf('await Promise.all(layers.map') < motifRuntime.indexOf("stage.classList.add('is-motif-ready')")
+  && /naturalWidth\s*<=\s*0/.test(motifRuntime));
+check('ConversationMotif returns to its registered static source state by the 1.8 second ceiling', /const\s+settleConversationMotif\b/.test(motifRuntime)
+  && /layers\.forEach\(\(layer\)\s*=>\s*layer\.remove\(\)\)/.test(motifRuntime)
+  && /setTimeout\(settle,\s*1800\)/.test(motifRuntime));
+check('motif runtime keeps injected artwork decorative', /aria-hidden/.test(motifRuntime)
+  && /removeAttribute\s*\(\s*["']aria-label["']\s*\)/.test(motifRuntime)
+  && /removeAttribute\s*\(\s*["']role["']\s*\)/.test(motifRuntime));
+check('motif runtime contains no timer loop or proposal-logo nav targeting', !/\bsetInterval\s*\(|\brequestAnimationFrame\s*\(/.test(motifRuntime)
+  && !/(?:site-nav|footer|footer-brand|data-cc-nav)[\s\S]{0,120}svg\.logo/i.test(motifRuntime));
+check('registered motion module exposes the intended siblings', /export\s+const\s+ids\s*=\s*\[[^\]]*["']motif["'][^\]]*["']a["'][^\]]*["']b["'][^\]]*["']c["'][^\]]*["']logo["']/.test(motifMotionModule)
+  && /export\s+const\s+svg\s*=/.test(motifMotionModule));
+check('registered motion stylesheet is finite and reduced-motion safe', motifMotionCss.length > 0
+  && !/\binfinite\b/i.test(motifMotionCss)
+  && /prefers-reduced-motion\s*:\s*reduce/.test(motifMotionCss)
+  && /animation\s*:\s*none\s*!important/i.test(motifMotionCss));
+
 try {
   new Script(app, { filename: 'deployment/app.js' });
   check('application JavaScript parses', true);
@@ -688,6 +1047,13 @@ while (stylesheetQueue.length > 0) {
     for (const match of stylesheetSource.matchAll(/@import\s+(?:url\(\s*)?["']([^"']+)["']/gi)) {
       addRuntimeResource(match[1], stylesheet, `CSS @import in ${stylesheet}`);
     }
+  } else if (/\.js$/i.test(stylesheet)) {
+    for (const match of stylesheetSource.matchAll(/(?:import|export)\s+(?:[^;"']*?\s+from\s*)?["']([^"']+)["']/g)) {
+      addRuntimeResource(match[1], stylesheet, `module import in ${stylesheet}`);
+    }
+    for (const match of stylesheetSource.matchAll(/\bimport\s*\(\s*["']([^"']+)["']\s*\)/g)) {
+      addRuntimeResource(match[1], stylesheet, `dynamic module import in ${stylesheet}`);
+    }
   } else if (/\.svg$/i.test(stylesheet)) {
     for (const { attrs } of [...tags('image', stylesheetSource), ...tags('use', stylesheetSource)]) {
       const href = attrs.get('href') || attrs.get('xlink:href');
@@ -711,6 +1077,12 @@ check('locale directory links are navigation rather than runtime files', localeP
 check('nested English references close over the shared deployment assets', ['app.js', 'citychat.css', config.identity.favicon.path, config.media.cityscan.path].every((assetPath) => runtimeResources.has(assetPath))
   && ![...runtimeResources].some((assetPath) => /^(?:en\/(?:assets|vendor)\/|en\/(?:app\.js|citychat\.css)$)/i.test(assetPath)),
 [...runtimeResources].filter((assetPath) => assetPath.startsWith('en/')).join(', '));
+const runtimeMotifFiles = motifRegisteredFiles.filter(({ file }) => file !== 'assets/conversation-motif-original.svg');
+check('runtime closure includes the host and every active registered motif file', runtimeResources.has(motifRuntimeHostPath)
+  && runtimeMotifFiles.every(({ deploymentPath }) => runtimeResources.has(deploymentPath)),
+runtimeMotifFiles.filter(({ deploymentPath }) => !runtimeResources.has(deploymentPath)).map(({ deploymentPath }) => deploymentPath).join(', '));
+check('original ConversationMotif remains attested provenance rather than an unused runtime request', !runtimeResources.has(motifByFile.get('assets/conversation-motif-original.svg').deploymentPath));
+check('nested English motif references close over shared root assets', ![...runtimeResources].some((assetPath) => /^en\/(?:motif-runtime\.js|assets\/citychat-motif-set\/)/i.test(assetPath)));
 
 for (const [relativePath, expectedHash] of Object.entries(config.pinnedInputs)) {
   let safePath;
@@ -739,6 +1111,20 @@ if (existsSync(cityscanPath)) {
 }
 
 check('all declared fonts are local', !/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|@import\s+url\(\s*["']?https?:)/i.test(css));
+check('site and motif CSS contain no infinite animation', !/\binfinite\b/i.test(`${css}\n${motifMotionCss}`));
+check('primary navigational CTA uses the standard finite 540 ms discovery cue', /@keyframes\s+ccSweep\s*\{[^}]*-120%[\s\S]*120%/i.test(css)
+  && /\[data-cc-nav\]\s+\[data-part=["']sweep["']\]\s*\{[^}]*animation\s*:\s*ccSweep\s+540ms\s+cubic-bezier\(\.16\s*,\s*1\s*,\s*\.3\s*,\s*1\)\s+1\s+both/i.test(css));
+check('motif fallbacks are the default source state', css.includes('[data-citychat-motif-fallback]')
+  && css.includes('[data-citychat-logo-fallback]')
+  && /is-motif-ready[^,{]*[\s\S]{0,180}\[data-citychat-(?:motif|logo)-fallback\]/i.test(css));
+check('print mode forces static motif and logo fallbacks', /@media\s+print[\s\S]*\[data-citychat-(?:motif|logo)-fallback\][^{]*\{[^}]*(?:display|visibility|opacity)\s*:/i.test(css)
+  && /@media\s+print[\s\S]*\.motif-stage__motion[^{]*\{[^}]*display\s*:\s*none\s*!important/i.test(css));
+check('print mode deterministically selects the light rendition on a light print surface', /@media\s+print[\s\S]*\[data-motif-rendition\][^{]*\{[^}]*display\s*:\s*none\s*!important/i.test(css)
+  && /@media\s+print[\s\S]*\[data-motif-rendition=["']light["']\][^{]*\{[^}]*display\s*:\s*grid\s*!important/i.test(css));
+check('inline ConversationMotif fallback is frozen without changing its registered SVG markup', /\[data-citychat-motif-fallback\][^{]*\[class\^=["']mm-["']\][\s\S]{0,260}animation\s*:\s*none\s*!important/i.test(css)
+  && /\[data-citychat-motif-fallback\][\s\S]{0,260}\.mm-ripple[^{]*\{[^}]*opacity\s*:\s*0\s*!important/i.test(css));
+check('reduced-motion mode forces static motif and logo fallbacks', /prefers-reduced-motion\s*:\s*reduce[\s\S]*\.motif-stage__motion[^{]*\{[^}]*display\s*:\s*none\s*!important/i.test(css));
+check('motif stages do not add glow, shadow, or non-proportional distortion', !/(?:motif-stage|citychat-motif)[^{]*\{[^}]*(?:box-shadow|drop-shadow|filter\s*:|scaleX\s*\(|scaleY\s*\()/i.test(css));
 check('CSS disables synthetic font faces', /font-synthesis\s*:\s*none/i.test(css));
 check('CSS includes Thai display, body, technical, Latin display, and icon fonts', [
   'IBM Plex Sans Thai Looped',

@@ -8,6 +8,10 @@ const repositoryRoot = path.resolve(toolsRoot, '..');
 const deploymentRoot = path.join(repositoryRoot, 'deployment');
 const config = JSON.parse(readFileSync(path.join(repositoryRoot, 'release.config.json'), 'utf8'));
 const requiredSections = ['main-content', 'offer', 'partners', 'product', 'loop', 'record', 'contact'];
+const motifStageSelector = '[data-citychat-logo],[data-citychat-motif]';
+const motifIds = ['motif', 'a', 'b', 'c'];
+const motifEndCapsMs = { motif: 1800, a: 1800, b: 2400, c: 1800 };
+const logoDotStartsMs = [[380, 500, 620], [530, 650, 770]];
 const routes = {
   th: {
     id: 'th',
@@ -123,6 +127,7 @@ function attachDiagnostics(page, scenario) {
     const pathname = new URL(request.url()).pathname;
     if (request.method() === 'HEAD' && errorText === 'net::ERR_ABORTED') return;
     if (pathname === '/assets/cityscan-demo.mp4' && errorText === 'net::ERR_ABORTED') return;
+    if (scenario.includes('no JavaScript') && pathname === '/assets/citychat-motif-set/motion/citychat-motif-motion.js' && errorText === 'csp') return;
     diagnostics.push(`requestfailed: ${request.url()} (${errorText})`);
   });
   page.on('request', (request) => {
@@ -258,6 +263,33 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop, route 
     const rail = document.querySelector('[data-cc-rail]');
     const railRect = rail?.getBoundingClientRect();
     const top = document.querySelector('#top');
+    const motifStages = [...document.querySelectorAll('[data-citychat-logo],[data-citychat-motif]')].map((element) => {
+      const rect = element.getBoundingClientRect();
+      const scene = element.closest('section,footer,header,main');
+      const fallback = element.querySelector('[data-citychat-logo-fallback],[data-citychat-motif-fallback]');
+      const motionLayers = [...element.querySelectorAll('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark')].map((layer) => ({
+        className: layer.className,
+        visible: visible(layer),
+        svgCount: layer.querySelectorAll('svg').length,
+      }));
+      const style = getComputedStyle(element);
+      return {
+        id: element.getAttribute('data-citychat-motif') || 'logo',
+        surface: element.getAttribute('data-motif-surface'),
+        ready: element.classList.contains('is-motif-ready'),
+        visible: visible(element),
+        width: rect.width,
+        height: rect.height,
+        fallbackVisible: visible(fallback),
+        motionLayers,
+        expectedLayerVisible: motionLayers.filter((layer) => layer.className.includes(`motif-stage__motion--theme-${theme}`) && layer.visible).length,
+        wrongLayerVisible: motionLayers.filter((layer) => !layer.className.includes(`motif-stage__motion--theme-${theme}`) && layer.visible).length,
+        scene: scene?.id || scene?.localName || '',
+        sceneStageCount: scene?.querySelectorAll('[data-citychat-logo],[data-citychat-motif]').length || 0,
+        boxShadow: style.boxShadow,
+        filter: style.filter,
+      };
+    });
     const localResources = [...document.querySelectorAll('script[src],link[rel~="stylesheet"][href],link[rel~="preload"][href],link[rel~="icon"][href],img[src],video[src],source[src]')]
       .map((element) => {
         const attribute = element.hasAttribute('src') ? 'src' : 'href';
@@ -340,6 +372,7 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop, route 
       },
       controls,
       icons,
+      motifStages,
       localResources,
       ariaLabels,
       video: video ? {
@@ -389,6 +422,21 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop, route 
   check(`${scenario}: locale body/display and shared icon fonts load`, state.fonts.localeBody && state.fonts.localeDisplay && state.fonts.latinDisplay && state.fonts.icons, JSON.stringify(state.fonts));
   check(`${scenario}: computed body and H1 use intended ${route.label} families`, state.fonts.body.includes(route.bodyFont.family) && state.fonts.h1.includes(route.displayFont.family), `${state.fonts.body} / ${state.fonts.h1}`);
   check(`${scenario}: theme-specific artwork is correct`, state.themeOnlyWrong === 0 && state.themeOnlyRight > 0, `wrong ${state.themeOnlyWrong}, right ${state.themeOnlyRight}`);
+  const renderedMotifIds = state.motifStages.filter(({ id }) => id !== 'logo').map(({ id }) => id).sort();
+  check(`${scenario}: four semantic motifs and one opening logo stage render`, state.motifStages.length === 5
+    && state.motifStages.filter(({ id }) => id === 'logo').length === 1
+    && JSON.stringify(renderedMotifIds) === JSON.stringify([...motifIds].sort()),
+  JSON.stringify(state.motifStages));
+  check(`${scenario}: every CityChat scene carries at most one identity or story motif`, state.motifStages.every(({ sceneStageCount }) => sceneStageCount === 1), JSON.stringify(state.motifStages));
+  check(`${scenario}: motif surface semantics remain exact`, state.motifStages.every(({ id, surface }) => surface === (['logo', 'motif'].includes(id) ? 'gradient' : 'regular')), JSON.stringify(state.motifStages));
+  check(`${scenario}: moving motifs keep the 120px minimum without shadows or glow`, state.motifStages.every(({ id, visible: stageVisible, width, height, boxShadow, filter }) => stageVisible
+    && width >= 119.5
+    && (id === 'logo' || height >= 119.5)
+    && boxShadow === 'none'
+    && filter === 'none'), JSON.stringify(state.motifStages));
+  check(`${scenario}: mounted motifs show only the page-theme motion layer and otherwise fail open to stills`, state.motifStages.every(({ ready, fallbackVisible, motionLayers, expectedLayerVisible, wrongLayerVisible }) => ready
+    ? !fallbackVisible && motionLayers.length === 2 && motionLayers.every(({ svgCount }) => svgCount === 1) && expectedLayerVisible === 1 && wrongLayerVisible === 0
+    : fallbackVisible && motionLayers.length === 0), JSON.stringify(state.motifStages));
   check(`${scenario}: non-lazy images decode`, state.nonLazyImages.every((image) => image.complete && image.naturalWidth > 0), JSON.stringify(state.nonLazyImages.filter((image) => !image.complete || image.naturalWidth <= 0)));
   check(`${scenario}: approved CityChat favicon loads at its exact dimensions`, state.favicon
     && state.favicon.href === route.faviconHref
@@ -459,8 +507,11 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop, route 
 
 async function assertRouteAssets(page, scenario, route) {
   const results = await page.evaluate(async () => {
-    const urls = [...document.querySelectorAll('script[src],link[rel~="stylesheet"][href],link[rel~="preload"][href],link[rel~="icon"][href],img[src],video[src],source[src]')]
-      .map((element) => element.src || element.href)
+    const urls = [
+      ...[...document.querySelectorAll('script[src],link[rel~="stylesheet"][href],link[rel~="preload"][href],link[rel~="icon"][href],img[src],video[src],source[src]')]
+        .map((element) => element.src || element.href),
+      ...performance.getEntriesByType('resource').map((entry) => entry.name),
+    ]
       .filter((value) => value && new URL(value, location.href).origin === location.origin);
     return Promise.all([...new Set(urls)].map(async (url) => {
       try {
@@ -474,11 +525,24 @@ async function assertRouteAssets(page, scenario, route) {
   const expectedPaths = [
     '/citychat.css',
     '/app.js',
+    '/motif-runtime.js',
+    '/assets/citychat-motif-set/motion/citychat-motif-motion.css',
+    '/assets/citychat-motif-set/motion/citychat-motif-motion.js',
     `/${config.identity.favicon.path}`,
     `/${config.media.cityscan.path}`,
+    '/assets/citychat-motif-set/assets/3a-voice-home-light.svg',
+    '/assets/citychat-motif-set/assets/3a-voice-home-dark.svg',
+    '/assets/citychat-motif-set/assets/3b-live-visit-trade-light.svg',
+    '/assets/citychat-motif-set/assets/3b-live-visit-trade-dark.svg',
+    '/assets/citychat-motif-set/assets/3c-our-voice-here-light.svg',
+    '/assets/citychat-motif-set/assets/3c-our-voice-here-dark.svg',
+    '/assets/citychat-motif-set/assets/logo-bubbles-proposal-light.svg',
+    '/assets/citychat-motif-set/assets/logo-bubbles-proposal-dark.svg',
+    '/assets/citychat-motif-set/assets/lockup-without-bubbles-light.png',
+    '/assets/citychat-motif-set/assets/lockup-without-bubbles-dark.png',
   ];
   check(`${scenario}: every declared local asset answers successfully`, results.length > 0 && results.every(({ ok }) => ok), JSON.stringify(results.filter(({ ok }) => !ok)));
-  check(`${scenario}: shared CSS, script, favicon, and CityScan bytes load from root`, expectedPaths.every((expected) => results.some(({ pathname }) => pathname === expected)), JSON.stringify(results));
+  check(`${scenario}: shared shell and registered motif bytes load from root`, expectedPaths.every((expected) => results.some(({ pathname }) => pathname === expected)), JSON.stringify(results));
   if (route.id === 'en') {
     check(`${scenario}: English asset probe makes no /en/ resource requests`, results.every(({ pathname }) => !pathname.startsWith('/en/')), JSON.stringify(results.filter(({ pathname }) => pathname.startsWith('/en/'))));
   }
@@ -644,12 +708,413 @@ async function runSystemDark(route = routes.th) {
   }
 }
 
+async function runDelayedLogoBases(route = routes.th) {
+  const scenario = `${route.label} delayed logo base responses`;
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'light' });
+  await seedTheme(context, 'light');
+  await context.addInitScript(() => {
+    const nativeDecode = HTMLImageElement.prototype.decode;
+    const releases = new Map();
+    const state = { pending: [], released: [], urls: {} };
+    window.__qaLogoBaseDecode = {
+      state,
+      release(rendition) {
+        releases.get(rendition)?.();
+      },
+    };
+    HTMLImageElement.prototype.decode = function gatedDecode() {
+      const rendition = this.dataset.motifBaseRendition;
+      const decoded = nativeDecode.call(this);
+      if (!this.classList.contains('citychat-logo-stage__base') || !['dark', 'light'].includes(rendition)) return decoded;
+      return decoded.then(() => new Promise((resolve) => {
+        state.urls[rendition] = this.currentSrc || this.src;
+        releases.set(rendition, () => {
+          if (!state.released.includes(rendition)) state.released.push(rendition);
+          resolve();
+        });
+        if (!state.pending.includes(rendition)) state.pending.push(rendition);
+      }));
+    };
+  });
+
+  const page = await context.newPage();
+  browserScenarios += 1;
+  const finishDiagnostics = attachDiagnostics(page, scenario);
+
+  const readLogoState = () => page.evaluate(() => {
+    const visible = (element) => {
+      if (!element) return false;
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0' && rect.width > 0 && rect.height > 0;
+    };
+    const stage = document.querySelector('[data-citychat-logo]');
+    const fallback = stage?.querySelector('[data-citychat-logo-fallback]');
+    const fallbackRenditions = fallback ? [...fallback.querySelectorAll('[data-motif-rendition]')].map((element) => ({
+      rendition: element.dataset.motifRendition,
+      visible: visible(element),
+      images: [...element.querySelectorAll('img')].map((image) => ({
+        kind: image.classList.contains('citychat-logo-stage__base') ? 'base' : 'bubbles',
+        pathname: new URL(image.currentSrc || image.src).pathname,
+        complete: image.complete,
+        naturalWidth: image.naturalWidth,
+        naturalHeight: image.naturalHeight,
+      })),
+    })) : [];
+    const motionLayers = stage ? [...stage.querySelectorAll('.motif-stage__motion')] : [];
+    return {
+      theme: document.documentElement.dataset.theme,
+      preference: document.documentElement.dataset.themePreference,
+      ready: stage?.classList.contains('is-motif-ready'),
+      motifState: stage?.dataset.motifState || '',
+      fallbackVisible: visible(fallback),
+      fallbackRenditions,
+      motionLayers: motionLayers.map((layer) => ({
+        theme: layer.classList.contains('motif-stage__motion--theme-light') ? 'light' : 'dark',
+        rendition: layer.dataset.motifRendition,
+        visible: visible(layer),
+        bases: [...layer.querySelectorAll('img.citychat-logo-stage__base')].map((image) => ({
+          pathname: new URL(image.currentSrc || image.src).pathname,
+          rendition: image.dataset.motifBaseRendition,
+          complete: image.complete,
+          naturalWidth: image.naturalWidth,
+          naturalHeight: image.naturalHeight,
+        })),
+      })),
+    };
+  });
+
+  try {
+    const response = await page.goto(new URL(route.pathname, origin).href, { waitUntil: 'domcontentloaded' });
+    check(`${scenario}: entry returns HTTP 200`, response?.status() === 200, `status ${response?.status()}`);
+    check(`${scenario}: delayed-response route stays canonical locally`, new URL(page.url()).pathname === route.pathname, page.url());
+    await page.evaluate(async () => {
+      const images = [...document.querySelectorAll('[data-citychat-logo-fallback] img')];
+      await Promise.all(images.map((image) => image.decode()));
+    });
+    await page.locator('[data-citychat-logo]').scrollIntoViewIfNeeded();
+
+    await page.waitForFunction(() => {
+      const pending = window.__qaLogoBaseDecode?.state.pending || [];
+      return pending.length === 2 && ['dark', 'light'].every((rendition) => pending.includes(rendition));
+    }, null, { timeout: 4000 });
+    const decodeGateState = await page.evaluate(() => ({ ...window.__qaLogoBaseDecode.state }));
+    const heldState = await readLogoState();
+    const heldVisible = heldState.fallbackRenditions.filter(({ visible }) => visible);
+    check(`${scenario}: both replacement PNG decode completions are independently held`, decodeGateState.pending.length === 2
+      && decodeGateState.released.length === 0
+      && ['dark', 'light'].every((rendition) => decodeGateState.pending.includes(rendition)
+        && new URL(decodeGateState.urls[rendition]).pathname.endsWith(`/lockup-without-bubbles-${rendition}.png`)), JSON.stringify(decodeGateState));
+    check(`${scenario}: complete static logo stays visible while both replacement bases are decode-gated`, heldState.theme === 'light'
+      && heldState.preference === 'light'
+      && !heldState.ready
+      && heldState.motionLayers.length === 0
+      && heldState.fallbackVisible
+      && heldState.fallbackRenditions.length === 2
+      && heldState.fallbackRenditions.every(({ images }) => images.length === 2
+        && images.every(({ complete, naturalWidth, naturalHeight }) => complete && naturalWidth > 0 && naturalHeight > 0))
+      && heldVisible.length === 1
+      && heldVisible[0].rendition === 'dark'
+      && heldVisible[0].images.length === 2
+      && heldVisible[0].images.some(({ kind, pathname }) => kind === 'base' && pathname.endsWith('/lockup-without-bubbles-dark.png'))
+      && heldVisible[0].images.some(({ kind, pathname }) => kind === 'bubbles' && pathname.endsWith('/logo-bubbles-proposal-dark.svg'))
+      && heldVisible[0].images.every(({ complete, naturalWidth, naturalHeight }) => complete && naturalWidth > 0 && naturalHeight > 0),
+    JSON.stringify(heldState));
+
+    await page.evaluate(() => window.__qaLogoBaseDecode.release('dark'));
+    await page.waitForFunction(() => window.__qaLogoBaseDecode.state.released.includes('dark'));
+    const oneReleasedState = await readLogoState();
+    check(`${scenario}: one decoded replacement base cannot hide the complete static logo`, !oneReleasedState.ready
+      && oneReleasedState.motionLayers.length === 0
+      && oneReleasedState.fallbackVisible
+      && oneReleasedState.fallbackRenditions.filter(({ visible }) => visible).length === 1,
+    JSON.stringify(oneReleasedState));
+
+    await page.evaluate(() => window.__qaLogoBaseDecode.release('light'));
+    await page.waitForFunction(() => document.querySelector('[data-citychat-logo]')?.classList.contains('is-motif-ready'), null, { timeout: 4000 });
+    await page.waitForLoadState('load');
+    const mountedState = await readLogoState();
+    check(`${scenario}: logo mounts safely only after both replacement bases decode`, mountedState.ready
+      && mountedState.motifState === 'animating'
+      && !mountedState.fallbackVisible
+      && mountedState.motionLayers.length === 2
+      && mountedState.motionLayers.every(({ rendition, bases }) => bases.length === 1
+        && bases.every(({ pathname, rendition: baseRendition, complete, naturalWidth, naturalHeight }) => baseRendition === rendition
+          && pathname.endsWith(`/lockup-without-bubbles-${rendition}.png`)
+          && complete
+          && naturalWidth > 0
+          && naturalHeight > 0))
+      && mountedState.motionLayers.filter(({ visible }) => visible).length === 1
+      && mountedState.motionLayers.some(({ theme, rendition, visible }) => theme === 'light' && rendition === 'dark' && visible),
+    JSON.stringify(mountedState));
+  } finally {
+    if (!page.isClosed()) {
+      await page.evaluate(() => {
+        window.__qaLogoBaseDecode?.release('dark');
+        window.__qaLogoBaseDecode?.release('light');
+      }).catch(() => {});
+    }
+    finishDiagnostics();
+    await context.close();
+  }
+}
+
+async function runMotifMotion(route = routes.th, theme = 'light') {
+  const scenario = `${route.label} motif motion ${theme}`;
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: theme });
+  await seedTheme(context, theme);
+  const { page, finishDiagnostics } = await openPage(context, scenario, route);
+  try {
+    const selectors = [
+      '[data-citychat-logo]',
+      '[data-citychat-motif="a"]',
+      '[data-citychat-motif="b"]',
+      '[data-citychat-motif="c"]',
+      '[data-citychat-motif="motif"]',
+    ];
+    await page.evaluate(() => {
+      const stage = document.querySelector('[data-citychat-motif="motif"]');
+      const fallback = stage?.querySelector('[data-citychat-motif-fallback]');
+      window.__citychatConversationFallback = fallback;
+      window.__citychatConversationFallbackMarkup = fallback?.innerHTML || '';
+    });
+    for (const selector of selectors) {
+      const stage = page.locator(selector);
+      await stage.scrollIntoViewIfNeeded();
+      await page.waitForFunction((target) => document.querySelector(target)?.classList.contains('is-motif-ready'), selector, { timeout: 4000 });
+      await page.waitForTimeout(80);
+    }
+
+    const state = await page.evaluate(({ pageTheme, stageSelectors }) => {
+      const visible = (element) => {
+        if (!element) return false;
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0' && rect.width > 0 && rect.height > 0;
+      };
+      const records = stageSelectors.map((selector) => {
+        const stage = document.querySelector(selector);
+        const id = stage?.getAttribute('data-citychat-motif') || 'logo';
+        const surface = stage?.getAttribute('data-motif-surface');
+        const expectedRendition = surface === 'gradient' ? (pageTheme === 'light' ? 'dark' : 'light') : pageTheme;
+        const selected = stage?.querySelector(`.motif-stage__motion--theme-${pageTheme}`);
+        const otherTheme = pageTheme === 'light' ? 'dark' : 'light';
+        const other = stage?.querySelector(`.motif-stage__motion--theme-${otherTheme}`);
+        const svg = selected?.querySelector('svg');
+        const markup = svg?.outerHTML.toUpperCase() || '';
+        const animations = selected?.getAnimations({ subtree: true }) || [];
+        const allAnimations = stage?.getAnimations({ subtree: true }) || [];
+        const rect = selected?.getBoundingClientRect();
+        const themeLayers = stage ? [...stage.querySelectorAll('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark')] : [];
+        const timingLayers = themeLayers.map((layer) => {
+          const layerAnimations = layer.getAnimations({ subtree: true });
+          return {
+            theme: layer.classList.contains('motif-stage__motion--theme-light') ? 'light' : 'dark',
+            endTimes: layerAnimations.map((animation) => Number(animation.effect?.getComputedTiming().endTime)),
+            iterations: layerAnimations.map((animation) => animation.effect?.getTiming().iterations),
+          };
+        });
+        const logoDotSchedules = id === 'logo' ? themeLayers.map((layer) => ({
+          theme: layer.classList.contains('motif-stage__motion--theme-light') ? 'light' : 'dark',
+          groups: [...layer.querySelectorAll('.mm-logo')].map((bubble) => (
+            [...bubble.querySelectorAll('.mm-dot')].map((dot) => {
+              const dotAnimations = dot.getAnimations();
+              return {
+                declaredStart: Number(dot.dataset.motifStartMs),
+                delays: dotAnimations.map((animation) => Number(animation.effect?.getTiming().delay)),
+                iterations: dotAnimations.map((animation) => animation.effect?.getTiming().iterations),
+              };
+            })
+          )),
+        })) : [];
+        return {
+          selector,
+          id,
+          surface,
+          expectedRendition,
+          ready: stage?.classList.contains('is-motif-ready'),
+          selectedVisible: visible(selected),
+          otherVisible: visible(other),
+          fallbackVisible: visible(stage?.querySelector('[data-citychat-logo-fallback],[data-citychat-motif-fallback]')),
+          layerCount: stage?.querySelectorAll('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark').length || 0,
+          svgCount: selected?.querySelectorAll('svg').length || 0,
+          viewBox: svg?.getAttribute('viewBox') || '',
+          ariaHidden: svg?.getAttribute('aria-hidden'),
+          ariaLabel: svg?.getAttribute('aria-label'),
+          role: svg?.getAttribute('role'),
+          textCount: svg?.querySelectorAll('text').length || 0,
+          gradientCount: svg?.querySelectorAll('linearGradient,radialGradient').length || 0,
+          palette: {
+            lightMain: markup.includes('#007A58'),
+            lightSecond: markup.includes('#0AD69C'),
+            darkMain: markup.includes('#3BD19B'),
+            darkSecond: markup.includes('#007E79'),
+          },
+          animationCount: animations.length,
+          totalAnimationCount: allAnimations.length,
+          iterations: allAnimations.map((animation) => animation.effect?.getTiming().iterations),
+          timingLayers,
+          logoDotSchedules,
+          width: rect?.width || 0,
+          height: rect?.height || 0,
+        };
+      });
+      window.__citychatMotifNodes = stageSelectors.map((selector) => document.querySelector(selector)?.querySelector('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark'));
+      return records;
+    }, { pageTheme: theme, stageSelectors: selectors });
+
+    check(`${scenario}: all five stages mount inline and replace their static fallback`, state.every((record) => record.ready
+      && record.layerCount === 2
+      && record.svgCount === 1
+      && record.selectedVisible
+      && !record.otherVisible
+      && !record.fallbackVisible), JSON.stringify(state));
+    check(`${scenario}: inline SVGs stay decorative, text-free, and gradient-free`, state.every((record) => record.ariaHidden === 'true'
+      && record.ariaLabel === null
+      && record.role === null
+      && record.textCount === 0
+      && record.gradientCount === 0), JSON.stringify(state));
+    check(`${scenario}: inline SVGs choose the rendition from actual surface luminance`, state.every((record) => record.expectedRendition === 'light'
+      ? record.palette.lightMain && record.palette.lightSecond && !record.palette.darkMain && !record.palette.darkSecond
+      : record.palette.darkMain && record.palette.darkSecond && !record.palette.lightMain && !record.palette.lightSecond), JSON.stringify(state));
+    check(`${scenario}: animated SVG geometry is proportional and large enough`, state.every((record) => record.viewBox === (record.id === 'logo' ? '0 0 494 106' : '0 0 240 240')
+      && record.width >= 119.5
+      && (record.id === 'logo' || record.height >= 119.5)), JSON.stringify(state));
+    check(`${scenario}: both theme layers advance together with finite one-shot CSS`, state.every((record) => record.animationCount > 0
+      && record.totalAnimationCount > record.animationCount
+      && record.iterations.every((iterations) => iterations === 1)), JSON.stringify(state));
+    const cappedMotifs = state.filter(({ id }) => Object.hasOwn(motifEndCapsMs, id));
+    check(`${scenario}: effective motif wall-clock ends stay within the release caps`, cappedMotifs.length === Object.keys(motifEndCapsMs).length
+      && cappedMotifs.every(({ id, timingLayers }) => timingLayers.length === 2
+        && timingLayers.every(({ endTimes, iterations }) => endTimes.length > 0
+          && endTimes.every((endTime) => Number.isFinite(endTime) && endTime > 0 && endTime <= motifEndCapsMs[id])
+          && iterations.every((iterations) => iterations === 1))),
+    JSON.stringify(cappedMotifs.map(({ id, timingLayers }) => ({ id, cap: motifEndCapsMs[id], timingLayers }))));
+    const logoRecord = state.find(({ id }) => id === 'logo');
+    check(`${scenario}: logo dots start at the exact two-row schedule and play once`, logoRecord?.logoDotSchedules.length === 2
+      && logoRecord.logoDotSchedules.every(({ groups }) => groups.length === logoDotStartsMs.length
+        && groups.every((dots, groupIndex) => dots.length === logoDotStartsMs[groupIndex].length
+          && dots.every(({ declaredStart, delays, iterations }, dotIndex) => declaredStart === logoDotStartsMs[groupIndex][dotIndex]
+            && delays.length === 1
+            && delays[0] === logoDotStartsMs[groupIndex][dotIndex]
+            && iterations.length === 1
+            && iterations[0] === 1))),
+    JSON.stringify(logoRecord?.logoDotSchedules));
+
+    const alternateTheme = theme === 'light' ? 'dark' : 'light';
+    const switchedWithoutReplay = await page.evaluate(({ nextTheme, stageSelectors }) => {
+      document.documentElement.dataset.theme = nextTheme;
+      const visible = (element) => {
+        if (!element) return false;
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0' && rect.width > 0 && rect.height > 0;
+      };
+      return stageSelectors.every((selector, index) => {
+        const stage = document.querySelector(selector);
+        const firstLayer = stage?.querySelector('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark');
+        const selected = stage?.querySelector(`.motif-stage__motion--theme-${nextTheme}`);
+        const previous = stage?.querySelector(`.motif-stage__motion--theme-${nextTheme === 'light' ? 'dark' : 'light'}`);
+        return firstLayer === window.__citychatMotifNodes[index]
+          && visible(selected)
+          && !visible(previous)
+          && stage?.querySelectorAll('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark').length === 2;
+      });
+    }, { nextTheme: alternateTheme, stageSelectors: selectors });
+    check(`${scenario}: switching theme reveals the pre-advanced rendition without remounting`, switchedWithoutReplay);
+
+    await page.evaluate(() => window.scrollTo(0, 0));
+    for (const selector of [...selectors].reverse()) {
+      await page.locator(selector).scrollIntoViewIfNeeded();
+      await page.waitForTimeout(30);
+    }
+    const stableNodes = await page.evaluate((stageSelectors) => stageSelectors.every((selector, index) => {
+      if (selector === '[data-citychat-motif="motif"]') return true;
+      const current = document.querySelector(selector)?.querySelector('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark');
+      return current === window.__citychatMotifNodes[index];
+    }), selectors);
+    check(`${scenario}: revisiting persistent scenes does not remount or replay motif nodes`, stableNodes);
+
+    await page.waitForFunction(() => {
+      const stage = document.querySelector('[data-citychat-motif="motif"]');
+      return stage?.dataset.motifState === 'complete'
+        && !stage.classList.contains('is-motif-ready')
+        && stage.querySelectorAll('.motif-stage__motion').length === 0;
+    }, null, { timeout: 3000 });
+    const conversationSettlement = await page.evaluate(async () => {
+      const visible = (element) => {
+        if (!element) return false;
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0' && rect.width > 0 && rect.height > 0;
+      };
+      const signature = (element) => ({
+        name: element.localName,
+        attributes: [...element.attributes]
+          .map((attribute) => [attribute.name, attribute.value])
+          .sort(([left], [right]) => left.localeCompare(right)),
+        children: [...element.children].map(signature),
+      });
+      const stage = document.querySelector('[data-citychat-motif="motif"]');
+      const fallback = stage?.querySelector('[data-citychat-motif-fallback]');
+      const { svg: registeredSvg } = await import(new URL('/assets/citychat-motif-set/motion/citychat-motif-motion.js', location.origin).href);
+      const renditions = fallback ? [...fallback.querySelectorAll('[data-motif-rendition]')].map((element) => {
+        const rendition = element.dataset.motifRendition;
+        const expected = new DOMParser().parseFromString(registeredSvg.motif[rendition] || '', 'image/svg+xml').documentElement;
+        const actual = element.querySelector('svg');
+        return {
+          rendition,
+          visible: visible(element),
+          registered: Boolean(actual && expected.localName === 'svg'
+            && JSON.stringify(signature(actual)) === JSON.stringify(signature(expected))),
+        };
+      }) : [];
+      const theme = document.documentElement.dataset.theme;
+      const expectedRendition = theme === 'light' ? 'dark' : 'light';
+      return {
+        state: stage?.dataset.motifState,
+        ready: stage?.classList.contains('is-motif-ready'),
+        fallbackVisible: visible(fallback),
+        sameNode: fallback === window.__citychatConversationFallback,
+        sameMarkup: fallback?.innerHTML === window.__citychatConversationFallbackMarkup,
+        motionLayers: stage?.querySelectorAll('.motif-stage__motion').length || 0,
+        runningAnimations: stage?.getAnimations({ subtree: true }).filter((animation) => animation.playState === 'running').length || 0,
+        expectedRendition,
+        renditions,
+      };
+    });
+    check(`${scenario}: ConversationMotif static fallbacks exactly match both registered renditions`, conversationSettlement.renditions.length === 2
+      && ['dark', 'light'].every((rendition) => conversationSettlement.renditions.some((record) => record.rendition === rendition && record.registered)),
+    JSON.stringify(conversationSettlement));
+    check(`${scenario}: ConversationMotif settles to its unchanged exact fallback after playing`, state.some(({ id, ready, animationCount }) => id === 'motif' && ready && animationCount > 0)
+      && conversationSettlement.state === 'complete'
+      && !conversationSettlement.ready
+      && conversationSettlement.fallbackVisible
+      && conversationSettlement.sameNode
+      && conversationSettlement.sameMarkup
+      && conversationSettlement.motionLayers === 0
+      && conversationSettlement.runningAnimations === 0
+      && conversationSettlement.renditions.filter(({ visible }) => visible).length === 1
+      && conversationSettlement.renditions.some(({ rendition, visible }) => rendition === conversationSettlement.expectedRendition && visible),
+    JSON.stringify(conversationSettlement));
+  } finally {
+    finishDiagnostics();
+    await context.close();
+  }
+}
+
 async function runReducedMotion(route = routes.th) {
   const scenario = route.id === 'th' ? 'reduced motion' : `${route.label} reduced motion`;
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'light', reducedMotion: 'reduce' });
   const { page, finishDiagnostics } = await openPage(context, scenario, route);
   try {
     const state = await page.evaluate(() => {
+      const visible = (element) => {
+        if (!element) return false;
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0' && rect.width > 0 && rect.height > 0;
+      };
       const approaches = [...document.querySelectorAll('[data-approach]')].map((element) => {
         const style = getComputedStyle(element);
         return { opacity: style.opacity, transform: style.transform, transition: style.transitionDuration };
@@ -661,6 +1126,12 @@ async function runReducedMotion(route = routes.th) {
           .filter((element) => !element.matches('a[hreflang="th"]'))
           .map((element) => element.getAttribute('aria-label')),
         approaches,
+        motifs: [...document.querySelectorAll('[data-citychat-logo],[data-citychat-motif]')].map((element) => ({
+          id: element.getAttribute('data-citychat-motif') || 'logo',
+          fallbackVisible: visible(element.querySelector('[data-citychat-logo-fallback],[data-citychat-motif-fallback]')),
+          visibleMotion: [...element.querySelectorAll('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark')].filter(visible).length,
+          runningAnimations: element.getAnimations({ subtree: true }).filter((animation) => animation.playState === 'running').length,
+        })),
         sweepAnimation: sweep ? getComputedStyle(sweep).animationName : '',
         scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
         video: (() => {
@@ -674,6 +1145,8 @@ async function runReducedMotion(route = routes.th) {
       check(`${scenario}: reduced-motion English UI keeps localized ARIA`, state.ariaLabels.every((label) => !/[฀-๿]/u.test(label)), JSON.stringify(state.ariaLabels.filter((label) => /[฀-๿]/u.test(label))));
     }
     check(`${scenario}: approach targets remain fully landed`, state.approaches.every((item) => item.opacity === '1' && item.transform === 'none' && item.transition.split(',').every((value) => value.trim() === '0s')), JSON.stringify(state.approaches.filter((item) => item.opacity !== '1' || item.transform !== 'none' || !item.transition.split(',').every((value) => value.trim() === '0s')).slice(0, 4)));
+    check(`${scenario}: all motifs and the approved opening logo remain static fallbacks`, state.motifs.length === 5
+      && state.motifs.every(({ fallbackVisible, visibleMotion, runningAnimations }) => fallbackVisible && visibleMotion === 0 && runningAnimations === 0), JSON.stringify(state.motifs));
     check(`${scenario}: decorative sweep animation is disabled`, state.sweepAnimation === 'none', state.sweepAnimation);
     check(`${scenario}: smooth scrolling is disabled`, state.scrollBehavior === 'auto', state.scrollBehavior);
     check(`${scenario}: CityScan loop is paused and autoplay is removed`, state.video && !state.video.autoplay && !state.video.autoplayAttribute && state.video.loop && state.video.paused, JSON.stringify(state.video));
@@ -708,6 +1181,11 @@ async function runNoJavaScript(route = routes.th) {
         hasJs: document.documentElement.classList.contains('has-js'),
         regions: ['main-content', 'offer', 'partners', 'product', 'loop', 'record', 'contact'].every((id) => visible(document.getElementById(id))),
         approaches,
+        motifs: [...document.querySelectorAll('[data-citychat-logo],[data-citychat-motif]')].map((element) => ({
+          id: element.getAttribute('data-citychat-motif') || 'logo',
+          fallbackVisible: visible(element.querySelector('[data-citychat-logo-fallback],[data-citychat-motif-fallback]')),
+          motionLayers: element.querySelectorAll('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark').length,
+        })),
         menuVisible: visible(document.querySelector('#menu-toggle')),
         tablistVisible: visible(document.querySelector('[role="tablist"]')),
         defaultPanelVisible: visible(document.querySelector('#panel-data')),
@@ -720,6 +1198,8 @@ async function runNoJavaScript(route = routes.th) {
     });
     check(`${scenario}: static document language is exact`, state.lang === route.lang, state.lang);
     check(`${scenario}: initial markup stays readable`, !state.hasJs && state.regions && state.approaches.every((item) => item.opacity === '1' && item.transform === 'none'));
+    check(`${scenario}: no-JS preserves all five registered static motif/logo outcomes`, state.motifs.length === 5
+      && state.motifs.every(({ fallbackVisible, motionLayers }) => fallbackVisible && motionLayers === 0), JSON.stringify(state.motifs));
     check(`${scenario}: inert menu and tab controls are hidden while default content remains available`, !state.menuVisible && !state.tablistVisible && state.defaultPanelVisible, JSON.stringify(state));
     check(`${scenario}: video area has a deterministic route-correct fallback`, state.fallbackVisible
       && !state.videoVisible
@@ -730,6 +1210,77 @@ async function runNoJavaScript(route = routes.th) {
       check(`${scenario}: static English UI exposes localized ARIA`, state.ariaLabels.every((label) => !/[฀-๿]/u.test(label)), JSON.stringify(state.ariaLabels.filter((label) => /[฀-๿]/u.test(label))));
     }
     check(`${scenario}: page has no horizontal overflow`, state.overflow <= 1, `${state.overflow}px`);
+  } finally {
+    finishDiagnostics();
+    await context.close();
+  }
+}
+
+async function runPrintFallback(route = routes.th, preference = 'light') {
+  const scenario = `${route.label} saved-${preference} print fallback`;
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: preference });
+  await seedTheme(context, preference);
+  const { page, finishDiagnostics } = await openPage(context, scenario, route);
+  try {
+    const selectors = [
+      '[data-citychat-logo]',
+      '[data-citychat-motif="a"]',
+      '[data-citychat-motif="b"]',
+      '[data-citychat-motif="c"]',
+      '[data-citychat-motif="motif"]',
+    ];
+    for (const selector of selectors) {
+      await page.locator(selector).scrollIntoViewIfNeeded();
+      await page.waitForFunction((target) => document.querySelector(target)?.classList.contains('is-motif-ready'), selector, { timeout: 4000 });
+    }
+    await page.emulateMedia({ media: 'print', colorScheme: preference, reducedMotion: 'no-preference' });
+    const state = await page.evaluate(() => {
+      const visible = (element) => {
+        if (!element) return false;
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0' && rect.width > 0 && rect.height > 0;
+      };
+      return {
+        lang: document.documentElement.lang,
+        theme: document.documentElement.dataset.theme,
+        preference: document.documentElement.dataset.themePreference,
+        stages: [...document.querySelectorAll('[data-citychat-logo],[data-citychat-motif]')].map((element) => {
+          const fallback = element.querySelector('[data-citychat-logo-fallback],[data-citychat-motif-fallback]');
+          const fallbackRenditions = fallback ? [...fallback.querySelectorAll('[data-motif-rendition]')].map((rendition) => ({
+            rendition: rendition.dataset.motifRendition,
+            visible: visible(rendition),
+          })) : [];
+          const motionLayers = [...element.querySelectorAll('.motif-stage__motion--theme-light,.motif-stage__motion--theme-dark')].map((layer) => ({
+            rendition: layer.dataset.motifRendition,
+            display: getComputedStyle(layer).display,
+            visible: visible(layer),
+          }));
+          return {
+            id: element.getAttribute('data-citychat-motif') || 'logo',
+            fallbackVisible: visible(fallback),
+            fallbackRenditions,
+            motionLayers,
+            runningAnimations: element.getAnimations({ subtree: true }).filter((animation) => animation.playState === 'running').length,
+          };
+        }),
+      };
+    });
+    check(`${scenario}: saved theme remains route-correct while print is active`, state.lang === route.lang
+      && state.theme === preference
+      && state.preference === preference, JSON.stringify(state));
+    check(`${scenario}: every fallback forces exactly the light registered rendition`, state.stages.length === 5
+      && state.stages.every(({ fallbackVisible, fallbackRenditions }) => fallbackVisible
+        && fallbackRenditions.length === 2
+        && ['dark', 'light'].every((rendition) => fallbackRenditions.some((record) => record.rendition === rendition))
+        && fallbackRenditions.filter(({ visible }) => visible).length === 1
+        && fallbackRenditions.some(({ rendition, visible }) => rendition === 'light' && visible)),
+    JSON.stringify(state.stages));
+    const mountedMotionLayers = state.stages.flatMap(({ motionLayers }) => motionLayers);
+    check(`${scenario}: print suppresses mounted runtime layers even when they carry rendition data`, mountedMotionLayers.length >= 8
+      && mountedMotionLayers.every(({ display, visible }) => display === 'none' && !visible)
+      && state.stages.every(({ runningAnimations }) => runningAnimations === 0),
+    JSON.stringify(state.stages));
   } finally {
     finishDiagnostics();
     await context.close();
@@ -787,8 +1338,13 @@ try {
   ];
   for (const scenario of matrix) await runMatrixScenario(scenario);
   await runSystemDark();
+  await runMotifMotion(routes.th, 'light');
+  await runMotifMotion(routes.th, 'dark');
+  await runDelayedLogoBases();
   await runReducedMotion();
   await runNoJavaScript();
+  await runPrintFallback(routes.th, 'light');
+  await runPrintFallback(routes.th, 'dark');
 
   await runMatrixScenario({
     name: 'English desktop light',
@@ -801,8 +1357,12 @@ try {
     probeAssets: true,
   });
   await runSystemDark(routes.en);
+  await runMotifMotion(routes.en, 'light');
+  await runDelayedLogoBases(routes.en);
   await runReducedMotion(routes.en);
   await runNoJavaScript(routes.en);
+  await runPrintFallback(routes.en, 'light');
+  await runPrintFallback(routes.en, 'dark');
   await runStorageDenied();
 } catch (error) {
   failures.push(`rendered test harness — ${error.stack || error.message}`);

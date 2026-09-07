@@ -4,6 +4,7 @@
     "name": "CityChat public landing",
     "product": "citychat",
     "buildId": "citychat-landing-20260903-03",
+    "releaseRevision": "citychat-motif-20260907-01",
     "pageKind": "product-landing",
     "language": "th",
     "canonicalUrl": "https://montri-th.github.io/CityChat/"
@@ -12,6 +13,11 @@
     "visibility": "public",
     "indexable": false,
     "robotsMeta": "noindex,nofollow,noarchive"
+  },
+  "buildCard": {
+    "path": "citychat-build-card.json",
+    "amendment": "handoff/citychat-motif-set/AMENDMENT.md",
+    "assetRegister": "handoff/citychat-motif-set/asset-register.json"
   },
   "locales": [
     {
@@ -127,7 +133,21 @@
       "en/index.html",
       "citychat.css",
       "app.js",
+      "motif-runtime.js",
       "robots.txt",
+      "assets/citychat-motif-set/assets/3a-voice-home-light.svg",
+      "assets/citychat-motif-set/assets/3a-voice-home-dark.svg",
+      "assets/citychat-motif-set/assets/3b-live-visit-trade-light.svg",
+      "assets/citychat-motif-set/assets/3b-live-visit-trade-dark.svg",
+      "assets/citychat-motif-set/assets/3c-our-voice-here-light.svg",
+      "assets/citychat-motif-set/assets/3c-our-voice-here-dark.svg",
+      "assets/citychat-motif-set/assets/logo-bubbles-proposal-light.svg",
+      "assets/citychat-motif-set/assets/logo-bubbles-proposal-dark.svg",
+      "assets/citychat-motif-set/assets/lockup-without-bubbles-light.png",
+      "assets/citychat-motif-set/assets/lockup-without-bubbles-dark.png",
+      "assets/citychat-motif-set/assets/conversation-motif-original.svg",
+      "assets/citychat-motif-set/motion/citychat-motif-motion.css",
+      "assets/citychat-motif-set/motion/citychat-motif-motion.js",
       "assets/identity/citychat-favicon-3b7439f6.png",
       "assets/identity/citychat-favicon-3b7439f6.receipt.json",
       "assets/identity/identity-assets.citychat-landing-20260903-03.json",
@@ -341,6 +361,19 @@
     }
   },
   "pinnedInputs": {
+    "assets/citychat-motif-set/assets/3a-voice-home-light.svg": "c175caf8dd9fb0b045af720693aa45aef588b026e4eeaa5b88754cfffa8a06eb",
+    "assets/citychat-motif-set/assets/3a-voice-home-dark.svg": "9717b6f70a9442e437e2ee069c335db44c8820aba6653d0aac385d1338f315d8",
+    "assets/citychat-motif-set/assets/3b-live-visit-trade-light.svg": "3727a85d22e666c26ee6b0e150c6faa9200de2eca049947ee95a94f400c9d157",
+    "assets/citychat-motif-set/assets/3b-live-visit-trade-dark.svg": "6f3a43b046b8c4a24b6f1c52b7d6a0e091ec08eb959f3cfecbe4e4140fc271a5",
+    "assets/citychat-motif-set/assets/3c-our-voice-here-light.svg": "4d13de02f25e82f0d919f5a51f18b72e5424798cfd83cdb2ff67e65e5458f1cd",
+    "assets/citychat-motif-set/assets/3c-our-voice-here-dark.svg": "350fadd34a5472ebac6effe2118e9fc4f3922b7dfd6e0d0faa9c6793bdaeba3d",
+    "assets/citychat-motif-set/assets/logo-bubbles-proposal-light.svg": "388f82731025fe82c446f4f40d611fc2a242997a47b0e82faeb1090f55b00760",
+    "assets/citychat-motif-set/assets/logo-bubbles-proposal-dark.svg": "2bb77c85b0885526b299899b6705d79b17383144f77fd563009f56f5143b76c6",
+    "assets/citychat-motif-set/assets/lockup-without-bubbles-light.png": "df00f1c02f2c2c453dbd6a21746d015fff8079880de863b2643c9fc7c2449583",
+    "assets/citychat-motif-set/assets/lockup-without-bubbles-dark.png": "37af6d9675ee4c1eac934e60c6e481727c0ddb0aff0ad0db87000a6b1923990a",
+    "assets/citychat-motif-set/assets/conversation-motif-original.svg": "fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4",
+    "assets/citychat-motif-set/motion/citychat-motif-motion.css": "67c4f2638ef76b7ecf355edd53a7c4f2c55cc51cafe7291f28dbf9cd4e00e91d",
+    "assets/citychat-motif-set/motion/citychat-motif-motion.js": "fc60ace74fa51fb4eb0f18e0398f4efe4032fcc18d38c4db7a350151c6e8064d",
     "assets/identity/citychat-favicon-3b7439f6.png": "3b7439f689fa6172660375e073ce3cbcd967ee2766c9d962522f712468e3b58a",
     "assets/identity/citychat-favicon-3b7439f6.receipt.json": "2ad25a4e8c2558a9d25f1c7004ae7cf62e4651bd21822a028d83b5beb97b71ac",
     "assets/identity/identity-assets.citychat-landing-20260903-03.json": "11454d84a61ae81f76dfa7f4aa6ab0ef97786eedc2f9f9659cad9d1c9bdab954",
