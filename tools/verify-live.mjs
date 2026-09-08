@@ -24,13 +24,13 @@ const motifRegisteredFiles = [
   { file: 'assets/3b-live-visit-trade-dark.svg', bytes: 10504, sha256: '6f3a43b046b8c4a24b6f1c52b7d6a0e091ec08eb959f3cfecbe4e4140fc271a5' },
   { file: 'assets/3c-our-voice-here-light.svg', bytes: 12662, sha256: '4d13de02f25e82f0d919f5a51f18b72e5424798cfd83cdb2ff67e65e5458f1cd' },
   { file: 'assets/3c-our-voice-here-dark.svg', bytes: 12662, sha256: '350fadd34a5472ebac6effe2118e9fc4f3922b7dfd6e0d0faa9c6793bdaeba3d' },
-  { file: 'assets/logo-bubbles-proposal-light.svg', bytes: 9249, sha256: '388f82731025fe82c446f4f40d611fc2a242997a47b0e82faeb1090f55b00760' },
-  { file: 'assets/logo-bubbles-proposal-dark.svg', bytes: 9249, sha256: '2bb77c85b0885526b299899b6705d79b17383144f77fd563009f56f5143b76c6' },
+  { file: 'assets/logo-bubbles-proposal-light.svg', bytes: 9249, sha256: '4f3defeb8901a9fc1b92690dab53c88c8c06532c99ef99eb8dc20f06f07f9aeb' },
+  { file: 'assets/logo-bubbles-proposal-dark.svg', bytes: 9249, sha256: 'd60f1b348ba9d3040ba65a4ebb267fedb52a78dc3fc766a05158475a8fdbfd8e' },
   { file: 'assets/lockup-without-bubbles-light.png', bytes: 17608, sha256: 'df00f1c02f2c2c453dbd6a21746d015fff8079880de863b2643c9fc7c2449583' },
   { file: 'assets/lockup-without-bubbles-dark.png', bytes: 17483, sha256: '37af6d9675ee4c1eac934e60c6e481727c0ddb0aff0ad0db87000a6b1923990a' },
   { file: 'assets/conversation-motif-original.svg', bytes: 11610, sha256: 'fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4' },
   { file: 'motion/citychat-motif-motion.css', bytes: 6779, sha256: '67c4f2638ef76b7ecf355edd53a7c4f2c55cc51cafe7291f28dbf9cd4e00e91d' },
-  { file: 'motion/citychat-motif-motion.js', bytes: 43005, sha256: 'fc60ace74fa51fb4eb0f18e0398f4efe4032fcc18d38c4db7a350151c6e8064d' },
+  { file: 'motion/citychat-motif-motion.js', bytes: 43005, sha256: 'cbcf4b541dfe784cdd8894770fbbd6a6495d7e8de82fc5cae4beb8257871b012' },
 ].map((record) => ({ ...record, deploymentPath: `${motifPackageRoot}/${record.file}` }));
 
 function positiveInteger(value, name) {

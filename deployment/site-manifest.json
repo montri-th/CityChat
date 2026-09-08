@@ -4,7 +4,7 @@
     "name": "CityChat public landing",
     "product": "citychat",
     "buildId": "citychat-landing-20260903-03",
-    "releaseRevision": "citychat-motif-20260907-01",
+    "releaseRevision": "citychat-contrast-20260908-01",
     "pageKind": "product-landing",
     "language": "th",
     "canonicalUrl": "https://montri-th.github.io/CityChat/"
@@ -17,7 +17,7 @@
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
     "files": 252,
-    "bytes": 45607302
+    "bytes": 45608541
   },
   "files": [
     {
@@ -103,12 +103,12 @@
     {
       "path": "assets/citychat-motif-set/assets/logo-bubbles-proposal-dark.svg",
       "bytes": 9249,
-      "sha256": "2bb77c85b0885526b299899b6705d79b17383144f77fd563009f56f5143b76c6"
+      "sha256": "d60f1b348ba9d3040ba65a4ebb267fedb52a78dc3fc766a05158475a8fdbfd8e"
     },
     {
       "path": "assets/citychat-motif-set/assets/logo-bubbles-proposal-light.svg",
       "bytes": 9249,
-      "sha256": "388f82731025fe82c446f4f40d611fc2a242997a47b0e82faeb1090f55b00760"
+      "sha256": "4f3defeb8901a9fc1b92690dab53c88c8c06532c99ef99eb8dc20f06f07f9aeb"
     },
     {
       "path": "assets/citychat-motif-set/motion/citychat-motif-motion.css",
@@ -118,7 +118,7 @@
     {
       "path": "assets/citychat-motif-set/motion/citychat-motif-motion.js",
       "bytes": 43005,
-      "sha256": "fc60ace74fa51fb4eb0f18e0398f4efe4032fcc18d38c4db7a350151c6e8064d"
+      "sha256": "cbcf4b541dfe784cdd8894770fbbd6a6495d7e8de82fc5cae4beb8257871b012"
     },
     {
       "path": "assets/cityscan-demo.mp4",
@@ -472,8 +472,8 @@
     },
     {
       "path": "citychat.css",
-      "bytes": 24903,
-      "sha256": "ee560402a49d6ec62d7b0657c3a2657b82fc693bc2c3d710ac96fe6d9d793b0d"
+      "bytes": 25814,
+      "sha256": "8329cf408464b78a92743703c48e8e76afe99d03f3b3ba79a5b22b0a63ef456a"
     },
     {
       "path": "control-inventory.v0.4.json",
@@ -507,8 +507,8 @@
     },
     {
       "path": "en/index.html",
-      "bytes": 70920,
-      "sha256": "8ecc6a8a014592224e441f396f348d76ae73bb8fa20fcf46f991c0e2e7f0aa89"
+      "bytes": 71032,
+      "sha256": "5639ed899954c190522ddee931625cf48f34cf90e2efca95b30cc40263b6ec2c"
     },
     {
       "path": "implementation-notes.v0.4.md",
@@ -542,8 +542,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 83869,
-      "sha256": "b1de388be36ad8dcdeea731b5781c2e2d28f0271881cdef17efc9c6f442993ef"
+      "bytes": 83981,
+      "sha256": "0eaf977cb56ee639f13507ea8d1ae7f0d65bcb0cbb6ce4adf40c1718c7f8403c"
     },
     {
       "path": "llms.txt",
@@ -552,8 +552,8 @@
     },
     {
       "path": "motif-runtime.js",
-      "bytes": 6743,
-      "sha256": "d5986e4d6546ed8cc1cfba46eb218f913680fb7252e6b178676079fad07e2a52"
+      "bytes": 6847,
+      "sha256": "9160afc5d33b0d7840df6c8f5373ded0fc88112fd5c5dae6f7933aa25810cc1b"
     },
     {
       "path": "qa/automated.v0.4.json",

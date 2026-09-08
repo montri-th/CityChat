@@ -22,8 +22,8 @@ const motifRegisterPath = 'handoff/citychat-motif-set/asset-register.json';
 const motifBuildCardPath = 'citychat-build-card.json';
 const motifRuntimeHostPath = 'motif-runtime.js';
 const motifGovernanceFiles = new Map([
-  [motifAmendmentPath, { bytes: 10670, sha256: '5b95e07973b7441d5c42b7a2a769eb5bec309e86f733a43c1b46ce16756bc005' }],
-  [motifRegisterPath, { bytes: 4353, sha256: '35bd51aaa001ed7874a5bb4428cc61a374f7f073bdeda6a8016741561acdca44' }],
+  [motifAmendmentPath, { bytes: 11421, sha256: '92c07c224b35e680c094a59aad9622de9007cdda672059b685a07104911e8799' }],
+  [motifRegisterPath, { bytes: 4624, sha256: 'abaad25d95312a7f39b5264816218629edf4641ab984d6f11e2bf6001fa8866a' }],
 ]);
 const motifRegisteredFiles = [
   { file: 'assets/3a-voice-home-light.svg', bytes: 11143, sha256: 'c175caf8dd9fb0b045af720693aa45aef588b026e4eeaa5b88754cfffa8a06eb' },
@@ -32,13 +32,13 @@ const motifRegisteredFiles = [
   { file: 'assets/3b-live-visit-trade-dark.svg', bytes: 10504, sha256: '6f3a43b046b8c4a24b6f1c52b7d6a0e091ec08eb959f3cfecbe4e4140fc271a5' },
   { file: 'assets/3c-our-voice-here-light.svg', bytes: 12662, sha256: '4d13de02f25e82f0d919f5a51f18b72e5424798cfd83cdb2ff67e65e5458f1cd' },
   { file: 'assets/3c-our-voice-here-dark.svg', bytes: 12662, sha256: '350fadd34a5472ebac6effe2118e9fc4f3922b7dfd6e0d0faa9c6793bdaeba3d' },
-  { file: 'assets/logo-bubbles-proposal-light.svg', bytes: 9249, sha256: '388f82731025fe82c446f4f40d611fc2a242997a47b0e82faeb1090f55b00760' },
-  { file: 'assets/logo-bubbles-proposal-dark.svg', bytes: 9249, sha256: '2bb77c85b0885526b299899b6705d79b17383144f77fd563009f56f5143b76c6' },
+  { file: 'assets/logo-bubbles-proposal-light.svg', bytes: 9249, sha256: '4f3defeb8901a9fc1b92690dab53c88c8c06532c99ef99eb8dc20f06f07f9aeb' },
+  { file: 'assets/logo-bubbles-proposal-dark.svg', bytes: 9249, sha256: 'd60f1b348ba9d3040ba65a4ebb267fedb52a78dc3fc766a05158475a8fdbfd8e' },
   { file: 'assets/lockup-without-bubbles-light.png', bytes: 17608, sha256: 'df00f1c02f2c2c453dbd6a21746d015fff8079880de863b2643c9fc7c2449583' },
   { file: 'assets/lockup-without-bubbles-dark.png', bytes: 17483, sha256: '37af6d9675ee4c1eac934e60c6e481727c0ddb0aff0ad0db87000a6b1923990a' },
   { file: 'assets/conversation-motif-original.svg', bytes: 11610, sha256: 'fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4' },
   { file: 'motion/citychat-motif-motion.css', bytes: 6779, sha256: '67c4f2638ef76b7ecf355edd53a7c4f2c55cc51cafe7291f28dbf9cd4e00e91d' },
-  { file: 'motion/citychat-motif-motion.js', bytes: 43005, sha256: 'fc60ace74fa51fb4eb0f18e0398f4efe4032fcc18d38c4db7a350151c6e8064d' },
+  { file: 'motion/citychat-motif-motion.js', bytes: 43005, sha256: 'cbcf4b541dfe784cdd8894770fbbd6a6495d7e8de82fc5cae4beb8257871b012' },
 ].map((record) => ({ ...record, deploymentPath: `${motifPackageRoot}/${record.file}` }));
 const motifByFile = new Map(motifRegisteredFiles.map((record) => [record.file, record]));
 const motifStaticIds = ['motif', 'a', 'b', 'c'];
@@ -349,7 +349,7 @@ function validateMotifMarkup(locale) {
   motifIds.join(', '));
   check(`${label} contains exactly one hero logo assembly`, logoStages.length === 1);
 
-  const expectedSurface = new Map([['motif', 'gradient'], ['a', 'regular'], ['b', 'regular'], ['c', 'regular']]);
+  const expectedSurface = new Map([['motif', 'foundation'], ['a', 'foundation'], ['b', 'foundation'], ['c', 'foundation']]);
   const expectedFallbacks = new Map([
     ['motif', []],
     ['a', ['assets/3a-voice-home-light.svg', 'assets/3a-voice-home-dark.svg']],
@@ -393,11 +393,11 @@ function validateMotifMarkup(locale) {
       check(`${label} ConversationMotif fallback embeds the registered SVG strings verbatim`, Boolean(registeredMotionSvg?.motif)
         && svgSource(layerByRendition.get('light')?.source || '') === registeredMotionSvg.motif.light
         && svgSource(layerByRendition.get('dark')?.source || '') === registeredMotionSvg.motif.dark);
-      check(`${label} ConversationMotif maps the gradient surface to inverse page-theme renditions`, hasClass(layerByRendition.get('dark')?.attrs || new Map(), 'motif-stage__theme--light')
-        && hasClass(layerByRendition.get('light')?.attrs || new Map(), 'motif-stage__theme--dark'));
+      check(`${label} ConversationMotif maps the foundation surface to page-theme renditions`, hasClass(layerByRendition.get('light')?.attrs || new Map(), 'motif-stage__theme--light')
+        && hasClass(layerByRendition.get('dark')?.attrs || new Map(), 'motif-stage__theme--dark'));
     } else {
-      const themeLightFile = expectedSurface.get(id) === 'gradient' ? expectedFiles[1] : expectedFiles[0];
-      const themeDarkFile = expectedSurface.get(id) === 'gradient' ? expectedFiles[0] : expectedFiles[1];
+      const themeLightFile = expectedFiles[0];
+      const themeDarkFile = expectedFiles[1];
       const themeLightHref = assetHref(locale, motifByFile.get(themeLightFile).deploymentPath);
       const themeDarkHref = assetHref(locale, motifByFile.get(themeDarkFile).deploymentPath);
       check(`${label} ${id} chooses rendition from actual surface luminance`, new RegExp(`motif-stage__theme--light[\\s\\S]{0,1600}${escapeRegExp(themeLightHref)}`, 'i').test(fallbackSource)
@@ -418,7 +418,7 @@ function validateMotifMarkup(locale) {
       'assets/lockup-without-bubbles-dark.png',
     ];
     const proposalHrefs = proposalFiles.map((file) => assetHref(locale, motifByFile.get(file).deploymentPath));
-    check(`${label} logo is restricted to the gradient opening scene`, stage.attrs.get('data-motif-surface') === 'gradient');
+    check(`${label} logo is restricted to the CityChat product opening scene`, stage.attrs.get('data-motif-surface') === 'citychat-product');
     check(`${label} logo has one static fallback wrapper`, fallbackSources.length === 1);
     check(`${label} logo fallback uses each exact registered component once`, proposalHrefs.every((href) => occurrences(fallbackSource, href) === 1));
     const logoImages = tags('img', fallbackSource);
@@ -556,11 +556,15 @@ try {
 
 if (motifRegister) {
   check('motif register is bound to LDS and CityChat Add-on v0.9.1', motifRegister.package === 'citychat-motif-set'
-    && motifRegister.version === '1.0.0-proposal'
+    && motifRegister.version === '1.0.1-proposal'
     && motifRegister.lds?.release === '0.9.1'
     && motifRegister.lds?.authoring === '0.9.1-r8'
     && motifRegister.lds?.machine === 'v0.9.1-mp7'
     && motifRegister.lds?.colorSet === 'color-srgb-05');
+  check('motif register records the contrast-corrected proposal-logo colors', motifRegister.palette?.logoSmallBubble?.light?.fill === '#1D4497'
+    && motifRegister.palette.logoSmallBubble.light.dots === '#FFFFFF'
+    && motifRegister.palette?.logoSmallBubble?.dark?.fill === '#F2F1DF'
+    && motifRegister.palette.logoSmallBubble.dark.dots === '#182327');
   const registerRecords = Array.isArray(motifRegister.files) ? motifRegister.files : [];
   check('motif register contains exactly the 13 pinned records', registerRecords.length === motifRegisteredFiles.length
     && new Set(registerRecords.map(({ file }) => file)).size === motifRegisteredFiles.length
@@ -592,6 +596,10 @@ if (motifBuildCard) {
     && motifBuildCard.implementation.ctaDiscoveryCue.repeatCountPerPageLoad === 1
     && motifBuildCard.implementation.ctaDiscoveryCue.reentryBehavior === 'do not repeat');
   check('Build Card identifies the local animation host separately', motifBuildCard.implementation?.runtimeHost === motifRuntimeHostPath);
+  check('Build Card records the verified replacement source package and corrected logo hashes', motifBuildCard.sourcePackage?.archive === 'CityChat มอทีฟชุมชน Assets and Prompt.zip'
+    && motifBuildCard.sourcePackage.archiveSha256 === '72b604f45130360f9bcde2e5a8b4bcd0727bc6a53b008d89fb93a52881279615'
+    && motifBuildCard.sourcePackage.sourceRegisterCorrections?.length === 2
+    && motifBuildCard.sourcePackage.sourceRegisterCorrections.every(({ file, verifiedSha256 }) => motifRegisteredFiles.some((record) => record.file === file && record.sha256 === verifiedSha256)));
   check('Build Card records the verbatim module-backed ConversationMotif fallback', motifBuildCard.implementation?.conversationStaticFallback?.source === 'registeredModule.svg.motif'
     && motifBuildCard.implementation.conversationStaticFallback.embeddedVerbatim === true
     && motifBuildCard.implementation.conversationStaticFallback.originalAssetRetainedForProvenance === `${motifPackageRoot}/assets/conversation-motif-original.svg`);
@@ -617,13 +625,27 @@ for (const expected of motifRegisteredFiles) {
   check(`registered motif SVG is inert and text-free: ${expected.file}`, !/<(?:script|text|foreignObject)\b|\bon[a-z]+\s*=|javascript:/i.test(source));
   check(`registered motif SVG has no gradient paint: ${expected.file}`, !/<(?:linearGradient|radialGradient)\b/i.test(source));
   check(`registered motif SVG never pairs #007A58 with #007E79: ${expected.file}`, !(source.includes('#007A58') && source.includes('#007E79')));
-  if (/-light\.svg$/i.test(expected.file) && expected.file !== 'assets/conversation-motif-original.svg') {
+  if (expected.file === 'assets/logo-bubbles-proposal-light.svg') {
+    check(`light proposal logo uses the contrast-corrected small bubble: ${expected.file}`, source.includes('#007A58')
+      && source.includes('#1D4497')
+      && source.includes('#FFFFFF')
+      && !source.includes('#0AD69C')
+      && !source.includes('#3BD19B')
+      && !source.includes('#007E79'));
+  } else if (/-light\.svg$/i.test(expected.file) && expected.file !== 'assets/conversation-motif-original.svg') {
     check(`light motif SVG stays in the light palette: ${expected.file}`, source.includes('#007A58')
       && source.includes('#0AD69C')
       && !source.includes('#3BD19B')
       && !source.includes('#007E79'));
   }
-  if (/-dark\.svg$/i.test(expected.file)) {
+  if (expected.file === 'assets/logo-bubbles-proposal-dark.svg') {
+    check(`dark proposal logo uses the contrast-corrected small bubble: ${expected.file}`, source.includes('#3BD19B')
+      && source.includes('#F2F1DF')
+      && source.includes('#182327')
+      && !source.includes('#007E79')
+      && !source.includes('#007A58')
+      && !source.includes('#0AD69C'));
+  } else if (/-dark\.svg$/i.test(expected.file)) {
     check(`dark motif SVG stays in the dark palette: ${expected.file}`, source.includes('#3BD19B')
       && source.includes('#007E79')
       && !source.includes('#007A58')
@@ -921,10 +943,18 @@ const motifMotionCss = existsSync(motifMotionCssPath) ? readFileSync(motifMotion
 const motifMotionModule = existsSync(motifMotionModulePath) ? readFileSync(motifMotionModulePath, 'utf8') : '';
 registeredMotionSvg = parseRegisteredMotionSvg(motifMotionModule);
 check('registered motion module SVG payload parses as pinned JSON', Boolean(registeredMotionSvg));
+check('registered motion module carries the contrast-corrected proposal-logo colors', registeredMotionSvg?.logo?.light?.includes('#1D4497')
+  && !registeredMotionSvg.logo.light.includes('#0AD69C')
+  && registeredMotionSvg?.logo?.dark?.includes('#F2F1DF')
+  && !registeredMotionSvg.logo.dark.includes('#007E79'));
 for (const locale of localePages) validateMotifMarkup(locale);
 check('motif runtime host exists as a local module', Boolean(motifRuntime));
 check('motif runtime imports the exact registered inline SVG module', new RegExp(`from\\s*["']\\./${escapeRegExp(motifByFile.get('motion/citychat-motif-motion.js').deploymentPath)}["']`).test(motifRuntime)
   && /import\s*\{[^}]*\bsvg\b[^}]*\}/.test(motifRuntime));
+check('motif runtime resolves only explicit foundation and CityChat product surfaces', /surface\s*===\s*["']foundation["']/.test(motifRuntime)
+  && /surface\s*===\s*["']citychat-product["']/.test(motifRuntime)
+  && /Unknown CityChat motif surface/.test(motifRuntime)
+  && !/\|\|\s*["']regular["']/.test(motifRuntime));
 check('motif runtime mounts only declared motif and logo stages', motifRuntime.includes('[data-citychat-motif]')
   && motifRuntime.includes('[data-citychat-logo]')
   && /svg\s*\[\s*(?:motifId|id|key)\s*\]/.test(motifRuntime)

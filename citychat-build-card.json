@@ -3,7 +3,7 @@
   "artifact": {
     "id": "citychat-public-landing",
     "buildId": "citychat-landing-20260903-03",
-    "releaseRevision": "citychat-motif-20260907-01",
+    "releaseRevision": "citychat-contrast-20260908-01",
     "canonicalUrls": [
       "https://montri-th.github.io/CityChat/",
       "https://montri-th.github.io/CityChat/en/"
@@ -39,8 +39,20 @@
     "assetRegister": "handoff/citychat-motif-set/asset-register.json"
   },
   "sourcePackage": {
-    "archive": "CityChat มอทีฟชุมชน.zip",
-    "archiveSha256": "72d5840a39d28db4f370c9a36e9bb328a197e5faaa55f0e3e9a94d493cfa02db"
+    "archive": "CityChat มอทีฟชุมชน Assets and Prompt.zip",
+    "archiveSha256": "72b604f45130360f9bcde2e5a8b4bcd0727bc6a53b008d89fb93a52881279615",
+    "sourceRegisterCorrections": [
+      {
+        "file": "assets/logo-bubbles-proposal-light.svg",
+        "declaredSha256": "3154e91f107df269b783337bbb4f868037449dd4dd349aca1215069c1818e8e1",
+        "verifiedSha256": "4f3defeb8901a9fc1b92690dab53c88c8c06532c99ef99eb8dc20f06f07f9aeb"
+      },
+      {
+        "file": "assets/logo-bubbles-proposal-dark.svg",
+        "declaredSha256": "cfd191927a2d1b425bb1ca60744f6c98e832e8ea47d8f569dcb3da7fc5c2efbb",
+        "verifiedSha256": "d60f1b348ba9d3040ba65a4ebb267fedb52a78dc3fc766a05158475a8fdbfd8e"
+      }
+    ]
   },
   "assets": [
     {
@@ -83,13 +95,13 @@
       "file": "assets/logo-bubbles-proposal-light.svg",
       "deploymentPath": "assets/citychat-motif-set/assets/logo-bubbles-proposal-light.svg",
       "bytes": 9249,
-      "sha256": "388f82731025fe82c446f4f40d611fc2a242997a47b0e82faeb1090f55b00760"
+      "sha256": "4f3defeb8901a9fc1b92690dab53c88c8c06532c99ef99eb8dc20f06f07f9aeb"
     },
     {
       "file": "assets/logo-bubbles-proposal-dark.svg",
       "deploymentPath": "assets/citychat-motif-set/assets/logo-bubbles-proposal-dark.svg",
       "bytes": 9249,
-      "sha256": "2bb77c85b0885526b299899b6705d79b17383144f77fd563009f56f5143b76c6"
+      "sha256": "d60f1b348ba9d3040ba65a4ebb267fedb52a78dc3fc766a05158475a8fdbfd8e"
     },
     {
       "file": "assets/lockup-without-bubbles-light.png",
@@ -119,7 +131,7 @@
       "file": "motion/citychat-motif-motion.js",
       "deploymentPath": "assets/citychat-motif-set/motion/citychat-motif-motion.js",
       "bytes": 43005,
-      "sha256": "fc60ace74fa51fb4eb0f18e0398f4efe4032fcc18d38c4db7a350151c6e8064d"
+      "sha256": "cbcf4b541dfe784cdd8894770fbbd6a6495d7e8de82fc5cae4beb8257871b012"
     }
   ],
   "placements": [
@@ -152,10 +164,10 @@
       "motion": "once on first intersection"
     },
     {
-      "scene": "contact invitation",
+      "scene": "offer invitation",
       "asset": "ConversationMotif",
       "meaning": "a calm invitation to begin a conversation",
-      "surface": "Landometer atmosphere gradient",
+      "surface": "page canvas",
       "motion": "once on first intersection"
     }
   ],
@@ -186,6 +198,14 @@
       "source": "registeredModule.svg.motif",
       "embeddedVerbatim": true,
       "originalAssetRetainedForProvenance": "assets/citychat-motif-set/assets/conversation-motif-original.svg"
+    },
+    "contrastRemediation": {
+      "productFieldForegrounds": "opaque contextual ink",
+      "interactiveBoundaries": "2px contextual contrast",
+      "calmNavigation": "full-opacity controls with 44px minimum targets",
+      "selectedStates": "color plus persistent inset marker",
+      "focusIndicators": "surface-contextual 3px outlines",
+      "motifSurfaces": "explicit citychat-product or foundation roles"
     },
     "intersectionThreshold": 0.14,
     "staticFallbacks": [

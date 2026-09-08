@@ -73,10 +73,10 @@ const applyMotionTiming = (inlineSvg, motifId) => {
 };
 
 const renditionFor = (stage, pageTheme) => {
-  const surface = stage.dataset.motifSurface || 'regular';
-  return surface === 'gradient'
-    ? (pageTheme === 'light' ? 'dark' : 'light')
-    : pageTheme;
+  const surface = stage.dataset.motifSurface;
+  if (surface === 'foundation') return pageTheme;
+  if (surface === 'citychat-product') return pageTheme === 'light' ? 'dark' : 'light';
+  throw new Error(`Unknown CityChat motif surface: ${surface || 'missing'}`);
 };
 
 const prepareSvg = (markup, motifId) => {

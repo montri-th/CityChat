@@ -1,4 +1,4 @@
-# CityChat motif set — handoff (1.0.0-proposal · 7 September 2026)
+# CityChat motif set — handoff (1.0.1-proposal · 8 September 2026)
 
 ชุดภาพประกอบของ CityChat 3 ชิ้น + ข้อเสนอบอลลูนโลโก้ + motion อ้างอิง สร้างจากรูปบอลลูนและรอยยิ้มของ ConversationMotif ตัวจริง ใช้ได้ทุกสื่อภายใต้ `AMENDMENT.md` (กติกาเพิ่มเติมที่ชนะ LDS/Add-on ในข้อที่ระบุ) และ `PROMPT.md` (ข้อความสั่งงานสำหรับ Claude/agent)
 
@@ -12,13 +12,13 @@
 | `assets/3b-live-visit-trade-dark.svg` | 3b น่าอยู่·น่าเที่ยว·น่าค้าขาย · dark | 10504 | `6f3a43b046b8c4a2…` |
 | `assets/3c-our-voice-here-light.svg` | 3c เสียงเราอยู่ตรงนี้ · light | 12662 | `4d13de02f25e82f0…` |
 | `assets/3c-our-voice-here-dark.svg` | 3c เสียงเราอยู่ตรงนี้ · dark | 12662 | `350fadd34a5472eb…` |
-| `assets/logo-bubbles-proposal-light.svg` | 3d บอลลูนโลโก้ (ข้อเสนอ) · light overlay | 9249 | `388f82731025fe82…` |
-| `assets/logo-bubbles-proposal-dark.svg` | 3d บอลลูนโลโก้ (ข้อเสนอ) · dark overlay | 9249 | `2bb77c85b0885526…` |
+| `assets/logo-bubbles-proposal-light.svg` | 3d บอลลูนโลโก้ (ข้อเสนอ) · light overlay | 9249 | `4f3defeb8901a9fc…` |
+| `assets/logo-bubbles-proposal-dark.svg` | 3d บอลลูนโลโก้ (ข้อเสนอ) · dark overlay | 9249 | `d60f1b348ba9d304…` |
 | `assets/lockup-without-bubbles-light.png` | wordmark + หมุด ไม่มีบอลลูน · light (ไฟล์ทำงาน) | 17608 | `df00f1c02f2c2c45…` |
 | `assets/lockup-without-bubbles-dark.png` | wordmark + หมุด ไม่มีบอลลูน · dark (ไฟล์ทำงาน) | 17483 | `37af6d9675ee4c1e…` |
 | `assets/conversation-motif-original.svg` | ConversationMotif ต้นฉบับจากเจ้าของ (ไม่แก้) | 11610 | `fa67237428dc510c…` |
 | `motion/citychat-motif-motion.css` | CSS motion: คลาส + keyframes | 6779 | `67c4f2638ef76b7e…` |
-| `motion/citychat-motif-motion.js` | ES module: SVG แบบเคลื่อนไหว 5 ชิ้น + css | 43005 | `fc60ace74fa51fb4…` |
+| `motion/citychat-motif-motion.js` | ES module: SVG แบบเคลื่อนไหว 5 ชิ้น + css | 43005 | `cbcf4b541dfe784c…` |
 
 hash เต็มอยู่ใน `asset-register.json`
 
@@ -30,7 +30,7 @@ hash เต็มอยู่ใน `asset-register.json`
 | **3b น่าอยู่ · น่าเที่ยว · น่าค้าขาย** | สามคำถามของละแวกบ้านหนึ่งแห่ง (บ้าน · กล้อง · ร้าน) ปักบนพื้นเดียวกัน | hero CityScan, roll-up, สไลด์สามคำถาม, สื่อแนะนำละแวกบ้าน | หมุนรอบแกนดิ่งคนละความเร็ว (2 · 3 · 1 รอบ) ชะลอแล้วหยุดไม่พร้อมกัน ภาพในใบโผล่ตอนใกล้หยุด |
 | **3c เสียงเราอยู่ตรงนี้** | เสียงของเราปักอยู่ที่จุดจริงบนแผนที่ ท่ามกลางเสียงเพื่อนบ้าน | empty state "ยังไม่มีใครเล่าเรื่องแถวนี้", หน้าปักเรื่อง, สไลด์ "เสียงมีที่อยู่ตรวจสอบได้" | เพื่อนบ้านโผล่ทีละใบ ใบใหญ่งอกจากแผนที่แล้วส่ายตัวเข้าที่ วงแหวนกระเพื่อมหนึ่งวง |
 | **ConversationMotif** | เมืองกำลังคุยกัน | welcome, คำชวน, empty, success | สองใบโผล่แล้วเอนเข้าหากันสลับจังหวะ |
-| **3d โลโก้ (ข้อเสนอ)** | บอลลูนบนโลโก้เป็นรูปเดียวกับชุด | header / footer / ปก — หลังอนุมัติและออกไฟล์ใหม่จากต้นฉบับ | บอลลูนโผล่ จุดสามจุดกระโดดทีละจุด ครั้งเดียว (ใช้เฉพาะฉากเปิดวิดีโอ/สไลด์) |
+| **3d โลโก้ (ข้อเสนอ)** | บอลลูนบนโลโก้เป็นรูปเดียวกับชุด · ใบเล็ก light `#1D4497` / dark `#F2F1DF` เพื่ออ่านได้บน hero ทั้งสองธีม | header / footer / ปก — หลังอนุมัติและออกไฟล์ใหม่จากต้นฉบับ | บอลลูนโผล่ จุดสามจุดกระโดดทีละจุด ครั้งเดียว (ใช้เฉพาะฉากเปิดวิดีโอ/สไลด์) |
 
 ## วิธีใช้ต่อสื่อ
 

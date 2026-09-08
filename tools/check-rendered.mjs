@@ -55,6 +55,120 @@ function check(label, condition, details = '') {
   if (!condition) failures.push(`${label}${details ? ` — ${details}` : ''}`);
 }
 
+function parseCssColor(value) {
+  const input = String(value || '').trim().toLowerCase();
+  if (!input) return null;
+  if (input === 'transparent') return { r: 0, g: 0, b: 0, a: 0 };
+
+  const hex = input.match(/^#([\da-f]{3,8})$/i)?.[1];
+  if (hex) {
+    const expanded = hex.length <= 4 ? [...hex].map((digit) => `${digit}${digit}`).join('') : hex;
+    if (![6, 8].includes(expanded.length)) return null;
+    return {
+      r: Number.parseInt(expanded.slice(0, 2), 16),
+      g: Number.parseInt(expanded.slice(2, 4), 16),
+      b: Number.parseInt(expanded.slice(4, 6), 16),
+      a: expanded.length === 8 ? Number.parseInt(expanded.slice(6, 8), 16) / 255 : 1,
+    };
+  }
+
+  const functional = input.match(/^rgba?\((.*)\)$/i);
+  if (functional) {
+    const [channelsText, alphaText] = functional[1].split('/').map((part) => part.trim());
+    const channels = channelsText.includes(',')
+      ? channelsText.split(',').map((part) => part.trim())
+      : channelsText.split(/\s+/).filter(Boolean);
+    let alpha = alphaText;
+    if (channels.length === 4 && alpha === undefined) alpha = channels.pop();
+    if (channels.length !== 3) return null;
+    const channel = (part) => part.endsWith('%')
+      ? Number.parseFloat(part) * 2.55
+      : Number.parseFloat(part);
+    const opacity = alpha === undefined
+      ? 1
+      : alpha.endsWith('%') ? Number.parseFloat(alpha) / 100 : Number.parseFloat(alpha);
+    const parsed = { r: channel(channels[0]), g: channel(channels[1]), b: channel(channels[2]), a: opacity };
+    return Object.values(parsed).every(Number.isFinite) ? parsed : null;
+  }
+
+  const srgb = input.match(/^color\(srgb\s+(.+)\)$/i);
+  if (srgb) {
+    const [channelsText, alphaText] = srgb[1].split('/').map((part) => part.trim());
+    const channels = channelsText.split(/\s+/).filter(Boolean).map(Number.parseFloat);
+    const alpha = alphaText === undefined
+      ? 1
+      : alphaText.endsWith('%') ? Number.parseFloat(alphaText) / 100 : Number.parseFloat(alphaText);
+    if (channels.length !== 3 || !channels.every(Number.isFinite) || !Number.isFinite(alpha)) return null;
+    return { r: channels[0] * 255, g: channels[1] * 255, b: channels[2] * 255, a: alpha };
+  }
+  return null;
+}
+
+function extractCssColors(value) {
+  const matches = String(value || '').match(/#[\da-f]{3,8}\b|rgba?\([^)]*\)|color\(srgb\s+[^)]*\)/gi) || [];
+  return matches.map(parseCssColor).filter(Boolean);
+}
+
+function compositeSrgb(foreground, background) {
+  const alpha = foreground.a + background.a * (1 - foreground.a);
+  if (alpha <= 0) return { r: 0, g: 0, b: 0, a: 0 };
+  return {
+    r: (foreground.r * foreground.a + background.r * background.a * (1 - foreground.a)) / alpha,
+    g: (foreground.g * foreground.a + background.g * background.a * (1 - foreground.a)) / alpha,
+    b: (foreground.b * foreground.a + background.b * background.a * (1 - foreground.a)) / alpha,
+    a: alpha,
+  };
+}
+
+function relativeLuminance(color) {
+  const linear = (channel) => {
+    const srgb = Math.min(255, Math.max(0, channel)) / 255;
+    return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * linear(color.r) + 0.7152 * linear(color.g) + 0.0722 * linear(color.b);
+}
+
+function contrastRatio(foreground, background) {
+  const renderedBackground = background.a < 1
+    ? compositeSrgb(background, { r: 255, g: 255, b: 255, a: 1 })
+    : background;
+  const renderedForeground = compositeSrgb(foreground, renderedBackground);
+  const lighter = Math.max(relativeLuminance(renderedForeground), relativeLuminance(renderedBackground));
+  const darker = Math.min(relativeLuminance(renderedForeground), relativeLuminance(renderedBackground));
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function minimumContrast(foregroundValue, backgrounds) {
+  const foreground = parseCssColor(foregroundValue);
+  if (!foreground || backgrounds.length === 0) return { minimum: 0, ratios: [] };
+  const ratios = backgrounds.map((background) => contrastRatio(foreground, background));
+  return { minimum: Math.min(...ratios), ratios };
+}
+
+function textContrastThreshold({ fontSize, fontWeight }) {
+  const weight = Number.parseFloat(fontWeight) || (String(fontWeight).toLowerCase() === 'bold' ? 700 : 400);
+  return fontSize >= 24 || (fontSize >= 18.66 && weight >= 700) ? 3 : 4.5;
+}
+
+function contrastDetails(record, result, threshold) {
+  return JSON.stringify({
+    label: record.label,
+    foreground: record.color,
+    fontSize: record.fontSize,
+    fontWeight: record.fontWeight,
+    threshold,
+    ratios: result.ratios.map((ratio) => Number(ratio.toFixed(3))),
+  });
+}
+
+function sameSrgb(left, right, tolerance = 0.6) {
+  return Boolean(left && right
+    && Math.abs(left.r - right.r) <= tolerance
+    && Math.abs(left.g - right.g) <= tolerance
+    && Math.abs(left.b - right.b) <= tolerance
+    && Math.abs(left.a - right.a) <= 0.005);
+}
+
 const mimeTypes = new Map([
   ['.css', 'text/css; charset=utf-8'],
   ['.html', 'text/html; charset=utf-8'],
@@ -164,6 +278,72 @@ async function openPage(context, scenario, route = routes.th) {
   await page.evaluate(() => document.fonts?.ready);
   await page.waitForTimeout(120);
   return { page, finishDiagnostics };
+}
+
+async function forceFocusVisible(page, selectors) {
+  const session = await page.context().newCDPSession(page);
+  await session.send('DOM.enable');
+  await session.send('CSS.enable');
+  const { root } = await session.send('DOM.getDocument', { depth: 0, pierce: true });
+  for (const selector of selectors) {
+    const { nodeId } = await session.send('DOM.querySelector', { nodeId: root.nodeId, selector });
+    if (!nodeId) throw new Error(`Cannot force :focus-visible for missing selector: ${selector}`);
+    await session.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: ['focus', 'focus-visible'] });
+  }
+  return session;
+}
+
+async function collectCalmNavState(page) {
+  return page.evaluate(() => {
+    const visible = (element) => {
+      if (!element) return false;
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0;
+    };
+    const tokenColor = (name) => {
+      const probe = document.createElement('span');
+      probe.style.color = `var(${name})`;
+      document.body.append(probe);
+      const value = getComputedStyle(probe).color;
+      probe.remove();
+      return value;
+    };
+    const nav = document.querySelector('[data-cc-nav]');
+    const bar = nav?.querySelector('[data-part="bar"]');
+    const row = nav?.querySelector('[data-part="row"]');
+    const wordmark = row?.querySelector(':scope > a span');
+    const barRect = bar?.getBoundingClientRect();
+    const rowRect = row?.getBoundingClientRect();
+    const wordmarkStyle = wordmark ? getComputedStyle(wordmark) : null;
+    const targetSelector = ':scope a, :scope button';
+    const targets = row ? [...row.querySelectorAll(targetSelector)].filter(visible).map((element) => {
+      const rect = element.getBoundingClientRect();
+      return { label: element.getAttribute('aria-label') || element.textContent.trim().slice(0, 32), width: rect.width, height: rect.height };
+    }) : [];
+    return {
+      calm: nav?.dataset.calm || '',
+      hovered: Boolean(nav?.matches(':hover')),
+      scrollY,
+      navOpacity: nav ? Number.parseFloat(getComputedStyle(nav).opacity) : 0,
+      barOpacity: bar ? Number.parseFloat(getComputedStyle(bar).opacity) : 0,
+      rowOpacity: row ? Number.parseFloat(getComputedStyle(row).opacity) : 0,
+      barHeight: barRect?.height || 0,
+      computedBarHeight: bar ? getComputedStyle(bar).height : '',
+      transitionDuration: bar ? getComputedStyle(bar).transitionDuration : '',
+      rowWidth: rowRect?.width || 0,
+      rowTransform: row ? getComputedStyle(row).transform : '',
+      backgroundColor: nav ? getComputedStyle(nav).backgroundColor : '',
+      canvasColor: tokenColor('--surface-canvas'),
+      productGradient: getComputedStyle(document.querySelector('[data-hero]')).backgroundImage,
+      targets,
+      wordmark: wordmarkStyle ? {
+        color: wordmarkStyle.color,
+        fontSize: Number.parseFloat(wordmarkStyle.fontSize),
+        fontWeight: wordmarkStyle.fontWeight,
+      } : null,
+    };
+  });
 }
 
 async function assertCommonLayout(page, scenario, expectedTheme, desktop, route = routes.th) {
@@ -428,7 +608,7 @@ async function assertCommonLayout(page, scenario, expectedTheme, desktop, route 
     && JSON.stringify(renderedMotifIds) === JSON.stringify([...motifIds].sort()),
   JSON.stringify(state.motifStages));
   check(`${scenario}: every CityChat scene carries at most one identity or story motif`, state.motifStages.every(({ sceneStageCount }) => sceneStageCount === 1), JSON.stringify(state.motifStages));
-  check(`${scenario}: motif surface semantics remain exact`, state.motifStages.every(({ id, surface }) => surface === (['logo', 'motif'].includes(id) ? 'gradient' : 'regular')), JSON.stringify(state.motifStages));
+  check(`${scenario}: motif surface semantics remain exact`, state.motifStages.every(({ id, surface }) => surface === (id === 'logo' ? 'citychat-product' : 'foundation')), JSON.stringify(state.motifStages));
   check(`${scenario}: moving motifs keep the 120px minimum without shadows or glow`, state.motifStages.every(({ id, visible: stageVisible, width, height, boxShadow, filter }) => stageVisible
     && width >= 119.5
     && (id === 'logo' || height >= 119.5)
@@ -659,37 +839,299 @@ async function runInteractions(route = routes.th) {
     await page.waitForFunction(() => document.querySelector('[data-cc-nav]')?.dataset.calm === 'off');
     await page.waitForFunction(() => document.querySelector('[data-cc-nav] [data-part="bar"]')?.getBoundingClientRect().height >= 75, null, { timeout: 3000 });
     const expandedHeight = await page.locator('[data-cc-nav] [data-part="bar"]').evaluate((element) => element.getBoundingClientRect().height);
-    const readNavState = () => page.evaluate(() => {
-        const nav = document.querySelector('[data-cc-nav]');
-        const bar = nav?.querySelector('[data-part="bar"]');
-        return {
-          calm: nav?.dataset.calm,
-          hovered: nav?.matches(':hover'),
-          height: bar?.getBoundingClientRect().height,
-          computedHeight: bar ? getComputedStyle(bar).height : '',
-          transitionDuration: bar ? getComputedStyle(bar).transitionDuration : '',
-          scrollY,
-        };
-      });
+    const readNavState = () => collectCalmNavState(page);
 
     let calmState = await readNavState();
     const calmDeadline = Date.now() + 3000;
-    while ((calmState.calm !== 'on' || calmState.height > 30) && Date.now() < calmDeadline) {
+    while ((calmState.calm !== 'on' || Math.abs(calmState.barHeight - 56) > 1) && Date.now() < calmDeadline) {
       await page.mouse.wheel(0, 120);
       await page.waitForTimeout(80);
       calmState = await readNavState();
     }
-    const calmHeight = calmState.height;
-    check(`${scenario}: sustained downward scrolling reaches the compact nav state`, calmState.calm === 'on' && calmHeight <= 30, JSON.stringify(calmState));
+    const calmHeight = calmState.barHeight;
+    check(`${scenario}: sustained downward scrolling reaches the calm 56px nav state`, calmState.calm === 'on' && Math.abs(calmHeight - 56) <= 1, JSON.stringify(calmState));
+    check(`${scenario}: calm nav keeps its row and controls full-size and opaque`, calmState.navOpacity === 1
+      && calmState.barOpacity === 1
+      && calmState.rowOpacity === 1
+      && calmState.rowTransform === 'none'
+      && calmState.rowWidth > 0
+      && calmState.targets.length > 0
+      && calmState.targets.every(({ width, height }) => width >= 43.5 && height >= 43.5), JSON.stringify(calmState));
     await page.waitForTimeout(240);
     const settledCalmState = await readNavState();
-    check(`${scenario}: compact nav remains stable after scrolling stops`, settledCalmState.calm === 'on' && settledCalmState.height <= 30, JSON.stringify(settledCalmState));
+    check(`${scenario}: calm nav remains stable after scrolling stops`, settledCalmState.calm === 'on' && Math.abs(settledCalmState.barHeight - 56) <= 1, JSON.stringify(settledCalmState));
     await page.locator('[data-cc-nav]').hover();
     await page.waitForFunction(() => document.querySelector('[data-cc-nav]')?.dataset.calm === 'off');
     await page.waitForFunction(() => document.querySelector('[data-cc-nav] [data-part="bar"]')?.getBoundingClientRect().height >= 75, null, { timeout: 3000 });
     const restoredHeight = await page.locator('[data-cc-nav] [data-part="bar"]').evaluate((element) => element.getBoundingClientRect().height);
-    check(`${scenario}: calm nav compresses and hover restores it`, expandedHeight >= 75 && calmHeight <= 30 && restoredHeight >= 75, `${expandedHeight}/${calmHeight}/${restoredHeight}`);
+    check(`${scenario}: calm nav shortens and hover restores it`, expandedHeight >= 75 && Math.abs(calmHeight - 56) <= 1 && restoredHeight >= 75, `${expandedHeight}/${calmHeight}/${restoredHeight}`);
   } finally {
+    finishDiagnostics();
+    await context.close();
+  }
+}
+
+async function runContrastRegression(route = routes.th, theme = 'light') {
+  const scenario = `${route.label} desktop ${theme} contrast`;
+  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: theme });
+  await seedTheme(context, theme);
+  const { page, finishDiagnostics } = await openPage(context, scenario, route);
+  let cdpSession;
+  try {
+    await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); });
+    await page.mouse.move(8, 992);
+    const calmDeadline = Date.now() + 3000;
+    let calmNav = await collectCalmNavState(page);
+    while ((calmNav.calm !== 'on' || Math.abs(calmNav.barHeight - 56) > 1) && Date.now() < calmDeadline) {
+      await page.mouse.wheel(0, 160);
+      await page.waitForTimeout(80);
+      calmNav = await collectCalmNavState(page);
+    }
+
+    await page.locator('#record').scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => document.querySelector('[data-cc-rail] [data-part="raillink"][aria-current="location"]'), null, { timeout: 3000 });
+    cdpSession = await forceFocusVisible(page, [
+      '[data-hero] .hero-cta--primary',
+      '[data-hero] .hero-cta--secondary',
+      '.footer-primary-action',
+      '.contact-card a[href^="tel:"]',
+      '.contact-card .profile-link',
+      '.contact-details .contact-link',
+      '.contact-details .contact-email',
+      '.contact-details .social-links a',
+      '.footer-bottom .footer-brand',
+    ]);
+
+    const state = await page.evaluate(() => {
+      const tokenColor = (name) => {
+        const probe = document.createElement('span');
+        probe.style.color = `var(${name})`;
+        document.body.append(probe);
+        const value = getComputedStyle(probe).color;
+        probe.remove();
+        return value;
+      };
+      const textRecord = (label, element) => {
+        const style = element ? getComputedStyle(element) : null;
+        return style ? {
+          label,
+          color: style.color,
+          fontSize: Number.parseFloat(style.fontSize),
+          fontWeight: style.fontWeight,
+        } : { label, color: '', fontSize: 0, fontWeight: '' };
+      };
+      const visualRecord = (label, selector, surface) => {
+        const element = document.querySelector(selector);
+        const style = element ? getComputedStyle(element) : null;
+        return style ? {
+          label,
+          selector,
+          surface,
+          color: style.color,
+          backgroundColor: style.backgroundColor,
+          borderColor: style.borderTopColor,
+          borderStyle: style.borderTopStyle,
+          borderWidth: Number.parseFloat(style.borderTopWidth),
+          outlineColor: style.outlineColor,
+          outlineStyle: style.outlineStyle,
+          outlineWidth: Number.parseFloat(style.outlineWidth),
+          outlineOffset: Number.parseFloat(style.outlineOffset),
+          focusVisible: element.matches(':focus-visible'),
+        } : { label, selector, surface, missing: true };
+      };
+
+      const hero = document.querySelector('[data-hero]');
+      const heading = hero?.querySelector('h1');
+      const heroMetadata = heading?.previousElementSibling?.querySelector('span');
+      const heroSupport = heading?.nextElementSibling;
+      const heroBody = heroSupport?.nextElementSibling;
+      const banner = document.querySelector('.city-loop-banner');
+      const selectedTab = document.querySelector('[role="tab"][aria-selected="true"]');
+      const selectedTabStyle = selectedTab ? getComputedStyle(selectedTab) : null;
+      const currentRail = document.querySelector('[data-cc-rail] [data-part="raillink"][aria-current="location"]');
+      const currentRailStyle = currentRail ? getComputedStyle(currentRail) : null;
+      const cardSurface = getComputedStyle(document.querySelector('.contact-card')).backgroundColor;
+      const canvasSurface = tokenColor('--surface-canvas');
+
+      return {
+        theme: document.documentElement.dataset.theme,
+        productGradient: getComputedStyle(hero).backgroundImage,
+        footerGradient: getComputedStyle(document.querySelector('.site-footer')).backgroundImage,
+        heroText: [
+          textRecord('hero metadata', heroMetadata),
+          textRecord('hero heading', heading),
+          textRecord('hero support', heroSupport),
+          textRecord('hero body', heroBody),
+          textRecord('hero secondary action', hero?.querySelector('.hero-cta--secondary')),
+          textRecord('City loop eyebrow', banner?.querySelector('.city-loop-banner__eyebrow')),
+          textRecord('City loop heading', banner?.querySelector('h2')),
+          textRecord('City loop story', banner?.querySelector('.city-loop-banner__story')),
+        ],
+        primaryActionText: textRecord('hero primary action', hero?.querySelector('.hero-cta--primary')),
+        ctaBoundaries: [
+          visualRecord('hero primary action', '[data-hero] .hero-cta--primary', 'product'),
+          visualRecord('hero secondary action', '[data-hero] .hero-cta--secondary', 'product'),
+        ],
+        focusIndicators: [
+          visualRecord('hero primary action', '[data-hero] .hero-cta--primary', 'product'),
+          visualRecord('hero secondary action', '[data-hero] .hero-cta--secondary', 'product'),
+          visualRecord('footer primary action', '.footer-primary-action', 'footer'),
+          visualRecord('contact card telephone', '.contact-card a[href^="tel:"]', 'card'),
+          visualRecord('contact card profile', '.contact-card .profile-link', 'card'),
+          visualRecord('office map', '.contact-details .contact-link', 'footer'),
+          visualRecord('contact email', '.contact-details .contact-email', 'footer'),
+          visualRecord('social profile', '.contact-details .social-links a', 'footer'),
+          visualRecord('footer brand', '.footer-bottom .footer-brand', 'canvas'),
+        ],
+        footerBoundaries: [
+          visualRecord('footer primary action', '.footer-primary-action', 'footer'),
+          visualRecord('office map', '.contact-details .contact-link', 'footer'),
+          visualRecord('social profile', '.contact-details .social-links a', 'footer'),
+          visualRecord('contact card telephone', '.contact-card a[href^="tel:"]', 'card'),
+        ],
+        surfaces: { card: cardSurface, canvas: canvasSurface },
+        selectedTab: selectedTabStyle ? {
+          ariaSelected: selectedTab.getAttribute('aria-selected'),
+          boxShadow: selectedTabStyle.boxShadow,
+          backgroundColor: selectedTabStyle.backgroundColor,
+          accentColor: tokenColor('--interaction-accent'),
+        } : null,
+        currentRail: currentRailStyle ? {
+          ariaCurrent: currentRail.getAttribute('aria-current'),
+          width: currentRail.getBoundingClientRect().width,
+          height: currentRail.getBoundingClientRect().height,
+          boxShadow: currentRailStyle.boxShadow,
+          backgroundColor: currentRailStyle.backgroundColor,
+          accentColor: tokenColor('--interaction-accent'),
+        } : null,
+      };
+    });
+
+    check(`${scenario}: theme is pinned for contrast sampling`, state.theme === theme, state.theme);
+    const productStops = extractCssColors(state.productGradient);
+    const footerStops = extractCssColors(state.footerGradient);
+    check(`${scenario}: CityChat product surface exposes at least two opaque gradient stops`, productStops.length >= 2 && productStops.every(({ a }) => a === 1), state.productGradient);
+    check(`${scenario}: footer atmosphere exposes at least three opaque gradient stops`, footerStops.length >= 3 && footerStops.every(({ a }) => a === 1), state.footerGradient);
+
+    for (const record of state.heroText) {
+      const threshold = textContrastThreshold(record);
+      const result = minimumContrast(record.color, productStops);
+      check(`${scenario}: ${record.label} meets ${threshold}:1 at every CityChat gradient stop`, result.minimum >= threshold, contrastDetails(record, result, threshold));
+    }
+
+    const componentBackgrounds = (record, outsideBackgrounds) => {
+      const fill = parseCssColor(record.backgroundColor);
+      if (!fill || fill.a === 0) return outsideBackgrounds;
+      return outsideBackgrounds.map((background) => compositeSrgb(fill, background));
+    };
+    const primaryTextBackgrounds = componentBackgrounds(state.ctaBoundaries[0], productStops);
+    const primaryTextThreshold = textContrastThreshold(state.primaryActionText);
+    const primaryTextResult = minimumContrast(state.primaryActionText.color, primaryTextBackgrounds);
+    check(`${scenario}: hero primary action text meets ${primaryTextThreshold}:1 on its rendered fill`, primaryTextResult.minimum >= primaryTextThreshold, contrastDetails(state.primaryActionText, primaryTextResult, primaryTextThreshold));
+
+    const boundaryRatios = (record, outsideBackgrounds) => {
+      const border = parseCssColor(record.borderColor);
+      const fill = parseCssColor(record.backgroundColor);
+      return outsideBackgrounds.map((outside) => {
+        const candidates = [];
+        if (border && record.borderStyle !== 'none' && record.borderWidth > 0) {
+          candidates.push(contrastRatio(compositeSrgb(border, outside), outside));
+        }
+        if (fill && fill.a > 0) candidates.push(contrastRatio(compositeSrgb(fill, outside), outside));
+        return candidates.length ? Math.max(...candidates) : 0;
+      });
+    };
+    for (const record of state.ctaBoundaries) {
+      const ratios = boundaryRatios(record, productStops);
+      check(`${scenario}: ${record.label} keeps a 3:1 visible boundary across the product gradient`, !record.missing
+        && record.borderStyle !== 'none'
+        && record.borderWidth >= 1
+        && Math.min(...ratios) >= 3,
+      JSON.stringify({ record, ratios: ratios.map((ratio) => Number(ratio.toFixed(3))) }));
+    }
+
+    const surfaceBackgrounds = (surface) => {
+      if (surface === 'product') return productStops;
+      if (surface === 'footer') return footerStops;
+      const flat = parseCssColor(state.surfaces[surface]);
+      return flat ? [flat] : [];
+    };
+    for (const record of state.focusIndicators) {
+      const backgrounds = surfaceBackgrounds(record.surface);
+      const result = minimumContrast(record.outlineColor, backgrounds);
+      check(`${scenario}: forced ${record.label} focus ring is visible at 3:1`, !record.missing
+        && record.focusVisible
+        && record.outlineStyle !== 'none'
+        && record.outlineWidth >= 2.5
+        && result.minimum >= 3,
+      JSON.stringify({ record, ratios: result.ratios.map((ratio) => Number(ratio.toFixed(3))) }));
+    }
+
+    for (const record of state.footerBoundaries) {
+      const backgrounds = surfaceBackgrounds(record.surface);
+      const ratios = boundaryRatios(record, backgrounds);
+      check(`${scenario}: ${record.label} retains a 3:1 footer/card boundary`, !record.missing
+        && record.borderStyle !== 'none'
+        && record.borderWidth >= 1
+        && Math.min(...ratios) >= 3,
+      JSON.stringify({ record, ratios: ratios.map((ratio) => Number(ratio.toFixed(3))) }));
+    }
+
+    const selectedAccent = parseCssColor(state.selectedTab?.accentColor);
+    const selectedBackground = parseCssColor(state.selectedTab?.backgroundColor);
+    const selectedShadowColors = extractCssColors(state.selectedTab?.boxShadow);
+    const selectedMarkerContrast = selectedAccent && selectedBackground ? contrastRatio(selectedAccent, selectedBackground) : 0;
+    check(`${scenario}: selected tab has a contrasting three-pixel non-colour marker`, state.selectedTab?.ariaSelected === 'true'
+      && state.selectedTab.boxShadow.includes('inset')
+      && state.selectedTab.boxShadow.includes('-3px')
+      && selectedShadowColors.some((color) => sameSrgb(color, selectedAccent))
+      && selectedMarkerContrast >= 3,
+    JSON.stringify({ ...state.selectedTab, markerContrast: Number(selectedMarkerContrast.toFixed(3)) }));
+
+    const railAccent = parseCssColor(state.currentRail?.accentColor);
+    const railBackground = parseCssColor(state.currentRail?.backgroundColor);
+    const railShadowColors = extractCssColors(state.currentRail?.boxShadow);
+    const railMarkerContrast = railAccent && railBackground ? contrastRatio(railAccent, railBackground) : 0;
+    check(`${scenario}: current rail item has a contrasting two-pixel inset marker`, state.currentRail?.ariaCurrent === 'location'
+      && state.currentRail.width >= 43.5
+      && state.currentRail.height >= 43.5
+      && state.currentRail.boxShadow.includes('inset')
+      && state.currentRail.boxShadow.includes('2px')
+      && railShadowColors.some((color) => sameSrgb(color, railAccent))
+      && railMarkerContrast >= 3,
+    JSON.stringify({ ...state.currentRail, markerContrast: Number(railMarkerContrast.toFixed(3)) }));
+
+    const assertCalmNav = (label, navState) => {
+      const overlay = parseCssColor(navState.backgroundColor);
+      const canvas = parseCssColor(navState.canvasColor);
+      const underlays = [canvas, ...extractCssColors(navState.productGradient)].filter(Boolean);
+      const renderedNavBackgrounds = overlay ? underlays.map((underlay) => compositeSrgb(overlay, underlay)) : [];
+      const wordmarkThreshold = navState.wordmark ? textContrastThreshold(navState.wordmark) : 4.5;
+      const wordmarkResult = navState.wordmark ? minimumContrast(navState.wordmark.color, renderedNavBackgrounds) : { minimum: 0, ratios: [] };
+      check(`${scenario}: ${label} calm nav remains full-size and opaque`, navState.calm === 'on'
+        && Math.abs(navState.barHeight - 56) <= 1
+        && navState.navOpacity === 1
+        && navState.barOpacity === 1
+        && navState.rowOpacity === 1
+        && navState.rowTransform === 'none'
+        && navState.rowWidth > 0
+        && navState.targets.length > 0
+        && navState.targets.every(({ width, height }) => width >= 43.5 && height >= 43.5), JSON.stringify(navState));
+      check(`${scenario}: ${label} wordmark qualifies as large bold text and meets 3:1 on every composited nav underlay`, navState.wordmark
+        && navState.wordmark.fontSize >= 18.66
+        && (Number.parseFloat(navState.wordmark.fontWeight) || 0) >= 700
+        && wordmarkThreshold === 3
+        && wordmarkResult.minimum >= 3,
+      JSON.stringify({ wordmark: navState.wordmark, background: navState.backgroundColor, ratios: wordmarkResult.ratios.map((ratio) => Number(ratio.toFixed(3))) }));
+    };
+    assertCalmNav('desktop', calmNav);
+
+    await page.setViewportSize({ width: 375, height: 844 });
+    await page.waitForTimeout(620);
+    const mobileCalmNav = await collectCalmNavState(page);
+    assertCalmNav('375px mobile', mobileCalmNav);
+  } finally {
+    if (cdpSession) await cdpSession.detach();
     finishDiagnostics();
     await context.close();
   }
@@ -896,7 +1338,9 @@ async function runMotifMotion(route = routes.th, theme = 'light') {
         const stage = document.querySelector(selector);
         const id = stage?.getAttribute('data-citychat-motif') || 'logo';
         const surface = stage?.getAttribute('data-motif-surface');
-        const expectedRendition = surface === 'gradient' ? (pageTheme === 'light' ? 'dark' : 'light') : pageTheme;
+        const expectedRendition = surface === 'citychat-product'
+          ? (pageTheme === 'light' ? 'dark' : 'light')
+          : surface === 'foundation' ? pageTheme : 'invalid';
         const selected = stage?.querySelector(`.motif-stage__motion--theme-${pageTheme}`);
         const otherTheme = pageTheme === 'light' ? 'dark' : 'light';
         const other = stage?.querySelector(`.motif-stage__motion--theme-${otherTheme}`);
@@ -949,6 +1393,8 @@ async function runMotifMotion(route = routes.th, theme = 'light') {
             lightSecond: markup.includes('#0AD69C'),
             darkMain: markup.includes('#3BD19B'),
             darkSecond: markup.includes('#007E79'),
+            brandBlue: markup.includes('#1D4497'),
+            brandBeige: markup.includes('#F2F1DF'),
           },
           animationCount: animations.length,
           totalAnimationCount: allAnimations.length,
@@ -974,9 +1420,16 @@ async function runMotifMotion(route = routes.th, theme = 'light') {
       && record.role === null
       && record.textCount === 0
       && record.gradientCount === 0), JSON.stringify(state));
-    check(`${scenario}: inline SVGs choose the rendition from actual surface luminance`, state.every((record) => record.expectedRendition === 'light'
-      ? record.palette.lightMain && record.palette.lightSecond && !record.palette.darkMain && !record.palette.darkSecond
-      : record.palette.darkMain && record.palette.darkSecond && !record.palette.lightMain && !record.palette.lightSecond), JSON.stringify(state));
+    check(`${scenario}: inline SVGs choose the rendition from actual surface luminance`, state.every((record) => {
+      if (record.id === 'logo') {
+        return record.expectedRendition === 'light'
+          ? record.palette.lightMain && record.palette.brandBlue && !record.palette.lightSecond && !record.palette.darkMain && !record.palette.darkSecond && !record.palette.brandBeige
+          : record.palette.darkMain && record.palette.brandBeige && !record.palette.darkSecond && !record.palette.lightMain && !record.palette.lightSecond && !record.palette.brandBlue;
+      }
+      return record.expectedRendition === 'light'
+        ? record.palette.lightMain && record.palette.lightSecond && !record.palette.darkMain && !record.palette.darkSecond
+        : record.palette.darkMain && record.palette.darkSecond && !record.palette.lightMain && !record.palette.lightSecond;
+    }), JSON.stringify(state));
     check(`${scenario}: animated SVG geometry is proportional and large enough`, state.every((record) => record.viewBox === (record.id === 'logo' ? '0 0 494 106' : '0 0 240 240')
       && record.width >= 119.5
       && (record.id === 'logo' || record.height >= 119.5)), JSON.stringify(state));
@@ -1070,7 +1523,7 @@ async function runMotifMotion(route = routes.th, theme = 'light') {
         };
       }) : [];
       const theme = document.documentElement.dataset.theme;
-      const expectedRendition = theme === 'light' ? 'dark' : 'light';
+      const expectedRendition = theme;
       return {
         state: stage?.dataset.motifState,
         ready: stage?.classList.contains('is-motif-ready'),
@@ -1323,6 +1776,10 @@ try {
 
   await runInteractions();
   await runInteractions(routes.en);
+  for (const route of [routes.th, routes.en]) {
+    await runContrastRegression(route, 'light');
+    await runContrastRegression(route, 'dark');
+  }
 
   const matrix = [
     { name: 'desktop light', viewport: { width: 1440, height: 1000 }, preference: 'light', expectedTheme: 'light', colorScheme: 'light', desktop: true },

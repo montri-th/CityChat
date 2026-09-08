@@ -1,6 +1,6 @@
 # CityChat DS Add-on — amendment: motif set (proposal for owner sign-off)
 
-**สถานะ:** candidate · เสนอ 7 September 2026 · มีผลเมื่อเจ้าของลงนามท้ายไฟล์ แล้วคัดลอกข้อ CC-MOTIF-01 … CC-EX-02 เข้า `brand/CityChat-DS-Addon-v0.9.1-normative.md`
+**สถานะ:** candidate · เสนอ 7 September 2026 · แก้ครั้งที่ 1: 8 September 2026 (สีบอลลูนเล็กบนโลโก้) · มีผลเมื่อเจ้าของลงนามท้ายไฟล์ แล้วคัดลอกข้อ CC-MOTIF-01 … CC-EX-02 เข้า `brand/CityChat-DS-Addon-v0.9.1-normative.md`
 **ฐาน:** LDS v0.9.1 (0.9.1-r8 · lds-rules-0.9.1 · v0.9.1-mp7 · color-srgb-05) + CityChat DS Add-on v0.9.1
 **ลำดับอำนาจ:** ข้อในไฟล์นี้ **ชนะ** LDS และ Add-on เฉพาะเรื่องที่ระบุชัดข้างล่าง (รูป สี motion ของ motif และบอลลูนโลโก้) เรื่องอื่นทั้งหมด LDS/Add-on ยังคุมตามเดิม
 **hash ของ asset:** `asset-register.json` ในแพ็กเกจเดียวกัน — ห้ามพิมพ์ hash จากความจำ
@@ -25,10 +25,11 @@
 - `#0AD69C` (energy.mint) ใช้เป็น **สีเติมภาพประกอบของ CityChat motif เท่านั้น** ผ่านชื่อใหม่ `--cc-motif-second` (Add-on เพิ่มชื่อใหม่ ไม่ redefine token) — ไม่กลายเป็น UI, state, data หรือ product color
 - เส้นพื้น/กริด/กระดาษ: light `#C9D0CB` / `#DCE1DD` / `#FCFCFA` · dark `#46524F` / `#33403D` / `#20292D`
 - ห้ามสีอื่นทุกกรณี (ไม่มี coral, น้ำเงิน, gradient ในบอลลูน, เวอร์ชันสีเดียว, outline ทั้งภาพ)
+- ข้อยกเว้นของคู่สี: บอลลูนเล็กบนโลโก้ใช้ `brand.blue` / `brand.beige` ตาม CC-LOGO-02 ไม่ใช่ใบรองสีเขียว
 
 ## CC-LOGO-02 · บอลลูนบนโลโก้ CityChat (แก้ Add-on §C "CityChat lockup")
 
-- บอลลูนเหลี่ยมสองใบบน lockup ถูกแทนด้วยรูปบอลลูนของ ConversationMotif: ใบใหญ่บน i (ปลายหางที่ x 158 y 41 ของ viewBox 494 × 106, scale .33) · ใบเล็กกลับด้านหลัง t (ปลายหาง x 470 y 36, scale .38) · สีตาม CC-COLOR-02 · จุดสามจุดคงไว้ (ink ตามพื้น)
+- บอลลูนเหลี่ยมสองใบบน lockup ถูกแทนด้วยรูปบอลลูนของ ConversationMotif: ใบใหญ่บน i (ปลายหางที่ x 158 y 41 ของ viewBox 494 × 106, scale .33) · ใบเล็กกลับด้านหลัง t (ปลายหาง x 470 y 36, scale .38) · ใบใหญ่ใช้สีใบหลักตาม CC-COLOR-02 · **ใบเล็กไม่ใช้เขียวคู่ที่สอง** แต่ใช้สี brand ตาม rendition: light `#1D4497` (จุด `#FFFFFF`) · dark `#F2F1DF` (จุด `#182327`) — อ่านได้บน hero gradient CityChat ทั้งสองธีม: #1D4497 บน #3BD19B→#3BD3CB 4.6–4.9:1 · #F2F1DF บน #007A58→#007E79 4.3–4.7:1 · จุดสามจุดคงไว้
 - wordmark และหมุด Landometer **ไม่แตะ**
 - จนกว่าจะออกไฟล์ใหม่จากต้นฉบับใน Figma และขึ้นทะเบียน hash ทั้งสองธีม `citychat-lockup.png` / `citychat-lockup-dark.png` เดิมยังเป็น asset ที่ใช้จริง; `logo-bubbles-proposal-*.svg` + `lockup-without-bubbles-*.png` เป็นไฟล์ทำงานเท่านั้น ห้ามขึ้น production
 
