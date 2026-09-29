@@ -444,6 +444,7 @@ const mimeByExtension = new Map([
   ['.css', ['text/css']],
   ['.js', ['text/javascript', 'application/javascript']],
   ['.json', ['application/json']],
+  ['.md', ['text/markdown']],
   ['.txt', ['text/plain']],
   ['.svg', ['image/svg+xml']],
   ['.png', ['image/png']],
