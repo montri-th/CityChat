@@ -450,7 +450,8 @@ check('release config schema is CityChat landing v2', config.schemaVersion === '
 check('publication remains public but non-indexable', config.publication?.visibility === 'public' && config.publication?.indexable === false);
 check('configured robots policy is exact', config.publication?.robotsMeta === 'noindex,nofollow,noarchive');
 check('canonical URL is the GitHub Pages project route', config.artifact?.canonicalUrl === 'https://montri-th.github.io/CityChat/');
-check('approved release build identity remains unchanged', config.artifact?.buildId === 'citychat-landing-20260903-03');
+check('successor release has a distinct 0.9.5 build and revision', config.artifact?.buildId === 'citychat-landing-20260930-01'
+  && config.artifact?.releaseRevision === 'citychat-lds095-20260930-01');
 check('release declares exactly the Thai and English locales', localePages.length === 2
   && localePages.map(({ id }) => id).sort().join(',') === 'en,th');
 check('locale IDs are unique', localeById.size === localePages.length);
@@ -576,8 +577,8 @@ if (motifRegister) {
 
 if (motifBuildCard) {
   const records = Array.isArray(motifBuildCard.assets) ? motifBuildCard.assets : [];
-  check('Build Card motif revision matches the deployed release identity', motifBuildCard.artifact?.buildId === config.artifact.buildId
-    && motifBuildCard.artifact?.releaseRevision === config.artifact.releaseRevision);
+  check('historical motif Build Card remains bound to its original release', motifBuildCard.artifact?.buildId === config.artifact.designSystemMigration?.historicalMotifBuildId
+    && motifBuildCard.artifact?.releaseRevision === config.artifact.designSystemMigration?.historicalMotifRevision);
   check('Build Card records the exact governing amendment path', motifBuildCard.addon?.amendment === motifAmendmentPath);
   check('Build Card records exactly the 13 registered source files', records.length === motifRegisteredFiles.length
     && new Set(records.map(({ file }) => file)).size === motifRegisteredFiles.length
@@ -755,6 +756,11 @@ if (existsSync(identityManifestPath)) {
     && approval.transformPolicy === 'exact_embedded_bytes'
     && approval.cropPolicy === 'none'
     && approval.recolorPolicy === 'none');
+  check('favicon carry-forward preserves original approval and same role', identityManifest.historicalApproval?.sha256 === config.pinnedInputs?.['assets/identity/identity-assets.citychat-landing-20260903-03.json']
+    && approval?.carryForwardFrom?.approvalId === 'CC-ID-ROLE-APP-20260903-FAVICON-01'
+    && approval?.carryForwardFrom?.approvedContentHash === config.identity.favicon.sha256
+    && identityManifest.carryForwardScope?.newRoles === false
+    && identityManifest.carryForwardScope?.newTransforms === false);
   const approvedRoles = (identityManifest.roleApprovals || []).filter(({ approvalState }) => approvalState === 'approved').map(({ role }) => role);
   check('current identity manifest grants no broader role', approvedRoles.length === 1 && approvedRoles[0] === 'browser_tab_favicon', approvedRoles.join(', '));
 }

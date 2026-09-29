@@ -21,5 +21,6 @@ Before changing an interface in this repository:
 17. Resolve motion through current LDS 0.9.5 primitives or `none`. `CC-EX-01` looping CTA motion is retired for new work. Keep first meaning and action visible; no-JavaScript and reduced-motion states stay readable. Animation never creates a receipt, event, telemetry, or capability claim.
 18. Do not use bracket-shaped highlights or colored left rails on selected navigation, tabs, cards, or callouts. Use restrained fill and weight while retaining keyboard focus and meaningful chart/table borders. Inspect Thai and English at narrow and desktop widths.
 19. The old v0.8 playground stays historical. Current normative CityChat guidance is v0.9.2 on LDS 0.9.5; implementation records do not themselves certify full conformance.
+20. The current public release is build `citychat-landing-20260930-01`, revision `citychat-lds095-20260930-01`. Read its `deployment/assets/downloads/citychat-lds095-content-release-20260930-01.json` for the narrowly scoped carry-forward of unchanged artwork. Keep `citychat-build-card.json` and the 2026-09-03 identity manifest unchanged as historical exact-build approvals.
 
 Files under `deployment/assets/downloads/` and `deployment/vendor/` are release inputs. Keep their hashes and manifest records synchronized.

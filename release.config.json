@@ -3,14 +3,17 @@
   "artifact": {
     "name": "CityChat public landing",
     "product": "citychat",
-    "buildId": "citychat-landing-20260903-03",
-    "releaseRevision": "citychat-contrast-20260908-01",
+    "buildId": "citychat-landing-20260930-01",
+    "releaseRevision": "citychat-lds095-20260930-01",
     "designSystemMigration": {
       "parentVersion": "0.9.5",
       "parentReleaseRef": "v0.9.5-owner.1",
       "colorSetId": "color-srgb-08",
       "citychatAddonVersion": "0.9.2",
-      "normativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
+      "normativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
+      "contentReleaseRecordPath": "assets/downloads/citychat-lds095-content-release-20260930-01.json",
+      "historicalMotifBuildId": "citychat-landing-20260903-03",
+      "historicalMotifRevision": "citychat-contrast-20260908-01"
     },
     "pageKind": "product-landing",
     "language": "th",
@@ -145,6 +148,8 @@
       "motif-runtime.js",
       "robots.txt",
       "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
+      "assets/downloads/citychat-lds095-content-release-20260930-01.json",
+      "assets/identity/identity-assets.citychat-landing-20260930-01.json",
       "assets/downloads/citychat-ds-addon-v0.9.2-normative.md",
       "assets/downloads/citychat-ds-addon-v0.9.2-binding.json",
       "vendor/landometer/v0.9.5/machine/release.json",
@@ -375,7 +380,7 @@
     }
   },
   "identity": {
-    "manifest": "assets/identity/identity-assets.citychat-landing-20260903-03.json",
+    "manifest": "assets/identity/identity-assets.citychat-landing-20260930-01.json",
     "favicon": {
       "path": "assets/identity/citychat-favicon-3b7439f6.png",
       "href": "./assets/identity/citychat-favicon-3b7439f6.png",
@@ -404,6 +409,8 @@
     "assets/identity/citychat-favicon-3b7439f6.png": "3b7439f689fa6172660375e073ce3cbcd967ee2766c9d962522f712468e3b58a",
     "assets/identity/citychat-favicon-3b7439f6.receipt.json": "2ad25a4e8c2558a9d25f1c7004ae7cf62e4651bd21822a028d83b5beb97b71ac",
     "assets/identity/identity-assets.citychat-landing-20260903-03.json": "11454d84a61ae81f76dfa7f4aa6ab0ef97786eedc2f9f9659cad9d1c9bdab954",
+    "assets/identity/identity-assets.citychat-landing-20260930-01.json": "1cbb5a2db42eea9d7884dfe1f75f25ecd9d9def2e05eeb61e77ed6b9e8f5b7ea",
+    "assets/downloads/citychat-lds095-content-release-20260930-01.json": "96e31a0202825684b290d4bc182c50e81d38030ef7d765813d62e16ae9a3a3ae",
     "assets/citychat-lockup-dark.png": "032bd864e187598f645d5adb1fadb99c15c9cb9cc0beb5af015203d0709bfa44",
     "assets/citychat-lockup.png": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
     "assets/cityscan-demo.mp4": "9a818a3d24934ae6ff6db4b600952413631db49d40673281499cb6d5c6e22760",

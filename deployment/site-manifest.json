@@ -3,14 +3,17 @@
   "artifact": {
     "name": "CityChat public landing",
     "product": "citychat",
-    "buildId": "citychat-landing-20260903-03",
-    "releaseRevision": "citychat-contrast-20260908-01",
+    "buildId": "citychat-landing-20260930-01",
+    "releaseRevision": "citychat-lds095-20260930-01",
     "designSystemMigration": {
       "parentVersion": "0.9.5",
       "parentReleaseRef": "v0.9.5-owner.1",
       "colorSetId": "color-srgb-08",
       "citychatAddonVersion": "0.9.2",
-      "normativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
+      "normativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
+      "contentReleaseRecordPath": "assets/downloads/citychat-lds095-content-release-20260930-01.json",
+      "historicalMotifBuildId": "citychat-landing-20260903-03",
+      "historicalMotifRevision": "citychat-contrast-20260908-01"
     },
     "pageKind": "product-landing",
     "language": "th",
@@ -23,8 +26,8 @@
   },
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
-    "files": 321,
-    "bytes": 48644226
+    "files": 323,
+    "bytes": 48655998
   },
   "files": [
     {
@@ -218,6 +221,11 @@
       "sha256": "0ff5bddb77774bbcdb36ed2cbc056c25025a20cd31be98904caf70fe77caf4db"
     },
     {
+      "path": "assets/downloads/citychat-lds095-content-release-20260930-01.json",
+      "bytes": 7143,
+      "sha256": "96e31a0202825684b290d4bc182c50e81d38030ef7d765813d62e16ae9a3a3ae"
+    },
+    {
       "path": "assets/downloads/citychat-product-experience-profile-v0.4.md",
       "bytes": 93895,
       "sha256": "f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba"
@@ -371,6 +379,11 @@
       "path": "assets/identity/identity-assets.citychat-landing-20260903-03.json",
       "bytes": 3068,
       "sha256": "11454d84a61ae81f76dfa7f4aa6ab0ef97786eedc2f9f9659cad9d1c9bdab954"
+    },
+    {
+      "path": "assets/identity/identity-assets.citychat-landing-20260930-01.json",
+      "bytes": 4432,
+      "sha256": "1cbb5a2db42eea9d7884dfe1f75f25ecd9d9def2e05eeb61e77ed6b9e8f5b7ea"
     },
     {
       "path": "assets/identity/identity-assets.v0.4.json",
@@ -839,8 +852,8 @@
     },
     {
       "path": "resources/index.json",
-      "bytes": 6863,
-      "sha256": "7db6b9f9a1dfef580b9eb58c88c1db1432ca78227b48185ed2ab619ddf13a25c"
+      "bytes": 7060,
+      "sha256": "d7df0eac7d5545b87d8784a747aebdac594620beabc5cddebef802e6a2ffa3d0"
     },
     {
       "path": "resources/starter/README.md",

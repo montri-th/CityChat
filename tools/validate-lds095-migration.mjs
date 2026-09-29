@@ -91,5 +91,35 @@ for (const value of ['--ldm-product-citychat-light-primary', '--ldm-product-city
 }
 const config = JSON.parse(readFileSync(path.join(root, 'release.config.json')));
 if (config.artifact.designSystemMigration?.citychatAddonVersion !== '0.9.2') fail('release config not migrated');
+if (config.artifact.buildId !== 'citychat-landing-20260930-01'
+  || config.artifact.releaseRevision !== 'citychat-lds095-20260930-01') fail('successor build identity mismatch');
+const recordPath = config.artifact.designSystemMigration.contentReleaseRecordPath;
+exact(recordPath, config.pinnedInputs[recordPath]);
+const contentRelease = JSON.parse(read(recordPath));
+if (contentRelease.artifact.buildId !== config.artifact.buildId
+  || contentRelease.artifact.releaseRevision !== config.artifact.releaseRevision
+  || contentRelease.artifact.parentDesignSystem.releaseRef !== binding.parentDesignSystem.releaseRef
+  || contentRelease.currentNormative.sha256 !== binding.normativeDocument.sha256) fail('successor release record mismatch');
+for (const item of Object.values(contentRelease.historicalApprovalSources)) {
+  const original = item.path.startsWith('assets/')
+    ? read(item.path)
+    : readFileSync(path.join(root, item.path));
+  if (hash(original) !== item.sha256) fail(`historical approval changed: ${item.path}`);
+}
+exact(contentRelease.successorIdentityManifest.path, contentRelease.successorIdentityManifest.sha256);
+if (config.identity.manifest !== contentRelease.successorIdentityManifest.path) fail('current identity manifest route mismatch');
+const currentIdentity = JSON.parse(read(config.identity.manifest));
+if (currentIdentity.artifactBuildId !== config.artifact.buildId
+  || currentIdentity.roleApprovals?.length !== 1
+  || currentIdentity.roleApprovals[0].artifactBinding?.refs[0] !== config.artifact.buildId
+  || currentIdentity.roleApprovals[0].role !== 'browser_tab_favicon') fail('successor favicon role scope mismatch');
+if (contentRelease.unchangedMotifFiles.length !== 13) fail('motif carry-forward inventory incomplete');
+for (const item of contentRelease.unchangedMotifFiles) {
+  exact(item.path, item.sha256);
+  if (read(item.path).length !== item.bytes) fail(`motif byte length changed: ${item.path}`);
+}
+exact(contentRelease.unchangedFavicon.path, contentRelease.unchangedFavicon.sha256);
+if (contentRelease.rules.logoBubblesException?.indexOf('CC-EX-02') < 0
+  || contentRelease.rules.ctaException?.indexOf('CC-EX-01 is retired') < 0) fail('artwork exception scope changed');
 
-console.log(`CityChat LDS 0.9.5 migration validation passed (${packageEntries.length} exact upstream assets, two locales, four Add-on documents).`);
+console.log(`CityChat LDS 0.9.5 migration validation passed (${packageEntries.length} exact upstream assets, two locales, four Add-on documents, successor content release).`);

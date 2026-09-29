@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "citychat-content-release-1",
+  "recordId": "citychat-lds095-content-release-20260930-01",
+  "recordedAt": "2026-09-30",
+  "artifact": {
+    "product": "CityChat",
+    "buildId": "citychat-landing-20260930-01",
+    "releaseRevision": "citychat-lds095-20260930-01",
+    "canonicalUrls": [
+      "https://montri-th.github.io/CityChat/",
+      "https://montri-th.github.io/CityChat/en/"
+    ],
+    "parentDesignSystem": {
+      "version": "0.9.5",
+      "releaseRef": "v0.9.5-owner.1",
+      "colorSetId": "color-srgb-08"
+    },
+    "citychatAddonVersion": "0.9.2"
+  },
+  "authorization": {
+    "source": "Owner selected CityChat repository, live website and Project Source migration to LDS 0.9.5 in the current 2026-09-30 task.",
+    "kind": "owner-directed successor migration",
+    "scope": "Same public TH/EN CityChat pages; unchanged exact CityChat artwork in the same roles and placements only.",
+    "notClaimed": [
+      "No new rights or roles for the artwork.",
+      "No amendment of the 2026-09-03 favicon or 2026-09-08 motif approval records.",
+      "No general design-system promotion of CC-EX-02.",
+      "No backend capability or live data approval."
+    ]
+  },
+  "historicalApprovalSources": {
+    "motifBuildCard": {
+      "path": "citychat-build-card.json",
+      "sha256": "02f020a89f62ad3d1a0293d5e279e1592b2641d9b320b3f0766267274b8d63be",
+      "buildId": "citychat-landing-20260903-03",
+      "releaseRevision": "citychat-contrast-20260908-01"
+    },
+    "motifAssetRegister": {
+      "path": "handoff/citychat-motif-set/asset-register.json",
+      "sha256": "abaad25d95312a7f39b5264816218629edf4641ab984d6f11e2bf6001fa8866a"
+    },
+    "faviconIdentityManifest": {
+      "path": "assets/identity/identity-assets.citychat-landing-20260903-03.json",
+      "sha256": "11454d84a61ae81f76dfa7f4aa6ab0ef97786eedc2f9f9659cad9d1c9bdab954",
+      "role": "browser_tab_favicon"
+    }
+  },
+  "successorIdentityManifest": {
+    "path": "assets/identity/identity-assets.citychat-landing-20260930-01.json",
+    "sha256": "1cbb5a2db42eea9d7884dfe1f75f25ecd9d9def2e05eeb61e77ed6b9e8f5b7ea"
+  },
+  "currentNormative": {
+    "path": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
+    "sha256": "31801f57a1e82c47c5e1b584278ca8d66ff1104880df45f31fdfd156675ec3d5"
+  },
+  "unchangedMotifFiles": [
+    {
+      "path": "assets/citychat-motif-set/assets/3a-voice-home-light.svg",
+      "sha256": "c175caf8dd9fb0b045af720693aa45aef588b026e4eeaa5b88754cfffa8a06eb",
+      "bytes": 11143
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/3a-voice-home-dark.svg",
+      "sha256": "9717b6f70a9442e437e2ee069c335db44c8820aba6653d0aac385d1338f315d8",
+      "bytes": 11143
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/3b-live-visit-trade-light.svg",
+      "sha256": "3727a85d22e666c26ee6b0e150c6faa9200de2eca049947ee95a94f400c9d157",
+      "bytes": 10504
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/3b-live-visit-trade-dark.svg",
+      "sha256": "6f3a43b046b8c4a24b6f1c52b7d6a0e091ec08eb959f3cfecbe4e4140fc271a5",
+      "bytes": 10504
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/3c-our-voice-here-light.svg",
+      "sha256": "4d13de02f25e82f0d919f5a51f18b72e5424798cfd83cdb2ff67e65e5458f1cd",
+      "bytes": 12662
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/3c-our-voice-here-dark.svg",
+      "sha256": "350fadd34a5472ebac6effe2118e9fc4f3922b7dfd6e0d0faa9c6793bdaeba3d",
+      "bytes": 12662
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/logo-bubbles-proposal-light.svg",
+      "sha256": "4f3defeb8901a9fc1b92690dab53c88c8c06532c99ef99eb8dc20f06f07f9aeb",
+      "bytes": 9249
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/logo-bubbles-proposal-dark.svg",
+      "sha256": "d60f1b348ba9d3040ba65a4ebb267fedb52a78dc3fc766a05158475a8fdbfd8e",
+      "bytes": 9249
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/lockup-without-bubbles-light.png",
+      "sha256": "df00f1c02f2c2c453dbd6a21746d015fff8079880de863b2643c9fc7c2449583",
+      "bytes": 17608
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/lockup-without-bubbles-dark.png",
+      "sha256": "37af6d9675ee4c1eac934e60c6e481727c0ddb0aff0ad0db87000a6b1923990a",
+      "bytes": 17483
+    },
+    {
+      "path": "assets/citychat-motif-set/assets/conversation-motif-original.svg",
+      "sha256": "fa67237428dc510cb4e7bc15e86e3764e9911db8a5e26787cb7d40291a284ca4",
+      "bytes": 11610
+    },
+    {
+      "path": "assets/citychat-motif-set/motion/citychat-motif-motion.css",
+      "sha256": "67c4f2638ef76b7ecf355edd53a7c4f2c55cc51cafe7291f28dbf9cd4e00e91d",
+      "bytes": 6779
+    },
+    {
+      "path": "assets/citychat-motif-set/motion/citychat-motif-motion.js",
+      "sha256": "cbcf4b541dfe784cdd8894770fbbd6a6495d7e8de82fc5cae4beb8257871b012",
+      "bytes": 43005
+    }
+  ],
+  "unchangedFavicon": {
+    "path": "assets/identity/citychat-favicon-3b7439f6.png",
+    "sha256": "3b7439f689fa6172660375e073ce3cbcd967ee2766c9d962522f712468e3b58a",
+    "role": "browser_tab_favicon",
+    "canonicalUrl": "https://montri-th.github.io/CityChat/"
+  },
+  "retainedPlacements": [
+    {
+      "scene": "opening hero",
+      "asset": "animated CityChat logo bubbles",
+      "meaning": "opening identity",
+      "surface": "CityChat theme gradient",
+      "motion": "once on first intersection"
+    },
+    {
+      "scene": "CityScan neighbourhood questions",
+      "asset": "3b-live-visit-trade",
+      "meaning": "live, visit, and local trade",
+      "surface": "page canvas",
+      "motion": "once on first intersection"
+    },
+    {
+      "scene": "resident view",
+      "asset": "3a-voice-home",
+      "meaning": "pride in home and a welcome for newcomers",
+      "surface": "card",
+      "motion": "once on first intersection"
+    },
+    {
+      "scene": "data and community voice",
+      "asset": "3c-our-voice-here",
+      "meaning": "a community voice pinned to a real place",
+      "surface": "alternate canvas",
+      "motion": "once on first intersection"
+    },
+    {
+      "scene": "offer invitation",
+      "asset": "ConversationMotif",
+      "meaning": "a calm invitation to begin a conversation",
+      "surface": "page canvas",
+      "motion": "once on first intersection"
+    }
+  ],
+  "rules": {
+    "logoBubblesException": "CC-EX-02 stays limited to the exact 2026-09-08 assets, opening hero, once-only motion and reduced-motion static state.",
+    "ctaException": "CC-EX-01 is retired; no looping CTA sweep/flicker.",
+    "selectedNavigation": "No decorative bracket highlight or colored left rail.",
+    "sharedDesign": "LDS 0.9.5 governs current shared UI; historical 0.9.1 build card is provenance for unchanged CityChat artwork only."
+  },
+  "verification": {
+    "required": [
+      "exact asset hashes",
+      "same roles and placements",
+      "Thai and English page render",
+      "light and dark themes",
+      "narrow and desktop widths",
+      "reduced motion",
+      "no JavaScript",
+      "post-deploy live byte closure"
+    ],
+    "status": "prepared_for_release; live verification pending deployment"
+  }
+}

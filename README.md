@@ -6,6 +6,8 @@ Static Thai-language landing page prepared for the GitHub Pages route:
 
 Current design-system migration: **CityChat DS Add-on v0.9.2 on LDS 0.9.5** (`v0.9.5-owner.1`, `color-srgb-08`). The [downloadable normative Add-on](deployment/assets/downloads/citychat-ds-addon-v0.9.2-project-source.md) and [machine-readable binding](deployment/assets/downloads/citychat-ds-addon-v0.9.2-binding.json) identify the active rule order. Exact historical v0.9 and v0.9.1 Add-on files remain available without edits. The Thai and English page footers link to the current normative file.
 
+This LDS migration has its own `citychat-landing-20260930-01` build and `citychat-lds095-20260930-01` release revision. The [successor content-release record](deployment/assets/downloads/citychat-lds095-content-release-20260930-01.json) identifies the unchanged artwork carried into the same roles and placements, points to the original exact-build approvals, and limits the carry-forward to this migration. The original approval records remain unchanged.
+
 The page introduces CityChat for local-government teams, includes product and municipal evidence, and ends with the rebuild02-aligned Landometer contact/footer system. Social profiles use the same accessible icon-only controls as rebuild02, while link decoration stays off icons and external-link cues. Team names are published without the honorifics previously attached to Sek and Film.
 
 This release also adopts the hash-bound CityChat motif amendment at artifact scope. All four semantic motifs use their registered one-shot gestures when first entering the viewport, while the opening hero uses the owner-approved animated bubble treatment under `CC-EX-02`. The wordmark and Landometer pin remain still. Reduced-motion, no-JavaScript, and print routes retain the exact registered static artwork, and changing theme or revisiting a section does not replay a motif.
@@ -44,7 +46,7 @@ npm run render
 ## Release checks
 
 - `npm run finalize` records every regular file in `deployment/` except the two generated release records themselves. It rejects symlinks, unexpected system metadata, missing required files, and changed pinned media/font inputs.
-- `npm test` checks JavaScript syntax, requires release records to be current, validates the existing site contracts, and checks all 61 current LDS package assets against their upstream hashes, three CityChat normative documents, and Thai/English CSS and download links.
+- `npm test` checks JavaScript syntax, requires release records to be current, validates the existing site contracts, and checks all 61 current LDS package assets against their upstream hashes, the CityChat Add-on documents and successor release record, and Thai/English CSS and download links.
 - `npm run render` exercises 320–1440px layouts, short landscape, light, dark, system-dark, reduced-motion, no-JavaScript, print, storage-denied, menu, theme, tab, calm-navigation, icon-only footer, the approved favicon, the CityChat gradient highlight, portrait CityScan behavior, and finite motif/logo motion without replay.
 - `tools/verify-live.mjs` re-fetches the live runtime closure and release records with retry-aware cache busting, then requires exact bytes, SHA-256 hashes, expected MIME types, canonical/noindex copy, requested names, footer contract, and all registered motif resources.
 
@@ -58,7 +60,9 @@ Both GitHub Actions workflows validate without rewriting tracked files. The Page
 - `deployment/citychat.css` — CityChat-specific responsive layout, footer, theme, motion, and no-JS rules
 - `deployment/app.js` — progressive menu, theme, tabs, rail, video fallback, and reveal behavior
 - `deployment/motif-runtime.js` — first-intersection mounting for registered motif and logo SVG motion
-- `citychat-build-card.json` — artifact-scoped motif approval, placements, hashes, and exception record
+- `citychat-build-card.json` — historical exact-build motif approval, placements, hashes, and exception record
+- `deployment/assets/downloads/citychat-lds095-content-release-20260930-01.json` — successor release identity and constrained artwork carry-forward
+- `deployment/assets/identity/identity-assets.citychat-landing-20260930-01.json` — browser-tab favicon role bound to the successor build
 - `handoff/citychat-motif-set/` — exact owner-supplied amendment, register, source assets, and motion reference
 - `release.config.json` — machine-readable release and content contract
 - `deployment/site-manifest.json` — deterministic whole-tree file inventory
