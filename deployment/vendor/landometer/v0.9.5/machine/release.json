@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "lds-owner-distribution-1",
+  "release": {
+    "dsVersion": "0.9.5",
+    "releaseRef": "v0.9.5-owner.1",
+    "machinePackage": "v0.9.5-owner.1",
+    "authoringRevision": "0.9.5-owner.1",
+    "colorSetId": "color-srgb-08",
+    "status": "owner-approved",
+    "effectiveFor": "work explicitly adopting this owner distribution",
+    "signatureStatus": "unsigned",
+    "signedRelease": false,
+    "ownerApproval": {
+      "date": "2026-09-29",
+      "authority": "Montri",
+      "reference": "owner-message:2026-09-29:approve-r2.1-and-implement-ds0.9.5"
+    }
+  },
+  "inherits": {
+    "dsVersion": "0.9.4",
+    "machinePackage": "v0.9.4-mp1",
+    "path": "../../../references/inherited/lds-0.9.4",
+    "releaseSha256": "6231ccfa6c67dea65abd9bb9597f14448ddc9f285be949e4efa026978e1d4419",
+    "sumSha256": "9a261eb4df7bf3be5cf1e23f7fb2bd7079c67ca481fc55dccc7049ac52d325cc",
+    "trustPath": "../../../references/owner-trust/v0.9.4",
+    "signedBaseDoesNotSignThisDistribution": true
+  },
+  "approvalSource": {
+    "path": "../../../references/approved-r2.1.json",
+    "sha256": "ebe57188c0824577628f8913a62f1c0794d1522214c54af63703281dfb07e011",
+    "visualBuildId": "lds-color-direction-20260929-r2-density-v2"
+  },
+  "entrypoints": {
+    "human": "../GUIDE.md",
+    "brand": "../brand/BRAND.md",
+    "policy": "policy.json",
+    "tokens": "tokens.v0.9.5.json",
+    "colorRegistry": "color-srgb-08.tokens.json",
+    "scales": "color-srgb-08.scales.json",
+    "css": "color-srgb-08.production.css",
+    "webBuildKit": "../build-kit/lds-0.9.5.css",
+    "designTokens": "lds-0.9.5.tokens.dtcg.json"
+  },
+  "counts": {
+    "families": 20,
+    "themes": 2,
+    "lutColors": 1640,
+    "categoricalSlots": 10,
+    "atmosphereRecipes": 7
+  },
+  "verification": {
+    "command": "node scripts/verify.mjs",
+    "scope": "immutable base, approved snapshot parity, typed policy, complete assets, analytical math and CSS projection; not artifact conformance"
+  },
+  "limitations": [
+    "Package parity and analytical math are automated.",
+    "Rendering, actual surface contrast, native Thai copy, source truth, threshold semantics, CVD/grayscale usability and each output format require artifact review.",
+    "No claim of signed0.9.5 release, complete conformance, universal platform enforcement or team installation.",
+    "Gold density nine-class minimum >=2.2 but below3.0; prefer5–7 for small marks.",
+    "Inherited open governance/product-icon/motif/signing follow-ups remain open unless specifically resolved here."
+  ]
+}

@@ -199,11 +199,26 @@
   const revealTargets = [...document.querySelectorAll('[data-approach]')];
   const reducedMotion = motionPreference?.matches;
   let revealObserver = null;
+  const revealTimers = new WeakMap();
   const land = (element) => {
     if (!element) return;
+    const timer = revealTimers.get(element);
+    if (timer) window.clearTimeout(timer);
+    revealTimers.delete(element);
     element.classList.add('is-lds-revealed');
     element.classList.remove('is-lds-reveal-armed');
-    revealObserver?.unobserve(element);
+  };
+  const outsideViewport = (element) => {
+    const rect = element.getBoundingClientRect();
+    return rect.bottom <= 0 || rect.top >= window.innerHeight;
+  };
+  const rearm = (element) => {
+    if (!element.classList.contains('is-lds-revealed') || !outsideViewport(element)) return;
+    const timer = revealTimers.get(element);
+    if (timer) window.clearTimeout(timer);
+    revealTimers.delete(element);
+    element.classList.add('is-lds-reveal-armed');
+    element.classList.remove('is-lds-revealed');
   };
   const landWrappers = (node) => {
     let current = node;
@@ -219,25 +234,28 @@
     const viewportHeight = window.innerHeight;
     const effectiveBottom = viewportHeight - window.innerWidth * 0.12;
     const hashTarget = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
-    const eligible = revealTargets.filter((element) => {
+    const observed = revealTargets.filter((element) => !element.closest('[data-hero], nav, header'));
+    const eligible = observed.filter((element) => {
       const rect = element.getBoundingClientRect();
-      if (element.closest('[data-hero], nav, header')) return false;
       if (hashTarget && (hashTarget === element || hashTarget.contains(element) || element.contains(hashTarget))) return false;
       return rect.top >= viewportHeight && rect.top > effectiveBottom;
     });
     revealTargets.forEach((element) => { if (!eligible.includes(element)) land(element); });
-    if (eligible.length) {
+    if (observed.length) {
       revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           const element = entry.target;
-          revealObserver.unobserve(element);
+          if (!element.classList.contains('is-lds-reveal-armed')) return;
           element.classList.add('is-lds-revealed');
           const delay = Number.parseInt(element.style.getPropertyValue('--lds-reveal-delay'), 10) || 0;
-          window.setTimeout(() => element.classList.remove('is-lds-reveal-armed'), delay + 1000);
+          revealTimers.set(element, window.setTimeout(() => {
+            element.classList.remove('is-lds-reveal-armed');
+            revealTimers.delete(element);
+          }, delay + 1000));
         });
       }, { threshold: 0.14, rootMargin: '0px 0px -12% 0px' });
-      eligible.forEach((element) => {
+      observed.forEach((element) => {
         const sequence = element.parentElement?.hasAttribute('data-approach-sequence') ? element.parentElement : null;
         let delay = 0;
         if (sequence) {
@@ -245,10 +263,31 @@
           delay = Math.min(peers.indexOf(element) * 150, 450);
         }
         element.style.setProperty('--lds-reveal-delay', `${delay}ms`);
-        element.classList.add('is-lds-reveal-armed');
+        if (eligible.includes(element)) element.classList.add('is-lds-reveal-armed');
         revealObserver.observe(element);
       });
       root.classList.add('lds-motion-ready');
+      let auditScheduled = false;
+      const audit = () => {
+        if (auditScheduled) return;
+        auditScheduled = true;
+        window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+          auditScheduled = false;
+          if (motionPreference?.matches) return;
+          observed.forEach((element) => {
+            if (outsideViewport(element)) rearm(element);
+            else if (element.classList.contains('is-lds-reveal-armed') && !revealTimers.has(element)) {
+              const rect = element.getBoundingClientRect();
+              if (rect.top <= window.innerHeight * .88) land(element);
+            }
+          });
+        }));
+      };
+      for (const eventName of ['scroll', 'resize', 'pageshow']) window.addEventListener(eventName, audit, { passive: true });
+      motionPreference?.addEventListener?.('change', (event) => {
+        if (event.matches) { observed.forEach(land); root.classList.remove('lds-motion-ready'); }
+        else { root.classList.add('lds-motion-ready'); audit(); }
+      });
       document.addEventListener('focusin', (event) => landWrappers(event.target), true);
       window.addEventListener('hashchange', () => {
         const element = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
@@ -257,9 +296,9 @@
         element.querySelectorAll('[data-approach]').forEach(land);
       });
       window.setTimeout(() => {
-        eligible.forEach((element) => {
+        observed.forEach((element) => {
           const rect = element.getBoundingClientRect();
-          if (rect.top <= effectiveBottom && !element.classList.contains('is-lds-revealed')) land(element);
+          if (rect.top <= effectiveBottom && element.classList.contains('is-lds-reveal-armed')) land(element);
         });
       }, 2400);
     }

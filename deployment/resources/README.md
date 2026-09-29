@@ -1,5 +1,7 @@
 # CityChat implementation resources
 
+For current CityChat work, start with the self-contained [`citychat-ds-addon-v0.9.2-project-source.md`](../assets/downloads/citychat-ds-addon-v0.9.2-project-source.md) and its [binding JSON](../assets/downloads/citychat-ds-addon-v0.9.2-binding.json). They pin LDS 0.9.5 (`v0.9.5-owner.1`, `color-srgb-08`). The v0.9.2 migration record and exact historical v0.9/v0.9.1 documents remain available for audit. The resource gallery below describes historical artifact v0.7.0 and does not replace current normative guidance.
+
 Artifact v0.7.0 is the implementation example layer for approved normative CityChat DS Add-on v0.7. The versioned records below govern this team-learning artifact; they do not create DS Add-on v0.7.0 authority or enable a product capability.
 
 - `starter/` — minimal token-bound StoryCell specimen that developers can copy into a prototype.

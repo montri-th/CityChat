@@ -5,6 +5,13 @@
     "product": "citychat",
     "buildId": "citychat-landing-20260903-03",
     "releaseRevision": "citychat-contrast-20260908-01",
+    "designSystemMigration": {
+      "parentVersion": "0.9.5",
+      "parentReleaseRef": "v0.9.5-owner.1",
+      "colorSetId": "color-srgb-08",
+      "citychatAddonVersion": "0.9.2",
+      "normativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
+    },
     "pageKind": "product-landing",
     "language": "th",
     "canonicalUrl": "https://montri-th.github.io/CityChat/"
@@ -131,10 +138,18 @@
       ".nojekyll",
       "index.html",
       "en/index.html",
+      "citychat-lds095-foundation.css",
+      "citychat-lds095-primitives.css",
       "citychat.css",
       "app.js",
       "motif-runtime.js",
       "robots.txt",
+      "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
+      "assets/downloads/citychat-ds-addon-v0.9.2-normative.md",
+      "assets/downloads/citychat-ds-addon-v0.9.2-binding.json",
+      "vendor/landometer/v0.9.5/machine/release.json",
+      "vendor/landometer/v0.9.5/machine/color-srgb-08.production.css",
+      "vendor/landometer/v0.9.5/build-kit/lds-0.9.5.css",
       "assets/citychat-motif-set/assets/3a-voice-home-light.svg",
       "assets/citychat-motif-set/assets/3a-voice-home-dark.svg",
       "assets/citychat-motif-set/assets/3b-live-visit-trade-light.svg",
@@ -253,6 +268,10 @@
         "href": "https://montri-th.github.io/rebuild02/#showcases"
       },
       {
+        "text": "คู่มือออกแบบสำหรับทีม",
+        "href": "./assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
+      },
+      {
         "text": "Privacy & Terms",
         "href": "https://landometer.com/pdpa/showDocVer"
       }
@@ -279,6 +298,10 @@
           {
             "text": "Showcases",
             "href": "https://montri-th.github.io/rebuild02/#showcases"
+          },
+          {
+            "text": "คู่มือออกแบบสำหรับทีม",
+            "href": "./assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
           },
           {
             "text": "Privacy & Terms",
@@ -312,6 +335,10 @@
           {
             "text": "Showcases",
             "href": "https://montri-th.github.io/rebuild02/Landometer-Home-EN.dc.html#showcases"
+          },
+          {
+            "text": "Design guide for the team",
+            "href": "../assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
           },
           {
             "text": "Privacy & Terms",

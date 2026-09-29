@@ -1,8 +1,8 @@
 # CityChat DS Add-on
 
-CityChat keeps its own face and way of speaking. Landometer DS supplies the shared visual foundation; approved CityChat DS Add-on v0.8 composes it into first value, a warm living-city identity, and honest civic continuity without creating a second token system.
+CityChat keeps its own face and way of speaking. The [current CityChat DS Add-on v0.9.2](deployment/assets/downloads/citychat-ds-addon-v0.9.2-project-source.md) composes LDS 0.9.5 into first value, a warm living-city identity, and honest civic continuity without creating a second token system. Its [binding record](deployment/assets/downloads/citychat-ds-addon-v0.9.2-binding.json) pins the exact LDS release and immutable historical Add-on documents.
 
-Playground artifact v0.8.0 is the implementation example layer for that approved DS Add-on. Its control, icon, motion, and colour records are bounded artifact bindings—not a new normative DS Add-on version and not evidence that a CityChat product capability is live.
+Playground artifact v0.8.0 remains a historical implementation example. Its control, icon, motion, and colour records are bounded artifact bindings, not current normative authority or evidence that a CityChat product capability is live.
 
 > Show a living city quickly, ask one meaningful question, let people act in one tap, remember their contribution, and make the next useful action obvious.
 
@@ -39,26 +39,27 @@ A governed CityStory may also stand on its own. CityScan discovery is optional a
 
 ## Visual inheritance
 
-Use the exact Landometer v0.9.0 machine package in `deployment/vendor/landometer/v0.9.0/`:
+Use the exact LDS 0.9.5 package in `deployment/vendor/landometer/v0.9.5/`. The landing loads its current color/font CSS and uses small artifact-owned bridges for retained geometry:
 
 ```html
-<link rel="stylesheet" href="vendor/landometer/v0.9.0/build-kit/lds-tokens.css">
-<link rel="stylesheet" href="vendor/landometer/v0.9.0/build-kit/lds-base.css">
+<link rel="stylesheet" href="citychat-lds095-foundation.css">
+<link rel="stylesheet" href="vendor/landometer/v0.9.5/build-kit/lds-0.9.5.css">
+<link rel="stylesheet" href="citychat-lds095-primitives.css">
 ```
 
-Build-local CSS may compose layout from semantic `var()` tokens. It must not copy retired CityChat v0.3 colours, font values, radii or motion tokens. The exact CityChat lockup remains protected artwork and may appear only in a role/build/surface approved by the active identity manifest.
+Build-local CSS composes layout from semantic `var()` tokens. It does not load the historical v0.9.0 color stylesheet or copy retired CityChat v0.3 colours. The exact CityChat lockup remains protected artwork and may appear only in a role/build/surface approved by the active identity manifest.
 
-Current frontstage identity is CityChat only. Do not render another product's name, mark, motif, gradient, profile, or product token. An immutable vendor package may contain other upstream profiles, but those files are not CityChat assets and must not resolve into current CityChat resources.
+CityChat-owned identity areas use CityChat artwork and product roles only: do not substitute another product's mark, motif, gradient, or token for CityChat identity. The explicitly labelled ecosystem navigation and CityMETER relationship in the landing may name and link to those products, with each mark used under its own approval. An immutable vendor package may contain other upstream profiles, but those files are not CityChat identity assets and must not resolve into CityChat product roles.
 
-## Implementation bindings in artifact v0.8.0
+## Historical implementation bindings in artifact v0.8.0
 
 - **Buttons** inherit the LDS `.btn` capsule or `.btn-icon` circle. Keep the inherited padding, gap, height, focus, disabled, busy, and press behaviour. A visual specimen is not a live product action.
 - **Functional icons** use the exact self-hosted Material Symbols Rounded subset recorded in `deployment/resources/citychat-ds-addon/v0.8.0/font-assets.manifest.json`. Bind only a closed role from `citychat-icon-map.json`, keep a visible or accessible label, and check `citychat-icon-resolution.json` before putting an icon on an actual control. The CityChat logo and motif are identity assets, never functional icons.
 - **Motion** uses only an inherited LDS primitive named in `semantic-motion.citychat.yml`, or `none`. The main meaning and action are visible before enhancement; reduced-motion and no-JavaScript routes land directly in the final readable state. Animation never emits a receipt, product event, telemetry, or proof of persistence.
-- **Colour** follows `citychat-color-role-map.json`, a product-usage overlay on the pinned LDS `color-srgb-05` source. It does not create a second palette, duplicate the complete LDS atlas, or authorize an analytical scale. Missing authority resolves to no-data or unavailable copy, not a guessed colour.
+- **Colour in the historical playground** follows `citychat-color-role-map.json` on its then-pinned `color-srgb-05` source. Current work uses LDS 0.9.5 / `color-srgb-08`; missing authority resolves to no-data or unavailable copy, not a guessed colour.
 - **Identity** uses the exact lockup bytes and the separately approved build, URL, role, theme, backdrop, and surface in `identity-assets.v0.8.0.json`. Do not add a white logo card or recolour, crop, filter, mask, animate, or rebuild the mark.
 
-Use the v0.8.0 resource directory as the human/AI handoff entry point; use the approved DS Add-on v0.8 when deciding normative CityChat composition and experience behaviour.
+Use v0.8.0 resources only to understand that historical artifact. Use Add-on v0.9.2 and its predecessor hierarchy for current CityChat decisions.
 
 ## CityCells and example cases
 

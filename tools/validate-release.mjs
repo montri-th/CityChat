@@ -11,6 +11,7 @@ const deploymentRoot = path.resolve(repositoryRoot, config.deployment.root);
 const entryRelativePath = safeRelativePath(config.deployment.entry, 'deployment entry');
 const html = readFileSync(resolveDeploymentPath(entryRelativePath), 'utf8');
 const css = readFileSync(resolveDeploymentPath('citychat.css'), 'utf8');
+const ldsFontCss = readFileSync(resolveDeploymentPath('vendor/landometer/v0.9.5/build-kit/fonts.css'), 'utf8');
 const app = readFileSync(resolveDeploymentPath('app.js'), 'utf8');
 const liveVerifier = readFileSync(path.join(repositoryRoot, 'tools/verify-live.mjs'), 'utf8');
 const failures = [];
@@ -1146,7 +1147,7 @@ if (existsSync(cityscanPath)) {
   check('CityScan MP4 includes playable media and metadata boxes', boxTypes.includes('mdat') && boxTypes.includes('moov'), boxTypes.join(', '));
 }
 
-check('all declared fonts are local', !/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|@import\s+url\(\s*["']?https?:)/i.test(css));
+check('all declared fonts are local', !/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|@import\s+url\(\s*["']?https?:)/i.test(`${css}\n${ldsFontCss}`));
 check('site and motif CSS contain no infinite animation', !/\binfinite\b/i.test(`${css}\n${motifMotionCss}`));
 check('primary navigational CTA uses the standard finite 540 ms discovery cue', /@keyframes\s+ccSweep\s*\{[^}]*-120%[\s\S]*120%/i.test(css)
   && /\[data-cc-nav\]\s+\[data-part=["']sweep["']\]\s*\{[^}]*animation\s*:\s*ccSweep\s+540ms\s+cubic-bezier\(\.16\s*,\s*1\s*,\s*\.3\s*,\s*1\)\s+1\s+both/i.test(css));
@@ -1169,7 +1170,7 @@ check('CSS includes Thai display, body, technical, Latin display, and icon fonts
   'Arvo',
   'JetBrains Mono',
   'Material Symbols Rounded',
-].every((family) => css.includes(family)));
+].every((family) => `${css}\n${ldsFontCss}`.includes(family)));
 check('Material Symbols font is served locally', /url\(["']?assets\/fonts\/material-symbols-rounded-citychat-landing-v369\.ttf["']?\)/i.test(css));
 check('approach elements are final-state by default', /\[data-approach\][^{]*\{[^}]*opacity\s*:\s*1[^}]*transform\s*:\s*none[^}]*transition\s*:\s*none/i.test(css));
 check('reduced-motion rules remove approach motion', /prefers-reduced-motion\s*:\s*reduce[\s\S]{0,1200}\[data-approach\][^{]*\{[^}]*transform\s*:\s*none\s*!important[^}]*transition\s*:\s*none\s*!important/i.test(css));

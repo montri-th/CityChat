@@ -7,7 +7,7 @@
     "finalize": "node tools/finalize-release.mjs",
     "validate": "node tools/validate-release.mjs",
     "render": "node tools/check-rendered.mjs",
-    "test": "node --check deployment/app.js && node tools/finalize-release.mjs --check && node tools/validate-release.mjs",
+    "test": "node --check deployment/app.js && node tools/finalize-release.mjs --check && node tools/validate-release.mjs && node tools/validate-lds095-migration.mjs",
     "serve": "python3 -m http.server 8000 --directory deployment"
   },
   "engines": {

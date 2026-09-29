@@ -1,0 +1,1936 @@
+{
+  "brand": {
+    "blue": "#1D4497",
+    "beige": "#F2F1DF",
+    "logoCyan": "#0194CA",
+    "logoGray": "#757575",
+    "energy": {
+      "sky": "#59D2FE",
+      "mint": "#0AD69C",
+      "coral": "#FF5A5F",
+      "yellow": "#FFBC1F"
+    }
+  },
+  "atmosphere": {
+    "registryId": "landometer-atmosphere-gradient-v2",
+    "gradientOnlyValues": [
+      "#89CEF6",
+      "#5ECAD6",
+      "#6CD5B3",
+      "#0F5773",
+      "#006A6A",
+      "#1F744F",
+      "#C4E0EE",
+      "#B2E2E2",
+      "#CCE6D0",
+      "#EB8182",
+      "#F5A06F",
+      "#EBC573",
+      "#F7CBC7",
+      "#FBD1B6",
+      "#F1E0B4"
+    ],
+    "recipes": {
+      "atmosphere.gradient.measure.deep": "linear-gradient(135deg, #1D4497 0%, #176B82 54%, #08756F 100%)",
+      "atmosphere.gradient.measure.luminous": "linear-gradient(135deg, #89CEF6 0%, #5ECAD6 50%, #6CD5B3 100%)",
+      "atmosphere.gradient.ground.current": "linear-gradient(135deg, #0F5773 0%, #006A6A 50%, #1F744F 100%)",
+      "atmosphere.gradient.ground.mist": "linear-gradient(135deg, #C4E0EE 0%, #B2E2E2 50%, #CCE6D0 100%)",
+      "atmosphere.gradient.cultivate.glow": "linear-gradient(135deg, #EB8182 0%, #F5A06F 50%, #EBC573 100%)",
+      "atmosphere.gradient.cultivate.mist": "linear-gradient(135deg, #F7CBC7 0%, #FBD1B6 50%, #F1E0B4 100%)",
+      "atmosphere.gradient.diversity.spectrum": "linear-gradient(135deg, #89CEF6 0%, #6CD5B3 34%, #EBC573 67%, #EB8182 100%)"
+    },
+    "surfaceAliases": {
+      "surfaceAtmosphere.measure.light": "atmosphere.gradient.measure.deep",
+      "surfaceAtmosphere.measure.dark": "atmosphere.gradient.measure.luminous",
+      "surfaceAtmosphere.ground.light": "atmosphere.gradient.ground.mist",
+      "surfaceAtmosphere.ground.dark": "atmosphere.gradient.ground.current",
+      "surfaceAtmosphere.cultivate.light": "atmosphere.gradient.cultivate.glow",
+      "surfaceAtmosphere.cultivate.dark": "atmosphere.gradient.cultivate.mist",
+      "surfaceAtmosphere.diversity": "atmosphere.gradient.diversity.spectrum"
+    },
+    "foreground": {
+      "onDeep": {
+        "primaryAndIcon": "#FFFFFF",
+        "secondaryAndMetadata": "#F1F4EF",
+        "meaningfulSeparator": "#F1F4EF",
+        "focusInner": "#182327",
+        "focusOuter": "#FFFFFF"
+      },
+      "onLight": {
+        "primaryAndIcon": "#182327",
+        "secondaryAndMetadata": "#293337",
+        "meaningfulSeparator": "#182327",
+        "focusInner": "#FFFFFF",
+        "focusOuter": "#182327"
+      }
+    },
+    "constraints": {
+      "oneDominantGradientPerViewport": true,
+      "diversityMaximumPerLongRoute": 1,
+      "dataOrStateEncodingForbidden": true,
+      "deletionTestRequired": true
+    }
+  },
+  "foundation": {
+    "surface.canvas": {
+      "light": "#F6F7F3",
+      "dark": "#11191D"
+    },
+    "surface.alt": {
+      "light": "#EEF1EE",
+      "dark": "#172126"
+    },
+    "surface.card": {
+      "light": "#FCFCFA",
+      "dark": "#20292D"
+    },
+    "surface.raised": {
+      "light": "#FFFFFF",
+      "dark": "#293337"
+    },
+    "surface.soft": {
+      "light": "#E5E9E6",
+      "dark": "#2B3534"
+    },
+    "surface.blueTint": {
+      "light": "#E2E9ED",
+      "dark": "#18333E"
+    },
+    "surface.beigeTint": {
+      "light": "#F2F1DF",
+      "dark": "#2C2A22"
+    },
+    "text.primary": {
+      "light": "#182327",
+      "dark": "#F1F4EF"
+    },
+    "text.secondary": {
+      "light": "#5F635A",
+      "dark": "#C4CECA"
+    },
+    "text.metadata": {
+      "light": "#5C6A61",
+      "dark": "#A6B5B1"
+    },
+    "text.muted": {
+      "light": "#7B877D",
+      "dark": "#8D9D99"
+    },
+    "text.disabled": {
+      "light": "#A7B3A9",
+      "dark": "#71817D"
+    },
+    "border.hairline": {
+      "light": "#DCE1DD",
+      "dark": "#33403D"
+    },
+    "border.default": {
+      "light": "#C9D0CB",
+      "dark": "#46524F"
+    },
+    "border.emphasis": {
+      "light": "#7D877F",
+      "dark": "#7C8A84"
+    },
+    "interaction.accent": {
+      "light": "#176B82",
+      "dark": "#68C4E2"
+    },
+    "interaction.focus.ring": {
+      "light": "#176B82",
+      "dark": "#68C4E2"
+    }
+  },
+  "semanticState": {
+    "success": {
+      "light": {
+        "surface": "#E2F4E5",
+        "content": "#126B49"
+      },
+      "dark": {
+        "surface": "#17362D",
+        "content": "#72E8C4"
+      }
+    },
+    "warning": {
+      "light": {
+        "surface": "#FFF1D1",
+        "content": "#A64A00"
+      },
+      "dark": {
+        "surface": "#3B2E16",
+        "content": "#F5C15C"
+      }
+    },
+    "danger": {
+      "light": {
+        "surface": "#FCE5DF",
+        "content": "#B43A3A"
+      },
+      "dark": {
+        "surface": "#3A1F21",
+        "content": "#FF7C72"
+      }
+    },
+    "info": {
+      "light": {
+        "surface": "#E8EEF0",
+        "content": "#176B82"
+      },
+      "dark": {
+        "surface": "#18333E",
+        "content": "#68C4E2"
+      }
+    },
+    "neutral": {
+      "light": {
+        "surface": "#ECE4D2",
+        "content": "#5F635A"
+      },
+      "dark": {
+        "surface": "#2B3534",
+        "content": "#C4CECA"
+      }
+    },
+    "pending": {
+      "light": {
+        "surface": "#F3EEDB",
+        "content": "#5C6A61"
+      },
+      "dark": {
+        "surface": "#2C2A22",
+        "content": "#D8CFB2"
+      }
+    },
+    "assisted": {
+      "light": {
+        "surface": "#DFF3F1",
+        "content": "#176C67"
+      },
+      "dark": {
+        "surface": "#163331",
+        "content": "#79D9D1"
+      }
+    }
+  },
+  "dataState": {
+    "noData": {
+      "light": "#D5DAD6",
+      "dark": "#404844",
+      "cue": "diagonal-pattern-plus-label"
+    },
+    "zero": {
+      "light": "#7D877F",
+      "dark": "#93A398",
+      "cue": "distinct-outline-only-when-zero-is-a-fact"
+    },
+    "valueStates": {
+      "rule": "EVID-05 as amended in DS0.9.5: six states, never collapse missing into zero",
+      "labelInk": "text.metadata",
+      "disabledHintOnly": "text.muted",
+      "labelPlacement": "legend or table cell, never on the no-data hatch fill (owner decision 15 September 2026)",
+      "states": [
+        {
+          "id": "measured",
+          "th": "ค่าที่มีข้อมูล",
+          "en": "Measured value",
+          "glyph": null,
+          "map": "appropriate analytical class with label and unit",
+          "table": "exact finite nonzero number with unit",
+          "requires": [
+            "unit",
+            "source",
+            "date",
+            "boundary",
+            "limitation"
+          ]
+        },
+        {
+          "id": "measured_zero",
+          "th": "ศูนย์ (สำรวจแล้ว)",
+          "en": "Zero (measured)",
+          "glyph": "0",
+          "map": "lowest class fill + --dataviz-zero-outline 2px",
+          "table": "numeric 0 with unit",
+          "requires": [
+            "unit",
+            "survey completeness"
+          ]
+        },
+        {
+          "id": "no_data",
+          "th": "ไม่มีข้อมูล",
+          "en": "No data",
+          "glyph": "—",
+          "map": "--data-no-data-pattern 135° hatch + --border-emphasis",
+          "table": "— + short reason, sorted last",
+          "requires": [
+            "reason",
+            "latest available value"
+          ]
+        },
+        {
+          "id": "out_of_scope",
+          "th": "นอกขอบเขตข้อมูล",
+          "en": "Out of scope",
+          "glyph": "นอกขอบเขต",
+          "map": "bare basemap (no fill, no hatch)",
+          "table": "text label",
+          "requires": [
+            "scope statement"
+          ]
+        },
+        {
+          "id": "suppressed",
+          "th": "ปิดค่า (n<5)",
+          "en": "Suppressed (n<5)",
+          "glyph": "‹5",
+          "map": "--surface-soft + dashed --border-emphasis",
+          "table": "‹5 + rule",
+          "requires": [
+            "threshold",
+            "aggregation level that unlocks"
+          ]
+        },
+        {
+          "id": "not_yet",
+          "th": "ยังไม่ถึงรอบข้อมูล",
+          "en": "Not yet available",
+          "glyph": "…",
+          "map": "--semantic-pending-fill + dotted --semantic-pending-ink",
+          "table": "… + expected date",
+          "requires": [
+            "expected date",
+            "source cadence"
+          ]
+        }
+      ],
+      "treatments": {
+        "measured_zero": {
+          "map": {
+            "fill": "scale lowest class",
+            "outline": "dataState.zero",
+            "outlineWidthPx": 2
+          },
+          "table": "numeric 0 with unit"
+        },
+        "no_data": {
+          "map": {
+            "fill": "dataState.noData",
+            "pattern": "135deg hatch",
+            "stroke": "border.emphasis"
+          },
+          "table": "— plus short reason; sorted last"
+        },
+        "out_of_scope": {
+          "map": {
+            "fill": "none (bare basemap)"
+          },
+          "table": "text label"
+        },
+        "suppressed": {
+          "map": {
+            "fill": "surface.soft",
+            "stroke": "border.emphasis",
+            "strokeStyle": "dashed"
+          },
+          "table": "‹n plus threshold"
+        },
+        "not_yet": {
+          "map": {
+            "fill": "semantic.pending.surface",
+            "stroke": "semantic.pending.content",
+            "strokeStyle": "dotted"
+          },
+          "table": "… plus expected date"
+        }
+      },
+      "agentContract": "Every governed numeric value carries measured (finite nonzero), measured_zero (0), or an exceptional state (null)."
+    }
+  },
+  "map": {
+    "activeLayer": {
+      "light": "#347DA8",
+      "dark": "#65B6DB"
+    },
+    "hoverStroke": {
+      "light": "#347DA8",
+      "dark": "#65B6DB"
+    },
+    "selectedStroke": {
+      "light": "#176B82",
+      "dark": "#68C4E2"
+    },
+    "focusStroke": {
+      "light": "#176B82",
+      "dark": "#68C4E2"
+    },
+    "markerHalo": {
+      "light": "#FFFFFF",
+      "dark": "#101318"
+    },
+    "markerStroke": {
+      "light": "#182327",
+      "dark": "#F1F4EF"
+    }
+  },
+  "typography": {
+    "families": {
+      "displayLatin": "Arvo",
+      "displayThai": "IBM Plex Sans Thai Looped",
+      "body": "Bai Jamjuree",
+      "technicalLatin": "JetBrains Mono",
+      "technicalThai": "IBM Plex Sans Thai",
+      "symbols": "Material Symbols Rounded"
+    },
+    "weights": {
+      "regular": 400,
+      "semibold": 600,
+      "display": 700,
+      "symbol": 300
+    },
+    "sizes": {
+      "caption": "0.75rem",
+      "label": "0.8125rem",
+      "bodySm": "0.875rem",
+      "body": "1rem",
+      "bodyLg": "1.125rem",
+      "h3": "clamp(1.35rem, 2vw, 1.75rem)",
+      "h2": "clamp(2rem, 4vw, 3.25rem)",
+      "h1Latin": "clamp(3.25rem, 7vw, 6.5rem)",
+      "h1Thai": "clamp(2.5rem, 6vw, 5rem)"
+    },
+    "thaiDisplayLineHeight": {
+      "status": "size-and-script-fixture-required",
+      "deprecatedUniversalValue": 1.16,
+      "safeFallbackWhenUnvalidated": 1.25
+    }
+  },
+  "icon": {
+    "family": "Material Symbols Rounded",
+    "axes": {
+      "FILL": 0,
+      "wght": 300,
+      "GRAD": 0
+    },
+    "stateChannels": [
+      "semantic-surface",
+      "semantic-color",
+      "visible-label",
+      "outline-container"
+    ],
+    "prohibited": [
+      "FILL-1-selected-state",
+      "weight-change-by-state",
+      "identity-as-interface-icon",
+      "unapproved-glyph"
+    ],
+    "iconSet": {
+      "ruleId": "FAVICON-01",
+      "sizesPx": [
+        16,
+        32,
+        48,
+        180,
+        192,
+        512
+      ],
+      "roles": {
+        "16": "favicon",
+        "32": "favicon",
+        "48": "favicon",
+        "180": "apple-touch",
+        "192": "manifest",
+        "512": "manifest-maskable"
+      },
+      "cornerRadiusPercent": {
+        "16": 25,
+        "32": 25,
+        "48": 0,
+        "180": 0,
+        "192": 0,
+        "512": 0
+      },
+      "maskableSafeZonePercent": 80,
+      "byProperty": {
+        "portfolio": "symbol on transparent (16/32/48/192); brand.beige tile (180/512)",
+        "product": "product identity-gradient tile with the symbol in that gradient's foreground contract (symbol-white on onDeep, symbol-color on onLight) — open until each product's gradient is approved"
+      },
+      "portfolioSet": {
+        "id": "iconset.landometer.portfolio.symbol.01",
+        "approval": {
+          "status": "owner_approved",
+          "decidedOn": "2026-09-15",
+          "evidenceRef": "owner-message:2026-09-15:0.9.3-answers"
+        },
+        "sourceSymbolSha256": "b818eeb6a6f4abeb7a8fac2b858de0e7a03a662dff371842a29ebfe4c21d12f6",
+        "files": [
+          {
+            "sizePx": 16,
+            "role": "favicon",
+            "file": "icon-portfolio-16.png",
+            "background": "transparent",
+            "sha256": "c100627d5e8fc9d21d168dbf15f9fdab7f5d6931b04df5164e58137df77feca8",
+            "bytes": 768
+          },
+          {
+            "sizePx": 32,
+            "role": "favicon",
+            "file": "icon-portfolio-32.png",
+            "background": "transparent",
+            "sha256": "5cd19dee724f1a72b2bdcd41467a26e03f76a4bc2d7bd1fe12de6b8b5de665c9",
+            "bytes": 1773
+          },
+          {
+            "sizePx": 48,
+            "role": "favicon",
+            "file": "icon-portfolio-48.png",
+            "background": "transparent",
+            "sha256": "443857069292f6910b9e5cc0383cab6da4273acf1e18a47745864729fc46e08e",
+            "bytes": 2897
+          },
+          {
+            "sizePx": 180,
+            "role": "apple-touch",
+            "file": "icon-portfolio-180.png",
+            "background": "brand.beige #F2F1DF",
+            "sha256": "41ac1e302345d29d791fcc26a5e7111aeb3a4e222dff63685743b43d0fdd6ef0",
+            "bytes": 8893
+          },
+          {
+            "sizePx": 192,
+            "role": "manifest",
+            "file": "icon-portfolio-192.png",
+            "background": "transparent",
+            "sha256": "1d8bbd3d8656a83f33c51364d333bba7ca328faf3ae713238fa9450f7810bf8e",
+            "bytes": 11929
+          },
+          {
+            "sizePx": 512,
+            "role": "manifest-maskable",
+            "file": "icon-portfolio-512.png",
+            "background": "brand.beige #F2F1DF",
+            "sha256": "d8939f6cc7891c47bbb3dce1ddb04d4c30ce4c7e78e29f6fb0061858dafc881f",
+            "bytes": 28124
+          }
+        ]
+      },
+      "neverChangesPerPage": true,
+      "neverSignalsStatus": true,
+      "titlePattern": {
+        "form": "[page] · [product]",
+        "maxCharacters": 60,
+        "order": "page first"
+      },
+      "missingIconSetIs": "WEBFMT-01 blocker",
+      "registry": "asset-registry.json#/iconSets"
+    }
+  },
+  "control": {
+    "discreteTargetMinCssPx": 44,
+    "textOrIconLabelButton": {
+      "shape": "capsule",
+      "minHeightCssPx": 44,
+      "paddingInlineCssPx": 24,
+      "gapCssPx": 8,
+      "borderCssPx": 2,
+      "radiusRef": "layout.radiusPx.pill"
+    },
+    "iconOnlyButton": {
+      "shape": "circle",
+      "widthCssPx": 44,
+      "heightCssPx": 44,
+      "borderCssPx": 2,
+      "accessibleNameRequired": true
+    },
+    "inlineTextLink": {
+      "forcedInto44Box": false,
+      "usesTextLinkExceptionAndSpacingBranch": true
+    }
+  },
+  "theme": {
+    "interactiveModes": [
+      "auto",
+      "light",
+      "dark"
+    ],
+    "autoSource": "prefers-color-scheme-unless-explicit-user-choice",
+    "explicitChoiceReversible": true,
+    "meaningParityRequired": true,
+    "forcedColorCheckRequired": true,
+    "staticExportRequiresFixedDeclaredTheme": true
+  },
+  "layout": {
+    "spacingPx": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      48,
+      64,
+      96,
+      128
+    ],
+    "radiusPx": {
+      "xs": 6,
+      "sm": 10,
+      "md": 16,
+      "lg": 24,
+      "xl": 32,
+      "pill": 999
+    },
+    "containerPx": {
+      "reading": 760,
+      "default": 1120,
+      "wide": 1280
+    },
+    "gutterPx": [
+      16,
+      24,
+      32
+    ],
+    "breakpointPx": {
+      "xs": 360,
+      "sm": 600,
+      "md": 900,
+      "lg": 1200,
+      "xl": 1600
+    },
+    "directTargetMinCssPx": {
+      "width": 44,
+      "height": 44
+    }
+  },
+  "motion": {
+    "feedback": {
+      "durationMs": 120,
+      "distancePx": 2
+    },
+    "state": {
+      "durationMs": 200,
+      "easing": "cubic-bezier(.2,0,0,1)"
+    },
+    "map": {
+      "durationMs": 280
+    },
+    "chart": {
+      "durationMs": 360
+    },
+    "approach": {
+      "mode": "browser_observer",
+      "opacityDurationMs": 760,
+      "transformDurationMs": 920,
+      "mediaDurationMs": 900,
+      "blockDistancePx": 32,
+      "inlineDistancePx": 36,
+      "scaleFrom": 0.985,
+      "staggerStepMs": 150,
+      "staggerCapMs": 450,
+      "staggerBeatCount": 4,
+      "staggerDelayFormula": "min(zeroBasedSiblingIndex,3)*150ms",
+      "opacityEasing": "cubic-bezier(.16,1,.3,1)",
+      "transformEasing": "cubic-bezier(.2,.9,.25,1.08)",
+      "pressEasing": "cubic-bezier(.3,0,.6,1)",
+      "observerThreshold": 0.14,
+      "observerRootMargin": "0px 0px -12% 0px",
+      "observersPerDocumentRoot": 1,
+      "onceOnlyUnobserve": false,
+      "initializationWatchdogMs": 2400,
+      "reachedContentFailsafeFrames": 2,
+      "prePaintArmingRequiresNormalMotionAndObserver": true,
+      "finalHiddenFinalFlashForbidden": true,
+      "reentryBehavior": "replay_on_reentry_while_visible",
+      "cycleWhileStill": false,
+      "repetitionAuthority": "OWNER-MOTION-01 (2026-09-11) — replaces once-only; cycle length unchanged; owner confirmed the reveal-on-re-entry interpretation on 2026-09-15"
+    },
+    "ctaDiscoveryCue": {
+      "recipeId": "motion.cta.discovery-cue.01",
+      "eligibleRole": "primary_navigational_cta",
+      "requiredUserBenefit": "discoverability",
+      "trigger": "first_visible_entry",
+      "repeatCountPerPageLoad": 1,
+      "reentryBehavior": "do_not_repeat",
+      "durationMs": 540,
+      "durationCeilingMs": 600,
+      "delayMs": 0,
+      "easing": "cubic-bezier(.16,1,.3,1)",
+      "geometry": {
+        "kind": "inline_highlight_sweep",
+        "startPercent": -120,
+        "endPercent": 120,
+        "bandWidthPercent": 28
+      },
+      "contentOpacityMinimum": 1,
+      "layoutGeometryStable": true,
+      "pointerEvents": "none",
+      "reducedMotion": "no_cue_final_state",
+      "observerFailure": "no_cue_final_state",
+      "staticEquivalent": "emphasis_without_motion",
+      "repetitionNote": "once per page load (owner confirmed 2026-09-15): the cue is motion over the primary action, which MOTION-04 / MOTIF-04 prohibit as ambience"
+    },
+    "reducedMotion": "render-final-state-remove-nonessential-spatial-motion",
+    "identity": {
+      "recipeId": "motion.identity.logo-assembly.01",
+      "ruleId": "MOTION-04",
+      "component": "component.motif-frame.01",
+      "runtime": {
+        "family": "landometer.motif.v3",
+        "element": "lm-motif",
+        "kind": "logo",
+        "motifRelease": "1.2.1",
+        "repository": "https://github.com/montri-th/motif",
+        "repositoryCommit": "a99f3c1e0250da91c7f13af8fe3ab8ad03b73e82",
+        "js": {
+          "assetId": "landometer.motif.runtime.js.v3",
+          "path": "assets/landometer/landometer-motifs.js",
+          "sha256": "3a5caef7918a85885b61dd53e049ea8bf2b0a3cea508f587bb14970bfe6deaf2",
+          "bytes": 17845
+        },
+        "css": {
+          "assetId": "landometer.motif.runtime.css.v3",
+          "path": "assets/landometer/landometer-motifs.css",
+          "sha256": "7cc2deb475a8d6e4af331407b2b4b741716c458a8ce885e2fb2859374b93912e",
+          "bytes": 11190
+        },
+        "manifest": {
+          "path": "assets/motif-library.json",
+          "sha256": "77e8185104751e2c21c2e10fb8c5d771821bcb8123e02f116638fdbf3968d483"
+        },
+        "bytesEditable": false
+      },
+      "finalStateFallback": {
+        "full": {
+          "assetId": "landometer.logo.full",
+          "path": "assets/landometer/svg/logo-full.svg",
+          "sha256": "90e9543f2f86a18f891331c13be25038b4334ca7dbe55b194650bc441e3558e1",
+          "bytes": 1252
+        },
+        "quiet": {
+          "assetId": "landometer.logo.quiet",
+          "path": "assets/landometer/svg/logo-quiet.svg",
+          "sha256": "5b6798cdb6c3ada246286e6ce3386644f383c4f987a267e5c5db392809403e14",
+          "bytes": 1979
+        }
+      },
+      "wedge": {
+        "derivation": "color-mix(in lch, energy.sky 48%, brand.blue)",
+        "browserSrgbReference": "#1F87CE",
+        "sampledHexForbidden": true
+      },
+      "identityFileDeltasAccepted": {
+        "decidedOn": "2026-09-15",
+        "wedge": {
+          "officialPng": "#0195CB",
+          "motifV3": "#1F87CE"
+        },
+        "pin": {
+          "officialPng": "#1E4497",
+          "motifV3Token": "#1D4497"
+        },
+        "radiusDeltaMax": "0.6%",
+        "disposition": "accepted_and_recorded; official PNG files remain the identity of record"
+      },
+      "hostInkForThemeInvariantPreview": "blue",
+      "authoredEndMs": {
+        "full": 2870,
+        "quiet": 3360
+      },
+      "settleAtMs": 3400,
+      "cycleMs": 6000,
+      "minimumCycleMs": 2000,
+      "observer": {
+        "threshold": 0.14,
+        "rootMargin": "0px 0px -8% 0px",
+        "onEnter": "play immediately then repeat every cycle",
+        "onExit": "clear the timer and hold the final state"
+      },
+      "technique": "repeated finite plays; animation-iteration-count: infinite is forbidden",
+      "pageControl": "one page-level pause/resume control (MotionController); pause shows the complete final state",
+      "reducedMotion": "final state, no cycle",
+      "noJavaScript": "final-state SVG",
+      "print": "final-state SVG",
+      "stateBoundMotifsUnchanged": true,
+      "prohibited": [
+        "hue cycling",
+        "shape distortion",
+        "motion carrying evidence or meaning",
+        "motion over the first answer, the primary proof or the primary action",
+        "motifs in navigation, favicon or OG images"
+      ],
+      "scope": [
+        "web_public",
+        "app_interactive.browser",
+        "document_flow, pdf_fixed and deck_presentation only when rendered in a browser"
+      ],
+      "staticFormats": "final state only"
+    },
+    "motifs": {
+      "ruleIds": [
+        "MOTIF-01",
+        "MOTIF-02",
+        "MOTIF-03",
+        "MOTIF-04",
+        "MOTIF-05",
+        "MOTIF-06"
+      ],
+      "family": "landometer.motif.v3",
+      "component": "component.motif-frame.01",
+      "runtime": {
+        "js": {
+          "assetId": "landometer.motif.runtime.js.v3",
+          "path": "assets/landometer/landometer-motifs.js",
+          "sha256": "3a5caef7918a85885b61dd53e049ea8bf2b0a3cea508f587bb14970bfe6deaf2",
+          "bytes": 17845
+        },
+        "css": {
+          "assetId": "landometer.motif.runtime.css.v3",
+          "path": "assets/landometer/landometer-motifs.css",
+          "sha256": "7cc2deb475a8d6e4af331407b2b4b741716c458a8ce885e2fb2859374b93912e",
+          "bytes": 11190
+        },
+        "manifest": {
+          "path": "assets/motif-library.json",
+          "sha256": "77e8185104751e2c21c2e10fb8c5d771821bcb8123e02f116638fdbf3968d483"
+        },
+        "release": "1.2.1",
+        "repositoryCommit": "a99f3c1e0250da91c7f13af8fe3ab8ad03b73e82"
+      },
+      "jobRegistry": [
+        "orientation",
+        "opening",
+        "spatial_transition",
+        "section_orientation",
+        "layering",
+        "quiet_divider",
+        "action_closure",
+        "cultural_closure",
+        "handoff",
+        "animated_brand_opening"
+      ],
+      "beats": {
+        "INTENT": "opening",
+        "AHA": "transition",
+        "NEXT_ACTION": "closing"
+      },
+      "beatKinds": {
+        "opening": [
+          "logo",
+          "dial"
+        ],
+        "transition": [
+          "rings",
+          "layers"
+        ],
+        "closing": [
+          "slice",
+          "cultivate"
+        ]
+      },
+      "kinds": {
+        "dial": {
+          "beat": "opening",
+          "allowedJobs": [
+            "orientation",
+            "opening"
+          ],
+          "prohibitedJobs": [
+            "data_encoding",
+            "evidence",
+            "measured_state",
+            "loading_state",
+            "official_navigation_identity",
+            "favicon",
+            "co_brand_lockup"
+          ],
+          "allowedFormats": [
+            "web_public",
+            "deck_16x9",
+            "social_square_1080",
+            "document_pdf",
+            "video_owner_extension"
+          ],
+          "variants": {
+            "full": {
+              "assetId": "landometer.dial.full",
+              "path": "assets/landometer/svg/dial-full.svg",
+              "sha256": "7ecfd1165a3e7ad25a0bb01b9680c35f71ff8a98edfd411dfe1b712cee12654d",
+              "bytes": 674
+            },
+            "quiet": {
+              "assetId": "landometer.dial.quiet",
+              "path": "assets/landometer/svg/dial-quiet.svg",
+              "sha256": "2e624d80b604891ad2ed3e4d5cc6268d2383f39f740ef1def5012c49aee0da1f",
+              "bytes": 733
+            }
+          },
+          "cycleMs": 3000,
+          "authoredEndMs": null,
+          "allowedCarriers": {
+            "full": [
+              "brand.beige",
+              "surface.alt@light",
+              "surface.beigeTint@light",
+              "surface.blueTint@light",
+              "surface.canvas@light",
+              "surface.card@light",
+              "surface.raised@light",
+              "surface.soft@light"
+            ],
+            "quiet": [
+              "atmosphere.ground.current",
+              "atmosphere.measure.deep",
+              "brand.blue",
+              "surface.alt@dark",
+              "surface.beigeTint@dark",
+              "surface.blueTint@dark",
+              "surface.canvas@dark",
+              "surface.card@dark",
+              "surface.raised@dark",
+              "surface.soft@dark"
+            ]
+          }
+        },
+        "rings": {
+          "beat": "transition",
+          "allowedJobs": [
+            "spatial_transition",
+            "section_orientation"
+          ],
+          "prohibitedJobs": [
+            "data_encoding",
+            "evidence",
+            "measured_state",
+            "loading_state",
+            "official_navigation_identity",
+            "favicon",
+            "co_brand_lockup"
+          ],
+          "allowedFormats": [
+            "web_public",
+            "deck_16x9",
+            "social_square_1080",
+            "document_pdf",
+            "video_owner_extension"
+          ],
+          "variants": {
+            "full": {
+              "assetId": "landometer.rings.full",
+              "path": "assets/landometer/svg/rings-full.svg",
+              "sha256": "b50ec8fa3828ee5b3504ff05e0c47c1ae55f6b644225482454ec319809552286",
+              "bytes": 552
+            },
+            "quiet": {
+              "assetId": "landometer.rings.quiet",
+              "path": "assets/landometer/svg/rings-quiet.svg",
+              "sha256": "d494be1f72e833704cd3c20d9d41f60599991d6efd5f670a86e40a7296eb566b",
+              "bytes": 833
+            }
+          },
+          "cycleMs": 3000,
+          "authoredEndMs": null,
+          "allowedCarriers": {
+            "full": [
+              "brand.beige",
+              "surface.alt@light",
+              "surface.beigeTint@light",
+              "surface.blueTint@light",
+              "surface.canvas@light",
+              "surface.card@light",
+              "surface.raised@light",
+              "surface.soft@light"
+            ],
+            "quiet": [
+              "atmosphere.ground.current",
+              "atmosphere.measure.deep",
+              "brand.blue",
+              "surface.alt@dark",
+              "surface.beigeTint@dark",
+              "surface.blueTint@dark",
+              "surface.canvas@dark",
+              "surface.card@dark",
+              "surface.raised@dark",
+              "surface.soft@dark"
+            ]
+          }
+        },
+        "layers": {
+          "beat": "transition",
+          "allowedJobs": [
+            "layering",
+            "quiet_divider"
+          ],
+          "prohibitedJobs": [
+            "data_encoding",
+            "evidence",
+            "measured_state",
+            "loading_state",
+            "official_navigation_identity",
+            "favicon",
+            "co_brand_lockup"
+          ],
+          "allowedFormats": [
+            "web_public",
+            "deck_16x9",
+            "social_square_1080",
+            "document_pdf",
+            "video_owner_extension"
+          ],
+          "variants": {
+            "full": {
+              "assetId": "landometer.layers.full",
+              "path": "assets/landometer/svg/layers-full.svg",
+              "sha256": "a94a59a342df39591f490deec960bba2263bc1c453620c557ff84a1c47901843",
+              "bytes": 741
+            },
+            "quiet": {
+              "assetId": "landometer.layers.quiet",
+              "path": "assets/landometer/svg/layers-quiet.svg",
+              "sha256": "e3e2bf65bcd38d34d0a07910bef44917eab76fdaf097131ec133d163f6a65a03",
+              "bytes": 1274
+            }
+          },
+          "cycleMs": 3000,
+          "authoredEndMs": null,
+          "allowedCarriers": {
+            "full": [
+              "surface.canvas@light",
+              "surface.card@light",
+              "surface.raised@light"
+            ],
+            "quiet": [
+              "brand.blue",
+              "surface.alt@dark",
+              "surface.beigeTint@dark",
+              "surface.blueTint@dark",
+              "surface.canvas@dark",
+              "surface.card@dark",
+              "surface.raised@dark",
+              "surface.soft@dark"
+            ]
+          }
+        },
+        "slice": {
+          "beat": "closing",
+          "allowedJobs": [
+            "action_closure"
+          ],
+          "prohibitedJobs": [
+            "data_encoding",
+            "evidence",
+            "measured_state",
+            "loading_state",
+            "official_navigation_identity",
+            "favicon",
+            "co_brand_lockup"
+          ],
+          "allowedFormats": [
+            "web_public",
+            "deck_16x9",
+            "social_square_1080",
+            "document_pdf",
+            "video_owner_extension"
+          ],
+          "variants": {
+            "full": {
+              "assetId": "landometer.slice.full",
+              "path": "assets/landometer/svg/slice-full.svg",
+              "sha256": "8d0dfb62d1ac92738afcd76e8b61b544a5c72bf10b165983235900558447b2df",
+              "bytes": 280
+            },
+            "quiet": {
+              "assetId": "landometer.slice.quiet",
+              "path": "assets/landometer/svg/slice-quiet.svg",
+              "sha256": "c72114d43b81584cbb46251a5519f768087259bf135216f6ea7933a83df4de6b",
+              "bytes": 350
+            }
+          },
+          "cycleMs": 3000,
+          "authoredEndMs": null,
+          "allowedCarriers": {
+            "full": [
+              "brand.beige",
+              "surface.alt@light",
+              "surface.beigeTint@light",
+              "surface.blueTint@light",
+              "surface.canvas@light",
+              "surface.card@light",
+              "surface.raised@light",
+              "surface.soft@light"
+            ],
+            "quiet": [
+              "atmosphere.ground.current",
+              "atmosphere.measure.deep",
+              "brand.blue",
+              "surface.alt@dark",
+              "surface.beigeTint@dark",
+              "surface.blueTint@dark",
+              "surface.canvas@dark",
+              "surface.card@dark",
+              "surface.raised@dark",
+              "surface.soft@dark"
+            ]
+          }
+        },
+        "cultivate": {
+          "beat": "closing",
+          "allowedJobs": [
+            "cultural_closure",
+            "handoff"
+          ],
+          "prohibitedJobs": [
+            "data_encoding",
+            "evidence",
+            "measured_state",
+            "loading_state",
+            "official_navigation_identity",
+            "favicon",
+            "co_brand_lockup"
+          ],
+          "allowedFormats": [
+            "web_public",
+            "deck_16x9",
+            "social_square_1080",
+            "document_pdf",
+            "video_owner_extension"
+          ],
+          "variants": {
+            "full": {
+              "assetId": "landometer.cultivate.full",
+              "path": "assets/landometer/svg/cultivate-full.svg",
+              "sha256": "ce494d792c12d73949a3dc8e6d18f6f93faa6aeab33d18b2de0889ab4af5af12",
+              "bytes": 984
+            },
+            "quiet": {
+              "assetId": "landometer.cultivate.quiet",
+              "path": "assets/landometer/svg/cultivate-quiet.svg",
+              "sha256": "edf8538107d30b078f0d7657bac054722ee88bdc10ddf7db00e63f44d077935f",
+              "bytes": 1190
+            }
+          },
+          "cycleMs": 3000,
+          "authoredEndMs": null,
+          "allowedCarriers": {
+            "full": [
+              "brand.beige",
+              "surface.alt@light",
+              "surface.beigeTint@light",
+              "surface.blueTint@light",
+              "surface.canvas@light",
+              "surface.card@light",
+              "surface.raised@light",
+              "surface.soft@light"
+            ],
+            "quiet": [
+              "atmosphere.ground.current",
+              "atmosphere.measure.deep",
+              "brand.blue",
+              "surface.alt@dark",
+              "surface.beigeTint@dark",
+              "surface.blueTint@dark",
+              "surface.canvas@dark",
+              "surface.card@dark",
+              "surface.raised@dark",
+              "surface.soft@dark"
+            ]
+          }
+        },
+        "logo": {
+          "beat": "opening",
+          "allowedJobs": [
+            "animated_brand_opening"
+          ],
+          "prohibitedJobs": [
+            "data_encoding",
+            "evidence",
+            "measured_state",
+            "loading_state",
+            "official_navigation_identity",
+            "favicon",
+            "co_brand_lockup"
+          ],
+          "allowedFormats": [
+            "web_public",
+            "deck_16x9",
+            "social_square_1080",
+            "document_pdf",
+            "video_owner_extension"
+          ],
+          "variants": {
+            "full": {
+              "assetId": "landometer.logo.full",
+              "path": "assets/landometer/svg/logo-full.svg",
+              "sha256": "90e9543f2f86a18f891331c13be25038b4334ca7dbe55b194650bc441e3558e1",
+              "bytes": 1252
+            },
+            "quiet": {
+              "assetId": "landometer.logo.quiet",
+              "path": "assets/landometer/svg/logo-quiet.svg",
+              "sha256": "5b6798cdb6c3ada246286e6ce3386644f383c4f987a267e5c5db392809403e14",
+              "bytes": 1979
+            }
+          },
+          "cycleMs": 6000,
+          "authoredEndMs": {
+            "full": 2870,
+            "quiet": 3360
+          },
+          "allowedCarriers": {
+            "full": [
+              "brand.beige",
+              "surface.alt@light",
+              "surface.beigeTint@light",
+              "surface.blueTint@light",
+              "surface.canvas@light",
+              "surface.card@light",
+              "surface.raised@light",
+              "surface.soft@light"
+            ],
+            "quiet": [
+              "atmosphere.ground.current",
+              "atmosphere.measure.deep",
+              "brand.blue",
+              "surface.alt@dark",
+              "surface.beigeTint@dark",
+              "surface.blueTint@dark",
+              "surface.canvas@dark",
+              "surface.card@dark",
+              "surface.raised@dark",
+              "surface.soft@dark"
+            ]
+          }
+        }
+      },
+      "defaultReplayIntervalMs": 3000,
+      "minimumCycleMs": 2000,
+      "runDurationMs": [
+        1200,
+        3400
+      ],
+      "vocabulary": {
+        "allowed": [
+          "drop with squash and stretch",
+          "pop-overshoot placement",
+          "four-beat stagger 0/150/300/450 ms",
+          "step-out-and-return finale",
+          "hop (product stings)"
+        ],
+        "forbidden": [
+          "hue cycling",
+          "identity morphing",
+          "geometry distortion",
+          "parallax",
+          "unbounded ambient loops",
+          "scale overshoot beyond 1.16"
+        ]
+      },
+      "joyBudget": {
+        "perLongRoute": 3,
+        "perTaskSurface": 1,
+        "forbiddenRegions": [
+          "first_answer",
+          "primary_proof",
+          "primary_action"
+        ],
+        "buildCardField": "motionMoments[] (beat + kind + job)"
+      },
+      "prohibitedJobsVerbatimFromManifest": [
+        "data_encoding",
+        "evidence",
+        "measured_state",
+        "loading_state",
+        "official_navigation_identity",
+        "favicon",
+        "co_brand_lockup"
+      ],
+      "carrierPolicy": {
+        "ruleId": "MOTIF-06",
+        "decision": {
+          "decidedOn": "2026-09-16",
+          "evidenceRef": "owner-message:2026-09-16:motif-carrier-answers"
+        },
+        "registerRef": "motif-register.v0.9.4.json#/carrierPolicy",
+        "tool": "measure-motif-carriers-0.9.4.mjs",
+        "shapeIntactMin": 1.3,
+        "bands": {
+          "meaningCapableMin": 3,
+          "decorativeOnlyMin": 1.3,
+          "invisibleMax": 1.29
+        },
+        "placement": {
+          "full": {
+            "carrierClasses": [
+              "light_plain"
+            ],
+            "ink": "blue",
+            "inkNote": "runtime renditions keep the governed light-reference ink: <lm-motif ink=\"blue\">"
+          },
+          "quiet": {
+            "carrierClasses": [
+              "deep_plain",
+              "deep_atmosphere"
+            ],
+            "ink": "sky",
+            "inkNote": "runtime default quiet ink (energy.sky); no other ink value has a governed file"
+          }
+        },
+        "carrierClasses": {
+          "light_plain": [
+            "brand.beige",
+            "surface.alt@light",
+            "surface.beigeTint@light",
+            "surface.blueTint@light",
+            "surface.canvas@light",
+            "surface.card@light",
+            "surface.raised@light",
+            "surface.soft@light"
+          ],
+          "deep_plain": [
+            "brand.blue",
+            "surface.alt@dark",
+            "surface.beigeTint@dark",
+            "surface.blueTint@dark",
+            "surface.canvas@dark",
+            "surface.card@dark",
+            "surface.raised@dark",
+            "surface.soft@dark"
+          ],
+          "light_atmosphere": [
+            "atmosphere.ground.mist",
+            "atmosphere.measure.luminous"
+          ],
+          "deep_atmosphere": [
+            "atmosphere.ground.current",
+            "atmosphere.measure.deep"
+          ]
+        },
+        "neverFull": [
+          "brand.blue",
+          "every atmosphere gradient",
+          "every dark surface"
+        ],
+        "neverQuiet": [
+          "every light surface",
+          "light atmospheres (ground.mist, measure.luminous)"
+        ],
+        "declaration": "data-host-surface on every MotifFrame and static motif placement: a carrier id (themed ids resolve per theme), a theme-fixed form <id>@light|@dark, or an invariant id",
+        "themeSwap": "data-variant is the light-theme variant; data-variant-dark=\"quiet\" switches a full frame on a themed surface to quiet in the dark theme — the only swap the measured policy admits",
+        "fixOrder": [
+          "change the carrier",
+          "change the variant",
+          "change the size or spacing",
+          "remove the motif"
+        ],
+        "neverOnTheAsset": [
+          "recolour",
+          "plate or tile under the mark",
+          "scrim over a gradient",
+          "new tint",
+          "opacity carrying meaning"
+        ]
+      }
+    },
+    "productOverlays": {
+      "ruleId": "MOTIF-05",
+      "register": "motif-register.v0.9.4.json",
+      "principle": "product animated identities are separately registered overlays with their own final fallback, duration, minimum size and host surface; families are never mixed in one lockup; navigation, favicon and OG images use official identity files",
+      "ownerApproval": {
+        "decidedOn": "2026-09-15",
+        "evidenceRef": "owner-message:2026-09-15:0.9.3-answers",
+        "scope": "ijji.logo-sting.r3, ijji.four-beat.selected-3.r3, CityChat conversation set (current montri-th/motif bytes), CityMETER and CityWiki stings pre-approved pending Studio 1.4 production"
+      }
+    },
+    "repetition": {
+      "authority": "OWNER-MOTION-01",
+      "decidedOn": "2026-09-11",
+      "rank": "above_design_system_all_versions",
+      "appliesTo": "decorative and identity motion (motif runtime, approach reveal on re-entry); not the CTA discovery cue",
+      "minimumCycleMs": 2000,
+      "infiniteIterationForbidden": true,
+      "pageLevelPauseRequired": true
+    }
+  },
+  "constraints": {
+    "colorAloneForbidden": true,
+    "visualSamenessAcrossFormatsRequired": false,
+    "semanticParityAcrossFormatsRequired": true,
+    "motionMayHideEssentialContent": false,
+    "interfaceIconFillMayChangeByState": false,
+    "candidateMaySelfPromote": false,
+    "publicWorkflowResidueAllowed": false,
+    "unresolvedDependencyBehavior": "block_or_internal_preview",
+    "colourValuesOutsideProposalForbidden": true,
+    "darkAnchorsHandEditedForbidden": true,
+    "forbiddenHueFamilies": [
+      "violet",
+      "purple",
+      "periwinkle",
+      "lavender",
+      "plum",
+      "fuchsia",
+      "cool magenta",
+      "terracotta",
+      "brick",
+      "rust",
+      "brown"
+    ],
+    "forbiddenHueWindows": "analyticalScalePolicy.bannedHue (DATAVIZ-04: OKLCh windows, purged-value proximity, pink ruling)",
+    "brandBlueFilledButtonsForbidden": true
+  },
+  "socialPreview": {
+    "targets": {
+      "feed": "target.social.square.1080.01",
+      "linkPreview": "target.social.og.1200x630.01"
+    },
+    "recognisers": {
+      "fourColourRulePx": 8,
+      "panel": "brand.blue or one declared atmosphere recipe",
+      "measureLine": "3×5px",
+      "identityMaxHeightPx": 56
+    },
+    "safeAreas": {
+      "textPx": [
+        1000,
+        560
+      ],
+      "centralSquarePx": 630,
+      "cropTolerant": "2:1"
+    },
+    "destinationCueMinPx": 22,
+    "metadata": {
+      "ogTitle": "[object] [period/scope] · [product] ≤ 60",
+      "ogDescription": "[what you will see] · [source · date] · [limitation] ≤ 155",
+      "post": "observation / question the reader can answer / verb + destination"
+    },
+    "forbidden": [
+      "exclamation marks",
+      "click now",
+      "emoji",
+      "unitless numbers"
+    ],
+    "motifsForbidden": true
+  },
+  "evidenceCard": {
+    "fourColourRulePx": 3,
+    "measureLinePx": 3,
+    "logo": "none",
+    "panel": "none",
+    "gradient": "none",
+    "motion": "none",
+    "required": [
+      "TrustBadge",
+      "value + unit + state",
+      "dataset",
+      "source",
+      "date",
+      "boundary",
+      "limitation",
+      "permanent URL",
+      "receipt id"
+    ],
+    "textOnlyFallback": "one line",
+    "valueStateContractRef": "evidence-value.schema.json"
+  },
+  "schemaVersion": "11-owner.1",
+  "releaseRef": "v0.9.5-owner.1",
+  "status": "owner-approved-unsigned",
+  "sets": {
+    "color": "color-srgb-08",
+    "motion": "motion-riddim-approach-03",
+    "icon": "icon-rounded-outline-01",
+    "typography": "type-script-aware-02",
+    "layout": "layout-cross-format-01"
+  },
+  "projection": {
+    "registry": "color-srgb-08.tokens.json",
+    "scales": "color-srgb-08.scales.json",
+    "productionCss": "color-srgb-08.production.css",
+    "policy": "policy.json",
+    "rawRegistryAudienceEmission": "forbidden"
+  },
+  "categoricalSeries": {
+    "registryId": "landometer-series-10-v8",
+    "values": [
+      {
+        "id": "series.01",
+        "name": "coral",
+        "cue": "circle",
+        "light": {
+          "fill": "#D88381",
+          "ink": "#963538",
+          "vivid": "#F66C6D"
+        },
+        "dark": {
+          "fill": "#E37A84",
+          "vivid": "#FF4F6D",
+          "ink": "#FF4F6D"
+        }
+      },
+      {
+        "id": "series.02",
+        "name": "apricot",
+        "cue": "square",
+        "light": {
+          "fill": "#E39B6E",
+          "ink": "#182327",
+          "vivid": "#FF8A36"
+        },
+        "dark": {
+          "fill": "#F59B62",
+          "vivid": "#FF8A37",
+          "ink": "#FF8A37"
+        }
+      },
+      {
+        "id": "series.03",
+        "name": "yellow",
+        "cue": "triangle",
+        "light": {
+          "fill": "#EAC578",
+          "ink": "#182327",
+          "vivid": "#FDC010"
+        },
+        "dark": {
+          "fill": "#ECCB67",
+          "vivid": "#FFD242",
+          "ink": "#FFD242"
+        }
+      },
+      {
+        "id": "series.04",
+        "name": "lime",
+        "cue": "diamond",
+        "light": {
+          "fill": "#BECE7E",
+          "ink": "#606E00",
+          "vivid": "#BBD23C"
+        },
+        "dark": {
+          "fill": "#A9C065",
+          "vivid": "#A9CB00",
+          "ink": "#A9CB00"
+        }
+      },
+      {
+        "id": "series.05",
+        "name": "mint",
+        "cue": "cross",
+        "light": {
+          "fill": "#7BD0A3",
+          "ink": "#007047",
+          "vivid": "#2ADB94"
+        },
+        "dark": {
+          "fill": "#6EC69D",
+          "vivid": "#00E39D",
+          "ink": "#00E39D"
+        }
+      },
+      {
+        "id": "series.06",
+        "name": "sky",
+        "cue": "star",
+        "light": {
+          "fill": "#6ACCF0",
+          "ink": "#006580",
+          "vivid": "#36D0FF"
+        },
+        "dark": {
+          "fill": "#62BEE6",
+          "vivid": "#54CDFF",
+          "ink": "#54CDFF"
+        }
+      },
+      {
+        "id": "series.07",
+        "name": "teal",
+        "cue": "hexagon",
+        "light": {
+          "fill": "#49C0BC",
+          "ink": "#006967",
+          "vivid": "#00C4BF"
+        },
+        "dark": {
+          "fill": "#2DA096",
+          "vivid": "#00B6AB",
+          "ink": "#00B6AB"
+        }
+      },
+      {
+        "id": "series.08",
+        "name": "blue",
+        "cue": "ring",
+        "light": {
+          "fill": "#6196D1",
+          "ink": "#0E599D",
+          "vivid": "#3295F6"
+        },
+        "dark": {
+          "fill": "#5A8CDA",
+          "vivid": "#5396FF",
+          "ink": "#5396FF"
+        }
+      },
+      {
+        "id": "series.09",
+        "name": "slate",
+        "cue": "dash",
+        "light": {
+          "fill": "#8AA4AA",
+          "ink": "#355F6A",
+          "vivid": "#7FA6B0"
+        },
+        "dark": {
+          "fill": "#BFD4E7",
+          "vivid": "#C0DBF4",
+          "ink": "#C0DBF4"
+        }
+      },
+      {
+        "id": "series.10",
+        "name": "green",
+        "cue": "plus",
+        "light": {
+          "fill": "#82AC79",
+          "ink": "#34622A",
+          "vivid": "#71B262"
+        },
+        "dark": {
+          "fill": "#5B9455",
+          "vivid": "#3CA633",
+          "ink": "#3CA633"
+        }
+      }
+    ],
+    "defaultVariant": "soft",
+    "variants": [
+      "soft",
+      "vivid"
+    ],
+    "policyRef": "policy.json#/categorical"
+  },
+  "analyticalScales": {
+    "activity": {
+      "kind": "sequential",
+      "light": [
+        "#FFF1F1",
+        "#FF8B7D",
+        "#BA1F1C"
+      ],
+      "dark": [
+        "#C1332C",
+        "#FF7F71",
+        "#FEDBD6"
+      ],
+      "use": "activity, transactions, usage",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "density.area": {
+      "kind": "sequential",
+      "light": [
+        "#FFF0E5",
+        "#FFA05C",
+        "#DD5B00"
+      ],
+      "dark": [
+        "#DF5D00",
+        "#FFA05C",
+        "#FFE8D4"
+      ],
+      "use": "per km², per rai (denominator = area)",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "heat": {
+      "kind": "sequential",
+      "light": [
+        "#FFF7C4",
+        "#FE9E0E",
+        "#9E122B"
+      ],
+      "dark": [
+        "#B68100",
+        "#FFA063",
+        "#FFE4E3"
+      ],
+      "use": "surface temperature, hotspots, fire",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "risk": {
+      "kind": "sequential",
+      "light": [
+        "#FFF1F1",
+        "#FF6875",
+        "#7F0322"
+      ],
+      "dark": [
+        "#C12440",
+        "#FF6170",
+        "#FED6D6"
+      ],
+      "use": "risk level, hazard probability",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "price": {
+      "kind": "sequential",
+      "light": [
+        "#E9FAED",
+        "#59C07B",
+        "#005729"
+      ],
+      "dark": [
+        "#227C45",
+        "#42C070",
+        "#BDF0C9"
+      ],
+      "use": "appraisal, rent, revenue, registered capital",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "age": {
+      "kind": "sequential",
+      "light": [
+        "#F3F9DE",
+        "#9DBC5A",
+        "#3B5B0A"
+      ],
+      "dark": [
+        "#527626",
+        "#99B94E",
+        "#E1EDA0"
+      ],
+      "use": "building age, business age",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "density.household": {
+      "kind": "sequential",
+      "light": [
+        "#FFEFED",
+        "#FF5D50",
+        "#7C0206"
+      ],
+      "dark": [
+        "#D1000E",
+        "#FF6457",
+        "#FFD6D0"
+      ],
+      "use": "per 100 households (denominator = household · Living)",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "growth": {
+      "kind": "sequential",
+      "light": [
+        "#E5FBF4",
+        "#2BCCAC",
+        "#005E4D"
+      ],
+      "dark": [
+        "#007B66",
+        "#00C7A6",
+        "#B4F5E2"
+      ],
+      "use": "cumulative index, growth rate",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "confidence": {
+      "kind": "sequential",
+      "light": [
+        "#F1F5FF",
+        "#92A8EB",
+        "#24338D"
+      ],
+      "dark": [
+        "#4860BE",
+        "#88A3F9",
+        "#DBE4FD"
+      ],
+      "use": "estimate confidence, data quality",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "count": {
+      "kind": "sequential",
+      "light": [
+        "#EDF6FF",
+        "#5DB2F7",
+        "#005182"
+      ],
+      "dark": [
+        "#036EAE",
+        "#4CAFFC",
+        "#CFE8FE"
+      ],
+      "use": "population, number of firms, vehicles (totals)",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "water": {
+      "kind": "sequential",
+      "light": [
+        "#E3FAFF",
+        "#46C7DF",
+        "#005A68"
+      ],
+      "dark": [
+        "#037687",
+        "#1CBFD8",
+        "#BFEEF8"
+      ],
+      "use": "water level, depth, flood frequency",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "density.capita": {
+      "kind": "sequential",
+      "light": [
+        "#FFF1F7",
+        "#FF85C3",
+        "#9E0067"
+      ],
+      "dark": [
+        "#C40181",
+        "#FF85C3",
+        "#FFD8E9"
+      ],
+      "use": "per 1,000 people (denominator = people)",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "built": {
+      "kind": "sequential",
+      "light": [
+        "#FFFBE2",
+        "#F5CE0D",
+        "#D2A700"
+      ],
+      "dark": [
+        "#BB9C00",
+        "#E8C300",
+        "#FFF19B"
+      ],
+      "use": "building footprint, height, coverage",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "duration": {
+      "kind": "sequential",
+      "light": [
+        "#F0F6F9",
+        "#89A3B0",
+        "#1D3C4B"
+      ],
+      "dark": [
+        "#546D79",
+        "#89A7B6",
+        "#D8E7F0"
+      ],
+      "use": "travel time, waiting time, inundation duration",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "balance": {
+      "kind": "diverging",
+      "light": [
+        "#BE2038",
+        "#EDF3F6",
+        "#006EAE"
+      ],
+      "dark": [
+        "#FFA194",
+        "#3A4145",
+        "#80C5FF"
+      ],
+      "use": "deficit ↔ surplus",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "delta": {
+      "kind": "diverging",
+      "light": [
+        "#B42965",
+        "#EDF3F6",
+        "#007C60"
+      ],
+      "dark": [
+        "#FF9BBA",
+        "#3A4145",
+        "#61D7B2"
+      ],
+      "use": "decrease ↔ increase vs previous period",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "tradeoff": {
+      "kind": "diverging",
+      "light": [
+        "#C86F00",
+        "#EDF3F6",
+        "#455DC9"
+      ],
+      "dark": [
+        "#FAB549",
+        "#3A4145",
+        "#ADC2FF"
+      ],
+      "use": "cost ↔ benefit",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "flow": {
+      "kind": "diverging",
+      "light": [
+        "#C54300",
+        "#EDF3F6",
+        "#007A89"
+      ],
+      "dark": [
+        "#FFAE89",
+        "#3A4145",
+        "#58D8ED"
+      ],
+      "use": "out-migration ↔ in-migration · closures ↔ openings",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "sentiment": {
+      "kind": "diverging",
+      "light": [
+        "#BD1F3D",
+        "#EDF3F6",
+        "#298033"
+      ],
+      "dark": [
+        "#FFA4A7",
+        "#3A4145",
+        "#72DD78"
+      ],
+      "use": "negative ↔ positive",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    },
+    "anomaly": {
+      "kind": "diverging",
+      "light": [
+        "#225BB9",
+        "#EDF3F6",
+        "#B30F2F"
+      ],
+      "dark": [
+        "#9DC2FF",
+        "#3A4145",
+        "#FFA59F"
+      ],
+      "use": "below normal (cool/dry) ↔ above normal (hot/wet)",
+      "lutRef": "color-srgb-08.scales.json",
+      "sampleCount": 41
+    }
+  }
+}

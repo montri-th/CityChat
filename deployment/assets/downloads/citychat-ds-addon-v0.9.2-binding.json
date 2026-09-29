@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "citychat-ds-addon-binding-1",
+  "product": "CityChat",
+  "addonVersion": "0.9.2",
+  "status": "owner-directed-migration",
+  "effectiveDate": "2026-09-30",
+  "authority": "Owner selected repository, website, and Project source migration to LDS 0.9.5 in the current CityChat/Landometer task",
+  "normativeDocument": {
+    "path": "citychat-ds-addon-v0.9.2-project-source.md",
+    "sha256": "31801f57a1e82c47c5e1b584278ca8d66ff1104880df45f31fdfd156675ec3d5"
+  },
+  "migrationRecord": {
+    "path": "citychat-ds-addon-v0.9.2-normative.md",
+    "sha256": "fde7c2cd2fc5118ae13efaaa67465ccfd5f792f2d85239209a64a995714de573"
+  },
+  "parentDesignSystem": {
+    "version": "0.9.5",
+    "releaseRef": "v0.9.5-owner.1",
+    "colorSetId": "color-srgb-08",
+    "signatureStatus": "unsigned-owner-approved",
+    "vendorPath": "vendor/landometer/v0.9.5",
+    "releaseJsonSha256": "9a2725d21927a19b0d78d04455ad95ad0e7571ce2d45d74da21a17786cc9e829",
+    "sha256SumsSha256": "2f6da2d1e283bdf191a7714704a9818dad262449753abaff4403f47e230ca985"
+  },
+  "historicalExactDocuments": [
+    {
+      "version": "0.9",
+      "path": "citychat-ds-addon-v0.9.md",
+      "sha256": "0ff5bddb77774bbcdb36ed2cbc056c25025a20cd31be98904caf70fe77caf4db",
+      "status": "approved_historical"
+    },
+    {
+      "version": "0.9.1",
+      "path": "citychat-ds-addon-v0.9.1-normative.md",
+      "sha256": "6956ee39bb0e83036efd9ef730bd0200e97e1facf3f39ca2195a5da7de65d3e3",
+      "status": "normative_dev_historical"
+    }
+  ],
+  "precedence": [
+    "current_dated_owner_instruction",
+    "lds_0_9_5_for_shared_contracts",
+    "citychat_addon_0_9_2_project_source_for_citychat_contracts",
+    "citychat_0_9_2_migration_record_for_audit",
+    "citychat_0_9_1_historical_only",
+    "citychat_0_9_historical_only",
+    "artifact_implementation_evidence"
+  ],
+  "supersededHistoricalPins": [
+    "lds-0.9.1",
+    "v0.9.1-mp7",
+    "color-srgb-05",
+    "CC-EX-01-looping-CTA"
+  ],
+  "limits": [
+    "Package verification is distinct from artifact conformance.",
+    "Historical documents are retained unchanged.",
+    "Project source upload does not activate all ChatGPT, Claude, or Codex clients."
+  ]
+}
