@@ -29,11 +29,11 @@
         "current CityChat product-specific rules and machine values"
       ],
       "embedsSharedFoundation": false,
-      "markdownSha256": "ec4f443fd877b09160ec134a69e186e17c00463836c195cf7f5b35c1c260fed4",
+      "markdownSha256": "18171bf024bb20affe452ceddaf39db5c2b08a13ea4208741043ceed8ef0fae4",
       "markdownBytes": 24010,
-      "jsonSha256": "bbb5e7e3b223373c68604e7c71f7661fb1f301d4d7f3d24f82aeebff754071cb",
+      "jsonSha256": "8079f496fdd70a08bd35d9c82c6c30cb2fa73d252eb959658e6044e4e714f836",
       "jsonBytes": 26313,
-      "documentId": "citychat-addon-0.9.2-lds-0.9.6-r3",
+      "documentId": "citychat-addon-0.9.2-lds-0.9.6-r1",
       "documentRevision": "standalone-0.9.6-r1",
       "publicationTag": "v0.9.6",
       "baseDocument": {
