@@ -15,13 +15,20 @@
       "historicalMotifRevision": "citychat-contrast-20260908-01",
       "historicalNormativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
       "projectSourcePolicyPath": "assets/downloads/design-system-source-policy.json",
-      "projectSourceDeliveryRevision": "base-plus-addon-20260930-r2",
-      "baseNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md",
-      "addonNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md"
+      "projectSourceDeliveryRevision": "base-plus-addon-20261001-lds096-r1",
+      "baseNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.6/normative/Landometer-Design-System-v0.9.6.md",
+      "addonNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.6/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.6.md"
     },
     "pageKind": "product-landing",
     "language": "th",
-    "canonicalUrl": "https://montri-th.github.io/CityChat/"
+    "canonicalUrl": "https://montri-th.github.io/CityChat/",
+    "currentAuthoring": {
+      "dsVersion": "0.9.6",
+      "colorSetId": "color-srgb-09",
+      "documentRevision": "standalone-0.9.6-r1",
+      "publicationTag": "v0.9.6",
+      "scope": "Project-source and authoring guidance only; existing runtime remains pinned by designSystemMigration."
+    }
   },
   "publication": {
     "visibility": "public",
@@ -31,7 +38,7 @@
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
     "files": 324,
-    "bytes": 48659894
+    "bytes": 48661265
   },
   "files": [
     {
@@ -261,8 +268,8 @@
     },
     {
       "path": "assets/downloads/design-system-source-policy.json",
-      "bytes": 3618,
-      "sha256": "ec521dddba3020a53d1a78a0a704f0620bb5dfb368d650e554422bf069ae5409"
+      "bytes": 4989,
+      "sha256": "cacad524a04d464419d6765914363787a8f25cb9c7798dd81ba0fbf29a593feb"
     },
     {
       "path": "assets/downloads/vibe-coding-prompt.md",
@@ -572,7 +579,7 @@
     {
       "path": "en/index.html",
       "bytes": 71400,
-      "sha256": "f1d7372946457eb67290acacacbf6d8ce61b7be4afbad90a5bb0fd2ba7096eaf"
+      "sha256": "21397695161268dd64da55c400359672f56ff29904e6c464fb654ba7d2cbd39a"
     },
     {
       "path": "implementation-notes.v0.4.md",
@@ -607,7 +614,7 @@
     {
       "path": "index.html",
       "bytes": 84357,
-      "sha256": "d23f89747208c5a6283db5dbbb64fdef76298a46035d0eca38b215240f77ee3c"
+      "sha256": "220e52f4e724ac77399228747802b62ddf8b943b774616319a327f34a28f952a"
     },
     {
       "path": "llms.txt",
