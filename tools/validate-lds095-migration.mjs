@@ -81,8 +81,8 @@ for (const [locale, relative, prefixUrl] of [
   }
   if (html.includes('href="vendor/landometer/v0.9.0/build-kit/lds-tokens.css"')
     || html.includes('href="../vendor/landometer/v0.9.0/build-kit/lds-tokens.css"')) fail(`${locale} loads old color tokens`);
-  const baseUrl = 'https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md';
-  const addonUrl = 'https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md';
+  const baseUrl = 'https://montri-th.github.io/Landometer/v0.9.6/normative/Landometer-Design-System-v0.9.6.md';
+  const addonUrl = 'https://montri-th.github.io/Landometer/v0.9.6/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.6.md';
   if (!html.includes(`href="${baseUrl}"`) || !html.includes(`href="${addonUrl}"`)) fail(`${locale} base or separate Add-on download missing`);
   if (html.includes('CityChat-LDS-v0.9.5-standalone')) fail(`${locale} withdrawn combined product route present`);
   if (html.includes('href="./assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"')
