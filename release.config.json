@@ -10,10 +10,14 @@
       "parentReleaseRef": "v0.9.5-owner.1",
       "colorSetId": "color-srgb-08",
       "citychatAddonVersion": "0.9.2",
-      "normativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
       "contentReleaseRecordPath": "assets/downloads/citychat-lds095-content-release-20260930-01.json",
       "historicalMotifBuildId": "citychat-landing-20260903-03",
-      "historicalMotifRevision": "citychat-contrast-20260908-01"
+      "historicalMotifRevision": "citychat-contrast-20260908-01",
+      "historicalNormativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
+      "projectSourcePolicyPath": "assets/downloads/design-system-source-policy.json",
+      "projectSourceDeliveryRevision": "base-plus-addon-20260930-r2",
+      "baseNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md",
+      "addonNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md"
     },
     "pageKind": "product-landing",
     "language": "th",
@@ -176,7 +180,8 @@
       "assets/fonts/licenses/ibm-plex-sans-thai-OFL.txt",
       "assets/fonts/licenses/ibm-plex-sans-thai-looped-OFL.txt",
       "assets/fonts/licenses/jetbrains-mono-OFL.txt",
-      "assets/fonts/licenses/material-symbols-Apache-2.0.txt"
+      "assets/fonts/licenses/material-symbols-Apache-2.0.txt",
+      "assets/downloads/design-system-source-policy.json"
     ]
   },
   "markup": {
@@ -273,8 +278,12 @@
         "href": "https://montri-th.github.io/rebuild02/#showcases"
       },
       {
-        "text": "คู่มือออกแบบสำหรับทีม",
-        "href": "./assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
+        "text": "LDS 0.9.5 · ฉบับเต็ม",
+        "href": "https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md"
+      },
+      {
+        "text": "CityChat Add-on 0.9.2",
+        "href": "https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md"
       },
       {
         "text": "Privacy & Terms",
@@ -305,8 +314,12 @@
             "href": "https://montri-th.github.io/rebuild02/#showcases"
           },
           {
-            "text": "คู่มือออกแบบสำหรับทีม",
-            "href": "./assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
+            "text": "LDS 0.9.5 · ฉบับเต็ม",
+            "href": "https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md"
+          },
+          {
+            "text": "CityChat Add-on 0.9.2",
+            "href": "https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md"
           },
           {
             "text": "Privacy & Terms",
@@ -342,8 +355,12 @@
             "href": "https://montri-th.github.io/rebuild02/Landometer-Home-EN.dc.html#showcases"
           },
           {
-            "text": "Design guide for the team",
-            "href": "../assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"
+            "text": "LDS 0.9.5 · complete base",
+            "href": "https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md"
+          },
+          {
+            "text": "CityChat Add-on 0.9.2",
+            "href": "https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md"
           },
           {
             "text": "Privacy & Terms",

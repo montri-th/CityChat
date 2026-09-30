@@ -10,10 +10,14 @@
       "parentReleaseRef": "v0.9.5-owner.1",
       "colorSetId": "color-srgb-08",
       "citychatAddonVersion": "0.9.2",
-      "normativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
       "contentReleaseRecordPath": "assets/downloads/citychat-lds095-content-release-20260930-01.json",
       "historicalMotifBuildId": "citychat-landing-20260903-03",
-      "historicalMotifRevision": "citychat-contrast-20260908-01"
+      "historicalMotifRevision": "citychat-contrast-20260908-01",
+      "historicalNormativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
+      "projectSourcePolicyPath": "assets/downloads/design-system-source-policy.json",
+      "projectSourceDeliveryRevision": "base-plus-addon-20260930-r2",
+      "baseNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md",
+      "addonNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md"
     },
     "pageKind": "product-landing",
     "language": "th",
@@ -26,8 +30,8 @@
   },
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
-    "files": 323,
-    "bytes": 48655998
+    "files": 324,
+    "bytes": 48659894
   },
   "files": [
     {
@@ -254,6 +258,11 @@
       "path": "assets/downloads/citychat-visual-experience-specification-v0.6.md",
       "bytes": 121200,
       "sha256": "5a137425ab195c4b5dd123ea86d0ee8730b370540eb57f05baf978fc6ca33a21"
+    },
+    {
+      "path": "assets/downloads/design-system-source-policy.json",
+      "bytes": 3618,
+      "sha256": "ec521dddba3020a53d1a78a0a704f0620bb5dfb368d650e554422bf069ae5409"
     },
     {
       "path": "assets/downloads/vibe-coding-prompt.md",
@@ -562,8 +571,8 @@
     },
     {
       "path": "en/index.html",
-      "bytes": 71248,
-      "sha256": "42679163f7b85066124d93295c568c51164159c233bb5d5b0899dd112757abb3"
+      "bytes": 71400,
+      "sha256": "f1d7372946457eb67290acacacbf6d8ce61b7be4afbad90a5bb0fd2ba7096eaf"
     },
     {
       "path": "implementation-notes.v0.4.md",
@@ -597,8 +606,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 84231,
-      "sha256": "88089e0a1d6eedf5a3f93429ab1c26645850bde35ffcf3ed94d2d8954bcbe35b"
+      "bytes": 84357,
+      "sha256": "d23f89747208c5a6283db5dbbb64fdef76298a46035d0eca38b215240f77ee3c"
     },
     {
       "path": "llms.txt",

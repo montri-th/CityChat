@@ -2,7 +2,7 @@
 
 Before changing an interface in this repository:
 
-1. Read `DESIGN.md`, current `deployment/assets/downloads/citychat-ds-addon-v0.9.2-project-source.md` and its binding JSON. The v0.9.2 migration record and exact historical v0.9/v0.9.1 documents are for audit, not new design pins.
+1. Read `DESIGN.md`, the [complete LDS 0.9.5 base](https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md) and the [separate CityChat Add-on 0.9.2](https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md), delivery revision `standalone-0.9.5-r2`. Use these two sources together; the Add-on does not duplicate the base. Follow `deployment/assets/downloads/design-system-source-policy.json`. Earlier source-limited guides, predecessor hierarchies and combined product/base files are superseded for new work; retain product evidence and immutable historical records.
 2. Treat both `deployment/vendor/landometer/v0.9.0/` and `deployment/vendor/landometer/v0.9.5/` as immutable upstream snapshots. Current work uses LDS 0.9.5, release `v0.9.5-owner.1`, Color Set `color-srgb-08`; run `npm test` to check vendored file hashes.
 3. Use the current LDS 0.9.5 CityChat product roles. Historical v0.9.0 profiles and playground implementation files are not current authority.
 4. Use shared tokens, fonts, colors and primitives from the vendored 0.9.5 build kit. The two `citychat-lds095-*.css` files bridge retained site geometry to that package; do not introduce another palette or reload old color CSS.
