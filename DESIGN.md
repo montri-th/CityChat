@@ -1,6 +1,6 @@
 # CityChat DS Add-on
 
-CityChat keeps its own face and way of speaking. The [current CityChat DS Add-on v0.9.2](deployment/assets/downloads/citychat-ds-addon-v0.9.2-project-source.md) composes LDS 0.9.5 into first value, a warm living-city identity, and honest civic continuity without creating a second token system. Its [binding record](deployment/assets/downloads/citychat-ds-addon-v0.9.2-binding.json) pins the exact LDS release and immutable historical Add-on documents.
+CityChat keeps its own face and way of speaking. Use the [complete LDS 0.9.5 base](https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md) together with the [separate CityChat Add-on 0.9.2](https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md), delivery revision `standalone-0.9.5-r2`. The Add-on composes the shared foundation into first value, a warm living-city identity, and honest civic continuity without creating a second token system. The current [source policy](deployment/assets/downloads/design-system-source-policy.json) defines these two active sources and cancels earlier source-limited or combined-file instructions. Original Add-on documents and [binding record](deployment/assets/downloads/citychat-ds-addon-v0.9.2-binding.json) remain immutable audit evidence.
 
 Playground artifact v0.8.0 remains a historical implementation example. Its control, icon, motion, and colour records are bounded artifact bindings, not current normative authority or evidence that a CityChat product capability is live.
 
@@ -59,7 +59,7 @@ CityChat-owned identity areas use CityChat artwork and product roles only: do no
 - **Colour in the historical playground** follows `citychat-color-role-map.json` on its then-pinned `color-srgb-05` source. Current work uses LDS 0.9.5 / `color-srgb-08`; missing authority resolves to no-data or unavailable copy, not a guessed colour.
 - **Identity** uses the exact lockup bytes and the separately approved build, URL, role, theme, backdrop, and surface in `identity-assets.v0.8.0.json`. Do not add a white logo card or recolour, crop, filter, mask, animate, or rebuild the mark.
 
-Use v0.8.0 resources only to understand that historical artifact. Use Add-on v0.9.2 and its predecessor hierarchy for current CityChat decisions.
+Use v0.8.0 resources only to understand that historical artifact. Use the complete LDS 0.9.5 base and the separate consolidated Add-on v0.9.2 for current CityChat decisions; no predecessor hierarchy is required.
 
 ## CityCells and example cases
 

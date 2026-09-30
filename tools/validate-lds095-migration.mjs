@@ -81,8 +81,12 @@ for (const [locale, relative, prefixUrl] of [
   }
   if (html.includes('href="vendor/landometer/v0.9.0/build-kit/lds-tokens.css"')
     || html.includes('href="../vendor/landometer/v0.9.0/build-kit/lds-tokens.css"')) fail(`${locale} loads old color tokens`);
-  const normativeUrl = `${locale === 'th' ? './' : prefixUrl}assets/downloads/citychat-ds-addon-v0.9.2-project-source.md`;
-  if (!html.includes(`href="${normativeUrl}" download`)) fail(`${locale} normative download missing`);
+  const baseUrl = 'https://montri-th.github.io/Landometer/v0.9.5/normative/Landometer-Design-System-v0.9.5.md';
+  const addonUrl = 'https://montri-th.github.io/Landometer/v0.9.5/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.5.md';
+  if (!html.includes(`href="${baseUrl}"`) || !html.includes(`href="${addonUrl}"`)) fail(`${locale} base or separate Add-on download missing`);
+  if (html.includes('CityChat-LDS-v0.9.5-standalone')) fail(`${locale} withdrawn combined product route present`);
+  if (html.includes('href="./assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"')
+    || html.includes('href="../assets/downloads/citychat-ds-addon-v0.9.2-project-source.md"')) fail(`${locale} still routes to the superseded separate Add-on`);
 }
 
 const foundation = read('citychat-lds095-foundation.css').toString('utf8');
@@ -91,6 +95,18 @@ for (const value of ['--ldm-product-citychat-light-primary', '--ldm-product-city
 }
 const config = JSON.parse(readFileSync(path.join(root, 'release.config.json')));
 if (config.artifact.designSystemMigration?.citychatAddonVersion !== '0.9.2') fail('release config not migrated');
+const sourcePolicy = JSON.parse(read(config.artifact.designSystemMigration.projectSourcePolicyPath));
+if (sourcePolicy.normative.base.markdownUrl !== config.artifact.designSystemMigration.baseNormativeUrl
+  || sourcePolicy.normative.addon.markdownUrl !== config.artifact.designSystemMigration.addonNormativeUrl
+  || sourcePolicy.normative.requiredDesignSourceFileCount !== 2
+  || sourcePolicy.normative.olderMasterRequired !== false
+  || sourcePolicy.normative.addon.embedsSharedFoundation !== false
+  || sourcePolicy.supersession.status !== 'cancelled_for_new_authoring') fail('base plus separate Add-on source policy mismatch');
+for (const item of sourcePolicy.supersession.files) exact(item.path, item.sha256);
+for (const part of ['base', 'addon']) {
+  if (sourcePolicy.normative[part].jsonUrl !== sourcePolicy.normative[part].markdownUrl.replace(/\.md$/, '.json')) fail(`${part} JSON route mismatch`);
+}
+
 if (config.artifact.buildId !== 'citychat-landing-20260930-01'
   || config.artifact.releaseRevision !== 'citychat-lds095-20260930-01') fail('successor build identity mismatch');
 const recordPath = config.artifact.designSystemMigration.contentReleaseRecordPath;
