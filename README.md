@@ -4,11 +4,11 @@ Static Thai-language landing page prepared for the GitHub Pages route:
 
 **https://montri-th.github.io/CityChat/**
 
-Current design authoring uses two human- and machine-readable files: **[the complete LDS 0.9.6 base](https://montri-th.github.io/Landometer/v0.9.6/normative/Landometer-Design-System-v0.9.6.md)** plus **[the separate CityChat Add-on 0.9.2](https://montri-th.github.io/Landometer/v0.9.6/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.6.md)**. The base owns shared rules and exact shared machine values; the Add-on contains CityChat-specific rules and product values without duplicating the base. JSON alternatives use the same URLs with `.json` instead of `.md`.
+Current design authoring uses two human- and machine-readable files: **[the complete LDS 0.9.7 base](https://montri-th.github.io/Landometer/v0.9.7/normative/Landometer-Design-System-v0.9.7.md)** plus **[the separate CityChat Add-on 0.9.2](https://montri-th.github.io/Landometer/v0.9.7/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.7.md)**. The base owns shared rules and exact shared machine values; the Add-on contains CityChat-specific rules and product values without duplicating the base. JSON alternatives use the same URLs with `.json` instead of `.md`.
 
 Upload the two Markdown files to a ChatGPT/Claude Project Source. Remove or deactivate conflicting old LDS/Add-on sources and combined product/base files; retain actual product/evidence/rights sources. Set Project Instructions to the complete base plus CityChat Add-on, then verify both sources in a new session. Source upload does not activate other clients/accounts or the whole team. The [source policy](deployment/assets/downloads/design-system-source-policy.json) cancels the former 8+1 setup and combined-product proposal for new work; old normative files, bindings and release receipts remain byte-identical historical records. Both page footers link separately to the base and Add-on.
 
-Current authoring uses LDS 0.9.6 / color-srgb-09. The existing landing runtime remains pinned to LDS 0.9.5 / color-srgb-08; this source-guidance update changes no analytical runtime, artwork or motion assets.
+Current authoring uses LDS 0.9.7 / color-srgb-10. The existing landing runtime remains pinned to LDS 0.9.5 / color-srgb-08; this source-guidance update changes no analytical runtime, artwork or motion assets.
 
 The earlier LDS 0.9.5 migration has its own `citychat-landing-20260930-01` build and `citychat-lds095-20260930-01` release revision. The [successor content-release record](deployment/assets/downloads/citychat-lds095-content-release-20260930-01.json) identifies the unchanged artwork carried into the same roles and placements, points to the original exact-build approvals, and limits the carry-forward to this migration. The original approval records remain unchanged.
 
@@ -71,3 +71,5 @@ Both GitHub Actions workflows validate without rewriting tracked files. The Page
 - `release.config.json` — machine-readable release and content contract
 - `deployment/site-manifest.json` — deterministic whole-tree file inventory
 - `deployment/SHA256SUMS.txt` — deterministic SHA-256 ledger
+
+For current LDS 0.9.7 authoring, Story supporting colours and analytical scales, including Location Intelligence, use the released original HEX, role colours and LUT values unchanged in light and dark modes. Do not auto-darken, invert, blend or derive substitute palettes for these sets. Foundation UI and categorical colours follow the released theme rules. This rule does not relabel the existing pinned landing runtime.

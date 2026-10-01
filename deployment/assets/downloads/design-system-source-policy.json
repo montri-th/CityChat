@@ -1,48 +1,48 @@
 {
   "schemaVersion": "lds-project-source-policy-1",
   "product": "CityChat",
-  "revision": "base-plus-addon-20261001-lds096-r1",
+  "revision": "base-plus-addon-20261001-lds097-r1",
   "effectiveDate": "2026-10-01",
-  "currentDesignSystem": "0.9.6",
+  "currentDesignSystem": "0.9.7",
   "normative": {
     "deliveryModel": "complete_base_plus_separate_product_addon",
     "base": {
-      "markdownUrl": "https://montri-th.github.io/Landometer/v0.9.6/normative/Landometer-Design-System-v0.9.6.md",
-      "jsonUrl": "https://montri-th.github.io/Landometer/v0.9.6/normative/Landometer-Design-System-v0.9.6.json",
+      "markdownUrl": "https://montri-th.github.io/Landometer/v0.9.7/normative/Landometer-Design-System-v0.9.7.md",
+      "jsonUrl": "https://montri-th.github.io/Landometer/v0.9.7/normative/Landometer-Design-System-v0.9.7.json",
       "contains": [
-        "complete LDS 0.9.6 shared rules",
+        "complete LDS 0.9.7 shared rules",
         "exact shared machine tokens and scales"
       ],
-      "documentRevision": "standalone-0.9.6-r1",
-      "publicationTag": "v0.9.6",
-      "colorSetId": "color-srgb-09",
-      "markdownSha256": "c2bed69f48a1fc3c23df1e8010684578bfcf5ef33701a819f65abf18542a3c91",
-      "markdownBytes": 1122346,
-      "jsonSha256": "f3dd5392e4fdc9b3bda8e9435e9252f68b3617b1be66f736fa5e42eca1f4694f",
-      "jsonBytes": 1851669,
-      "documentId": "lds-0.9.6-landometer-standalone-r1"
+      "documentRevision": "standalone-0.9.7-r1",
+      "publicationTag": "v0.9.7",
+      "colorSetId": "color-srgb-10",
+      "markdownSha256": "f4ae912aae11f8346b55836246c4e774f242851635757528a8f33473c0045131",
+      "markdownBytes": 1141965,
+      "jsonSha256": "55730472dc1e3c306b42ecfed75e625a6283518045c8eb1313b0991f4ac5361d",
+      "jsonBytes": 1872866,
+      "documentId": "lds-0.9.7-landometer-standalone-r1"
     },
     "addon": {
-      "markdownUrl": "https://montri-th.github.io/Landometer/v0.9.6/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.6.md",
-      "jsonUrl": "https://montri-th.github.io/Landometer/v0.9.6/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.6.json",
+      "markdownUrl": "https://montri-th.github.io/Landometer/v0.9.7/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.7.md",
+      "jsonUrl": "https://montri-th.github.io/Landometer/v0.9.7/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.7.json",
       "contains": [
         "current CityChat product-specific rules and machine values"
       ],
       "embedsSharedFoundation": false,
-      "markdownSha256": "18171bf024bb20affe452ceddaf39db5c2b08a13ea4208741043ceed8ef0fae4",
+      "markdownSha256": "8fc35a8adf868de6dac3a80efebad0b9ad010c97576a051a66eed760ba9c1eca",
       "markdownBytes": 24010,
-      "jsonSha256": "8079f496fdd70a08bd35d9c82c6c30cb2fa73d252eb959658e6044e4e714f836",
+      "jsonSha256": "405e2cea29612b7325f86b029bd35fdba0ce8d4165ccf228ea578a466da39ee2",
       "jsonBytes": 26313,
-      "documentId": "citychat-addon-0.9.2-lds-0.9.6-r1",
-      "documentRevision": "standalone-0.9.6-r1",
-      "publicationTag": "v0.9.6",
+      "documentId": "citychat-addon-0.9.2-lds-0.9.7-r1",
+      "documentRevision": "standalone-0.9.7-r1",
+      "publicationTag": "v0.9.7",
       "baseDocument": {
-        "documentId": "lds-0.9.6-landometer-standalone-r1",
-        "path": "Landometer-Design-System-v0.9.6.md",
-        "sha256": "c2bed69f48a1fc3c23df1e8010684578bfcf5ef33701a819f65abf18542a3c91",
-        "dsVersion": "0.9.6",
-        "releaseRef": "v0.9.6-owner.1",
-        "colorSetId": "color-srgb-09"
+        "documentId": "lds-0.9.7-landometer-standalone-r1",
+        "path": "Landometer-Design-System-v0.9.7.md",
+        "sha256": "f4ae912aae11f8346b55836246c4e774f242851635757528a8f33473c0045131",
+        "dsVersion": "0.9.7",
+        "releaseRef": "v0.9.7-owner.1",
+        "colorSetId": "color-srgb-10"
       }
     },
     "preferredUpload": "markdown",
@@ -75,12 +75,12 @@
   },
   "projectSetup": {
     "steps": [
-      "Download the complete LDS 0.9.6 base Markdown and the separate product Add-on Markdown from normative.base.markdownUrl and normative.addon.markdownUrl.",
+      "Download the complete LDS 0.9.7 base Markdown and the separate product Add-on Markdown from normative.base.markdownUrl and normative.addon.markdownUrl.",
       "Upload both Markdown files as the active design sources in the intended ChatGPT or Claude project. JSON mirrors are alternatives for machine ingestion, not additional required uploads.",
       "Remove or explicitly deactivate prior LDS and product design-source documents that conflict, including withdrawn combined-product files; retain product briefs, factual evidence, research specifications and rights records.",
-      "Set Project Instructions to the LDS 0.9.6 base plus the product Add-on; start a new session to verify the release, shared values and product-specific rules."
+      "Set Project Instructions to the LDS 0.9.7 base plus the product Add-on; start a new session to verify the release, shared values and product-specific rules."
     ],
-    "instruction": "For new CityChat work use Landometer-Design-System-v0.9.6.md as the complete shared foundation together with CityChat-Add-on-v0.9.2-for-LDS-v0.9.6.md for product-specific rules. Use both files. Do not use an older LDS master or a combined product/base file. Older conflicting design-source instructions are superseded. Product evidence, rights and capabilities retain their own authority.",
+    "instruction": "For new CityChat work use Landometer-Design-System-v0.9.7.md as the complete shared foundation together with CityChat-Add-on-v0.9.2-for-LDS-v0.9.7.md for product-specific rules. Use both files. Do not use an older LDS master or a combined product/base file. Older conflicting design-source instructions are superseded. Product evidence, rights and capabilities retain their own authority. For Story supporting colours and analytical scales, including Location Intelligence, use the released original HEX, role colours and LUT values unchanged in both light and dark modes; do not auto-darken, invert, blend, recolour or derive a substitute palette. Foundation UI and categorical colours follow the released theme rules. For Location Intelligence work also read Location-Intelligence-Profile-for-LDS-v0.9.7.md, verify its exact base binding and preserve its units, denominators, evidence boundaries and non-colour cues. Do not assume this optional profile is present until it is verified.",
     "activationLimit": "Upload or link availability does not establish plugin, account or team activation."
   },
   "runtimeBoundary": {
@@ -88,5 +88,41 @@
     "releaseRef": "v0.9.5-owner.1",
     "colorSetId": "color-srgb-08",
     "scope": "Existing landing runtime remains pinned. This update changes current authoring sources and download pointers only; it does not relabel the deployed runtime or replace historical assets."
-  }
+  },
+  "currentColorPolicy": {
+    "source": "LDS 0.9.7 released originals",
+    "sameOriginalColoursAcrossThemes": true,
+    "analyticalLutAndRoleHex": "exact released values, unchanged on light and dark surfaces",
+    "forbiddenTransformations": [
+      "auto-dark palette derivation",
+      "hex inversion",
+      "theme-based hue/chroma changes",
+      "opacity used to replace original palette colours"
+    ],
+    "scope": "Story supporting colours and analytical scales, including Location Intelligence role HEX and LUT values, for current authoring only. Foundation UI and categorical theme rules remain as released. Existing immutable runtime packages retain their recorded versions and bytes."
+  },
+  "optionalProfiles": [
+    {
+      "scope": "Location Intelligence work only; use with the complete LDS base and this product Add-on when relevant.",
+      "requiredWhenUsed": true,
+      "embedsSharedFoundation": false,
+      "documentId": "location-intelligence-profile-lds-0.9.7-r1",
+      "documentRevision": "standalone-0.9.7-r1",
+      "publicationTag": "v0.9.7",
+      "markdownUrl": "https://montri-th.github.io/Landometer/v0.9.7/normative/Location-Intelligence-Profile-for-LDS-v0.9.7.md",
+      "markdownSha256": "3982b985d4ed9f5000f0a963433561cbb24e2704ea9df1525749d5a567f58c28",
+      "markdownBytes": 124135,
+      "jsonUrl": "https://montri-th.github.io/Landometer/v0.9.7/normative/Location-Intelligence-Profile-for-LDS-v0.9.7.json",
+      "jsonSha256": "bcb0c6248ddeaee7bd4a0263d48e23019fbe935ca7513de778a7189fc39f8ac9",
+      "jsonBytes": 179016,
+      "baseDocument": {
+        "documentId": "lds-0.9.7-landometer-standalone-r1",
+        "path": "Landometer-Design-System-v0.9.7.md",
+        "sha256": "f4ae912aae11f8346b55836246c4e774f242851635757528a8f33473c0045131",
+        "dsVersion": "0.9.7",
+        "releaseRef": "v0.9.7-owner.1",
+        "colorSetId": "color-srgb-10"
+      }
+    }
+  ]
 }
