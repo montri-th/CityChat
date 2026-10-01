@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "citychat-share-preview-1",
+  "buildId": "citychat-landing-20261001-01",
+  "role": "social_preview",
+  "records": [
+    {
+      "locale": "th",
+      "path": "assets/identity/citychat-share-th-88f66bdc.png",
+      "sha256": "88f66bdcfb891629fdcc25b4841a1d902c2ab1f50fd61a568fecbd8ebfef5d48",
+      "bytes": 50528,
+      "mimeType": "image/png",
+      "width": 1200,
+      "height": 630,
+      "source": "tools/share-preview/th.html",
+      "sourceSha256": "4130665f3c961bd3cf943939e8e6993525f5ab2339cebdb3bcb3b6963a60a79a",
+      "visibleText": "ข้อมูลเมือง\nที่เริ่มจากโจทย์ของคุณ\n\nรู้จัก CityChat สำหรับ อปท.\nข้อมูลพื้นที่ เสียงคน และการทำงานร่วมกัน\n\nmontri-th.github.io/CityChat/",
+      "identitySource": "assets/citychat-lockup.png",
+      "identitySourceSha256": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
+      "transform": "Whole unmodified lockup rendered proportionally at 56px height; no crop, recolour, motif or motion.",
+      "authority": "Owner request 2026-10-01: update/publish current CityChat public surface including sharing hero; same current public copy.",
+      "visualReview": "pending root review before publication",
+      "thirdPartyCache": "not checked; origin delivery only"
+    },
+    {
+      "locale": "en",
+      "path": "assets/identity/citychat-share-en-d3021149.png",
+      "sha256": "d3021149a9a5b8479b686201149d44ed8549c97d6c1b274a67144b969f1828ab",
+      "bytes": 44069,
+      "mimeType": "image/png",
+      "width": 1200,
+      "height": 630,
+      "source": "tools/share-preview/en.html",
+      "sourceSha256": "a67ee679e6bcf432f9708deb3aa19f57ee451e52355bf4c702b9b2cb89a2f840",
+      "visibleText": "City data.\nLocal priorities.\n\nMeet CityChat for local authorities.\nPlaces, community voices and shared work.\n\nmontri-th.github.io/CityChat/en/",
+      "identitySource": "assets/citychat-lockup.png",
+      "identitySourceSha256": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
+      "transform": "Whole unmodified lockup rendered proportionally at 56px height; no crop, recolour, motif or motion.",
+      "authority": "Owner request 2026-10-01: update/publish current CityChat public surface including sharing hero; same current public copy.",
+      "visualReview": "pending root review before publication",
+      "thirdPartyCache": "not checked; origin delivery only"
+    }
+  ]
+}

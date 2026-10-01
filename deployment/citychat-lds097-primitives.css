@@ -1,0 +1,30 @@
+/* CityChat landing primitives, resolved against LDS 0.9.7 tokens.
+   Geometry is retained from the earlier site where the 0.9.7 web kit does not
+   provide a replacement. No earlier color token stylesheet is loaded. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--font-body); font-size: var(--type-body); line-height: var(--leading-body); background: var(--surface-canvas); color: var(--text-primary); }
+img, video, canvas, svg { display: block; max-width: 100%; height: auto; }
+[id] { scroll-margin-top: 88px; }
+h1, h2, h3 { margin: 0 0 var(--space-4); font-weight: 700; }
+:where(html[lang="th"]) h1 { font-family: var(--font-display-th); font-size: var(--type-h1-th); line-height: var(--leading-display-th); }
+:where(html[lang="en"]) h1 { font-family: var(--font-display-en); font-size: var(--type-h1-en); line-height: var(--leading-display-en); }
+:where(html[lang="th"]) h2, :where(html[lang="th"]) h3 { font-family: var(--font-ui-heading-th); line-height: var(--leading-ui-heading-th); }
+:where(html[lang="en"]) h2, :where(html[lang="en"]) h3 { font-family: var(--font-ui-heading-en); line-height: var(--leading-ui-heading-en); }
+h2 { font-size: var(--type-h2); }
+h3 { font-size: var(--type-h3); }
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline: 3px solid var(--interaction-focus-ring); outline-offset: 2px; }
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: var(--z-tooltip); background: var(--surface-raised); color: var(--text-primary); padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm); }
+.skip-link:focus { left: var(--space-4); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 44px; padding: 10px var(--space-5); border: 2px solid var(--interaction-accent); border-radius: var(--radius-pill); background: transparent; color: var(--interaction-accent); font: 600 var(--type-body)/1.2 var(--font-body); text-decoration: none; cursor: pointer; transition: background-color var(--motion-duration-feedback) var(--motion-ease-state), transform var(--motion-duration-feedback) var(--motion-ease-press); }
+.btn:hover { background: var(--surface-blue-tint); }
+.btn:active { background: var(--surface-soft); transform: translateY(var(--motion-distance-feedback)); }
+.btn:disabled, .btn[aria-disabled="true"] { border-color: var(--border-hairline); color: var(--text-disabled); cursor: not-allowed; transform: none; }
+.btn[aria-busy="true"] { cursor: progress; }
+.btn-icon { width: 44px; height: 44px; min-width: 44px; padding: 0; border-radius: 50%; }
+.scene-atmosphere { color: var(--on-atmosphere, var(--fg-on-deep-primary)); }
+.scene-atmosphere--measure { background-image: var(--surface-atmosphere-measure); --on-atmosphere: var(--on-atmosphere-measure); --on-atmosphere-2: var(--on-atmosphere-measure-2); }
+.scene-atmosphere .meta { color: var(--on-atmosphere-2); }
+.scene-atmosphere :where(a, button, [tabindex]):focus-visible { outline-color: var(--on-atmosphere); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

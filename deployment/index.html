@@ -12,6 +12,23 @@
 <link rel="alternate" hreflang="en" href="https://montri-th.github.io/CityChat/en/">
 <link rel="alternate" hreflang="x-default" href="https://montri-th.github.io/CityChat/">
 <link rel="icon" type="image/png" href="./assets/identity/citychat-favicon-3b7439f6.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CityChat">
+<meta property="og:locale" content="th_TH">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:url" content="https://montri-th.github.io/CityChat/">
+<meta property="og:title" content="ข้อมูลเมืองสำหรับ อปท. · CityChat">
+<meta property="og:description" content="รู้จัก CityChat ผ่านข้อมูลพื้นที่ เสียงคน และตัวอย่างการทำงานร่วมกับ อปท.">
+<meta property="og:image" content="https://montri-th.github.io/CityChat/assets/identity/citychat-share-th-88f66bdc.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CityChat — ข้อมูลเมืองที่เริ่มจากโจทย์ของคุณ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ข้อมูลเมืองสำหรับ อปท. · CityChat">
+<meta name="twitter:description" content="รู้จัก CityChat ผ่านข้อมูลพื้นที่ เสียงคน และตัวอย่างการทำงานร่วมกับ อปท.">
+<meta name="twitter:image" content="https://montri-th.github.io/CityChat/assets/identity/citychat-share-th-88f66bdc.png">
+<meta name="twitter:image:alt" content="CityChat — ข้อมูลเมืองที่เริ่มจากโจทย์ของคุณ">
 <title>CityChat — แพลตฟอร์มข้อมูลเมืองสำหรับ อปท.</title>
 <script>
 (() => {
@@ -26,11 +43,11 @@
   root.style.colorScheme = root.dataset.theme;
 })();
 </script>
-<link rel="preload" href="vendor/landometer/v0.9.5/build-kit/assets/bai-jamjuree-thai-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="vendor/landometer/v0.9.5/build-kit/assets/ibm-plex-sans-thai-looped-thai-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="citychat-lds095-foundation.css">
-<link rel="stylesheet" href="vendor/landometer/v0.9.5/build-kit/lds-0.9.5.css">
-<link rel="stylesheet" href="citychat-lds095-primitives.css">
+<link rel="preload" href="vendor/landometer/v0.9.7/build-kit/assets/bai-jamjuree-thai-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/landometer/v0.9.7/build-kit/assets/ibm-plex-sans-thai-looped-thai-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="citychat-lds097-foundation.css">
+<link rel="stylesheet" href="vendor/landometer/v0.9.7/build-kit/lds-0.9.7.css">
+<link rel="stylesheet" href="citychat-lds097-primitives.css">
 <link rel="modulepreload" href="./assets/citychat-motif-set/motion/citychat-motif-motion.js">
 <link rel="stylesheet" href="./assets/citychat-motif-set/motion/citychat-motif-motion.css">
 <link rel="stylesheet" href="citychat.css">
@@ -277,6 +294,7 @@
 <div data-approach="peer_group" style="background:var(--surface-card);padding:var(--space-5) var(--space-4);display:grid;gap:var(--space-3);justify-items:center;text-align:center"><span class="ls-icon" aria-hidden="true" style="font-size:28px;color:var(--interaction-accent)">forum</span><span style="font-size:.9375rem;font-weight:600">เรื่องร้องเรียน</span></div>
 </div>
 </section>
+<section class="design-update" id="design-system" aria-label="LDS 0.9.7"><details><summary>สำหรับทีมออกแบบและพัฒนา · สิ่งที่เพิ่มจาก LDS 0.9.1</summary><div class="design-update-body"><h2>สีอ่านข้อมูลชัดขึ้น อัตลักษณ์ CityChat ยังอยู่ครบ</h2><p>LDS 0.9.7 เพิ่มสี Story 17 สี และสเกลข้อมูล 20 ชุด: ทางเดียว 14 ชุดและสองทาง 6 ชุด ทุกชุดมีสีหลักหัว–กลาง–ท้ายที่เลือกตามความหมายของข้อมูล ใช้ค่าสีเดียวกันบนพื้นสว่างและมืด</p><p class="design-example-note">ตัวอย่างสเกล 7 ระดับ · แสดงกติกาสี ไม่ใช่ข้อมูลเมืองจริง</p><div class="design-scale-grid"><figure data-scale-family="water"><figcaption>น้ำ · ปริมาณหรือระดับ</figcaption><div class="design-scale" aria-hidden="true"><i style="background:#EEF7FC" aria-hidden="true"></i><i style="background:#B8E2EC" aria-hidden="true"></i><i style="background:#87D0DE" aria-hidden="true"></i><i style="background:#3DBBCD" aria-hidden="true"></i><i style="background:#278EAF" aria-hidden="true"></i><i style="background:#156896" aria-hidden="true"></i><i style="background:#073E78" aria-hidden="true"></i></div><div class="design-scale-axis"><span>น้อย</span><span>มาก</span></div></figure><figure data-scale-family="density.capita"><figcaption>ความหนาแน่นต่อประชากร</figcaption><div class="design-scale" aria-hidden="true"><i style="background:#FFF0ED" aria-hidden="true"></i><i style="background:#FCD4C4" aria-hidden="true"></i><i style="background:#F9BCA0" aria-hidden="true"></i><i style="background:#F3A076" aria-hidden="true"></i><i style="background:#DF7A71" aria-hidden="true"></i><i style="background:#CD596B" aria-hidden="true"></i><i style="background:#B72B63" aria-hidden="true"></i></div><div class="design-scale-axis"><span>น้อย</span><span>มาก</span></div></figure><figure data-scale-family="delta"><figcaption>การเปลี่ยนแปลง · ลด / ไม่เปลี่ยน / เพิ่ม</figcaption><div class="design-scale" aria-hidden="true"><i style="background:#CF5420" aria-hidden="true"></i><i style="background:#E18F6E" aria-hidden="true"></i><i style="background:#EBBDA8" aria-hidden="true"></i><i style="background:#F1F3EC" aria-hidden="true"></i><i style="background:#B4D1C2" aria-hidden="true"></i><i style="background:#80B49F" aria-hidden="true"></i><i style="background:#3C9278" aria-hidden="true"></i></div><div class="design-scale-axis"><span>ลด</span><span>เพิ่ม</span></div></figure></div><p>มี Location Intelligence แยกสำหรับวิเคราะห์ทำเล สีไม่แทนหลักฐานหรือสถานะทางการ เรายังคงน้ำเสียง ภาพอัตลักษณ์และ motion ของ CityChat พร้อมแยกค่าที่ไม่ทราบออกจากศูนย์</p><a href="https://montri-th.github.io/Landometer/v0.9.7/#complete-color-atlas">ดูสเกลทั้งหมดและแนวทาง LDS 0.9.7</a></div></details></section>
 </main>
 <footer id="contact" tabindex="-1" class="site-footer contact-footer scene-atmosphere scene-atmosphere--measure" aria-labelledby="contact-title">
 <div class="measure-line" aria-hidden="true"><span></span><span></span><span></span><span></span></div>

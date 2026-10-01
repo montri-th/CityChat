@@ -1,0 +1,619 @@
+{
+  "schemaVersion": "lds-colors-0.9.7-1",
+  "releaseRef": "v0.9.7-owner.1",
+  "colorSetId": "color-srgb-10",
+  "scope": "implementation registry; avoid embedding full raw registry in audience UI",
+  "values": {
+    "brand": {
+      "blue": "#1D4497",
+      "beige": "#F2F1DF",
+      "darkBeige": "#D8CFB2"
+    },
+    "energy": {
+      "sky": "#59D2FE",
+      "mint": "#0AD69C",
+      "coral": "#FF5A5F",
+      "yellow": "#FFBC1F"
+    },
+    "foundation": {
+      "surface.canvas": [
+        "#F6F7F3",
+        "#11191D"
+      ],
+      "surface.alt": [
+        "#EEF1EE",
+        "#172126"
+      ],
+      "surface.card": [
+        "#FCFCFA",
+        "#20292D"
+      ],
+      "surface.raised": [
+        "#FFFFFF",
+        "#293337"
+      ],
+      "surface.soft": [
+        "#E5E9E6",
+        "#2B3534"
+      ],
+      "surface.blueTint": [
+        "#E2E9ED",
+        "#18333E"
+      ],
+      "surface.beigeTint": [
+        "#F2F1DF",
+        "#2C2A22"
+      ],
+      "text.primary": [
+        "#182327",
+        "#F1F4EF"
+      ],
+      "text.secondary": [
+        "#5F635A",
+        "#C4CECA"
+      ],
+      "text.metadata": [
+        "#5C6A61",
+        "#A6B5B1"
+      ],
+      "text.muted": [
+        "#7B877D",
+        "#8D9D99"
+      ],
+      "text.disabled": [
+        "#A7B3A9",
+        "#71817D"
+      ],
+      "border.hairline": [
+        "#DCE1DD",
+        "#33403D"
+      ],
+      "border.default": [
+        "#C9D0CB",
+        "#46524F"
+      ],
+      "border.emphasis": [
+        "#7D877F",
+        "#7C8A84"
+      ],
+      "interaction.accent": [
+        "#176B82",
+        "#68C4E2"
+      ],
+      "interaction.focus.ring": [
+        "#176B82",
+        "#68C4E2"
+      ]
+    },
+    "semantic": {
+      "success": {
+        "light": [
+          "#E2F4E5",
+          "#126B49"
+        ],
+        "dark": [
+          "#17362D",
+          "#72E8C4"
+        ]
+      },
+      "warning": {
+        "light": [
+          "#FFF1D1",
+          "#A64A00"
+        ],
+        "dark": [
+          "#3B2E16",
+          "#F5C15C"
+        ]
+      },
+      "danger": {
+        "light": [
+          "#FCE5DF",
+          "#B43A3A"
+        ],
+        "dark": [
+          "#3A1F21",
+          "#FF7C72"
+        ]
+      },
+      "info": {
+        "light": [
+          "#E8EEF0",
+          "#176B82"
+        ],
+        "dark": [
+          "#18333E",
+          "#68C4E2"
+        ]
+      },
+      "neutral": {
+        "light": [
+          "#ECE4D2",
+          "#5F635A"
+        ],
+        "dark": [
+          "#2B3534",
+          "#C4CECA"
+        ]
+      },
+      "pending": {
+        "light": [
+          "#F3EEDB",
+          "#5C6A61"
+        ],
+        "dark": [
+          "#2C2A22",
+          "#D8CFB2"
+        ]
+      },
+      "assisted": {
+        "light": [
+          "#DFF3F1",
+          "#176C67"
+        ],
+        "dark": [
+          "#163331",
+          "#79D9D1"
+        ]
+      }
+    },
+    "signature": {
+      "closingLight": "linear-gradient(135deg, #1D4497 0%, #176B82 54%, #08756F 100%)",
+      "closingDark": "linear-gradient(135deg, #68C4E2 0%, #15919A 52%, #08756F 100%)"
+    },
+    "product": {
+      "citymeter": {
+        "light": [
+          "#12669B",
+          "#36BCE4"
+        ],
+        "dark": [
+          "#4C99D5",
+          "#59C7E8"
+        ]
+      },
+      "citywiki": {
+        "light": [
+          "#176B82",
+          "#007E79"
+        ],
+        "dark": [
+          "#59C7E8",
+          "#3BD3CB"
+        ]
+      },
+      "citychat": {
+        "light": [
+          "#007A58",
+          "#007E79"
+        ],
+        "dark": [
+          "#3BD19B",
+          "#3BD3CB"
+        ]
+      }
+    },
+    "dataState": {
+      "noData": {
+        "light": "#D5DAD6",
+        "dark": "#404844",
+        "cue": "diagonal pattern + label"
+      },
+      "zero": {
+        "light": "#7D877F",
+        "dark": "#93A398",
+        "cue": "distinct outline only when zero is a fact"
+      }
+    },
+    "map": {
+      "activeLayer": [
+        "#347DA8",
+        "#65B6DB"
+      ],
+      "hoverStroke": [
+        "#347DA8",
+        "#65B6DB"
+      ],
+      "selectedStroke": [
+        "#176B82",
+        "#68C4E2"
+      ],
+      "focusStroke": [
+        "#176B82",
+        "#68C4E2"
+      ],
+      "markerHalo": [
+        "#FFFFFF",
+        "#101318"
+      ],
+      "markerStroke": [
+        "#182327",
+        "#F1F4EF"
+      ]
+    },
+    "type": {
+      "caption": ".75rem",
+      "label": ".8125rem",
+      "bodySm": ".875rem",
+      "body": "1rem",
+      "bodyLg": "1.125rem",
+      "h3": "clamp(1.35rem, 2vw, 1.75rem)",
+      "h2": "clamp(2rem, 4vw, 3.25rem)",
+      "h1En": "clamp(3.25rem, 7vw, 6.5rem)",
+      "h1Th": "clamp(2.5rem, 6vw, 5rem)"
+    },
+    "spacing": [
+      0,
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      48,
+      64,
+      96,
+      128
+    ],
+    "radius": {
+      "xs": 6,
+      "sm": 10,
+      "md": 16,
+      "lg": 24,
+      "xl": 32,
+      "pill": 999
+    },
+    "container": {
+      "reading": 760,
+      "default": 1120,
+      "wide": 1280
+    },
+    "breakpoint": {
+      "xs": 360,
+      "sm": 600,
+      "md": 900,
+      "lg": 1200,
+      "xl": 1600
+    },
+    "motion": {
+      "durationFeedback": 120,
+      "durationState": 200,
+      "durationMap": 280,
+      "durationChart": 360,
+      "durationReveal": 640,
+      "durationEmphasis": 560,
+      "delayStagger": 120,
+      "delayStaggerCap": 600,
+      "distanceFeedback": 2,
+      "distanceReveal": 20,
+      "easeState": "cubic-bezier(.2,0,0,1)",
+      "easeEnter": "cubic-bezier(.16,1,.3,1)"
+    },
+    "series": {
+      "registryId": "landometer-series-10-v8",
+      "values": [
+        {
+          "id": "series.01",
+          "name": "coral",
+          "cue": "circle",
+          "light": {
+            "fill": "#D88381",
+            "ink": "#963538",
+            "vivid": "#F66C6D"
+          },
+          "dark": {
+            "fill": "#E37A84",
+            "vivid": "#FF4F6D",
+            "ink": "#FF4F6D"
+          }
+        },
+        {
+          "id": "series.02",
+          "name": "apricot",
+          "cue": "square",
+          "light": {
+            "fill": "#E39B6E",
+            "ink": "#182327",
+            "vivid": "#FF8A36"
+          },
+          "dark": {
+            "fill": "#F59B62",
+            "vivid": "#FF8A37",
+            "ink": "#FF8A37"
+          }
+        },
+        {
+          "id": "series.03",
+          "name": "yellow",
+          "cue": "triangle",
+          "light": {
+            "fill": "#EAC578",
+            "ink": "#182327",
+            "vivid": "#FDC010"
+          },
+          "dark": {
+            "fill": "#ECCB67",
+            "vivid": "#FFD242",
+            "ink": "#FFD242"
+          }
+        },
+        {
+          "id": "series.04",
+          "name": "lime",
+          "cue": "diamond",
+          "light": {
+            "fill": "#BECE7E",
+            "ink": "#606E00",
+            "vivid": "#BBD23C"
+          },
+          "dark": {
+            "fill": "#A9C065",
+            "vivid": "#A9CB00",
+            "ink": "#A9CB00"
+          }
+        },
+        {
+          "id": "series.05",
+          "name": "mint",
+          "cue": "cross",
+          "light": {
+            "fill": "#7BD0A3",
+            "ink": "#007047",
+            "vivid": "#2ADB94"
+          },
+          "dark": {
+            "fill": "#6EC69D",
+            "vivid": "#00E39D",
+            "ink": "#00E39D"
+          }
+        },
+        {
+          "id": "series.06",
+          "name": "sky",
+          "cue": "star",
+          "light": {
+            "fill": "#6ACCF0",
+            "ink": "#006580",
+            "vivid": "#36D0FF"
+          },
+          "dark": {
+            "fill": "#62BEE6",
+            "vivid": "#54CDFF",
+            "ink": "#54CDFF"
+          }
+        },
+        {
+          "id": "series.07",
+          "name": "teal",
+          "cue": "hexagon",
+          "light": {
+            "fill": "#49C0BC",
+            "ink": "#006967",
+            "vivid": "#00C4BF"
+          },
+          "dark": {
+            "fill": "#2DA096",
+            "vivid": "#00B6AB",
+            "ink": "#00B6AB"
+          }
+        },
+        {
+          "id": "series.08",
+          "name": "blue",
+          "cue": "ring",
+          "light": {
+            "fill": "#6196D1",
+            "ink": "#0E599D",
+            "vivid": "#3295F6"
+          },
+          "dark": {
+            "fill": "#5A8CDA",
+            "vivid": "#5396FF",
+            "ink": "#5396FF"
+          }
+        },
+        {
+          "id": "series.09",
+          "name": "slate",
+          "cue": "dash",
+          "light": {
+            "fill": "#8AA4AA",
+            "ink": "#355F6A",
+            "vivid": "#7FA6B0"
+          },
+          "dark": {
+            "fill": "#BFD4E7",
+            "vivid": "#C0DBF4",
+            "ink": "#C0DBF4"
+          }
+        },
+        {
+          "id": "series.10",
+          "name": "green",
+          "cue": "plus",
+          "light": {
+            "fill": "#82AC79",
+            "ink": "#34622A",
+            "vivid": "#71B262"
+          },
+          "dark": {
+            "fill": "#5B9455",
+            "vivid": "#3CA633",
+            "ink": "#3CA633"
+          }
+        }
+      ],
+      "defaultVariant": "soft",
+      "variants": [
+        "soft",
+        "vivid"
+      ],
+      "policyRef": "policy.json#/categorical"
+    },
+    "atmosphere": {
+      "registryId": "landometer-atmosphere-gradient-v2",
+      "gradientOnlyValues": [
+        "#89CEF6",
+        "#5ECAD6",
+        "#6CD5B3",
+        "#0F5773",
+        "#006A6A",
+        "#1F744F",
+        "#C4E0EE",
+        "#B2E2E2",
+        "#CCE6D0",
+        "#EB8182",
+        "#F5A06F",
+        "#EBC573",
+        "#F7CBC7",
+        "#FBD1B6",
+        "#F1E0B4"
+      ],
+      "recipes": {
+        "atmosphere.gradient.measure.deep": "linear-gradient(135deg, #1D4497 0%, #176B82 54%, #08756F 100%)",
+        "atmosphere.gradient.measure.luminous": "linear-gradient(135deg, #89CEF6 0%, #5ECAD6 50%, #6CD5B3 100%)",
+        "atmosphere.gradient.ground.current": "linear-gradient(135deg, #0F5773 0%, #006A6A 50%, #1F744F 100%)",
+        "atmosphere.gradient.ground.mist": "linear-gradient(135deg, #C4E0EE 0%, #B2E2E2 50%, #CCE6D0 100%)",
+        "atmosphere.gradient.cultivate.glow": "linear-gradient(135deg, #EB8182 0%, #F5A06F 50%, #EBC573 100%)",
+        "atmosphere.gradient.cultivate.mist": "linear-gradient(135deg, #F7CBC7 0%, #FBD1B6 50%, #F1E0B4 100%)",
+        "atmosphere.gradient.diversity.spectrum": "linear-gradient(135deg, #89CEF6 0%, #6CD5B3 34%, #EBC573 67%, #EB8182 100%)"
+      },
+      "surfaceAliases": {
+        "surfaceAtmosphere.measure.light": "atmosphere.gradient.measure.deep",
+        "surfaceAtmosphere.measure.dark": "atmosphere.gradient.measure.luminous",
+        "surfaceAtmosphere.ground.light": "atmosphere.gradient.ground.mist",
+        "surfaceAtmosphere.ground.dark": "atmosphere.gradient.ground.current",
+        "surfaceAtmosphere.cultivate.light": "atmosphere.gradient.cultivate.glow",
+        "surfaceAtmosphere.cultivate.dark": "atmosphere.gradient.cultivate.mist",
+        "surfaceAtmosphere.diversity": "atmosphere.gradient.diversity.spectrum"
+      },
+      "foreground": {
+        "onDeep": {
+          "primaryAndIcon": "#FFFFFF",
+          "secondaryAndMetadata": "#F1F4EF",
+          "meaningfulSeparator": "#F1F4EF",
+          "focusInner": "#182327",
+          "focusOuter": "#FFFFFF"
+        },
+        "onLight": {
+          "primaryAndIcon": "#182327",
+          "secondaryAndMetadata": "#293337",
+          "meaningfulSeparator": "#182327",
+          "focusInner": "#FFFFFF",
+          "focusOuter": "#182327"
+        }
+      },
+      "constraints": {
+        "oneDominantGradientPerViewport": true,
+        "diversityMaximumPerLongRoute": 1,
+        "dataOrStateEncodingForbidden": true,
+        "deletionTestRequired": true
+      }
+    },
+    "scaleRegistry": "color-srgb-10.scales.json",
+    "supportingPalette": [
+      {
+        "id": "paper",
+        "name": "Paper / กระดาษ",
+        "hex": "#F4F0E7",
+        "role": "Quiet editorial ground"
+      },
+      {
+        "id": "navy",
+        "name": "Editorial navy / น้ำเงินหมึก",
+        "hex": "#213E70",
+        "role": "Deep typographic weight"
+      },
+      {
+        "id": "blue",
+        "name": "Active blue / ฟ้ากิจกรรม",
+        "hex": "#25659A",
+        "role": "Focused cool accent"
+      },
+      {
+        "id": "cyan",
+        "name": "Water cyan / ฟ้าน้ำ",
+        "hex": "#3DBBCD",
+        "role": "Clear aquatic accent"
+      },
+      {
+        "id": "mint",
+        "name": "Exchange mint / มิ้นต์",
+        "hex": "#60C9AD",
+        "role": "Energetic exchange"
+      },
+      {
+        "id": "leaf",
+        "name": "Leaf / ใบไม้",
+        "hex": "#2B702F",
+        "role": "Organic depth"
+      },
+      {
+        "id": "gold",
+        "name": "Built gold / ทอง",
+        "hex": "#BFA000",
+        "role": "Warm structural accent"
+      },
+      {
+        "id": "coral",
+        "name": "Signal coral / คอรัล",
+        "hex": "#F27642",
+        "role": "Focused warm signal"
+      },
+      {
+        "id": "rose",
+        "name": "People rose / กุหลาบ",
+        "hex": "#B72B63",
+        "role": "Warm human-scale accent"
+      },
+      {
+        "id": "red",
+        "name": "Risk red / แดงความเสี่ยง",
+        "hex": "#A40822",
+        "role": "Urgent evidence-bound emphasis"
+      },
+      {
+        "id": "teal",
+        "name": "Teal / ทีล",
+        "hex": "#278E94",
+        "role": "Supporting editorial accent; assignment requires a named context, not automatic metric meaning."
+      },
+      {
+        "id": "amber",
+        "name": "Amber / อำพัน",
+        "hex": "#DDA527",
+        "role": "Supporting editorial accent; assignment requires a named context, not automatic metric meaning."
+      },
+      {
+        "id": "azure",
+        "name": "Azure / ฟ้า",
+        "hex": "#4B8FD8",
+        "role": "Supporting editorial accent; assignment requires a named context, not automatic metric meaning."
+      },
+      {
+        "id": "lime-leaf",
+        "name": "Lime leaf / เขียวอ่อน",
+        "hex": "#92B847",
+        "role": "Supporting editorial accent; assignment requires a named context, not automatic metric meaning."
+      },
+      {
+        "id": "scarlet",
+        "name": "Scarlet / แดงส้ม",
+        "hex": "#E45244",
+        "role": "Supporting editorial accent; assignment requires a named context, not automatic metric meaning."
+      },
+      {
+        "id": "orange",
+        "name": "Orange / ส้ม",
+        "hex": "#D6600C",
+        "role": "Supporting editorial accent; assignment requires a named context, not automatic metric meaning."
+      },
+      {
+        "id": "pine",
+        "name": "Pine / เขียวสน",
+        "hex": "#216D58",
+        "role": "Supporting editorial accent; assignment requires a named context, not automatic metric meaning."
+      }
+    ]
+  }
+}

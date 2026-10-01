@@ -84,10 +84,10 @@
     "activationLimit": "Upload or link availability does not establish plugin, account or team activation."
   },
   "runtimeBoundary": {
-    "dsVersion": "0.9.5",
-    "releaseRef": "v0.9.5-owner.1",
-    "colorSetId": "color-srgb-08",
-    "scope": "Existing landing runtime remains pinned. This update changes current authoring sources and download pointers only; it does not relabel the deployed runtime or replace historical assets."
+    "dsVersion": "0.9.7",
+    "releaseRef": "v0.9.7-owner.1",
+    "colorSetId": "color-srgb-10",
+    "scope": "The current public landing consumes the exact vendored LDS0.9.7 runtime. Historical0.9.0 and0.9.5 package snapshots, artwork approvals and evidence remain unchanged."
   },
   "currentColorPolicy": {
     "source": "LDS 0.9.7 released originals",
@@ -99,7 +99,7 @@
       "theme-based hue/chroma changes",
       "opacity used to replace original palette colours"
     ],
-    "scope": "Story supporting colours and analytical scales, including Location Intelligence role HEX and LUT values, for current authoring only. Foundation UI and categorical theme rules remain as released. Existing immutable runtime packages retain their recorded versions and bytes."
+    "scope": "Story supporting colours and analytical scales, including Location Intelligence role HEX and LUT values, use the same originals in current authoring and runtime. Foundation UI and categorical theme rules remain as released. Immutable historical snapshots retain their original versions and bytes."
   },
   "optionalProfiles": [
     {

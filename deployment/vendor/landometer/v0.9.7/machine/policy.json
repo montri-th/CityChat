@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "lds-0.9.7-policy-1",
+  "releaseRef": "v0.9.7-owner.1",
+  "colorSetId": "color-srgb-10",
+  "approval": {
+    "authority": "Montri",
+    "date": "2026-10-01",
+    "reference": "owner-message:2026-10-01:release-0.9.7-original-light-hex-on-both-themes",
+    "decision": "Adopt Story r4 and Location r2 LIGHT colors. Use each exact light anchor/LUT/class and role HEX unchanged on dark, with the same data direction; no derived dark formulas. Existing categorical palettes and decorative gradients retain their own contracts.",
+    "inputs": {
+      "approved-story-r4.json": "be696bc8f41520f85167678634407838ac5ed5c9bb9a802585146b0b2f36415f",
+      "approved-location-r2.json": "0906c14107ef20a2a42a5d1c830ffa56c0a88caca34d54096dc58b346faba279",
+      "approved-location-metrics.json": "44ad44d254262932812b61a5ca9e7a4b27c6ec89c7bfdc7da9eb0bb081a387e7"
+    },
+    "signatureStatus": "unsigned-owner-approved",
+    "cryptographicReleaseAttestation": false
+  },
+  "precedence": [
+    "Complete standalone LDS 0.9.7 normative and exact assets for adopted 0.9.7 work",
+    "Separate applicable product Add-on or Location profile binds the exact current base",
+    "Historical packages apply only to explicitly pinned historical work"
+  ],
+  "sourceRules": {
+    "COLOR-01": "Use exact color-srgb-10 analytical tables and approved 17-value Story vocabulary. Original categorical and decorative roles remain separate.",
+    "DATAVIZ-02": "Three explicit anchors at 0/20/40; use exact approved 41 samples and classes 3/5/7/9. A sequential midpoint changes hue, not numerical direction. Start colors are semantic near-whites, not a compulsory universal cream.",
+    "DATAVIZ-03": "Analytical light and dark anchors, LUTs and classes are byte-for-byte equal in numerical values. Preserve value direction. No dark derivation, inversion, recoloring or theme-dependent numerical normalization. Use labels, borders and a neutral backplate for actual-surface contrast.",
+    "DATAVIZ-04": "Every delivered analytical sample must avoid the applicable earth and violet windows; pink is allowed. Domain, unit and redundant cues remain mandatory.",
+    "DATAVIZ-05": "Stable 10 IDs and cues; exact unchanged light values plus approved dark soft/vivid/ink. Deprecated v5 aliases prohibited.",
+    "EVID-05": "Six value states: measured, measured_zero, no_data, out_of_scope, suppressed, not_yet; finite nonzero, zero, or null respectively.",
+    "SOCIALFMT-01": "Full inherited sidecar contract admits square1080x1080 and OG1200x630 using the new schema; creative hash and dimensions required.",
+    "GOV-01/RELEASE-01": "This owner-approved distribution is unsigned. An artifact may pin this exact channel and report scoped checks, but MUST NOT fabricate or inherit a signed 0.9.7 receipt or call itself fully conformant from package verification."
+  },
+  "analytical": {
+    "families": 20,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "samplesPerTheme": 41,
+    "classCounts": [
+      3,
+      5,
+      7,
+      9
+    ],
+    "recommendedClassCounts": [
+      5,
+      7
+    ],
+    "selection": "round(i * 40 / (n - 1))",
+    "minAdjacentClassDeltaEOK": 2.2,
+    "fixedLutRequired": true,
+    "runtimeInterpolation": "forbidden",
+    "noDataSeparateFromZero": true,
+    "domainAndThresholds": "consumer supplied; never silently normalized or clamped",
+    "outlierPolicy": "consumer must declare reject, extend with approved scale, or explicit end-bin; never silently clamp",
+    "divergingMidpoint": "must be meaningful and named; no equal-brightness arm claim",
+    "warmDensity": {
+      "density.area": "orange",
+      "density.capita": "rose",
+      "density.household": "scarlet",
+      "built": "gold"
+    },
+    "semanticCuesRequired": [
+      "metric label",
+      "unit",
+      "denominator when density",
+      "legend",
+      "accessible values/table"
+    ],
+    "dataRolesCannotUseAtmosphere": true,
+    "sequentialAnchors": {
+      "count": 3,
+      "indices": [
+        0,
+        20,
+        40
+      ],
+      "start": "exact family-specific approved semantic near-white",
+      "middleHue": "distinct from the end hue, never merely its lighter tint",
+      "singleDirection": true,
+      "lightness": "strictly decreasing on both themes",
+      "relativeLuminance": "strictly decreasing on both themes",
+      "approvalSourceSha256": "be696bc8f41520f85167678634407838ac5ed5c9bb9a802585146b0b2f36415f",
+      "constructionOnly": "authoring construction only; consumers use exact LUT samples",
+      "notDiverging": "The middle colour is a perceptual turn, not zero, balance or a second data direction."
+    },
+    "themeInvariant": {
+      "required": true,
+      "sourceTheme": "light",
+      "anchorsEqual": true,
+      "lutEqual": true,
+      "classesEqual": true,
+      "valueDirectionEqual": true,
+      "darkDerivationForbidden": true,
+      "contrastRemedy": "Keep data HEX; use labels, meaningful boundaries or a neutral backplate. Test actual surfaces and sizes. No automatic 3:1, CVD or full accessibility claim."
+    },
+    "semanticZones": {
+      "activity": "cool mint/blue",
+      "water": "aquatic blue/cyan",
+      "density": "warm with explicit denominators"
+    }
+  },
+  "categorical": {
+    "stableIds": true,
+    "bindBy": "category ID",
+    "nonColorCuesRequired": true,
+    "darkInkMinContrastOnCanvas": 4.5,
+    "fillSeparation": ">=1px border.default or ink outline; do not imply all light fills meet3:1",
+    "vividAndEnergyAccentShareSurface": false
+  },
+  "forbiddenAliases": [
+    "--ldm-series-NN-light",
+    "--ldm-series-NN-dark",
+    "--ldm-product-ijji-*",
+    "--scale-density-*"
+  ],
+  "brand": {
+    "voice": [
+      "calm",
+      "clear",
+      "evidence-aware",
+      "civic-minded",
+      "action-capable"
+    ],
+    "preserve": [
+      "protected lines and roles",
+      "brand core",
+      "foundation",
+      "semantic states",
+      "typography",
+      "logo assets",
+      "7 atmosphere recipes",
+      "layout and motion contracts"
+    ],
+    "ijjiIdentity": "ground.mist for light; #59C7E8 to #3BD3CB for dark. Retired warm product aliases must not be used as identity."
+  },
+  "verificationBounds": [
+    "Package parity and analytical math are automated.",
+    "Rendering, actual surface contrast, native Thai copy, source truth, threshold semantics, CVD/grayscale usability and each output format require artifact review.",
+    "No claim of signed 0.9.7 release, complete conformance, universal platform enforcement or team installation.",
+    "Inherited open governance/product-icon/motif/signing follow-ups remain open unless specifically resolved here.",
+    "Dark numerical colors intentionally equal light values; actual-surface contrast and CVD usability are artifact checks, not universal package guarantees."
+  ],
+  "supportingPalette": {
+    "name": "Story",
+    "count": 17,
+    "themeInvariant": true,
+    "scope": "supporting editorial vocabulary; not 17 simultaneously distinguishable chart series",
+    "locationRules": "Optional separate Location Intelligence profile; not shared LDS business semantics"
+  }
+}
