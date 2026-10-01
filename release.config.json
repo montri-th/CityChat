@@ -474,10 +474,10 @@
     "assets/fonts/jetbrains-mono-latin-400-normal.woff2": "14425ba9c695763c1547f48a206b7aa60350a33ae23de09f0407877f3fcd89eb",
     "assets/fonts/material-symbols-rounded-citychat-landing-v369.ttf": "5609dce4afb79e593fd57d5e9b54c108c496faccce930f1e8d9c9f323031f02e",
     "assets/identity/identity-assets.citychat-landing-20261001-01.json": "9be4942e7b4708606dfdf6b8e84ec4fdc7ad30adedc30cc5020fcc612397812a",
-    "assets/downloads/citychat-lds097-content-release-20261001-01.json": "733e23ec91298654bc975b7fccc7b2f1463615b92d021973af67405538ec7a33",
+    "assets/downloads/citychat-lds097-content-release-20261001-01.json": "8c159bdb8245ddfd412d055c9a274649228288c20f5e3f566265894cc5008957",
     "assets/identity/citychat-share-th-88f66bdc.png": "88f66bdcfb891629fdcc25b4841a1d902c2ab1f50fd61a568fecbd8ebfef5d48",
     "assets/identity/citychat-share-en-d3021149.png": "d3021149a9a5b8479b686201149d44ed8549c97d6c1b274a67144b969f1828ab",
-    "assets/identity/citychat-share-20261001-01.json": "158764036da523f499a3eb62a82cf6f753a5c749f7106ed14e4eab393ed032ad"
+    "assets/identity/citychat-share-20261001-01.json": "6562c1dd0eea34a47aabc1f36aa6a5cec946274ef5476791dfb67f4e7b8568dc"
   },
   "live": {
     "verify": "runtime-closure",
@@ -502,7 +502,7 @@
         "identitySourceSha256": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
         "transform": "Whole unmodified lockup rendered proportionally at 56px height; no crop, recolour, motif or motion.",
         "authority": "Owner request 2026-10-01: update/publish current CityChat public surface including sharing hero; same current public copy.",
-        "visualReview": "pending root review before publication",
+        "visualReview": "PASS: root reviewed actual1200\u00d7630 export and central safe area on2026-10-01 before publication.",
         "thirdPartyCache": "not checked; origin delivery only",
         "canonicalUrl": "https://montri-th.github.io/CityChat/",
         "imageUrl": "https://montri-th.github.io/CityChat/assets/identity/citychat-share-th-88f66bdc.png",
@@ -525,7 +525,7 @@
         "identitySourceSha256": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
         "transform": "Whole unmodified lockup rendered proportionally at 56px height; no crop, recolour, motif or motion.",
         "authority": "Owner request 2026-10-01: update/publish current CityChat public surface including sharing hero; same current public copy.",
-        "visualReview": "pending root review before publication",
+        "visualReview": "PASS: root reviewed actual1200\u00d7630 export and central safe area on2026-10-01 before publication.",
         "thirdPartyCache": "not checked; origin delivery only",
         "canonicalUrl": "https://montri-th.github.io/CityChat/en/",
         "imageUrl": "https://montri-th.github.io/CityChat/assets/identity/citychat-share-en-d3021149.png",

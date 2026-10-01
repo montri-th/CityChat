@@ -13,12 +13,12 @@
       "height": 630,
       "source": "tools/share-preview/th.html",
       "sourceSha256": "4130665f3c961bd3cf943939e8e6993525f5ab2339cebdb3bcb3b6963a60a79a",
-      "visibleText": "ข้อมูลเมือง\nที่เริ่มจากโจทย์ของคุณ\n\nรู้จัก CityChat สำหรับ อปท.\nข้อมูลพื้นที่ เสียงคน และการทำงานร่วมกัน\n\nmontri-th.github.io/CityChat/",
+      "visibleText": "\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e40\u0e21\u0e37\u0e2d\u0e07\n\u0e17\u0e35\u0e48\u0e40\u0e23\u0e34\u0e48\u0e21\u0e08\u0e32\u0e01\u0e42\u0e08\u0e17\u0e22\u0e4c\u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13\n\n\u0e23\u0e39\u0e49\u0e08\u0e31\u0e01 CityChat \u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a \u0e2d\u0e1b\u0e17.\n\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e1e\u0e37\u0e49\u0e19\u0e17\u0e35\u0e48 \u0e40\u0e2a\u0e35\u0e22\u0e07\u0e04\u0e19 \u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e17\u0e33\u0e07\u0e32\u0e19\u0e23\u0e48\u0e27\u0e21\u0e01\u0e31\u0e19\n\nmontri-th.github.io/CityChat/",
       "identitySource": "assets/citychat-lockup.png",
       "identitySourceSha256": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
       "transform": "Whole unmodified lockup rendered proportionally at 56px height; no crop, recolour, motif or motion.",
       "authority": "Owner request 2026-10-01: update/publish current CityChat public surface including sharing hero; same current public copy.",
-      "visualReview": "pending root review before publication",
+      "visualReview": "PASS: root reviewed actual1200\u00d7630 export and central safe area on2026-10-01 before publication.",
       "thirdPartyCache": "not checked; origin delivery only"
     },
     {
@@ -36,8 +36,9 @@
       "identitySourceSha256": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
       "transform": "Whole unmodified lockup rendered proportionally at 56px height; no crop, recolour, motif or motion.",
       "authority": "Owner request 2026-10-01: update/publish current CityChat public surface including sharing hero; same current public copy.",
-      "visualReview": "pending root review before publication",
+      "visualReview": "PASS: root reviewed actual1200\u00d7630 export and central safe area on2026-10-01 before publication.",
       "thirdPartyCache": "not checked; origin delivery only"
     }
-  ]
+  ],
+  "reviewBoundary": "Origin artwork and safe-area review only; native third-party sharing cache has not been inspected."
 }

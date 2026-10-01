@@ -38,7 +38,7 @@
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
     "files": 393,
-    "bytes": 51929777
+    "bytes": 51930647
   },
   "files": [
     {
@@ -238,8 +238,8 @@
     },
     {
       "path": "assets/downloads/citychat-lds097-content-release-20261001-01.json",
-      "bytes": 7750,
-      "sha256": "733e23ec91298654bc975b7fccc7b2f1463615b92d021973af67405538ec7a33"
+      "bytes": 8114,
+      "sha256": "8c159bdb8245ddfd412d055c9a274649228288c20f5e3f566265894cc5008957"
     },
     {
       "path": "assets/downloads/citychat-product-experience-profile-v0.4.md",
@@ -393,8 +393,8 @@
     },
     {
       "path": "assets/identity/citychat-share-20261001-01.json",
-      "bytes": 2571,
-      "sha256": "158764036da523f499a3eb62a82cf6f753a5c749f7106ed14e4eab393ed032ad"
+      "bytes": 3077,
+      "sha256": "6562c1dd0eea34a47aabc1f36aa6a5cec946274ef5476791dfb67f4e7b8568dc"
     },
     {
       "path": "assets/identity/citychat-share-en-d3021149.png",

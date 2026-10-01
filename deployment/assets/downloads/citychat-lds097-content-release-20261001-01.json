@@ -182,10 +182,20 @@
       "no JavaScript",
       "post-deploy live byte closure"
     ],
-    "status": "prepared_for_release; live verification pending deployment"
+    "status": "source_and_rendered_review_passed; live byte verification is recorded separately after deployment",
+    "rootVisualReview": {
+      "date": "2026-10-01",
+      "status": "PASS",
+      "scope": [
+        "existing Thai desktop hero",
+        "new disclosure in Thai and English at1440px and390px",
+        "all three exact analytical scale rows",
+        "both shareimages at actual size and central safe area"
+      ]
+    }
   },
   "socialPreviewManifest": {
     "path": "assets/identity/citychat-share-20261001-01.json",
-    "sha256": "158764036da523f499a3eb62a82cf6f753a5c749f7106ed14e4eab393ed032ad"
+    "sha256": "6562c1dd0eea34a47aabc1f36aa6a5cec946274ef5476791dfb67f4e7b8568dc"
   }
 }
