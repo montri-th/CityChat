@@ -15,18 +15,18 @@
       "historicalMotifRevision": "citychat-contrast-20260908-01",
       "historicalNormativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
       "projectSourcePolicyPath": "assets/downloads/design-system-source-policy.json",
-      "projectSourceDeliveryRevision": "base-plus-addon-20261001-lds096-r1",
-      "baseNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.6/normative/Landometer-Design-System-v0.9.6.md",
-      "addonNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.6/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.6.md"
+      "projectSourceDeliveryRevision": "base-plus-addon-20261001-lds097-r1",
+      "baseNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.7/normative/Landometer-Design-System-v0.9.7.md",
+      "addonNormativeUrl": "https://montri-th.github.io/Landometer/v0.9.7/normative/CityChat-Add-on-v0.9.2-for-LDS-v0.9.7.md"
     },
     "pageKind": "product-landing",
     "language": "th",
     "canonicalUrl": "https://montri-th.github.io/CityChat/",
     "currentAuthoring": {
-      "dsVersion": "0.9.6",
-      "colorSetId": "color-srgb-09",
-      "documentRevision": "standalone-0.9.6-r1",
-      "publicationTag": "v0.9.6",
+      "dsVersion": "0.9.7",
+      "colorSetId": "color-srgb-10",
+      "documentRevision": "standalone-0.9.7-r1",
+      "publicationTag": "v0.9.7",
       "scope": "Project-source and authoring guidance only; existing runtime remains pinned by designSystemMigration."
     }
   },
@@ -38,7 +38,7 @@
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
     "files": 324,
-    "bytes": 48661265
+    "bytes": 48663781
   },
   "files": [
     {
@@ -268,8 +268,8 @@
     },
     {
       "path": "assets/downloads/design-system-source-policy.json",
-      "bytes": 4989,
-      "sha256": "cacad524a04d464419d6765914363787a8f25cb9c7798dd81ba0fbf29a593feb"
+      "bytes": 7505,
+      "sha256": "4839c0114943fe891512fa3aadb8832ec465de09e6eb451c26dfd3fce64a82fd"
     },
     {
       "path": "assets/downloads/vibe-coding-prompt.md",
@@ -579,7 +579,7 @@
     {
       "path": "en/index.html",
       "bytes": 71400,
-      "sha256": "21397695161268dd64da55c400359672f56ff29904e6c464fb654ba7d2cbd39a"
+      "sha256": "53a3064c9ac0daab52816c95777133aa9b67efdb012fd7d307fc20db06687cbc"
     },
     {
       "path": "implementation-notes.v0.4.md",
@@ -614,7 +614,7 @@
     {
       "path": "index.html",
       "bytes": 84357,
-      "sha256": "220e52f4e724ac77399228747802b62ddf8b943b774616319a327f34a28f952a"
+      "sha256": "a9b9f685f8c586836aa924103f0c8ca68f42751264ef65f507aae0c1b47b397e"
     },
     {
       "path": "llms.txt",
