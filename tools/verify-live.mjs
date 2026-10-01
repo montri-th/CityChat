@@ -327,6 +327,15 @@ const manifestByPath = new Map(manifest.files.map((record) => [record.path, reco
 const localeEntryPaths = new Set(localePages.map((locale) => locale.entry));
 const closure = new Set(localeEntryPaths);
 const pending = [...localeEntryPaths];
+// Social scrapers load absolute image URLs from metadata; include their local
+// records explicitly in the same live byte/MIME closure.
+for (const record of Object.values(config.socialPreview?.records || {})) {
+  closure.add(record.path);
+  pending.push(record.path);
+}
+closure.add(config.identity.manifest);
+closure.add(config.socialPreview.manifest);
+
 
 function addResource(rawValue, fromRelativePath, context) {
   const relativePath = normalizeResource(rawValue, fromRelativePath, context);

@@ -11,7 +11,7 @@ const deploymentRoot = path.resolve(repositoryRoot, config.deployment.root);
 const entryRelativePath = safeRelativePath(config.deployment.entry, 'deployment entry');
 const html = readFileSync(resolveDeploymentPath(entryRelativePath), 'utf8');
 const css = readFileSync(resolveDeploymentPath('citychat.css'), 'utf8');
-const ldsFontCss = readFileSync(resolveDeploymentPath('vendor/landometer/v0.9.5/build-kit/fonts.css'), 'utf8');
+const ldsFontCss = readFileSync(resolveDeploymentPath('vendor/landometer/v0.9.7/build-kit/fonts.css'), 'utf8');
 const app = readFileSync(resolveDeploymentPath('app.js'), 'utf8');
 const liveVerifier = readFileSync(path.join(repositoryRoot, 'tools/verify-live.mjs'), 'utf8');
 const failures = [];
@@ -450,8 +450,8 @@ check('release config schema is CityChat landing v2', config.schemaVersion === '
 check('publication remains public but non-indexable', config.publication?.visibility === 'public' && config.publication?.indexable === false);
 check('configured robots policy is exact', config.publication?.robotsMeta === 'noindex,nofollow,noarchive');
 check('canonical URL is the GitHub Pages project route', config.artifact?.canonicalUrl === 'https://montri-th.github.io/CityChat/');
-check('successor release has a distinct 0.9.5 build and revision', config.artifact?.buildId === 'citychat-landing-20260930-01'
-  && config.artifact?.releaseRevision === 'citychat-lds095-20260930-01');
+check('successor release has a distinct 0.9.7 build and revision', config.artifact?.buildId === 'citychat-landing-20261001-01'
+  && config.artifact?.releaseRevision === 'citychat-lds097-20261001-01');
 check('release declares exactly the Thai and English locales', localePages.length === 2
   && localePages.map(({ id }) => id).sort().join(',') === 'en,th');
 check('locale IDs are unique', localeById.size === localePages.length);
@@ -762,7 +762,7 @@ if (existsSync(identityManifestPath)) {
     && identityManifest.carryForwardScope?.newRoles === false
     && identityManifest.carryForwardScope?.newTransforms === false);
   const approvedRoles = (identityManifest.roleApprovals || []).filter(({ approvalState }) => approvalState === 'approved').map(({ role }) => role);
-  check('current identity manifest grants no broader role', approvedRoles.length === 1 && approvedRoles[0] === 'browser_tab_favicon', approvedRoles.join(', '));
+  check('current identity manifest grants only favicon and owner-requested locale share previews', approvedRoles.length === 3 && approvedRoles.filter(role => role === 'browser_tab_favicon').length === 1 && approvedRoles.filter(role => role === 'social_preview').length === 2, approvedRoles.join(', '));
 }
 
 const robotsMeta = tags('meta').find(({ attrs }) => attrs.get('name')?.toLowerCase() === 'robots');

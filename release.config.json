@@ -3,14 +3,14 @@
   "artifact": {
     "name": "CityChat public landing",
     "product": "citychat",
-    "buildId": "citychat-landing-20260930-01",
-    "releaseRevision": "citychat-lds095-20260930-01",
+    "buildId": "citychat-landing-20261001-01",
+    "releaseRevision": "citychat-lds097-20261001-01",
     "designSystemMigration": {
-      "parentVersion": "0.9.5",
-      "parentReleaseRef": "v0.9.5-owner.1",
-      "colorSetId": "color-srgb-08",
+      "parentVersion": "0.9.7",
+      "parentReleaseRef": "v0.9.7-owner.1",
+      "colorSetId": "color-srgb-10",
       "citychatAddonVersion": "0.9.2",
-      "contentReleaseRecordPath": "assets/downloads/citychat-lds095-content-release-20260930-01.json",
+      "contentReleaseRecordPath": "assets/downloads/citychat-lds097-content-release-20261001-01.json",
       "historicalMotifBuildId": "citychat-landing-20260903-03",
       "historicalMotifRevision": "citychat-contrast-20260908-01",
       "historicalNormativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
@@ -27,7 +27,7 @@
       "colorSetId": "color-srgb-10",
       "documentRevision": "standalone-0.9.7-r1",
       "publicationTag": "v0.9.7",
-      "scope": "Project-source and authoring guidance only; existing runtime remains pinned by designSystemMigration."
+      "scope": "Current shared runtime and authoring sources; existing CityChat artwork, product claims and motion preserved."
     }
   },
   "publication": {
@@ -48,24 +48,24 @@
       "publicPath": "./",
       "canonicalUrl": "https://montri-th.github.io/CityChat/",
       "assetPrefix": "./",
-      "highlightText": "ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ",
+      "highlightText": "\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e44\u0e21\u0e48\u0e04\u0e27\u0e23\u0e2b\u0e22\u0e38\u0e14\u0e2d\u0e22\u0e39\u0e48\u0e41\u0e04\u0e48\u0e27\u0e31\u0e19\u0e17\u0e35\u0e48\u0e40\u0e01\u0e47\u0e1a",
       "requiredText": [
         {
-          "text": "จิรศักดิ์ แก้วเจริญ",
+          "text": "\u0e08\u0e34\u0e23\u0e28\u0e31\u0e01\u0e14\u0e34\u0e4c \u0e41\u0e01\u0e49\u0e27\u0e40\u0e08\u0e23\u0e34\u0e0d",
           "count": 1
         },
         {
-          "text": "พรสุดา โมคศิริ",
+          "text": "\u0e1e\u0e23\u0e2a\u0e38\u0e14\u0e32 \u0e42\u0e21\u0e04\u0e28\u0e34\u0e23\u0e34",
           "count": 1
         },
         {
-          "text": "แพลตฟอร์มข้อมูลเมืองที่เริ่มจากสิ่งที่ อปท. ของคุณต้องการจริง",
+          "text": "\u0e41\u0e1e\u0e25\u0e15\u0e1f\u0e2d\u0e23\u0e4c\u0e21\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e40\u0e21\u0e37\u0e2d\u0e07\u0e17\u0e35\u0e48\u0e40\u0e23\u0e34\u0e48\u0e21\u0e08\u0e32\u0e01\u0e2a\u0e34\u0e48\u0e07\u0e17\u0e35\u0e48 \u0e2d\u0e1b\u0e17. \u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13\u0e15\u0e49\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e08\u0e23\u0e34\u0e07",
           "count": 1
         }
       ],
       "forbiddenText": [
-        "นายจิรศักดิ์ แก้วเจริญ",
-        "นางสาวพรสุดา โมคศิริ"
+        "\u0e19\u0e32\u0e22\u0e08\u0e34\u0e23\u0e28\u0e31\u0e01\u0e14\u0e34\u0e4c \u0e41\u0e01\u0e49\u0e27\u0e40\u0e08\u0e23\u0e34\u0e0d",
+        "\u0e19\u0e32\u0e07\u0e2a\u0e32\u0e27\u0e1e\u0e23\u0e2a\u0e38\u0e14\u0e32 \u0e42\u0e21\u0e04\u0e28\u0e34\u0e23\u0e34"
       ],
       "languageSwitch": {
         "target": "en",
@@ -78,11 +78,11 @@
         "count": 2
       },
       "runtimeLabels": {
-        "themeSystem": "ธีม: ตามระบบ — สลับเป็นสว่าง",
-        "themeLight": "ธีม: สว่าง — สลับเป็นมืด",
-        "themeDark": "ธีม: มืด — สลับเป็นตามระบบ",
-        "menuOpen": "เปิดเมนู",
-        "menuClose": "ปิดเมนู"
+        "themeSystem": "\u0e18\u0e35\u0e21: \u0e15\u0e32\u0e21\u0e23\u0e30\u0e1a\u0e1a \u2014 \u0e2a\u0e25\u0e31\u0e1a\u0e40\u0e1b\u0e47\u0e19\u0e2a\u0e27\u0e48\u0e32\u0e07",
+        "themeLight": "\u0e18\u0e35\u0e21: \u0e2a\u0e27\u0e48\u0e32\u0e07 \u2014 \u0e2a\u0e25\u0e31\u0e1a\u0e40\u0e1b\u0e47\u0e19\u0e21\u0e37\u0e14",
+        "themeDark": "\u0e18\u0e35\u0e21: \u0e21\u0e37\u0e14 \u2014 \u0e2a\u0e25\u0e31\u0e1a\u0e40\u0e1b\u0e47\u0e19\u0e15\u0e32\u0e21\u0e23\u0e30\u0e1a\u0e1a",
+        "menuOpen": "\u0e40\u0e1b\u0e34\u0e14\u0e40\u0e21\u0e19\u0e39",
+        "menuClose": "\u0e1b\u0e34\u0e14\u0e40\u0e21\u0e19\u0e39"
       }
     },
     {
@@ -114,15 +114,15 @@
         "Ms Phonsuda Moksiri",
         "Jirasak Kaewcharoen",
         "Pornsuda Moksiri",
-        "จิรศักดิ์ แก้วเจริญ",
-        "พรสุดา โมคศิริ",
-        "นายจิรศักดิ์ แก้วเจริญ",
-        "นางสาวพรสุดา โมคศิริ",
-        "แพลตฟอร์มข้อมูลเมืองที่เริ่มจากสิ่งที่ อปท. ของคุณต้องการจริง",
-        "ข้อมูลไม่ควรหยุดอยู่แค่วันที่เก็บ",
-        "เหลือที่สำหรับ อปท. อีก 6 แห่งในรอบแรก",
-        "เปิดแผนที่สำนักงาน",
-        "เรื่องราวของพวกเรา"
+        "\u0e08\u0e34\u0e23\u0e28\u0e31\u0e01\u0e14\u0e34\u0e4c \u0e41\u0e01\u0e49\u0e27\u0e40\u0e08\u0e23\u0e34\u0e0d",
+        "\u0e1e\u0e23\u0e2a\u0e38\u0e14\u0e32 \u0e42\u0e21\u0e04\u0e28\u0e34\u0e23\u0e34",
+        "\u0e19\u0e32\u0e22\u0e08\u0e34\u0e23\u0e28\u0e31\u0e01\u0e14\u0e34\u0e4c \u0e41\u0e01\u0e49\u0e27\u0e40\u0e08\u0e23\u0e34\u0e0d",
+        "\u0e19\u0e32\u0e07\u0e2a\u0e32\u0e27\u0e1e\u0e23\u0e2a\u0e38\u0e14\u0e32 \u0e42\u0e21\u0e04\u0e28\u0e34\u0e23\u0e34",
+        "\u0e41\u0e1e\u0e25\u0e15\u0e1f\u0e2d\u0e23\u0e4c\u0e21\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e40\u0e21\u0e37\u0e2d\u0e07\u0e17\u0e35\u0e48\u0e40\u0e23\u0e34\u0e48\u0e21\u0e08\u0e32\u0e01\u0e2a\u0e34\u0e48\u0e07\u0e17\u0e35\u0e48 \u0e2d\u0e1b\u0e17. \u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13\u0e15\u0e49\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e08\u0e23\u0e34\u0e07",
+        "\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e44\u0e21\u0e48\u0e04\u0e27\u0e23\u0e2b\u0e22\u0e38\u0e14\u0e2d\u0e22\u0e39\u0e48\u0e41\u0e04\u0e48\u0e27\u0e31\u0e19\u0e17\u0e35\u0e48\u0e40\u0e01\u0e47\u0e1a",
+        "\u0e40\u0e2b\u0e25\u0e37\u0e2d\u0e17\u0e35\u0e48\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a \u0e2d\u0e1b\u0e17. \u0e2d\u0e35\u0e01 6 \u0e41\u0e2b\u0e48\u0e07\u0e43\u0e19\u0e23\u0e2d\u0e1a\u0e41\u0e23\u0e01",
+        "\u0e40\u0e1b\u0e34\u0e14\u0e41\u0e1c\u0e19\u0e17\u0e35\u0e48\u0e2a\u0e33\u0e19\u0e31\u0e01\u0e07\u0e32\u0e19",
+        "\u0e40\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e23\u0e32\u0e27\u0e02\u0e2d\u0e07\u0e1e\u0e27\u0e01\u0e40\u0e23\u0e32"
       ],
       "languageSwitch": {
         "target": "th",
@@ -130,14 +130,14 @@
         "hreflang": "th",
         "lang": "th",
         "text": "TH",
-        "ariaLabel": "เปลี่ยนเป็นภาษาไทย",
-        "title": "เปลี่ยนเป็นภาษาไทย",
+        "ariaLabel": "\u0e40\u0e1b\u0e25\u0e35\u0e48\u0e22\u0e19\u0e40\u0e1b\u0e47\u0e19\u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22",
+        "title": "\u0e40\u0e1b\u0e25\u0e35\u0e48\u0e22\u0e19\u0e40\u0e1b\u0e47\u0e19\u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22",
         "count": 2
       },
       "runtimeLabels": {
-        "themeSystem": "Theme: System — switch to light",
-        "themeLight": "Theme: Light — switch to dark",
-        "themeDark": "Theme: Dark — switch to system",
+        "themeSystem": "Theme: System \u2014 switch to light",
+        "themeLight": "Theme: Light \u2014 switch to dark",
+        "themeDark": "Theme: Dark \u2014 switch to system",
         "menuOpen": "Open menu",
         "menuClose": "Close menu"
       }
@@ -152,8 +152,8 @@
       ".nojekyll",
       "index.html",
       "en/index.html",
-      "citychat-lds095-foundation.css",
-      "citychat-lds095-primitives.css",
+      "citychat-lds097-foundation.css",
+      "citychat-lds097-primitives.css",
       "citychat.css",
       "app.js",
       "motif-runtime.js",
@@ -188,7 +188,15 @@
       "assets/fonts/licenses/ibm-plex-sans-thai-looped-OFL.txt",
       "assets/fonts/licenses/jetbrains-mono-OFL.txt",
       "assets/fonts/licenses/material-symbols-Apache-2.0.txt",
-      "assets/downloads/design-system-source-policy.json"
+      "assets/downloads/design-system-source-policy.json",
+      "vendor/landometer/v0.9.7/machine/release.json",
+      "vendor/landometer/v0.9.7/machine/color-srgb-10.production.css",
+      "vendor/landometer/v0.9.7/build-kit/lds-0.9.7.css",
+      "assets/downloads/citychat-lds097-content-release-20261001-01.json",
+      "assets/identity/identity-assets.citychat-landing-20261001-01.json",
+      "assets/identity/citychat-share-th-88f66bdc.png",
+      "assets/identity/citychat-share-en-d3021149.png",
+      "assets/identity/citychat-share-20261001-01.json"
     ]
   },
   "markup": {
@@ -213,21 +221,21 @@
     ],
     "requiredText": [
       {
-        "text": "จิรศักดิ์ แก้วเจริญ",
+        "text": "\u0e08\u0e34\u0e23\u0e28\u0e31\u0e01\u0e14\u0e34\u0e4c \u0e41\u0e01\u0e49\u0e27\u0e40\u0e08\u0e23\u0e34\u0e0d",
         "count": 1
       },
       {
-        "text": "พรสุดา โมคศิริ",
+        "text": "\u0e1e\u0e23\u0e2a\u0e38\u0e14\u0e32 \u0e42\u0e21\u0e04\u0e28\u0e34\u0e23\u0e34",
         "count": 1
       },
       {
-        "text": "แพลตฟอร์มข้อมูลเมืองที่เริ่มจากสิ่งที่ อปท. ของคุณต้องการจริง",
+        "text": "\u0e41\u0e1e\u0e25\u0e15\u0e1f\u0e2d\u0e23\u0e4c\u0e21\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e40\u0e21\u0e37\u0e2d\u0e07\u0e17\u0e35\u0e48\u0e40\u0e23\u0e34\u0e48\u0e21\u0e08\u0e32\u0e01\u0e2a\u0e34\u0e48\u0e07\u0e17\u0e35\u0e48 \u0e2d\u0e1b\u0e17. \u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13\u0e15\u0e49\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e08\u0e23\u0e34\u0e07",
         "count": 1
       }
     ],
     "forbiddenText": [
-      "นายจิรศักดิ์ แก้วเจริญ",
-      "นางสาวพรสุดา โมคศิริ"
+      "\u0e19\u0e32\u0e22\u0e08\u0e34\u0e23\u0e28\u0e31\u0e01\u0e14\u0e34\u0e4c \u0e41\u0e01\u0e49\u0e27\u0e40\u0e08\u0e23\u0e34\u0e0d",
+      "\u0e19\u0e32\u0e07\u0e2a\u0e32\u0e27\u0e1e\u0e23\u0e2a\u0e38\u0e14\u0e32 \u0e42\u0e21\u0e04\u0e28\u0e34\u0e23\u0e34"
     ]
   },
   "footer": {
@@ -238,9 +246,9 @@
     "stripeClass": "measure-line",
     "contact": {
       "company": "Landometer Co., Ltd.",
-      "address": "23/34-35 Room 4C-4D 4th Fl. The Quarter Bangkok Tower, ถนนตรีมิตร แขวงตลาดน้อย เขตสัมพันธวงศ์ กรุงเทพมหานคร 10100",
+      "address": "23/34-35 Room 4C-4D 4th Fl. The Quarter Bangkok Tower, \u0e16\u0e19\u0e19\u0e15\u0e23\u0e35\u0e21\u0e34\u0e15\u0e23 \u0e41\u0e02\u0e27\u0e07\u0e15\u0e25\u0e32\u0e14\u0e19\u0e49\u0e2d\u0e22 \u0e40\u0e02\u0e15\u0e2a\u0e31\u0e21\u0e1e\u0e31\u0e19\u0e18\u0e27\u0e07\u0e28\u0e4c \u0e01\u0e23\u0e38\u0e07\u0e40\u0e17\u0e1e\u0e21\u0e2b\u0e32\u0e19\u0e04\u0e23 10100",
       "map": {
-        "text": "เปิดแผนที่สำนักงาน",
+        "text": "\u0e40\u0e1b\u0e34\u0e14\u0e41\u0e1c\u0e19\u0e17\u0e35\u0e48\u0e2a\u0e33\u0e19\u0e31\u0e01\u0e07\u0e32\u0e19",
         "href": "https://maps.app.goo.gl/8DQPVMtPdxWMBoZU9"
       },
       "email": {
@@ -277,7 +285,7 @@
     ],
     "links": [
       {
-        "text": "เรื่องราวของพวกเรา",
+        "text": "\u0e40\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e23\u0e32\u0e27\u0e02\u0e2d\u0e07\u0e1e\u0e27\u0e01\u0e40\u0e23\u0e32",
         "href": "https://montri-th.github.io/rebuild02/#dna"
       },
       {
@@ -285,7 +293,7 @@
         "href": "https://montri-th.github.io/rebuild02/#showcases"
       },
       {
-        "text": "LDS 0.9.7 · ฉบับเต็ม",
+        "text": "LDS 0.9.7 \u00b7 \u0e09\u0e1a\u0e31\u0e1a\u0e40\u0e15\u0e47\u0e21",
         "href": "https://montri-th.github.io/Landometer/v0.9.7/normative/Landometer-Design-System-v0.9.7.md"
       },
       {
@@ -301,9 +309,9 @@
       "th": {
         "contact": {
           "company": "Landometer Co., Ltd.",
-          "address": "23/34-35 Room 4C-4D 4th Fl. The Quarter Bangkok Tower, ถนนตรีมิตร แขวงตลาดน้อย เขตสัมพันธวงศ์ กรุงเทพมหานคร 10100",
+          "address": "23/34-35 Room 4C-4D 4th Fl. The Quarter Bangkok Tower, \u0e16\u0e19\u0e19\u0e15\u0e23\u0e35\u0e21\u0e34\u0e15\u0e23 \u0e41\u0e02\u0e27\u0e07\u0e15\u0e25\u0e32\u0e14\u0e19\u0e49\u0e2d\u0e22 \u0e40\u0e02\u0e15\u0e2a\u0e31\u0e21\u0e1e\u0e31\u0e19\u0e18\u0e27\u0e07\u0e28\u0e4c \u0e01\u0e23\u0e38\u0e07\u0e40\u0e17\u0e1e\u0e21\u0e2b\u0e32\u0e19\u0e04\u0e23 10100",
           "map": {
-            "text": "เปิดแผนที่สำนักงาน",
+            "text": "\u0e40\u0e1b\u0e34\u0e14\u0e41\u0e1c\u0e19\u0e17\u0e35\u0e48\u0e2a\u0e33\u0e19\u0e31\u0e01\u0e07\u0e32\u0e19",
             "href": "https://maps.app.goo.gl/8DQPVMtPdxWMBoZU9"
           },
           "email": {
@@ -313,7 +321,7 @@
         },
         "links": [
           {
-            "text": "เรื่องราวของพวกเรา",
+            "text": "\u0e40\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e23\u0e32\u0e27\u0e02\u0e2d\u0e07\u0e1e\u0e27\u0e01\u0e40\u0e23\u0e32",
             "href": "https://montri-th.github.io/rebuild02/#dna"
           },
           {
@@ -321,7 +329,7 @@
             "href": "https://montri-th.github.io/rebuild02/#showcases"
           },
           {
-            "text": "LDS 0.9.7 · ฉบับเต็ม",
+            "text": "LDS 0.9.7 \u00b7 \u0e09\u0e1a\u0e31\u0e1a\u0e40\u0e15\u0e47\u0e21",
             "href": "https://montri-th.github.io/Landometer/v0.9.7/normative/Landometer-Design-System-v0.9.7.md"
           },
           {
@@ -334,9 +342,9 @@
           }
         ],
         "labels": {
-          "socialNav": "ช่องทางสังคมของ Landometer",
-          "footerNav": "ลิงก์ท้ายหน้า",
-          "brand": "Landometer — กลับไปด้านบน"
+          "socialNav": "\u0e0a\u0e48\u0e2d\u0e07\u0e17\u0e32\u0e07\u0e2a\u0e31\u0e07\u0e04\u0e21\u0e02\u0e2d\u0e07 Landometer",
+          "footerNav": "\u0e25\u0e34\u0e07\u0e01\u0e4c\u0e17\u0e49\u0e32\u0e22\u0e2b\u0e19\u0e49\u0e32",
+          "brand": "Landometer \u2014 \u0e01\u0e25\u0e31\u0e1a\u0e44\u0e1b\u0e14\u0e49\u0e32\u0e19\u0e1a\u0e19"
         }
       },
       "en": {
@@ -362,7 +370,7 @@
             "href": "https://montri-th.github.io/rebuild02/Landometer-Home-EN.dc.html#showcases"
           },
           {
-            "text": "LDS 0.9.7 · complete base",
+            "text": "LDS 0.9.7 \u00b7 complete base",
             "href": "https://montri-th.github.io/Landometer/v0.9.7/normative/Landometer-Design-System-v0.9.7.md"
           },
           {
@@ -377,7 +385,7 @@
         "labels": {
           "socialNav": "Landometer social profiles",
           "footerNav": "Footer links",
-          "brand": "Landometer — back to top"
+          "brand": "Landometer \u2014 back to top"
         }
       }
     },
@@ -388,7 +396,7 @@
     "brandHref": "#top",
     "brandImage": "assets/landometer-symbol-color.png",
     "brandText": "Landometer",
-    "copyright": "© 2017–2026 Landometer Co., Ltd."
+    "copyright": "\u00a9 2017\u20132026 Landometer Co., Ltd."
   },
   "media": {
     "cityscan": {
@@ -404,7 +412,7 @@
     }
   },
   "identity": {
-    "manifest": "assets/identity/identity-assets.citychat-landing-20260930-01.json",
+    "manifest": "assets/identity/identity-assets.citychat-landing-20261001-01.json",
     "favicon": {
       "path": "assets/identity/citychat-favicon-3b7439f6.png",
       "href": "./assets/identity/citychat-favicon-3b7439f6.png",
@@ -464,11 +472,67 @@
     "assets/fonts/ibm-plex-sans-thai-looped-thai-700-normal.woff2": "fa03fc4dda6a69763997e79d50e0437795d06c02e1798bdacf3a2f5e685cea2c",
     "assets/fonts/ibm-plex-sans-thai-thai-400-normal.woff2": "2d66381c26d32bf2a95bfe559d1a5ed5475fcdac3fa128e45a33301010d42056",
     "assets/fonts/jetbrains-mono-latin-400-normal.woff2": "14425ba9c695763c1547f48a206b7aa60350a33ae23de09f0407877f3fcd89eb",
-    "assets/fonts/material-symbols-rounded-citychat-landing-v369.ttf": "5609dce4afb79e593fd57d5e9b54c108c496faccce930f1e8d9c9f323031f02e"
+    "assets/fonts/material-symbols-rounded-citychat-landing-v369.ttf": "5609dce4afb79e593fd57d5e9b54c108c496faccce930f1e8d9c9f323031f02e",
+    "assets/identity/identity-assets.citychat-landing-20261001-01.json": "9be4942e7b4708606dfdf6b8e84ec4fdc7ad30adedc30cc5020fcc612397812a",
+    "assets/downloads/citychat-lds097-content-release-20261001-01.json": "8c159bdb8245ddfd412d055c9a274649228288c20f5e3f566265894cc5008957",
+    "assets/identity/citychat-share-th-88f66bdc.png": "88f66bdcfb891629fdcc25b4841a1d902c2ab1f50fd61a568fecbd8ebfef5d48",
+    "assets/identity/citychat-share-en-d3021149.png": "d3021149a9a5b8479b686201149d44ed8549c97d6c1b274a67144b969f1828ab",
+    "assets/identity/citychat-share-20261001-01.json": "6562c1dd0eea34a47aabc1f36aa6a5cec946274ef5476791dfb67f4e7b8568dc"
   },
   "live": {
     "verify": "runtime-closure",
     "attempts": 30,
     "delayMs": 10000
+  },
+  "socialPreview": {
+    "manifest": "assets/identity/citychat-share-20261001-01.json",
+    "records": {
+      "th": {
+        "locale": "th",
+        "path": "assets/identity/citychat-share-th-88f66bdc.png",
+        "sha256": "88f66bdcfb891629fdcc25b4841a1d902c2ab1f50fd61a568fecbd8ebfef5d48",
+        "bytes": 50528,
+        "mimeType": "image/png",
+        "width": 1200,
+        "height": 630,
+        "source": "tools/share-preview/th.html",
+        "sourceSha256": "4130665f3c961bd3cf943939e8e6993525f5ab2339cebdb3bcb3b6963a60a79a",
+        "visibleText": "\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e40\u0e21\u0e37\u0e2d\u0e07\n\u0e17\u0e35\u0e48\u0e40\u0e23\u0e34\u0e48\u0e21\u0e08\u0e32\u0e01\u0e42\u0e08\u0e17\u0e22\u0e4c\u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13\n\n\u0e23\u0e39\u0e49\u0e08\u0e31\u0e01 CityChat \u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a \u0e2d\u0e1b\u0e17.\n\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e1e\u0e37\u0e49\u0e19\u0e17\u0e35\u0e48 \u0e40\u0e2a\u0e35\u0e22\u0e07\u0e04\u0e19 \u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e17\u0e33\u0e07\u0e32\u0e19\u0e23\u0e48\u0e27\u0e21\u0e01\u0e31\u0e19\n\nmontri-th.github.io/CityChat/",
+        "identitySource": "assets/citychat-lockup.png",
+        "identitySourceSha256": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
+        "transform": "Whole unmodified lockup rendered proportionally at 56px height; no crop, recolour, motif or motion.",
+        "authority": "Owner request 2026-10-01: update/publish current CityChat public surface including sharing hero; same current public copy.",
+        "visualReview": "PASS: root reviewed actual1200\u00d7630 export and central safe area on2026-10-01 before publication.",
+        "thirdPartyCache": "not checked; origin delivery only",
+        "canonicalUrl": "https://montri-th.github.io/CityChat/",
+        "imageUrl": "https://montri-th.github.io/CityChat/assets/identity/citychat-share-th-88f66bdc.png",
+        "title": "\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e40\u0e21\u0e37\u0e2d\u0e07\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a \u0e2d\u0e1b\u0e17. \u00b7 CityChat",
+        "description": "\u0e23\u0e39\u0e49\u0e08\u0e31\u0e01 CityChat \u0e1c\u0e48\u0e32\u0e19\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e1e\u0e37\u0e49\u0e19\u0e17\u0e35\u0e48 \u0e40\u0e2a\u0e35\u0e22\u0e07\u0e04\u0e19 \u0e41\u0e25\u0e30\u0e15\u0e31\u0e27\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e01\u0e32\u0e23\u0e17\u0e33\u0e07\u0e32\u0e19\u0e23\u0e48\u0e27\u0e21\u0e01\u0e31\u0e1a \u0e2d\u0e1b\u0e17.",
+        "alt": "CityChat \u2014 \u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e40\u0e21\u0e37\u0e2d\u0e07\u0e17\u0e35\u0e48\u0e40\u0e23\u0e34\u0e48\u0e21\u0e08\u0e32\u0e01\u0e42\u0e08\u0e17\u0e22\u0e4c\u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13"
+      },
+      "en": {
+        "locale": "en",
+        "path": "assets/identity/citychat-share-en-d3021149.png",
+        "sha256": "d3021149a9a5b8479b686201149d44ed8549c97d6c1b274a67144b969f1828ab",
+        "bytes": 44069,
+        "mimeType": "image/png",
+        "width": 1200,
+        "height": 630,
+        "source": "tools/share-preview/en.html",
+        "sourceSha256": "a67ee679e6bcf432f9708deb3aa19f57ee451e52355bf4c702b9b2cb89a2f840",
+        "visibleText": "City data.\nLocal priorities.\n\nMeet CityChat for local authorities.\nPlaces, community voices and shared work.\n\nmontri-th.github.io/CityChat/en/",
+        "identitySource": "assets/citychat-lockup.png",
+        "identitySourceSha256": "a716ce59bdd2b0c3a3ea459c14800b07d0da77b1e474d24cf13ba201f34fa214",
+        "transform": "Whole unmodified lockup rendered proportionally at 56px height; no crop, recolour, motif or motion.",
+        "authority": "Owner request 2026-10-01: update/publish current CityChat public surface including sharing hero; same current public copy.",
+        "visualReview": "PASS: root reviewed actual1200\u00d7630 export and central safe area on2026-10-01 before publication.",
+        "thirdPartyCache": "not checked; origin delivery only",
+        "canonicalUrl": "https://montri-th.github.io/CityChat/en/",
+        "imageUrl": "https://montri-th.github.io/CityChat/assets/identity/citychat-share-en-d3021149.png",
+        "title": "City data for local authorities \u00b7 CityChat",
+        "description": "Explore CityChat through places, community voices and examples of work with local authorities.",
+        "alt": "CityChat \u2014 City data. Local priorities."
+      }
+    }
   }
 }

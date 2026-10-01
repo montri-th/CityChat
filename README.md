@@ -8,7 +8,7 @@ Current design authoring uses two human- and machine-readable files: **[the comp
 
 Upload the two Markdown files to a ChatGPT/Claude Project Source. Remove or deactivate conflicting old LDS/Add-on sources and combined product/base files; retain actual product/evidence/rights sources. Set Project Instructions to the complete base plus CityChat Add-on, then verify both sources in a new session. Source upload does not activate other clients/accounts or the whole team. The [source policy](deployment/assets/downloads/design-system-source-policy.json) cancels the former 8+1 setup and combined-product proposal for new work; old normative files, bindings and release receipts remain byte-identical historical records. Both page footers link separately to the base and Add-on.
 
-Current authoring uses LDS 0.9.7 / color-srgb-10. The existing landing runtime remains pinned to LDS 0.9.5 / color-srgb-08; this source-guidance update changes no analytical runtime, artwork or motion assets.
+Current authoring and the landing runtime use LDS 0.9.7 / color-srgb-10. Existing artwork, motion, product claims and page outline remain unchanged.
 
 The earlier LDS 0.9.5 migration has its own `citychat-landing-20260930-01` build and `citychat-lds095-20260930-01` release revision. The [successor content-release record](deployment/assets/downloads/citychat-lds095-content-release-20260930-01.json) identifies the unchanged artwork carried into the same roles and placements, points to the original exact-build approvals, and limits the carry-forward to this migration. The original approval records remain unchanged.
 
@@ -22,7 +22,7 @@ The CityScan demonstration keeps its original portrait framing: it sits beside t
 
 The site is publicly reachable but intentionally non-indexable. `index.html` carries `noindex,nofollow,noarchive`, and `robots.txt` disallows crawling under this project artifact. The repository and directly addressed public files can still be discovered independently; `noindex` is a request to compliant search engines, not access control.
 
-The page has no analytics or background network calls. Runtime images, video, fonts, Material Symbols, JavaScript, CSS, and the vendored LDS 0.9.5 assets are served locally from `deployment/`. The old v0.9.0 vendor snapshot remains for historical records but is not loaded as a current color stylesheet.
+The page has no analytics or background network calls. Runtime images, video, fonts, Material Symbols, JavaScript, CSS, and the vendored LDS 0.9.7 assets are served locally from `deployment/`. The old v0.9.0 vendor snapshot remains for historical records but is not loaded as a current color stylesheet.
 
 ## Work locally
 
@@ -50,7 +50,7 @@ npm run render
 ## Release checks
 
 - `npm run finalize` records every regular file in `deployment/` except the two generated release records themselves. It rejects symlinks, unexpected system metadata, missing required files, and changed pinned media/font inputs.
-- `npm test` checks JavaScript syntax, requires release records to be current, validates the existing site contracts, and checks all 61 current LDS package assets against their upstream hashes, the CityChat Add-on documents and successor release record, and Thai/English CSS and download links.
+- `npm test` checks JavaScript syntax, requires release records to be current, validates the existing site contracts, and checks all historical and current LDS package assets against their upstream hashes, the CityChat Add-on documents and successor release record, and Thai/English CSS and download links.
 - `npm run render` exercises 320–1440px layouts, short landscape, light, dark, system-dark, reduced-motion, no-JavaScript, print, storage-denied, menu, theme, tab, calm-navigation, icon-only footer, the approved favicon, the CityChat gradient highlight, portrait CityScan behavior, and finite motif/logo motion without replay.
 - `tools/verify-live.mjs` re-fetches the live runtime closure and release records with retry-aware cache busting, then requires exact bytes, SHA-256 hashes, expected MIME types, canonical/noindex copy, requested names, footer contract, and all registered motif resources.
 
@@ -59,17 +59,21 @@ Both GitHub Actions workflows validate without rewriting tracked files. The Page
 ## Key files
 
 - `deployment/index.html` — static landing markup and publication metadata
-- `deployment/citychat-lds095-foundation.css` and `deployment/citychat-lds095-primitives.css` — retained site geometry bound to the current LDS roles
-- `deployment/vendor/landometer/v0.9.5/` — exact current machine, font, color, and web assets
+- `deployment/citychat-lds097-foundation.css` and `deployment/citychat-lds097-primitives.css` — retained site geometry bound to the current LDS roles
+- `deployment/vendor/landometer/v0.9.7/` — exact current machine, font, color, and web assets
 - `deployment/citychat.css` — CityChat-specific responsive layout, footer, theme, motion, and no-JS rules
 - `deployment/app.js` — progressive menu, theme, tabs, rail, video fallback, and reveal behavior
 - `deployment/motif-runtime.js` — first-intersection mounting for registered motif and logo SVG motion
 - `citychat-build-card.json` — historical exact-build motif approval, placements, hashes, and exception record
-- `deployment/assets/downloads/citychat-lds095-content-release-20260930-01.json` — successor release identity and constrained artwork carry-forward
-- `deployment/assets/identity/identity-assets.citychat-landing-20260930-01.json` — browser-tab favicon role bound to the successor build
+- `deployment/assets/downloads/citychat-lds097-content-release-20261001-01.json` — current release identity and constrained artwork carry-forward
+- `deployment/assets/identity/identity-assets.citychat-landing-20261001-01.json` — unchanged favicon and locale-specific share previews bound to the current build
 - `handoff/citychat-motif-set/` — exact owner-supplied amendment, register, source assets, and motion reference
 - `release.config.json` — machine-readable release and content contract
 - `deployment/site-manifest.json` — deterministic whole-tree file inventory
 - `deployment/SHA256SUMS.txt` — deterministic SHA-256 ledger
 
-For current LDS 0.9.7 authoring, Story supporting colours and analytical scales, including Location Intelligence, use the released original HEX, role colours and LUT values unchanged in light and dark modes. Do not auto-darken, invert, blend or derive substitute palettes for these sets. Foundation UI and categorical colours follow the released theme rules. This rule does not relabel the existing pinned landing runtime.
+For current LDS 0.9.7 authoring, Story supporting colours and analytical scales, including Location Intelligence, use the released original HEX, role colours and LUT values unchanged in light and dark modes. Do not auto-darken, invert, blend or derive substitute palettes for these sets. Foundation UI and categorical colours follow the released theme rules. The current landing consumes these exact 0.9.7 runtime values; immutable historical snapshots remain unchanged.
+
+## Current public surface — 1 October 2026
+
+The 0.9.7 runtime replaces the 0.9.5 runtime stylesheet without rewriting historical snapshots. A separate team disclosure presents the 17 Story colours, 14 sequential / 6 diverging families, exact seven-class examples and unchanged light/dark data HEX. The public product outline and existing evidence stay intact. Localized 1200×630 sharing images use the exact static lockup; favicon bytes stay unchanged. Sharing metadata does not change the existing noindex policy.

@@ -3,14 +3,14 @@
   "artifact": {
     "name": "CityChat public landing",
     "product": "citychat",
-    "buildId": "citychat-landing-20260930-01",
-    "releaseRevision": "citychat-lds095-20260930-01",
+    "buildId": "citychat-landing-20261001-01",
+    "releaseRevision": "citychat-lds097-20261001-01",
     "designSystemMigration": {
-      "parentVersion": "0.9.5",
-      "parentReleaseRef": "v0.9.5-owner.1",
-      "colorSetId": "color-srgb-08",
+      "parentVersion": "0.9.7",
+      "parentReleaseRef": "v0.9.7-owner.1",
+      "colorSetId": "color-srgb-10",
       "citychatAddonVersion": "0.9.2",
-      "contentReleaseRecordPath": "assets/downloads/citychat-lds095-content-release-20260930-01.json",
+      "contentReleaseRecordPath": "assets/downloads/citychat-lds097-content-release-20261001-01.json",
       "historicalMotifBuildId": "citychat-landing-20260903-03",
       "historicalMotifRevision": "citychat-contrast-20260908-01",
       "historicalNormativePath": "assets/downloads/citychat-ds-addon-v0.9.2-project-source.md",
@@ -27,7 +27,7 @@
       "colorSetId": "color-srgb-10",
       "documentRevision": "standalone-0.9.7-r1",
       "publicationTag": "v0.9.7",
-      "scope": "Project-source and authoring guidance only; existing runtime remains pinned by designSystemMigration."
+      "scope": "Current shared runtime and authoring sources; existing CityChat artwork, product claims and motion preserved."
     }
   },
   "publication": {
@@ -37,8 +37,8 @@
   },
   "generatedBy": "tools/finalize-release.mjs",
   "totals": {
-    "files": 324,
-    "bytes": 48663781
+    "files": 393,
+    "bytes": 51930647
   },
   "files": [
     {
@@ -237,6 +237,11 @@
       "sha256": "96e31a0202825684b290d4bc182c50e81d38030ef7d765813d62e16ae9a3a3ae"
     },
     {
+      "path": "assets/downloads/citychat-lds097-content-release-20261001-01.json",
+      "bytes": 8114,
+      "sha256": "8c159bdb8245ddfd412d055c9a274649228288c20f5e3f566265894cc5008957"
+    },
+    {
       "path": "assets/downloads/citychat-product-experience-profile-v0.4.md",
       "bytes": 93895,
       "sha256": "f1964af7b34a24ebf1f2afba1bcb1bba5f2d8df7cc871eeb7f4c72ba790689ba"
@@ -268,8 +273,8 @@
     },
     {
       "path": "assets/downloads/design-system-source-policy.json",
-      "bytes": 7505,
-      "sha256": "4839c0114943fe891512fa3aadb8832ec465de09e6eb451c26dfd3fce64a82fd"
+      "bytes": 7509,
+      "sha256": "e24e1cbb259989ff5c0b824c50424a0e7703c36ff406666aa73c5289dfc40d77"
     },
     {
       "path": "assets/downloads/vibe-coding-prompt.md",
@@ -387,6 +392,21 @@
       "sha256": "3a3cd1b4c6091a107bd41502e6df04ddfc62c3074b75b850bfabdf9ddacab98c"
     },
     {
+      "path": "assets/identity/citychat-share-20261001-01.json",
+      "bytes": 3077,
+      "sha256": "6562c1dd0eea34a47aabc1f36aa6a5cec946274ef5476791dfb67f4e7b8568dc"
+    },
+    {
+      "path": "assets/identity/citychat-share-en-d3021149.png",
+      "bytes": 44069,
+      "sha256": "d3021149a9a5b8479b686201149d44ed8549c97d6c1b274a67144b969f1828ab"
+    },
+    {
+      "path": "assets/identity/citychat-share-th-88f66bdc.png",
+      "bytes": 50528,
+      "sha256": "88f66bdcfb891629fdcc25b4841a1d902c2ab1f50fd61a568fecbd8ebfef5d48"
+    },
+    {
       "path": "assets/identity/citychat-symbol.source.svg",
       "bytes": 3714,
       "sha256": "4d8dfd72be8a666a80040291b8b75411854b9a0c90d6693111f79c721bbf1e74"
@@ -400,6 +420,11 @@
       "path": "assets/identity/identity-assets.citychat-landing-20260930-01.json",
       "bytes": 4432,
       "sha256": "1cbb5a2db42eea9d7884dfe1f75f25ecd9d9def2e05eeb61e77ed6b9e8f5b7ea"
+    },
+    {
+      "path": "assets/identity/identity-assets.citychat-landing-20261001-01.json",
+      "bytes": 7550,
+      "sha256": "9be4942e7b4708606dfdf6b8e84ec4fdc7ad30adedc30cc5020fcc612397812a"
     },
     {
       "path": "assets/identity/identity-assets.v0.4.json",
@@ -542,9 +567,19 @@
       "sha256": "d22787d26b79e937226bf450f0eb7d3c19c7ad36d430da69bf0c19493448e21d"
     },
     {
+      "path": "citychat-lds097-foundation.css",
+      "bytes": 5015,
+      "sha256": "87820d9c7a3d9ffa3a169242b04ccfd39916f970b2fa13bc0e884239fc8f56fd"
+    },
+    {
+      "path": "citychat-lds097-primitives.css",
+      "bytes": 3424,
+      "sha256": "3b0f8a32bb079c32dccae6f8eee438aff5fd4e2a0944214d1e2e66897d4df5be"
+    },
+    {
       "path": "citychat.css",
-      "bytes": 23999,
-      "sha256": "b0a6e3096cfbfd4c53adde714aba0410b3adbdbd96ca343d38eae0d473644b1e"
+      "bytes": 25548,
+      "sha256": "089c496f412d3a216d190e733d4b0a4e76f5d86ec6b02690788d67df81495847"
     },
     {
       "path": "control-inventory.v0.4.json",
@@ -578,8 +613,8 @@
     },
     {
       "path": "en/index.html",
-      "bytes": 71400,
-      "sha256": "53a3064c9ac0daab52816c95777133aa9b67efdb012fd7d307fc20db06687cbc"
+      "bytes": 75503,
+      "sha256": "d980616f245285475bad7ca9ac85256f5e19437c470cac67c01a75863fdad682"
     },
     {
       "path": "implementation-notes.v0.4.md",
@@ -613,8 +648,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 84357,
-      "sha256": "a9b9f685f8c586836aa924103f0c8ca68f42751264ef65f507aae0c1b47b397e"
+      "bytes": 89699,
+      "sha256": "42be2d7c4cd99717c80df07a8a0b56af928901fed5be32a26ecf1ae76af2ad19"
     },
     {
       "path": "llms.txt",
@@ -1660,6 +1695,316 @@
       "path": "vendor/landometer/v0.9.5/machine/tokens.v0.9.5.json",
       "bytes": 53938,
       "sha256": "460e70d6e7c10e3ecd484056c6ae54cf7dc8a99865011be633834b3ba8c1e98b"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/SHA256SUMS.txt",
+      "bytes": 6405,
+      "sha256": "29d6bcbb7f76a877c2fd8dd4b68d214624e05d1418173d92bde2c589d5ecdefb"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/Landometer-Logo-TransparentBG.png",
+      "bytes": 903326,
+      "sha256": "8d706f8021bc4b4fdc0e89117244b54868687b74045be54002321de7aaa7ef92"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/arvo-OFL.txt",
+      "bytes": 4508,
+      "sha256": "f4f2cb57f7050c4e615863a39bf04811eada567d76d99b10b0f33d1e10e6cccd"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/arvo-latin-700-normal.woff2",
+      "bytes": 17348,
+      "sha256": "3d908a2c04ec4c59d26d1454008b2d6744480654663a5f88e439f6483976bd37"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/bai-jamjuree-OFL.txt",
+      "bytes": 5487,
+      "sha256": "74b7deafa632a5ed301dc322fcc2867ac200402e06b6d0b0b01faf09b8514e3e"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/bai-jamjuree-latin-400-normal.woff2",
+      "bytes": 11596,
+      "sha256": "5200faf54f32adc1dc47b8522adbd1399e739f4ce5c9236866806c04d6397b19"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/bai-jamjuree-latin-600-normal.woff2",
+      "bytes": 11844,
+      "sha256": "5ae338ac0db4222226ad96bf1b4b460030c3af1affabb475c67bf218b2eaa83f"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/bai-jamjuree-thai-400-normal.woff2",
+      "bytes": 9168,
+      "sha256": "357f8fe9fd08973568a061a2fc266a07819cdc33e8c9bb2b39985cc4ec49bfa9"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/bai-jamjuree-thai-600-normal.woff2",
+      "bytes": 9808,
+      "sha256": "547483c6fbedcc13f4c04489c4ec3f6be4c69877ae7cd4cfbf4a0d289889ba32"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/ibm-plex-sans-thai-OFL.txt",
+      "bytes": 4796,
+      "sha256": "1b4f4d1f1463b63f1356e7b6034ad5a94311b35ffb53cc4bf83f2fbda24450e4"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/ibm-plex-sans-thai-looped-OFL.txt",
+      "bytes": 4832,
+      "sha256": "e3ac4237aef600394644cdab2375d7011b0f80d2229ff05f47df2e61a109ab57"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/ibm-plex-sans-thai-looped-latin-700-normal.woff2",
+      "bytes": 18012,
+      "sha256": "47eb0fe82a8b96cc5f1ac057e2edad4d2550d6b73d4aa030697bf1678047c526"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/ibm-plex-sans-thai-looped-thai-700-normal.woff2",
+      "bytes": 14176,
+      "sha256": "fa03fc4dda6a69763997e79d50e0437795d06c02e1798bdacf3a2f5e685cea2c"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/ibm-plex-sans-thai-thai-400-normal.woff2",
+      "bytes": 11804,
+      "sha256": "2d66381c26d32bf2a95bfe559d1a5ed5475fcdac3fa128e45a33301010d42056"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/jetbrains-mono-OFL.txt",
+      "bytes": 4524,
+      "sha256": "403581b69dac5cff4079205e01c6b467e56af449ecbd7247693ddb1baafa005b"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/jetbrains-mono-latin-400-normal.woff2",
+      "bytes": 21168,
+      "sha256": "14425ba9c695763c1547f48a206b7aa60350a33ae23de09f0407877f3fcd89eb"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/material-symbols-Apache-2.0.txt",
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/material-symbols-rounded-nav-300.woff2",
+      "bytes": 2500,
+      "sha256": "d7e283106ed2898726b24504c4e0f5ad524292984a90a4d29553c7dcf53b9657"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/assets/material-symbols-rounded-open-in-new-300.woff2",
+      "bytes": 1124,
+      "sha256": "778b29f8befe5ba7a8f0f8188d4c12e3c53d00810dac10337609b04d8506d46e"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/example.html",
+      "bytes": 4513,
+      "sha256": "7fc91efa5deda07dedeb7be3015d42c4d873152008e3d3c835a38d688ae7d54b"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/fonts.css",
+      "bytes": 1786,
+      "sha256": "a2564ee20060ac90db6b6ef2b2e18d54671005e4b6736823d2ebb2c0ddb3fbd6"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/icons/generate-icon-set.py",
+      "bytes": 4611,
+      "sha256": "32dd794b1e8272fa0ddb6e28949e8e6dce4718b45a11610f06441eb024dbfc99"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/icons/icon-portfolio-16.png",
+      "bytes": 768,
+      "sha256": "c100627d5e8fc9d21d168dbf15f9fdab7f5d6931b04df5164e58137df77feca8"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/icons/icon-portfolio-180.png",
+      "bytes": 8893,
+      "sha256": "41ac1e302345d29d791fcc26a5e7111aeb3a4e222dff63685743b43d0fdd6ef0"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/icons/icon-portfolio-192.png",
+      "bytes": 11929,
+      "sha256": "1d8bbd3d8656a83f33c51364d333bba7ca328faf3ae713238fa9450f7810bf8e"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/icons/icon-portfolio-32.png",
+      "bytes": 1773,
+      "sha256": "5cd19dee724f1a72b2bdcd41467a26e03f76a4bc2d7bd1fe12de6b8b5de665c9"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/icons/icon-portfolio-48.png",
+      "bytes": 2897,
+      "sha256": "443857069292f6910b9e5cc0383cab6da4273acf1e18a47745864729fc46e08e"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/icons/icon-portfolio-512.png",
+      "bytes": 28124,
+      "sha256": "d8939f6cc7891c47bbb3dce1ddb04d4c30ce4c7e78e29f6fb0061858dafc881f"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/icons/icon-set.json",
+      "bytes": 3284,
+      "sha256": "aea8f5a7f9793c14a6b183706627e4c2390388b7d8c49129eceacdd9b0bce7a4"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/lds-0.9.7-components.css",
+      "bytes": 7108,
+      "sha256": "0977837144503394a8dc79b83c42a22f0bc6ee58a59aeba1d7ffaa30ebf1bf38"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/lds-0.9.7-ext.css",
+      "bytes": 26891,
+      "sha256": "11c764df4e3b6d2cd42daecbe8481a2e9ff0913136d987ce3039453ed482221f"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/lds-0.9.7.css",
+      "bytes": 137,
+      "sha256": "5512425b092f9197412ffb0f1b5b0e7a2060172ebf5d83174c6b0e94ef266fee"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/landometer-motifs.css",
+      "bytes": 11190,
+      "sha256": "7cc2deb475a8d6e4af331407b2b4b741716c458a8ce885e2fb2859374b93912e"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/landometer-motifs.js",
+      "bytes": 17845,
+      "sha256": "3a5caef7918a85885b61dd53e049ea8bf2b0a3cea508f587bb14970bfe6deaf2"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/motif-frame.css",
+      "bytes": 5783,
+      "sha256": "bce9aa3cab8f4f61a15a97bd8dac0835a052b35e0bf19c58d73c160c194a7fc1"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/motif-frame.js",
+      "bytes": 27265,
+      "sha256": "ea96e0099526068126ab726634763d60825046dfd285134b3897087436aebb2b"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/motif-library.json",
+      "bytes": 120161,
+      "sha256": "77e8185104751e2c21c2e10fb8c5d771821bcb8123e02f116638fdbf3968d483"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/motion-controller.js",
+      "bytes": 4175,
+      "sha256": "9199d94ae0f61af69dade73cbb6326898556749d6a1a36038580f59be153b37f"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/cultivate-full.svg",
+      "bytes": 984,
+      "sha256": "ce494d792c12d73949a3dc8e6d18f6f93faa6aeab33d18b2de0889ab4af5af12"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/cultivate-quiet.svg",
+      "bytes": 1190,
+      "sha256": "edf8538107d30b078f0d7657bac054722ee88bdc10ddf7db00e63f44d077935f"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/dial-full.svg",
+      "bytes": 674,
+      "sha256": "7ecfd1165a3e7ad25a0bb01b9680c35f71ff8a98edfd411dfe1b712cee12654d"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/dial-quiet.svg",
+      "bytes": 733,
+      "sha256": "2e624d80b604891ad2ed3e4d5cc6268d2383f39f740ef1def5012c49aee0da1f"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/layers-full.svg",
+      "bytes": 741,
+      "sha256": "a94a59a342df39591f490deec960bba2263bc1c453620c557ff84a1c47901843"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/layers-quiet.svg",
+      "bytes": 1274,
+      "sha256": "e3e2bf65bcd38d34d0a07910bef44917eab76fdaf097131ec133d163f6a65a03"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/logo-full.svg",
+      "bytes": 1252,
+      "sha256": "90e9543f2f86a18f891331c13be25038b4334ca7dbe55b194650bc441e3558e1"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/logo-quiet.svg",
+      "bytes": 1979,
+      "sha256": "5b6798cdb6c3ada246286e6ce3386644f383c4f987a267e5c5db392809403e14"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/rings-full.svg",
+      "bytes": 552,
+      "sha256": "b50ec8fa3828ee5b3504ff05e0c47c1ae55f6b644225482454ec319809552286"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/rings-quiet.svg",
+      "bytes": 833,
+      "sha256": "d494be1f72e833704cd3c20d9d41f60599991d6efd5f670a86e40a7296eb566b"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/slice-full.svg",
+      "bytes": 280,
+      "sha256": "8d0dfb62d1ac92738afcd76e8b61b544a5c72bf10b165983235900558447b2df"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/build-kit/motif/svg/slice-quiet.svg",
+      "bytes": 350,
+      "sha256": "c72114d43b81584cbb46251a5519f768087259bf135216f6ea7933a83df4de6b"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/color-registry.json",
+      "bytes": 134316,
+      "sha256": "c5f8048caa6563703890d90947e1eab23bc15c61d45a19b896a289ffd317d2fa"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/color-srgb-10.production.css",
+      "bytes": 133444,
+      "sha256": "3d34924a249804c4573da5b136303141b67c47f24a3f00dd5d7b86b521d9dfc8"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/color-srgb-10.scales.json",
+      "bytes": 116861,
+      "sha256": "dc804436c080b5be9125417cacb258b898a679c31f1481973a61f8e8cca4e305"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/color-srgb-10.tokens.json",
+      "bytes": 15063,
+      "sha256": "2e71d065e5facb3abcc2ed7a0412d2dd739a4aaf8a78664cd0d15e8caa03d3db"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/evidence-value.schema.json",
+      "bytes": 1513,
+      "sha256": "478cb07c15b0d42ee6e7bb911a34dd15cfc9d43de801053bfedfd6004573b986"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/lds-0.9.7.tokens.dtcg.json",
+      "bytes": 1037543,
+      "sha256": "ac7681730c18c4af2a2dc7dad7a9131035bd660036b86ee79adf5113705fb8c3"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/location-intelligence-0.9.7.css",
+      "bytes": 100181,
+      "sha256": "8d80360f8fef805e8b69aff67eb9b73df2babda379f19ccbec0beeb293a0999d"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/location-intelligence-0.9.7.json",
+      "bytes": 129009,
+      "sha256": "2940c5aac3eef1242e501492b5315048c6b5f138496e8139cc116bfbba945e57"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/policy.json",
+      "bytes": 7102,
+      "sha256": "be568a1815f9efa9e0a48484b72eff6da721a4f0943f7ed3f4252e4890f6c14d"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/release.json",
+      "bytes": 4282,
+      "sha256": "0a936393fc1ab05f8b32110397546b2a87cc26e46f2661a712bdd2debaa58516"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/social-sidecar.schema.json",
+      "bytes": 23816,
+      "sha256": "110c594160c807f38c1bc4984fe20deb65f96329755322b4aa0d0d22f11af82c"
+    },
+    {
+      "path": "vendor/landometer/v0.9.7/machine/tokens.v0.9.7.json",
+      "bytes": 57203,
+      "sha256": "329ef6b125439ab7190b7d06826418e95bb879f7e657cfa9c7ba5f685241b2a6"
     }
   ]
 }

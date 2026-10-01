@@ -39,12 +39,12 @@ A governed CityStory may also stand on its own. CityScan discovery is optional a
 
 ## Visual inheritance
 
-The existing landing runtime remains on the exact LDS 0.9.5 package in `deployment/vendor/landometer/v0.9.5/`. The landing loads its current color/font CSS and uses small artifact-owned bridges for retained geometry:
+The landing runtime uses the exact LDS 0.9.7 package in `deployment/vendor/landometer/v0.9.7/`. The landing loads its current color/font CSS and uses small artifact-owned bridges for retained geometry:
 
 ```html
-<link rel="stylesheet" href="citychat-lds095-foundation.css">
-<link rel="stylesheet" href="vendor/landometer/v0.9.5/build-kit/lds-0.9.5.css">
-<link rel="stylesheet" href="citychat-lds095-primitives.css">
+<link rel="stylesheet" href="citychat-lds097-foundation.css">
+<link rel="stylesheet" href="vendor/landometer/v0.9.7/build-kit/lds-0.9.7.css">
+<link rel="stylesheet" href="citychat-lds097-primitives.css">
 ```
 
 Build-local CSS composes layout from semantic `var()` tokens. It does not load the historical v0.9.0 color stylesheet or copy retired CityChat v0.3 colours. The exact CityChat lockup remains protected artwork and may appear only in a role/build/surface approved by the active identity manifest.
@@ -56,7 +56,7 @@ CityChat-owned identity areas use CityChat artwork and product roles only: do no
 - **Buttons** inherit the LDS `.btn` capsule or `.btn-icon` circle. Keep the inherited padding, gap, height, focus, disabled, busy, and press behaviour. A visual specimen is not a live product action.
 - **Functional icons** use the exact self-hosted Material Symbols Rounded subset recorded in `deployment/resources/citychat-ds-addon/v0.8.0/font-assets.manifest.json`. Bind only a closed role from `citychat-icon-map.json`, keep a visible or accessible label, and check `citychat-icon-resolution.json` before putting an icon on an actual control. The CityChat logo and motif are identity assets, never functional icons.
 - **Motion** uses only an inherited LDS primitive named in `semantic-motion.citychat.yml`, or `none`. The main meaning and action are visible before enhancement; reduced-motion and no-JavaScript routes land directly in the final readable state. Animation never emits a receipt, product event, telemetry, or proof of persistence.
-- **Colour in the historical playground** follows `citychat-color-role-map.json` on its then-pinned `color-srgb-05` source. New authoring uses LDS 0.9.7 / `color-srgb-10`; the existing landing runtime remains pinned to LDS 0.9.5 / `color-srgb-08`; missing authority resolves to no-data or unavailable copy, not a guessed colour.
+- **Colour in the historical playground** follows `citychat-color-role-map.json` on its then-pinned `color-srgb-05` source. New authoring uses LDS 0.9.7 / `color-srgb-10`; the landing runtime uses LDS 0.9.7 / `color-srgb-10`; missing authority resolves to no-data or unavailable copy, not a guessed colour.
 - **Identity** uses the exact lockup bytes and the separately approved build, URL, role, theme, backdrop, and surface in `identity-assets.v0.8.0.json`. Do not add a white logo card or recolour, crop, filter, mask, animate, or rebuild the mark.
 
 Use v0.8.0 resources only to understand that historical artifact. Use the complete LDS 0.9.7 base and the separate consolidated Add-on v0.9.2 for current CityChat decisions; no predecessor hierarchy is required.
@@ -102,4 +102,4 @@ object ID + version + place/boundary version
 
 See the downloadable profile and component registry for the full typed contract.
 
-For current LDS 0.9.7 authoring, Story supporting colours and analytical scales, including Location Intelligence, use the released original HEX, role colours and LUT values unchanged in light and dark modes. Do not auto-darken, invert, blend or derive substitute palettes for these sets. Foundation UI and categorical colours follow the released theme rules. This rule does not relabel the existing pinned landing runtime.
+For current LDS 0.9.7 authoring, Story supporting colours and analytical scales, including Location Intelligence, use the released original HEX, role colours and LUT values unchanged in light and dark modes. Do not auto-darken, invert, blend or derive substitute palettes for these sets. Foundation UI and categorical colours follow the released theme rules. The current landing consumes these exact 0.9.7 runtime values; immutable historical snapshots remain unchanged.

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/Landometer/v0.9.7/package/assets/lds-0.9.7/machine/evidence-value.schema.json",
+  "title": "Landometer DS0.9.7 evidence-value.schema.json",
+  "description": "Numeric value/state pair only. Other record metadata is allowed and remains governed by the original claim/provenance contracts. This schema does not approve a claim.",
+  "type": "object",
+  "required": [
+    "value",
+    "state"
+  ],
+  "properties": {
+    "state": {
+      "enum": [
+        "measured",
+        "measured_zero",
+        "no_data",
+        "out_of_scope",
+        "suppressed",
+        "not_yet"
+      ]
+    },
+    "value": {
+      "type": [
+        "number",
+        "null"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "state": {
+          "const": "measured"
+        },
+        "value": {
+          "type": "number",
+          "not": {
+            "const": 0
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "state": {
+          "const": "measured_zero"
+        },
+        "value": {
+          "const": 0
+        }
+      }
+    },
+    {
+      "properties": {
+        "state": {
+          "enum": [
+            "no_data",
+            "out_of_scope",
+            "suppressed",
+            "not_yet"
+          ]
+        },
+        "value": {
+          "type": "null"
+        }
+      }
+    }
+  ],
+  "$comment": "Current unsigned LDS 0.9.7 contract. Historical source bytes remain immutable."
+}

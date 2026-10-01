@@ -1,0 +1,944 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://montri-th.github.io/Landometer/v0.9.7/package/assets/lds-0.9.7/machine/social-sidecar.schema.json",
+  "title": "Landometer DS0.9.7 social-sidecar.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "releaseRef",
+    "kind",
+    "sidecarId",
+    "publicationStatus",
+    "generatedAt",
+    "promotionCheckedAt",
+    "productionObservedAt",
+    "artifact",
+    "locale",
+    "campaign",
+    "claimBinding",
+    "evidenceBindings",
+    "actionBinding",
+    "rights",
+    "visibleCopyInspection",
+    "outputClarity"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.2"
+    },
+    "releaseRef": {
+      "const": "v0.9.4-mp1"
+    },
+    "kind": {
+      "const": "social_static_publication_sidecar"
+    },
+    "sidecarId": {
+      "$ref": "#/$defs/stableId"
+    },
+    "publicationStatus": {
+      "enum": [
+        "example_only",
+        "approved_for_publication"
+      ],
+      "description": "example_only documents the reusable shape and grants no publication state; an Artifact Manifest at artifact_qa_passed or production_verified must bind approved_for_publication."
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "promotionCheckedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The instant at which this exact sidecar was evaluated for promotion. Destination freshness and all campaign, claim, and rights windows are evaluated at this instant."
+    },
+    "productionObservedAt": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Null before production verification; otherwise the exact post-promotion production observation time bound to the Artifact Manifest's production evidence and used as a destination-freshness boundary."
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifactId",
+        "artifactBuildId",
+        "builtAt",
+        "formatProfile",
+        "targetProfileRef",
+        "buildCardRef",
+        "buildCardSha256",
+        "creativePath",
+        "creativeSha256",
+        "creativeMediaType"
+      ],
+      "properties": {
+        "artifactId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "artifactBuildId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "builtAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "formatProfile": {
+          "const": "social_static"
+        },
+        "targetProfileRef": {
+          "enum": [
+            "target.social.square.1080.01",
+            "target.social.og.1200x630.01"
+          ]
+        },
+        "buildCardRef": {
+          "$ref": "#/$defs/safeRef"
+        },
+        "buildCardSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "creativePath": {
+          "$ref": "#/$defs/safeRef"
+        },
+        "creativeSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "creativeMediaType": {
+          "enum": [
+            "image/png",
+            "image/jpeg",
+            "image/webp"
+          ]
+        }
+      }
+    },
+    "locale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary",
+        "languageDirection"
+      ],
+      "properties": {
+        "primary": {
+          "$ref": "#/$defs/locale"
+        },
+        "languageDirection": {
+          "enum": [
+            "ltr",
+            "rtl"
+          ]
+        }
+      }
+    },
+    "campaign": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Campaign identity, channel, and expiresAt must exactly match the Build Card output.formatContext social_context for promoted artifacts.",
+      "required": [
+        "campaignId",
+        "channel",
+        "name",
+        "startsAt",
+        "expiryBasis",
+        "expiresAt"
+      ],
+      "properties": {
+        "campaignId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "channel": {
+          "$ref": "#/$defs/stableId"
+        },
+        "name": {
+          "$ref": "#/$defs/resolvedAudienceText"
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiryBasis": {
+          "enum": [
+            "fixed_timestamp",
+            "no_expiry"
+          ]
+        },
+        "expiresAt": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "expiryBasis": {
+                "const": "fixed_timestamp"
+              }
+            },
+            "required": [
+              "expiryBasis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expiresAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "expiryBasis": {
+                "const": "no_expiry"
+              }
+            },
+            "required": [
+              "expiryBasis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expiresAt": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "claimBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claimId",
+        "claimManifestRef",
+        "claimManifestSha256",
+        "claimRecordRef",
+        "claimRecordSha256",
+        "claimAsOf",
+        "validityBasis",
+        "validUntil",
+        "visibleText",
+        "visibleLimitations"
+      ],
+      "properties": {
+        "claimId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "claimManifestRef": {
+          "$ref": "#/$defs/safeRef"
+        },
+        "claimManifestSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "claimRecordRef": {
+          "$ref": "#/$defs/safeRef"
+        },
+        "claimRecordSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "claimAsOf": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validityBasis": {
+          "enum": [
+            "timeless",
+            "bounded_interval",
+            "until_superseded"
+          ]
+        },
+        "validUntil": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "visibleText": {
+          "$ref": "#/$defs/resolvedAudienceText"
+        },
+        "visibleLimitations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "limitationId",
+              "text"
+            ],
+            "properties": {
+              "limitationId": {
+                "$ref": "#/$defs/stableId"
+              },
+              "text": {
+                "$ref": "#/$defs/resolvedAudienceText"
+              }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "validityBasis": {
+                "const": "bounded_interval"
+              }
+            },
+            "required": [
+              "validityBasis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "validUntil": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "validityBasis": {
+                "enum": [
+                  "timeless",
+                  "until_superseded"
+                ]
+              }
+            },
+            "required": [
+              "validityBasis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "validUntil": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "evidenceBindings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidenceRef",
+          "claimId",
+          "visibleCue",
+          "evidenceKind",
+          "observedAt"
+        ],
+        "properties": {
+          "evidenceRef": {
+            "$ref": "#/$defs/stablePublicRef"
+          },
+          "claimId": {
+            "$ref": "#/$defs/stableId"
+          },
+          "visibleCue": {
+            "$ref": "#/$defs/resolvedAudienceText"
+          },
+          "evidenceKind": {
+            "enum": [
+              "owner_approval",
+              "source",
+              "method",
+              "dataset",
+              "public_record"
+            ]
+          },
+          "observedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "actionBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Exact visible projection of the Build Card action identified by experience.primaryActionRef; that action must be available and carry priority primary.",
+      "required": [
+        "actionId",
+        "availability",
+        "label",
+        "outcome",
+        "destinationKind",
+        "destination",
+        "presentation",
+        "destinationCue",
+        "destinationVerification"
+      ],
+      "properties": {
+        "actionId": {
+          "$ref": "#/$defs/stableId"
+        },
+        "availability": {
+          "const": "available"
+        },
+        "label": {
+          "$ref": "#/$defs/resolvedAudienceText"
+        },
+        "outcome": {
+          "$ref": "#/$defs/resolvedAudienceText"
+        },
+        "destinationKind": {
+          "enum": [
+            "route",
+            "external",
+            "download",
+            "form",
+            "contact"
+          ]
+        },
+        "destination": {
+          "$ref": "#/$defs/nonEmpty"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "technique"
+          ],
+          "properties": {
+            "mode": {
+              "const": "static_equivalent"
+            },
+            "technique": {
+              "const": "destination_cue"
+            }
+          }
+        },
+        "destinationCue": {
+          "$ref": "#/$defs/resolvedAudienceText",
+          "description": "Exact deterministic visible cue for the governed primary destination: route/contact targets remain exact; HTTPS external/download/form targets use the URL parser's canonical lowercase hostname, non-default port when present, path, query, and fragment, omitting only the https:// scheme."
+        },
+        "destinationVerification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "method",
+            "observedDestination",
+            "observedAt",
+            "freshnessTtlSeconds",
+            "evidenceRef",
+            "evidenceSha256"
+          ],
+          "properties": {
+            "status": {
+              "const": "passed"
+            },
+            "method": {
+              "enum": [
+                "http_head_or_get",
+                "route_resolution",
+                "download_probe",
+                "form_probe",
+                "contact_path_review"
+              ]
+            },
+            "observedDestination": {
+              "$ref": "#/$defs/nonEmpty"
+            },
+            "observedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "freshnessTtlSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 86400,
+              "description": "Explicit bounded maximum age at both promotionCheckedAt and productionObservedAt when production verification is claimed; v0.9.4 never permits an unbounded destination check."
+            },
+            "evidenceRef": {
+              "$ref": "#/$defs/safeRef"
+            },
+            "evidenceSha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "destinationKind": {
+                "const": "route"
+              }
+            },
+            "required": [
+              "destinationKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destination": {
+                "pattern": "^(?:/|\\./)(?!.*(?:^|/)\\.\\.(?:/|$))\\S+$"
+              },
+              "destinationVerification": {
+                "properties": {
+                  "method": {
+                    "const": "route_resolution"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "destinationKind": {
+                "const": "external"
+              }
+            },
+            "required": [
+              "destinationKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destination": {
+                "$ref": "#/$defs/httpsUrl"
+              },
+              "destinationVerification": {
+                "properties": {
+                  "method": {
+                    "const": "http_head_or_get"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "destinationKind": {
+                "enum": [
+                  "download",
+                  "form"
+                ]
+              }
+            },
+            "required": [
+              "destinationKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destination": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/httpsUrl"
+                  },
+                  {
+                    "pattern": "^(?:/|\\./)(?!.*(?:^|/)\\.\\.(?:/|$))\\S+$"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "destinationKind": {
+                "const": "download"
+              }
+            },
+            "required": [
+              "destinationKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destinationVerification": {
+                "properties": {
+                  "method": {
+                    "const": "download_probe"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "destinationKind": {
+                "const": "form"
+              }
+            },
+            "required": [
+              "destinationKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destinationVerification": {
+                "properties": {
+                  "method": {
+                    "const": "form_probe"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "destinationKind": {
+                "const": "contact"
+              }
+            },
+            "required": [
+              "destinationKind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "destination": {
+                "pattern": "^(?:mailto:[^\\s@]+@[^\\s@]+|tel:\\+?[0-9(). -]{6,})$"
+              },
+              "destinationVerification": {
+                "properties": {
+                  "method": {
+                    "const": "contact_path_review"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "publicationPermission",
+        "licenseOrPermission",
+        "rightsSourceRef",
+        "rightsSourceSha256",
+        "allowedChannels",
+        "allowedLocales",
+        "validFrom",
+        "expiryBasis",
+        "expiresAt"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "public",
+            "licensed"
+          ]
+        },
+        "publicationPermission": {
+          "const": true
+        },
+        "licenseOrPermission": {
+          "$ref": "#/$defs/resolvedAudienceText"
+        },
+        "rightsSourceRef": {
+          "$ref": "#/$defs/safeRef"
+        },
+        "rightsSourceSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "allowedChannels": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/stableId"
+          }
+        },
+        "allowedLocales": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/locale"
+          }
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiryBasis": {
+          "enum": [
+            "fixed_timestamp",
+            "no_expiry"
+          ]
+        },
+        "expiresAt": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "expiryBasis": {
+                "const": "fixed_timestamp"
+              }
+            },
+            "required": [
+              "expiryBasis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expiresAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "expiryBasis": {
+                "const": "no_expiry"
+              }
+            },
+            "required": [
+              "expiryBasis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "expiresAt": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visibleCopyInspection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subjectPath",
+        "subjectSha256",
+        "method",
+        "result",
+        "inspectedAt",
+        "normalizationAlgorithm",
+        "normalizedProjectionSha256",
+        "evidenceRef",
+        "evidenceSha256"
+      ],
+      "properties": {
+        "subjectPath": {
+          "$ref": "#/$defs/safeRef"
+        },
+        "subjectSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "method": {
+          "const": "ocr_plus_visual_review"
+        },
+        "result": {
+          "const": "pass"
+        },
+        "inspectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "normalizationAlgorithm": {
+          "const": "unicode_nfc_trim_collapse_whitespace_v1"
+        },
+        "normalizedProjectionSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "evidenceRef": {
+          "$ref": "#/$defs/safeRef"
+        },
+        "evidenceSha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "outputClarity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "workflowState",
+        "blockingDependencyRefs",
+        "placeholderCount",
+        "unresolvedWorkflowLanguagePresent",
+        "audienceProjectionId",
+        "audienceTextHashAlgorithm",
+        "audienceTextSha256",
+        "visibleCopyProjectionId",
+        "visibleCopyNormalization",
+        "visibleCopySha256"
+      ],
+      "properties": {
+        "mode": {
+          "const": "resolved_only"
+        },
+        "workflowState": {
+          "const": "resolved"
+        },
+        "blockingDependencyRefs": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "placeholderCount": {
+          "const": 0
+        },
+        "unresolvedWorkflowLanguagePresent": {
+          "const": false
+        },
+        "audienceProjectionId": {
+          "const": "social_sidecar_audience_v2"
+        },
+        "audienceTextHashAlgorithm": {
+          "const": "sha256_canonical_json_v1"
+        },
+        "audienceTextSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "visibleCopyProjectionId": {
+          "const": "social_visible_copy_projection_v1"
+        },
+        "visibleCopyNormalization": {
+          "const": "unicode_nfc_trim_collapse_whitespace_v1"
+        },
+        "visibleCopySha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "nonEmpty": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/workflowFreeString"
+        },
+        {
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      ]
+    },
+    "stableId": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/workflowFreeString"
+        },
+        {
+          "pattern": "^[a-z0-9][a-z0-9._-]{2,159}$"
+        }
+      ]
+    },
+    "locale": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/workflowFreeString"
+        },
+        {
+          "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$"
+        }
+      ]
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "httpsUrl": {
+      "type": "string",
+      "pattern": "^https://[^\\s]+$"
+    },
+    "stablePublicRef": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/workflowFreeString"
+        },
+        {
+          "pattern": "^(?:https://[^\\s]+|urn:[A-Za-z0-9][A-Za-z0-9:._-]+)$"
+        }
+      ]
+    },
+    "safeRef": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/workflowFreeString"
+        },
+        {
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\u0000]+$"
+        }
+      ]
+    },
+    "workflowFreeString": {
+      "type": "string",
+      "pattern": "^(?![\\s\\S]*(?:(?:^|[^A-Za-z0-9])(?:[Tt][Oo][Dd][Oo]|[Tt][Bb][Dd]|[Ff][Ii][Xx][Mm][Ee]|[Pp][Ll][Aa][Cc][Ee][Hh][Oo][Ll][Dd][Ee][Rr]|[Ll][Oo][Rr][Ee][Mm]\\s+[Ii][Pp][Ss][Uu][Mm]|[Dd][Rr][Aa][Ff][Tt]|[Cc][Aa][Nn][Dd][Ii][Dd][Aa][Tt][Ee]|[Pp][Ee][Nn][Dd][Ii][Nn][Gg](?:\\s+(?:[Aa][Pp][Pp][Rr][Oo][Vv][Aa][Ll]|[Rr][Ee][Vv][Ii][Ee][Ww]))?|[Aa][Ww][Aa][Ii][Tt][Ii][Nn][Gg]\\s+[Aa][Pp][Pp][Rr][Oo][Vv][Aa][Ll]|[Uu][Nn][Vv][Ee][Rr][Ii][Ff][Ii][Ee][Dd]|[Nn][Oo][Tt]\\s+[Tt][Ee][Ss][Tt][Ee][Dd]|[Nn][Ee][Ee][Dd][Ss]\\s+[Rr][Ee][Vv][Ii][Ee][Ww]|[Ii][Nn][Tt][Ee][Rr][Nn][Aa][Ll]\\s+[Oo][Nn][Ll][Yy]|[Rr][Ee][Vv][Ii][Ee][Ww]\\s+[Cc][Oo][Pp][Yy])(?:$|[^A-Za-z0-9])|ฉบับร่าง|รอ(?:อนุมัติ|ตรวจ)|ยังไม่ตรวจ))[\\s\\S]*$"
+    },
+    "resolvedAudienceText": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/workflowFreeString"
+        },
+        {
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      ]
+    }
+  },
+  "$comment": "Current unsigned LDS 0.9.7 contract. Historical source bytes remain immutable."
+}
